@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import Player from "./Player"
 
 export default class CircleTelegraph {
     graphics: Phaser.GameObjects.Graphics
@@ -23,6 +24,18 @@ export default class CircleTelegraph {
         this.graphics.strokeCircle(this.x, this.y, this.radius)
         this.graphics.fillStyle(0xff0000, 0.25)
         this.graphics.fillCircle(this.x, this.y, this.radius)
+    }
+
+    resolveAttack(player: Player) {
+        const dx = player.x - this.x
+        const dy = player.y - this.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+
+        if (distance < this.radius) {
+            player.takeDamage(20)
+        } 
+
+        this.destroy()
     }
 
     destroy() {

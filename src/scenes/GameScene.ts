@@ -4,6 +4,7 @@ import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"
 import Boss from "../entities/Boss"
 import CircleTelegraph from "../entities/CircleTelegraph"
+import LineTelegraph from "../entities/LineTelegraph"
 
 export default class GameScene extends Phaser.Scene {
     player!: Player
@@ -19,35 +20,52 @@ export default class GameScene extends Phaser.Scene {
     attackOnCooldown: boolean = false
     attackCooldownTime: number = 3
 
+    //Circle Telegraph Attack
     spawnCircleTelegraphOnPlayer() {
-        const t = new CircleTelegraph(
+        const telegraph = new CircleTelegraph(
             this,
             this.player.x,
             this.player.y,
             80
         )
 
-        //Attack after delay
         this.time.delayedCall(1200, () => {
-            this.resolveAttack(t)
+            telegraph.resolveAttack(this.player)
         })
     }
 
-    resolveAttack(t: CircleTelegraph) {
-        const dx = this.player.x - t.x
-        const dy = this.player.y - t.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
+    //Line Telegraph Attack
+    spawnLineTelegraphFromBoss() {
+        const angle = Phaser.Math.Angle.Between(
+            this.boss.x,
+            this.boss.y,
+            this.player.x,
+            this.player.y
+        )
 
-        if (distance < t.radius) {
-            this.player.takeDamage(20)
-            console.log("Player HIT!")
-        } else {
-            console.log("Player DODGED!")
-        }
+        const telegraph = new LineTelegraph(
+            this,
+            this.boss.x,
+            this.boss.y,
+            angle,
+            700,
+            100
+        )
 
-        t.destroy()
+        this.time.delayedCall(1200, () => {
+            telegraph.resolveAttack(this.player)
+        })
     }
 
+    //Boss Attack
+    spawnBossAttack() {
+        const attackType = Phaser.Math.Between(0, 1)
+        if (attackType === 0 ) {
+            this.spawnCircleTelegraphOnPlayer()
+        } else {
+            this.spawnLineTelegraphFromBoss()
+        }
+    }
     constructor() {
         super("game")
     }
@@ -78,8 +96,17 @@ export default class GameScene extends Phaser.Scene {
             this.spawnCircleTelegraphOnPlayer()
         })
 
+        // Boss Mechanics Loop
+        this.time.addEvent({
+            delay: 5000,
+            loop: true,
+            callback: () => {
+                this.spawnBossAttack()
+            }
+        })
+
         // Optional: add some text
-        this.add.text(10, 10, "Use WASD to move", {
+        this.add.text(10, 10, "PhantomZ", {
         font: "16px Arial",
         color: "#ffffff",
         })
