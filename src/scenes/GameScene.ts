@@ -18,6 +18,7 @@ export default class GameScene extends Phaser.Scene {
     dKey!: Phaser.Input.Keyboard.Key
 
     num4Key!: Phaser.Input.Keyboard.Key
+    num8Key!: Phaser.Input.Keyboard.Key
 
     slashCooldownBG!: Phaser.GameObjects.Graphics
     slashCooldownFG!: Phaser.GameObjects.Graphics
@@ -56,6 +57,9 @@ export default class GameScene extends Phaser.Scene {
         this.slashCooldownFG.fillRoundedRect(x - size/2, y - size, size, size, radius)
 
         this.num4Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR)
+
+        //Cooldown Block for Arrow Skill
+        this.num8Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT)
 
         // Boss Mechanics Loop
         this.time.addEvent({
@@ -126,7 +130,6 @@ export default class GameScene extends Phaser.Scene {
             this.player.slashSkill.use(this.time.now)
         }
 
-
         //Slash Cooldown Visual
         const skill = this.player.slashSkill
 
@@ -143,5 +146,10 @@ export default class GameScene extends Phaser.Scene {
         this.slashCooldownFG.clear()
         this.slashCooldownFG.fillStyle(ratio < 1? 0x888888 : 0x00ff00, 1)
         this.slashCooldownFG.fillRoundedRect(x - size / 2, fillY, size, fillHeight, radius)
+
+        //Player Arrow Skill
+        if (Phaser.Input.Keyboard.JustDown(this.num8Key)) {
+            this.player.arrowSkill.use(this.time.now)
+        }
     }
 }

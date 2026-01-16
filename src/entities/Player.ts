@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import SlashSkill from "../skills/SlashSkill"
+import ArrowSkill from "../skills/ArrowSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 500
@@ -8,6 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     //Skills
     slashSkill!: SlashSkill
+    arrowSkill!: ArrowSkill
 
     constructor(scene: Phaser.Scene, x: number, y: number, boss: any) {
     super(scene, x, y, "")
@@ -20,6 +22,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true)
     
     this.slashSkill = new SlashSkill(scene, this, boss, 50, 3000)
+    this.arrowSkill = new ArrowSkill(scene, this, boss, 4000)
+    
     }
 
     takeDamage(amount: number) {
