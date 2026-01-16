@@ -22,7 +22,9 @@ export default class GameScene extends Phaser.Scene {
 
     slashCooldownBG!: Phaser.GameObjects.Graphics
     slashCooldownFG!: Phaser.GameObjects.Graphics
-    
+    arrowCooldownBG!: Phaser.GameObjects.Graphics
+    arrowCooldownFG!: Phaser.GameObjects.Graphics
+
     constructor() {
         super("game")
     }
@@ -42,23 +44,36 @@ export default class GameScene extends Phaser.Scene {
         this.sKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         this.dKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D)
 
-        //Cooldown Blocks for Slash Skill
-        const x = 400
-        const y = 640
+        //Cooldown Blocks
         const size = 40
         const radius = 6
 
+        //Cooldown Block for Slash Skill
+        const slashBlockX = 400
+        const slashBlockY = 640
+
         this.slashCooldownBG = this.add.graphics()
         this.slashCooldownBG.fillStyle(0x444444, 1)
-        this.slashCooldownBG.fillRoundedRect(x - size/2, y - size, size, size, radius)
+        this.slashCooldownBG.fillRoundedRect(slashBlockX - size/2, slashBlockY - size, size, size, radius)
 
         this.slashCooldownFG = this.add.graphics()
         this.slashCooldownFG.fillStyle(0x00ff00, 1)
-        this.slashCooldownFG.fillRoundedRect(x - size/2, y - size, size, size, radius)
+        this.slashCooldownFG.fillRoundedRect(slashBlockX - size/2, slashBlockY - size, size, size, radius)
 
         this.num4Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR)
 
         //Cooldown Block for Arrow Skill
+        const arrowBlockX = 450
+        const arrowBlockY = 640
+
+        this.arrowCooldownBG = this.add.graphics()
+        this.arrowCooldownBG.fillStyle(0x444444, 1)
+        this.arrowCooldownBG.fillRoundedRect(arrowBlockX - size/2, arrowBlockY - size, size, size, radius)
+
+        this.arrowCooldownFG = this.add.graphics()
+        this.arrowCooldownFG.fillStyle(0x00ff00, 1)
+        this.arrowCooldownFG.fillRoundedRect(arrowBlockX - size/2, arrowBlockY - size, size, size, radius)
+
         this.num8Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT)
 
         // Boss Mechanics Loop
@@ -124,6 +139,10 @@ export default class GameScene extends Phaser.Scene {
         dir.normalize()
         this.player.move(dir)
 
+        //General Cooldown Visual
+        const size = 40
+        const radius = 6
+
         //Player Slash Skill
         this.player.slashSkill.updateFacing()
         if (Phaser.Input.Keyboard.JustDown(this.num4Key)) {
@@ -131,25 +150,40 @@ export default class GameScene extends Phaser.Scene {
         }
 
         //Slash Cooldown Visual
-        const skill = this.player.slashSkill
+        const playerSlashSkill = this.player.slashSkill
 
-        let ratio = (this.time.now - skill.lastUsed) / skill.cooldown
-        ratio = Phaser.Math.Clamp(ratio, 0, 1)
+        let slashSkillRatio = (this.time.now - playerSlashSkill.lastUsed) / playerSlashSkill.cooldown
+        slashSkillRatio = Phaser.Math.Clamp(slashSkillRatio, 0, 1)
 
-        const x = 400
-        const y = 640
-        const size = 40
-        const radius = 6
-        const fillHeight = size * ratio
-        const fillY = y - fillHeight
+        const slashBlockX = 400
+        const slashBlockY = 640
+        const slashBlockTop = slashBlockY - size
+        const slashSkillFillHeight = size * slashSkillRatio
+        const slashSkillFillY = slashBlockTop + (size - slashSkillFillHeight)
 
         this.slashCooldownFG.clear()
-        this.slashCooldownFG.fillStyle(ratio < 1? 0x888888 : 0x00ff00, 1)
-        this.slashCooldownFG.fillRoundedRect(x - size / 2, fillY, size, fillHeight, radius)
+        this.slashCooldownFG.fillStyle(slashSkillRatio < 1? 0x888888 : 0x00ff00, 1)
+        this.slashCooldownFG.fillRoundedRect(slashBlockX - size / 2, slashSkillFillY, size, slashSkillFillHeight, radius)
 
         //Player Arrow Skill
         if (Phaser.Input.Keyboard.JustDown(this.num8Key)) {
             this.player.arrowSkill.use(this.time.now)
         }
+
+        //Arrow Cooldown Visual
+        const playerArrowSkill = this.player.arrowSkill
+
+        let arrowSkillRatio = (this.time.now - playerArrowSkill.lastUsed) / playerArrowSkill.cooldown
+        arrowSkillRatio = Phaser.Math.Clamp(arrowSkillRatio, 0, 1)
+
+        const arrowBlockX = 450
+        const arrowBlockY = 640
+        const arrowBlockTop = arrowBlockY - size
+        const arrowSkillFillHeight = size * arrowSkillRatio
+        const arrowSkillFillY = arrowBlockTop + (size - arrowSkillFillHeight)
+
+        this.arrowCooldownFG.clear()
+        this.arrowCooldownFG.fillStyle(arrowSkillRatio < 1? 0x888888 : 0x00ff00, 1)
+        this.arrowCooldownFG.fillRoundedRect(arrowBlockX - size /2, arrowSkillFillY, size, arrowSkillFillHeight, radius)
     }
 }
