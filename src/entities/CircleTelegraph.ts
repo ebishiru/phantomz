@@ -27,11 +27,23 @@ export default class CircleTelegraph {
     }
 
     resolveAttack(player: Player) {
-        const dx = player.x - this.x
-        const dy = player.y - this.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
+        const attackCircle = new Phaser.Geom.Circle(
+            this.x,
+            this.y,
+            this.radius
+        )
+        const playerCircle = new Phaser.Geom.Circle(
+            player.x,
+            player.y,
+            16
+        )
 
-        if (distance < this.radius) {
+        const hit = Phaser.Geom.Intersects.CircleToCircle(
+            attackCircle,
+            playerCircle
+        )
+
+        if (hit) {
             player.takeDamage(20)
         } 
 

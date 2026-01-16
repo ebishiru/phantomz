@@ -29,7 +29,7 @@ export default class LineTelegraph extends Phaser.GameObjects.Graphics {
 
     draw() {
         this.clear()
-        this.lineStyle(this.width, 0xff0000, 0.6)
+        this.lineStyle(this.width, 0xff0000, 0.25)
 
         const endX = this.startX + Math.cos(this.angle) * this.length
         const endY = this.startY + Math.sin(this.angle) * this.length
