@@ -26,7 +26,7 @@ export default class SlashSkill extends Skill {
         this.updateFacing()
 
         const g = this.scene.add.graphics()
-        g.fillStyle(0xff0000, 0.25)
+        g.fillStyle(0x00ff00, 0.25)
         g.slice(
             this.player.x,
             this.player.y,
@@ -36,7 +36,7 @@ export default class SlashSkill extends Skill {
             false
         )
         g.fillPath()
-        g.lineStyle(2, 0xff0000, 1)
+        g.lineStyle(2, 0x00ff00, 1)
         g.strokeCircle(this.player.x, this.player.y, this.range)
         this.scene.time.delayedCall(150, () => g.destroy())
 
@@ -50,7 +50,7 @@ export default class SlashSkill extends Skill {
         const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
         if (Math.abs(diff) > Math.PI/2) return
 
-        this.boss.takeDamage(10)
+        this.boss.takeDamage(25)
 
     }
 }

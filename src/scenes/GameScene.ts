@@ -75,8 +75,8 @@ export default class GameScene extends Phaser.Scene {
 
     //Boss Telegraphs
     spawnCircleTelegraphOnPlayer() {
-        const telegraph = new CircleTelegraph(this, this.player.x, this.player.y,80)
-        this.time.delayedCall(1200, () => {
+        const telegraph = new CircleTelegraph(this, this.player.x, this.player.y, 80)
+        this.time.delayedCall(600, () => {
             telegraph.resolveAttack(this.player)
         })
     }
@@ -84,17 +84,26 @@ export default class GameScene extends Phaser.Scene {
     spawnLineTelegraphFromBoss() {
         const angle = Phaser.Math.Angle.Between(this.boss.x, this.boss.y, this.player.x, this.player.y)
         const telegraph = new LineTelegraph(this, this.boss.x, this.boss.y, angle, 700, 100)
-        this.time.delayedCall(1200, () => {
+        this.time.delayedCall(600, () => {
+            telegraph.resolveAttack(this.player)
+        })
+    }
+
+    spawnCircleTelegraphFromBoss() {
+        const telegraph = new CircleTelegraph(this, this.boss.x, this.boss.y, 160)
+        this.time.delayedCall(600, () => {
             telegraph.resolveAttack(this.player)
         })
     }
 
     spawnBossAttack() {
-        const attackType = Phaser.Math.Between(0, 1)
+        const attackType = Phaser.Math.Between(0, 2)
         if (attackType === 0 ) {
             this.spawnCircleTelegraphOnPlayer()
-        } else {
+        } else if (attackType === 1) {
             this.spawnLineTelegraphFromBoss()
+        } else {
+            this.spawnCircleTelegraphFromBoss()
         }
     }
 
