@@ -15,11 +15,8 @@ export default class SlashSkill extends Skill {
     }
 
     updateFacing() {
-        const vel = this.player.body.velocity
-        const speed = Math.sqrt(vel.x * vel.x + vel.y * vel.y)
-        if (speed > 0) {
-            this.facingAngle = Math.atan2(vel.y, vel.x)
-        }
+        const dir = this.player.facing.clone().normalize()
+        this.facingAngle = Math.atan2(dir.y, dir.x)
     }
 
     activate() {

@@ -3,8 +3,11 @@ import Phaser from "phaser"
 import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"
 import Boss from "../entities/Boss"
-import CircleTelegraph from "../entities/CircleTelegraph"
-import LineTelegraph from "../entities/LineTelegraph"
+import BossMechanic from "../mechanics/BossMechanics"
+import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss"
+import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer"
+import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss"
+import SkillCooldown from "../ui/SkillCooldown"
 
 export default class GameScene extends Phaser.Scene {
     player!: Player
@@ -21,12 +24,8 @@ export default class GameScene extends Phaser.Scene {
     num8Key!: Phaser.Input.Keyboard.Key
     num6Key!: Phaser.Input.Keyboard.Key
 
-    slashCooldownBG!: Phaser.GameObjects.Graphics
-    slashCooldownFG!: Phaser.GameObjects.Graphics
-    arrowCooldownBG!: Phaser.GameObjects.Graphics
-    arrowCooldownFG!: Phaser.GameObjects.Graphics
-    pulseCooldownBG!: Phaser.GameObjects.Graphics
-    pulseCooldownFG!: Phaser.GameObjects.Graphics
+    skillCooldownUIs!: SkillCooldown[]
+    bossMechanics!: BossMechanic[]
 
     constructor() {
         super("game")
@@ -47,58 +46,32 @@ export default class GameScene extends Phaser.Scene {
         this.sKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         this.dKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D)
 
-        //Cooldown Blocks
-        const size = 40
-        const radius = 6
-
-        //Cooldown Block for Slash Skill
-        const slashBlockX = 400
-        const slashBlockY = 640
-
-        this.slashCooldownBG = this.add.graphics()
-        this.slashCooldownBG.fillStyle(0x444444, 1)
-        this.slashCooldownBG.fillRoundedRect(slashBlockX - size/2, slashBlockY - size, size, size, radius)
-
-        this.slashCooldownFG = this.add.graphics()
-        this.slashCooldownFG.fillStyle(0x00ff00, 1)
-        this.slashCooldownFG.fillRoundedRect(slashBlockX - size/2, slashBlockY - size, size, size, radius)
-
+        //Slash Skill
         this.num4Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR)
-
-        //Cooldown Block for Arrow Skill
-        const arrowBlockX = 450
-        const arrowBlockY = 640
-
-        this.arrowCooldownBG = this.add.graphics()
-        this.arrowCooldownBG.fillStyle(0x444444, 1)
-        this.arrowCooldownBG.fillRoundedRect(arrowBlockX - size/2, arrowBlockY - size, size, size, radius)
-
-        this.arrowCooldownFG = this.add.graphics()
-        this.arrowCooldownFG.fillStyle(0x00ff00, 1)
-        this.arrowCooldownFG.fillRoundedRect(arrowBlockX - size/2, arrowBlockY - size, size, size, radius)
-
+        //Arrow Skill
         this.num8Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT)
-
-        //Cooldown Block for Pulse Skill
-        const pulseBlockX = 500
-        const pulseBlockY = 640
-
-        this.pulseCooldownBG = this.add.graphics()
-        this.pulseCooldownBG.fillStyle(0x444444, 1)
-        this.pulseCooldownBG.fillRoundedRect(pulseBlockX - size/2, pulseBlockY - size, size, size, radius)
-
-        this.pulseCooldownFG = this.add.graphics()
-        this.pulseCooldownFG.fillStyle(0x00ff00, 1)
-        this.pulseCooldownFG.fillRoundedRect(pulseBlockX - size/2, pulseBlockY - size, size, size, radius)
-
+        //Pulse Skill
         this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
 
+        this.skillCooldownUIs = [
+            new SkillCooldown(this, this.player.slashSkill, 400, 640),
+            new SkillCooldown(this, this.player.arrowSkill, 450, 640),
+            new SkillCooldown(this, this.player.pulseSkill, 500, 640),
+        ]
+
         // Boss Mechanics Loop
+        this.bossMechanics = [
+            new CircleTelegraphOnBoss(this, this.boss, this.player),
+            new CircleTelegraphOnPlayer(this, this.boss, this.player),
+            new LineTelegraphFromBoss(this, this.boss, this.player),
+        ]
+
         this.time.addEvent({
             delay: 5000,
             loop: true,
             callback: () => {
-                this.spawnBossAttack()
+                const mechanic = Phaser.Utils.Array.GetRandom(this.bossMechanics)
+                mechanic.trigger()
             }
         })
 
@@ -107,40 +80,6 @@ export default class GameScene extends Phaser.Scene {
         font: "16px Arial",
         color: "#ffffff",
         })
-    }
-
-    //Boss Telegraphs
-    spawnCircleTelegraphOnPlayer() {
-        const telegraph = new CircleTelegraph(this, this.player.x, this.player.y, 80)
-        this.time.delayedCall(1000, () => {
-            telegraph.resolveAttack(this.player)
-        })
-    }
-
-    spawnLineTelegraphFromBoss() {
-        const angle = Phaser.Math.Angle.Between(this.boss.x, this.boss.y, this.player.x, this.player.y)
-        const telegraph = new LineTelegraph(this, this.boss.x, this.boss.y, angle, 700, 100)
-        this.time.delayedCall(1000, () => {
-            telegraph.resolveAttack(this.player)
-        })
-    }
-
-    spawnCircleTelegraphFromBoss() {
-        const telegraph = new CircleTelegraph(this, this.boss.x, this.boss.y, 160)
-        this.time.delayedCall(1000, () => {
-            telegraph.resolveAttack(this.player)
-        })
-    }
-
-    spawnBossAttack() {
-        const attackType = Phaser.Math.Between(0, 2)
-        if (attackType === 0 ) {
-            this.spawnCircleTelegraphOnPlayer()
-        } else if (attackType === 1) {
-            this.spawnLineTelegraphFromBoss()
-        } else {
-            this.spawnCircleTelegraphFromBoss()
-        }
     }
 
     update() {
@@ -158,65 +97,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.player.update(this.time.now)
 
-        //General Cooldown Visual
-        const size = 40
-        const radius = 6
-
-        //Player Slash Skill
-        this.player.slashSkill.updateFacing()
-        if (Phaser.Input.Keyboard.JustDown(this.num4Key)) {
-            this.player.slashSkill.use(this.time.now)
-        }
-
-        //Slash Cooldown Visual
-        const playerSlashSkill = this.player.slashSkill
-
-        let slashSkillRatio = (this.time.now - playerSlashSkill.lastUsed) / playerSlashSkill.cooldown
-        slashSkillRatio = Phaser.Math.Clamp(slashSkillRatio, 0, 1)
-
-        const slashBlockX = 400
-        const slashBlockY = 640
-        const slashBlockTop = slashBlockY - size
-        const slashSkillFillHeight = size * slashSkillRatio
-        const slashSkillFillY = slashBlockTop + (size - slashSkillFillHeight)
-
-        this.slashCooldownFG.clear()
-        const slashFGRadius = slashSkillRatio >= 1 ? radius : 0
-        this.slashCooldownFG.fillStyle(slashSkillRatio < 1? 0x888888 : 0x00ff00, 1)
-        this.slashCooldownFG.fillRoundedRect(slashBlockX - size / 2, slashSkillFillY, size, slashSkillFillHeight, slashFGRadius)
-
-        //Arrow Cooldown Visual
-        const playerArrowSkill = this.player.arrowSkill
-
-        let arrowSkillRatio = (this.time.now - playerArrowSkill.lastUsed) / playerArrowSkill.cooldown
-        arrowSkillRatio = Phaser.Math.Clamp(arrowSkillRatio, 0, 1)
-
-        const arrowBlockX = 450
-        const arrowBlockY = 640
-        const arrowBlockTop = arrowBlockY - size
-        const arrowSkillFillHeight = size * arrowSkillRatio
-        const arrowSkillFillY = arrowBlockTop + (size - arrowSkillFillHeight)
-
-        this.arrowCooldownFG.clear()
-        const arrowFGRadius = arrowSkillRatio >= 1 ? radius : 0
-        this.arrowCooldownFG.fillStyle(arrowSkillRatio < 1? 0x888888 : 0x00ff00, 1)
-        this.arrowCooldownFG.fillRoundedRect(arrowBlockX - size /2, arrowSkillFillY, size, arrowSkillFillHeight, arrowFGRadius)
-
-        //Pulse Cooldown Visual
-        const playerPulseSkill = this.player.pulseSkill
-
-        let pulseSkillRatio = (this.time.now - playerPulseSkill.lastUsed) / playerPulseSkill.cooldown
-        pulseSkillRatio = Phaser.Math.Clamp(pulseSkillRatio, 0, 1)
-
-        const pulseBlockX = 500
-        const pulseBlockY = 640
-        const pulseBlockTop = pulseBlockY - size
-        const pulseSkillFillHeight = size * pulseSkillRatio
-        const pulseSkillFillY = pulseBlockTop + (size - pulseSkillFillHeight)
-
-        this.pulseCooldownFG.clear()
-        const pulseFGRadius = pulseSkillRatio >= 1? radius : 0
-        this.pulseCooldownFG.fillStyle(pulseSkillRatio < 1? 0x888888 : 0x00ff00, 1)
-        this.pulseCooldownFG.fillRoundedRect(pulseBlockX - size/2, pulseSkillFillY, size, pulseSkillFillHeight, pulseFGRadius)
+        this.skillCooldownUIs.forEach( ui => {
+            ui.update(this.time.now)
+        })
     }
 }

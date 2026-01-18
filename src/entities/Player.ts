@@ -4,7 +4,7 @@ import ArrowSkill from "../skills/ArrowSkill"
 import PulseSkill from "../skills/PulseSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-    speed = 500
+    speed = 300
     maxHealth = 100
     health = 100
 
@@ -12,6 +12,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     slashSkill!: SlashSkill
     arrowSkill!: ArrowSkill
     pulseSkill!: PulseSkill
+
+    facing!: Phaser.Math.Vector2
 
     constructor(scene: Phaser.Scene, x: number, y: number, boss: any) {
         super(scene, x, y, "")
@@ -23,6 +25,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0x00ff00)
         this.setCollideWorldBounds(true)
         
+        //Default Facing down
+        this.facing = new Phaser.Math.Vector2(0, 1)
+
+        //Initialize skills
         this.slashSkill = new SlashSkill(scene, this, boss, 50, 3000)
         this.arrowSkill = new ArrowSkill(scene, this, boss, 4000)
         this.pulseSkill = new PulseSkill(scene, this, boss, 75, 8000)
@@ -36,6 +42,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     move(dir: Phaser.Math.Vector2) {
         this.setVelocity(dir.x * this.speed, dir.y * this.speed)
+
+        if(dir.lengthSq() > 0) {
+            this.facing.copy(dir).normalize()
+        }
     }
 
     update(time: number) {

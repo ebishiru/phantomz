@@ -10,4 +10,9 @@ export default class BossMechanic {
         this.boss = boss
         this.player = player
     }
+
+    trigger() {
+        //initialized
+    }
+
 }
