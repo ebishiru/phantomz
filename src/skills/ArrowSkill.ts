@@ -20,6 +20,6 @@ export default class ArrowSkill extends Skill {
         g.strokePath()
         this.scene.time.delayedCall(150, () => g.destroy())
 
-        this.boss.takeDamage(15)
+        this.boss.takeDamage(20)
     }
 }
