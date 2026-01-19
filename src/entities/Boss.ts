@@ -34,7 +34,6 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         if (this.hurtBoxGraphics) {
             this.hurtBoxGraphics.destroy()
         }
-
         this.destroy()
     }
 }

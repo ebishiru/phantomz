@@ -7,6 +7,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
     maxHealth = 100
     health = 100
+    exp = 0
+    level = 1
+    expToNextLevel = 10
 
     //Skills
     slashSkill!: SlashSkill
@@ -63,5 +66,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX))) {
             this.pulseSkill.use(time)
         }
+    }
+
+    gainExp(amount: number) {
+        this.exp += amount
+
+        if(this.exp >= this.expToNextLevel) {
+            this.levelUp()
+        }
+    }
+
+    levelUp() {
+        this.exp -= this.expToNextLevel
+        this.level++
+        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.5)
     }
 }

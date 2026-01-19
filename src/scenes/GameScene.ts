@@ -4,6 +4,7 @@ import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"
 import BossManager from "../managers/BossManager"
 import SkillCooldown from "../ui/SkillCooldown"
+import ExpOrb from "../entities/ExpOrb"
 
 export default class GameScene extends Phaser.Scene {
     player!: Player
@@ -21,6 +22,8 @@ export default class GameScene extends Phaser.Scene {
     num6Key!: Phaser.Input.Keyboard.Key
 
     skillCooldownUIs!: SkillCooldown[]
+
+    expOrbs!: ExpOrb[]
 
     constructor() {
         super("game")
@@ -59,6 +62,33 @@ export default class GameScene extends Phaser.Scene {
         font: "16px Arial",
         color: "#ffffff",
         })
+
+        //Exp
+        this.expOrbs = []
+    }
+
+    spawnExp(x: number, y: number) {
+        const orbCount = 15
+
+        for (let i = 0; i < orbCount; i++) {
+            const orb = new ExpOrb(
+                this,
+                x,
+                y,
+                this.player,
+                1
+            )
+
+            const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+            const speed = Phaser.Math.Between(100, 250)
+
+            orb.setVelocity(
+                Math.cos(angle) * speed,
+                Math.sin(angle) * speed
+            )
+
+            this.expOrbs.push(orb)
+        }
     }
 
     update() {
@@ -86,5 +116,27 @@ export default class GameScene extends Phaser.Scene {
         if (this.bossManager.boss.health <= 0) {
             this.bossManager.spawnBoss()
         }
+
+        //Exp
+        this.expOrbs.forEach((orb, index) => {
+            if (!orb.active) return
+
+            const distance = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                orb.x,
+                orb.y,
+            )
+
+            if (distance < 20) {
+                this.player.gainExp(orb.expValue)
+                orb.destroy()
+                this.expOrbs.splice(index, 1)
+            }
+        })
+
+        this.expOrbs.forEach((orb) => {
+            orb.update()
+        })
     }
 }

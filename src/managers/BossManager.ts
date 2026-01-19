@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import GameScene from "../scenes/GameScene";
 import Boss from "../entities/Boss";
 import HealthBar from "../ui/HealthBar";
 import Player from "../entities/Player";
@@ -26,8 +27,8 @@ export default class BossManager {
 
         if (this.boss) {
             this.isRespawning = true
-
-            this.destroyAllMechanics()
+            this.destroyAllMechanics();
+            (this.scene as GameScene).spawnExp(this.boss.x, this.boss.y)
             this.boss.destroyBoss()
             this.bossHealthBar.destroy()
 
