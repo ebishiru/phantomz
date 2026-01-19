@@ -2,18 +2,14 @@
 import Phaser from "phaser"
 import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"
-import Boss from "../entities/Boss"
-import BossMechanic from "../mechanics/BossMechanics"
-import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss"
-import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer"
-import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss"
+import BossManager from "../managers/BossManager"
 import SkillCooldown from "../ui/SkillCooldown"
 
 export default class GameScene extends Phaser.Scene {
     player!: Player
     healthBar!: HealthBar
-    boss!: Boss
-    bossHealthBar!: HealthBar
+    
+    bossManager!: BossManager
 
     wKey!: Phaser.Input.Keyboard.Key
     aKey!: Phaser.Input.Keyboard.Key
@@ -25,20 +21,19 @@ export default class GameScene extends Phaser.Scene {
     num6Key!: Phaser.Input.Keyboard.Key
 
     skillCooldownUIs!: SkillCooldown[]
-    bossMechanics!: BossMechanic[]
 
     constructor() {
         super("game")
     }
 
     create() {
-        // Boss Info
-        this.boss = new Boss(this, 400, 350)
-        this.bossHealthBar = new HealthBar(this, 150, 30, 500, 20, this.boss, 0xff0000)
-
         // Player Info
-        this.player = new Player(this, 400, 550, this.boss)
-        this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x00ff00)
+        this.player = new Player(this, 400, 550, null)
+        this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
+
+        //Boss Info
+        this.bossManager = new BossManager(this, this.player)
+        this.bossManager.spawnBoss()
 
         // Inputs
         this.wKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W)
@@ -59,22 +54,6 @@ export default class GameScene extends Phaser.Scene {
             new SkillCooldown(this, this.player.pulseSkill, 500, 640),
         ]
 
-        // Boss Mechanics Loop
-        this.bossMechanics = [
-            new CircleTelegraphOnBoss(this, this.boss, this.player),
-            new CircleTelegraphOnPlayer(this, this.boss, this.player),
-            new LineTelegraphFromBoss(this, this.boss, this.player),
-        ]
-
-        this.time.addEvent({
-            delay: 5000,
-            loop: true,
-            callback: () => {
-                const mechanic = Phaser.Utils.Array.GetRandom(this.bossMechanics)
-                mechanic.trigger()
-            }
-        })
-
         // Optional: add some text
         this.add.text(150, 10, "BOSS", {
         font: "16px Arial",
@@ -84,7 +63,9 @@ export default class GameScene extends Phaser.Scene {
 
     update() {
         this.healthBar.draw()
-        this.bossHealthBar.draw()
+        if (this.bossManager.boss && this.bossManager.bossHealthBar) {
+            this.bossManager.bossHealthBar.draw()
+        }
 
         //Player Movement and Skills
         const dir = new Phaser.Math.Vector2(0, 0)
@@ -100,5 +81,10 @@ export default class GameScene extends Phaser.Scene {
         this.skillCooldownUIs.forEach( ui => {
             ui.update(this.time.now)
         })
+
+        //Boss Respawn
+        if (this.bossManager.boss.health <= 0) {
+            this.bossManager.spawnBoss()
+        }
     }
 }

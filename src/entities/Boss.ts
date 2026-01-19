@@ -1,8 +1,8 @@
 import Phaser from "phaser"
 
 export default class Boss extends Phaser.Physics.Arcade.Sprite {
-    maxHealth = 500
-    health = 500
+    maxHealth = 100
+    health = 100
     speed = 0
     hurtRadius = 128
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
@@ -28,5 +28,13 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         this.health -= amount
         this.health = Math.max(this.health, 0)
         console.log(`Boss HP: ${this.health}`)
+    }
+
+    destroyBoss() {
+        if (this.hurtBoxGraphics) {
+            this.hurtBoxGraphics.destroy()
+        }
+
+        this.destroy()
     }
 }

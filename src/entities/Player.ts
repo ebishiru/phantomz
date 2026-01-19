@@ -31,7 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Initialize skills
         this.slashSkill = new SlashSkill(scene, this, boss, 50, 3000)
         this.arrowSkill = new ArrowSkill(scene, this, boss, 4000)
-        this.pulseSkill = new PulseSkill(scene, this, boss, 75, 8000)
+        this.pulseSkill = new PulseSkill(scene, this, boss, 50, 8000)
     
     }
 

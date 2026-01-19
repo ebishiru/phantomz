@@ -13,7 +13,7 @@ export default class ArrowSkill extends Skill {
 
     activate() {
         const g = this.scene.add.graphics()
-        g.lineStyle(8, 0x00ff00, 0.6)
+        g.lineStyle(3, 0x00ff00, 0.6)
         g.beginPath()
         g.moveTo(this.player.x, this.player.y)
         g.lineTo(this.boss.x, this.boss.y)
