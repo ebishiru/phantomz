@@ -4,7 +4,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     maxHealth = 100
     health = 100
     speed = 0
-    hurtRadius = 128
+    hurtRadius = 80
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -13,7 +13,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
-        this.setSize(128, 128)
+        this.setSize(96, 96)
         this.setTint(0xff0000)
         this.setCollideWorldBounds(true)
 

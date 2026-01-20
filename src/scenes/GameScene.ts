@@ -2,6 +2,7 @@
 import Phaser from "phaser"
 import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"
+import ExpBar from "../ui/ExpBar"
 import BossManager from "../managers/BossManager"
 import SkillCooldown from "../ui/SkillCooldown"
 import ExpOrb from "../entities/ExpOrb"
@@ -9,7 +10,7 @@ import ExpOrb from "../entities/ExpOrb"
 export default class GameScene extends Phaser.Scene {
     player!: Player
     healthBar!: HealthBar
-    
+    expBar!: ExpBar
     bossManager!: BossManager
 
     wKey!: Phaser.Input.Keyboard.Key
@@ -30,9 +31,13 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create() {
+        // World Bounds
+        this.physics.world.setBounds(25, 70, 750, 550)
+
         // Player Info
         this.player = new Player(this, 400, 550, null)
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
+        this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
         //Boss Info
         this.bossManager = new BossManager(this, this.player)
@@ -52,9 +57,9 @@ export default class GameScene extends Phaser.Scene {
         this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
 
         this.skillCooldownUIs = [
-            new SkillCooldown(this, this.player.slashSkill, 400, 640),
-            new SkillCooldown(this, this.player.arrowSkill, 450, 640),
-            new SkillCooldown(this, this.player.pulseSkill, 500, 640),
+            new SkillCooldown(this, this.player.slashSkill, 550, 670),
+            new SkillCooldown(this, this.player.arrowSkill, 600, 670),
+            new SkillCooldown(this, this.player.pulseSkill, 650, 670),
         ]
 
         // Optional: add some text
@@ -69,23 +74,33 @@ export default class GameScene extends Phaser.Scene {
 
     spawnExp(x: number, y: number) {
         const orbCount = 15
+        const minRadius = 80
+        const maxRadius = 100
 
         for (let i = 0; i < orbCount; i++) {
+            const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+            const distance = Phaser.Math.FloatBetween(minRadius, maxRadius)
+
+            const spawnX = x + Math.cos(angle) * distance
+            const spawnY = y + Math.sin(angle) * distance
+
             const orb = new ExpOrb(
                 this,
-                x,
-                y,
-                this.player,
+                spawnX,
+                spawnY,
                 1
             )
 
-            const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
-            const speed = Phaser.Math.Between(100, 250)
+            orb.setScale(0)
 
-            orb.setVelocity(
-                Math.cos(angle) * speed,
-                Math.sin(angle) * speed
-            )
+            this.tweens.add({
+                targets: orb,
+                x: spawnX,
+                y: spawnY,
+                scale: 0.5,
+                duration: 800,
+                ease: "Back.Out"
+            })
 
             this.expOrbs.push(orb)
         }
@@ -93,6 +108,7 @@ export default class GameScene extends Phaser.Scene {
 
     update() {
         this.healthBar.draw()
+        this.expBar.draw()
         if (this.bossManager.boss && this.bossManager.bossHealthBar) {
             this.bossManager.bossHealthBar.draw()
         }

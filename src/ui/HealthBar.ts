@@ -53,7 +53,7 @@ export default class HealthBar {
 
         const healthPercent = this.entity.health / this.entity.maxHealth
 
-        this.bar.fillStyle(this.color, 1)
+        this.bar.fillStyle(this.color, 0.7)
         this.bar.fillRect(this.x, this.y, this.width * healthPercent, this.height)
 
         this.text.setText(`${this.entity.health} / ${this.entity.maxHealth}`)
