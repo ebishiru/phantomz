@@ -4,10 +4,11 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     maxHealth = 100
     health = 100
     speed = 0
+    bossName!: Phaser.GameObjects.Text
     hurtRadius = 80
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, name: string) {
         super(scene, x, y, "")
 
         scene.add.existing(this)
@@ -16,6 +17,11 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         this.setSize(96, 96)
         this.setTint(0xff0000)
         this.setCollideWorldBounds(true)
+
+        this.bossName = this.scene.add.text(150, 10, name, {
+            font: "16px Roboto",
+            color: "#ffffff",
+        })
 
         this.hurtBoxGraphics = scene.add.graphics()
         this.hurtBoxGraphics.fillStyle(0xAAAAAAa, 0.2)
@@ -33,6 +39,9 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     destroyBoss() {
         if (this.hurtBoxGraphics) {
             this.hurtBoxGraphics.destroy()
+        }
+        if (this.bossName) {
+            this.bossName.destroy()
         }
         this.destroy()
     }

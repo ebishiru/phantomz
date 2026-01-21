@@ -16,13 +16,23 @@ export default class BossManager {
     player: Player
     bossMechanics!: BossMechanic[]
     bossMechanicTimer!: Phaser.Time.TimerEvent
+    bossesKilled = 0
+    buffPool: string[] = []
+    activeBuffs: string[] = []
 
     constructor(scene: Phaser.Scene, player: Player) {
         this.scene = scene
         this.player = player
+        this.buffPool = [
+            "INC_HP",
+            "INC_HP",
+            "INC_HP",
+            "LOW_ATK_CD",
+            "LOW_ATK_CD"
+        ]
     }
 
-    spawnBoss(x = 400, y = 350, respawnDelay = 800) {
+    spawnBoss(x = 400, y = 350, respawnDelay = 2000) {
         if (this.isRespawning) return
 
         if (this.boss) {
@@ -31,6 +41,10 @@ export default class BossManager {
             (this.scene as GameScene).spawnExp(this.boss.x, this.boss.y)
             this.boss.destroyBoss()
             this.bossHealthBar.destroy()
+
+            this.bossesKilled++
+            const buff = Phaser.Utils.Array.RemoveRandomElement(this.buffPool) as unknown as string
+            this.activeBuffs.push(buff)
 
             this.scene.time.delayedCall(respawnDelay, () => {
                 this.createBoss(x, y)
@@ -42,7 +56,8 @@ export default class BossManager {
     }
 
     createBoss(x: number, y: number) {
-        this.boss = new Boss(this.scene, x, y)
+        this.boss = new Boss(this.scene, x, y, `BOSS ${this.bossesKilled}`)
+
         this.bossHealthBar = new HealthBar(
             this.scene,
             150, 30,
@@ -61,14 +76,23 @@ export default class BossManager {
             new LineTelegraphFromBoss(this.scene, this.boss, this.player),
         ]
 
+        let attackDelay = 5000
+        const lowAtkBuffCount = this.activeBuffs.filter(b => b === "LOW_ATK_CD").length
+        attackDelay *= Math.pow(0.8, lowAtkBuffCount)
+
+        const hpBuffCount = this.activeBuffs.filter(b => b === "INC_HP").length
+        this.boss.maxHealth += 50 * hpBuffCount
+        this.boss.health = this.boss.maxHealth
+
         this.bossMechanicTimer = this.scene.time.addEvent({
-            delay: 5000,
+            delay: attackDelay,
             loop: true,
             callback: () => {
                 const mechanic = Phaser.Utils.Array.GetRandom(this.bossMechanics)
                 mechanic.trigger()
             }
         })
+
     }
 
     destroyAllMechanics() {

@@ -62,12 +62,6 @@ export default class GameScene extends Phaser.Scene {
             new SkillCooldown(this, this.player.pulseSkill, 650, 670),
         ]
 
-        // Optional: add some text
-        this.add.text(150, 10, "BOSS", {
-        font: "16px Arial",
-        color: "#ffffff",
-        })
-
         //Exp
         this.expOrbs = []
     }
@@ -75,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
     spawnExp(x: number, y: number) {
         const orbCount = 15
         const minRadius = 80
-        const maxRadius = 100
+        const maxRadius = 120
 
         for (let i = 0; i < orbCount; i++) {
             const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
@@ -152,7 +146,7 @@ export default class GameScene extends Phaser.Scene {
         })
 
         this.expOrbs.forEach((orb) => {
-            orb.update()
+            orb.update(this.player, this.time.now)
         })
     }
 }
