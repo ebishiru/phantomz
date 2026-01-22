@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanics";
 import LineTelegraph from "../entities/LineTelegraph";
-import Player from "../entities/Player";
 
 export default class LineTelegraphFromBoss extends BossMechanic {
 

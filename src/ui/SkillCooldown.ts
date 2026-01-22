@@ -9,7 +9,7 @@ export default class SkillCooldown {
     size: number
     radius: number
 
-    bg: Phaser.GameObjects.Graphics
+    bg: Phaser.GameObjects.Graphics | Phaser.GameObjects.Image
     fg: Phaser.GameObjects.Graphics
 
     constructor(
@@ -17,8 +17,9 @@ export default class SkillCooldown {
         skill: Skill,
         x: number,
         y: number,
-        size = 40,
-        radius = 6
+        bgKey: string | null = null,
+        size = 32,
+        radius = 6,
     ) {
         this.scene = scene
         this.skill = skill
@@ -27,9 +28,15 @@ export default class SkillCooldown {
         this.size = size
         this.radius = radius
 
-        this.bg = scene.add.graphics()
-        this.bg.fillStyle(0x444444, 1)
-        this.bg.fillRoundedRect(x - size/2, y - size, size, size, radius)
+        if (bgKey) {
+            this.bg = scene.add.image(x, y - size / 2, bgKey);
+            this.bg.setDisplaySize(size, size) 
+        } else {
+            this.bg = scene.add.graphics()
+            this.bg.fillStyle(0x444444, 1)
+            this.bg.fillRoundedRect(x - size/2, y - size, size, size, radius)
+        }
+
         this.fg = scene.add.graphics()
     }
 
@@ -44,7 +51,7 @@ export default class SkillCooldown {
         this.fg.clear()
         const fgRadius = ratio >= 1 ? this.radius : 0
 
-        this.fg.fillStyle(ratio < 1 ? 0x888888 : 0x00ff00, 1)
+        this.fg.fillStyle(ratio < 1 ? 0x888888 : 0x00ff00, 0.6)
         this.fg.fillRoundedRect( this.x - this.size / 2, fillY, this.size, fillHeight, fgRadius)
     }
 

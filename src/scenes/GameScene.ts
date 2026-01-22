@@ -39,6 +39,7 @@ export default class GameScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        this.load.image("slash-icon", "assets/slash-icon.png")
     }
 
     create() {
@@ -96,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
         this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
 
         this.skillCooldownUIs = [
-            new SkillCooldown(this, this.player.slashSkill, 550, 670),
+            new SkillCooldown(this, this.player.slashSkill, 550, 670, "slash-icon"),
             new SkillCooldown(this, this.player.arrowSkill, 600, 670),
             new SkillCooldown(this, this.player.pulseSkill, 650, 670),
         ]
