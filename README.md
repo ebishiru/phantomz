@@ -46,15 +46,26 @@ BASIC:
 - Pulse: AOE multi, high cd, high damage
 
 INTERMEDIATE:
-- Thrust: Melee line double hit
-
-- Charge: Melee line w/ dash
-
-- Bomb: Placeable AOE
+- Thrust: Melee line w/ dash
 
 - Boomerang: Ranged Line that goes and comes back
 
-- Fireball: Circle AOE in front burn dmg
+- Poison: Placeable AOE DOT
+
+- Devour: Melee cone that dmgs and heals player
+
+- Ricochet: Ranged projectile that deals 2x dmg if bounced off wall
+
+- Fireball: Delayed circle AOE in front
+
+ADVANCED:
+- Blood: AOE around player, Use HP to deal dmg, no cd
+
+- Knives: Ranged, set line distance. Can be picked up to reset cd. 
+
+- Restoration: Instantly heal player, long cd
+
+
 
 
 ```
