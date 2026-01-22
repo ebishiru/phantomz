@@ -18,18 +18,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     facing!: Phaser.Math.Vector2
 
-    constructor(scene: Phaser.Scene, x: number, y: number, boss: any) {
-        super(scene, x, y, "")
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, boss: any) {
+        super(scene, x, y, texture)
 
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
-        this.setSize(32, 32)
-        this.setTint(0x00ff00)
+        this.setScale(2)
+
+        this.body?.setSize(16, 16)
+        this.body?.setOffset(0, 0)
+
         this.setCollideWorldBounds(true)
         
         //Default Facing down
         this.facing = new Phaser.Math.Vector2(0, 1)
+
+        //Idle animation
+        this.play("player-idle")
 
         //Initialize skills
         this.slashSkill = new SlashSkill(scene, this, boss, 50, 3000)

@@ -30,14 +30,53 @@ export default class GameScene extends Phaser.Scene {
         super("game")
     }
 
+    preload() {
+        this.load.spritesheet("player", "assets/player.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+        this.load.spritesheet("boss", "assets/boss1.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+    }
+
     create() {
         // World Bounds
         this.physics.world.setBounds(25, 70, 750, 550)
 
+        //Player animation
+        if (!this.anims.exists("player-idle")) {
+            this.anims.create({
+                key: "player-idle",
+                frames: this.anims.generateFrameNumbers("player", {
+                    start: 0,
+                    end: 1
+                }),
+                frameRate: 3,
+                repeat: -1
+            })
+        }
+
         // Player Info
-        this.player = new Player(this, 400, 550, null)
+        this.player = new Player(this, 400, 550, "player", null)
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
+
+        //Boss animation
+        this.anims.create({
+            key: "boss-idle",
+            frames: [{ key: "boss", frame: 0}],
+            frameRate: 1,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: "boss-attack",
+            frames: [{ key: "boss", frame: 1}],
+            frameRate: 1,
+            repeat: 0
+        })
 
         //Boss Info
         this.bossManager = new BossManager(this, this.player)
@@ -123,7 +162,7 @@ export default class GameScene extends Phaser.Scene {
         })
 
         //Boss Respawn
-        if (this.bossManager.boss.health <= 0) {
+        if (this.bossManager.boss && this.bossManager.boss.health <= 0) {
             this.bossManager.spawnBoss()
         }
 

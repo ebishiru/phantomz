@@ -14,9 +14,14 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
-        this.setSize(96, 96)
-        this.setTint(0xff0000)
+        this.setScale(3)
+
+        this.body?.setSize(16, 16)
+        this.body?.setOffset(0, 0)
+
         this.setCollideWorldBounds(true)
+
+        this.play("boss-idle")
 
         this.bossName = this.scene.add.text(150, 10, name, {
             font: "16px Roboto",
