@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import GameScene from "./scenes/GameScene"
+import LevellingScene from "./scenes/LevellingScene"
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -10,7 +11,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: "arcade",
     arcade: { debug: true },
   },
-  scene: [GameScene],
+  scene: [GameScene, LevellingScene],
 }
 
 new Phaser.Game(config)

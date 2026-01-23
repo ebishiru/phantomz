@@ -78,6 +78,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.exp += amount
 
         if(this.exp >= this.expToNextLevel) {
+            this.scene.scene.pause()
+            this.scene.scene.launch("level-up")
             this.levelUp()
         }
     }

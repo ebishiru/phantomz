@@ -29,7 +29,11 @@ export default class BossManager {
         this.player = player;
 
         // Timer text
-        this.globalTimerText = this.scene.add.text(700, 10, "Time: 00:00", { font: "16px Roboto", color: "#ffffff" });
+        this.globalTimerText = this.scene.add.text(700, 10, "Time: 00:00", { 
+            fontSize: "16px", 
+            fontFamily: `"Old English Text MT", Georgia, serif`, 
+            color: "#ffffff" 
+        });
 
         // 1-second timer to update UI
         this.scene.time.addEvent({
