@@ -12,6 +12,9 @@ export default class SkillCooldown {
     bg: Phaser.GameObjects.Graphics | Phaser.GameObjects.Image
     fg: Phaser.GameObjects.Graphics
 
+    loadingBorder: Phaser.GameObjects.Image
+    readyBorder: Phaser.GameObjects.Image
+
     constructor(
         scene: Phaser.Scene,
         skill: Skill,
@@ -37,7 +40,21 @@ export default class SkillCooldown {
             this.bg.fillRoundedRect(x - size/2, y - size, size, size, radius)
         }
 
+        this.loadingBorder = scene.add.image(x, y - size / 2, "loading-border")
+        this.loadingBorder.setDisplaySize(size + 2, size + 2)
+
+        this.readyBorder = scene.add.image(x, y - size / 2, "ready-border")
+        this.readyBorder.setDisplaySize(size + 2, size + 2)
+
+        this.readyBorder.setVisible(false)
+
         this.fg = scene.add.graphics()
+
+        this.bg.setDepth(1)
+        this.loadingBorder.setDepth(2)
+        this.fg.setDepth(3)
+        this.readyBorder.setDepth(4)
+
     }
 
     update(time: number) {
@@ -49,14 +66,25 @@ export default class SkillCooldown {
         const fillY = top + (this.size - fillHeight)
 
         this.fg.clear()
-        const fgRadius = ratio >= 1 ? this.radius : 0
 
-        this.fg.fillStyle(ratio < 1 ? 0x888888 : 0x00ff00, 0.6)
-        this.fg.fillRoundedRect( this.x - this.size / 2, fillY, this.size, fillHeight, fgRadius)
+        if (ratio < 1) {
+            //loading state
+            this.loadingBorder.setVisible(true)
+            this.readyBorder.setVisible(false)
+
+            this.fg.fillStyle(0xffffff, 0.3)
+            this.fg.fillRect(this.x - this.size / 2, fillY, this.size, fillHeight)
+        } else {
+            //ready state
+            this.loadingBorder.setVisible(false)
+            this.readyBorder.setVisible(true)
+        }
     }
 
     destroy() {
         this.bg.destroy()
         this.fg.destroy()
+        this.loadingBorder.destroy()
+        this.readyBorder.destroy()
     }
 }

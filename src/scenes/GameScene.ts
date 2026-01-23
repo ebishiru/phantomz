@@ -39,7 +39,11 @@ export default class GameScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        this.load.image("loading-border", "assets/loading-border.png")
+        this.load.image("ready-border", "assets/ready-border.png")
         this.load.image("slash-icon", "assets/slash-icon.png")
+        this.load.image("arrow-icon", "assets/arrow-icon.png")
+        this.load.image("pulse-icon", "assets/pulse-icon.png")
     }
 
     create() {
@@ -98,8 +102,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.skillCooldownUIs = [
             new SkillCooldown(this, this.player.slashSkill, 550, 670, "slash-icon"),
-            new SkillCooldown(this, this.player.arrowSkill, 600, 670),
-            new SkillCooldown(this, this.player.pulseSkill, 650, 670),
+            new SkillCooldown(this, this.player.arrowSkill, 600, 670, "arrow-icon"),
+            new SkillCooldown(this, this.player.pulseSkill, 650, 670, "pulse-icon"),
         ]
 
         //Exp
