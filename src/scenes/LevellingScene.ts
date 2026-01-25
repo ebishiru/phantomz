@@ -44,31 +44,54 @@ export default class LevellingScene extends Phaser.Scene {
 
         options.forEach((option, index) => {
             const y = optionsStartY + (index * optionsSpacing)
+
+            const container = this.add.container(menuX, y)
+
+            const iconKey = option.iconKey || "slash-icon" //Placeholder icon
+            const icon = this.add.image(-menuWidth / 2 + 30, 0, iconKey)
+            .setDisplaySize(32, 32)
+            .setOrigin(0, 0.5)
+
             const text = this.add.text(
-                menuX,
-                y,
+                -menuWidth / 2 + 70,
+                0,
                 `${option.title}\n${option.desc}`,
                 {
                     fontSize: "16px",
                     fontFamily: `"Old English Text MT", Georgia, serif`,
-                    align: "center",
+                    align: "left",
                     backgroundColor: "#333333",
                     color: "#ffffff",
-                    padding: { x: 14, y: 10},
-                    wordWrap: { width: menuWidth - 40}
+                    padding: { x: 0, y: 0},
+                    wordWrap: { width: menuWidth - 100}
                 }
-            ).setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
+            ).setOrigin(0, 0.5)
+            
+            container.add([icon, text])
 
-            text.on("pointerdown", () => {
+            container.setSize(menuWidth - 20, 50)
+            container.setInteractive({ useHandCursor: true})
+            container.on("pointerdown", () => chooseOption(index))
+        })
+
+        const chooseOption = (index: number) => {
+            const option = options[index]
+            if (!option) return
                 option.apply()
                 this.scene.stop()
                 const gameScene = this.scene.get("game") as GameScene
                 this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
                 this.scene.resume("game")
                 gameScene.updateSkillUIPositions()
-            })
-        })
+        }
+
+        const key1 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ONE)
+        const key2 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.TWO)
+        const key3 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.THREE)
+
+        key1?.on("down", () => chooseOption(0))
+        key2?.on("down", () => chooseOption(1))
+        key3?.on("down", () => chooseOption(2))
 
         //Skill Summary (bottom) 
         this.displaySummary(this.player, menuY + menuHeight / 2 - 120, menuWidth)
@@ -82,6 +105,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Slash Unlock",
                 desc: "Attack in a frontal arc",
+                iconKey: "slash-icon",
                 apply: () => { player.slashSkill.enabled = true }
             })
         }
@@ -89,6 +113,7 @@ export default class LevellingScene extends Phaser.Scene {
         options.push({
             title: "Slash Upgrade",
             desc: slashUpgrade.desc,
+            iconKey: "slash-icon",
             apply: () => slashUpgrade.apply(player)
         })
 
@@ -97,6 +122,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Arrow Unlock",
                 desc: "Fire a guaranteed missile",
+                iconKey: "arrow-icon",
                 apply: () => { player.arrowSkill.enabled = true }
             })
         } else {
@@ -104,6 +130,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Arrow Upgrade",
                 desc: arrowUpgrade.desc,
+                iconKey: "arrow-icon",
                 apply: () => arrowUpgrade.apply(player)
             })
         }
@@ -113,6 +140,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Pulse Unlock",
                 desc: "Unleash an energy pulse repeatedly",
+                iconKey: "pulse-icon",
                 apply: () => { player.pulseSkill.enabled = true}
             }) 
         } else {
@@ -120,6 +148,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Pulse Upgrade",
                 desc: pulseUpgrade.desc,
+                iconKey: "pulse-icon",
                 apply: () => pulseUpgrade.apply(player)
             })
         }
@@ -129,6 +158,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Thrust Unlock",
                 desc: "Propel and strike forward",
+                iconKey: "thrust-icon",
                 apply: () => { player.thrustSkill.enabled = true}
             })
         } else {
@@ -136,6 +166,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Thrust Upgrade",
                 desc: thrustUpgrade.desc,
+                iconKey: "thrust-icon",
                 apply: () => thrustUpgrade.apply(player)
             })
         }
@@ -145,6 +176,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Caltrops Unlock",
                 desc: "Drop spikes behind",
+                iconKey: "caltrops-icon",
                 apply: () => { player.caltropsSkill.enabled = true}
             })
         } else {
@@ -152,6 +184,7 @@ export default class LevellingScene extends Phaser.Scene {
             options.push({
                 title: "Caltops Upgrade",
                 desc: caltropsUpgrade.desc,
+                iconKey: "caltrops-icon",
                 apply: () => caltropsUpgrade.apply(player)
             })
         }

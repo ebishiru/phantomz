@@ -10,6 +10,7 @@ import ExpOrb from "../entities/ExpOrb"
 export default class GameScene extends Phaser.Scene {
     player!: Player
     healthBar!: HealthBar
+    levelText!: Phaser.GameObjects.Text
     expBar!: ExpBar
     bossManager!: BossManager
 
@@ -71,6 +72,13 @@ export default class GameScene extends Phaser.Scene {
         this.player = new Player(this, 400, 550, "player", null)
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
+
+        //Player Level Text
+        this.levelText = this.add.text(400, 630, `Lv ${this.player.level}`, {
+            fontSize: "12px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: "#ffffff",
+        }).setOrigin(0.5, 0)
 
         //Boss animation
         this.anims.create({
@@ -177,6 +185,7 @@ export default class GameScene extends Phaser.Scene {
         if (this.scene.isPaused()) return
 
         this.healthBar.draw()
+        this.levelText.setText(`LV ${this.player.level}`)
         this.expBar.draw()
         if (this.bossManager.boss && this.bossManager.bossHealthBar) {
             this.bossManager.bossHealthBar.draw()
