@@ -5,8 +5,9 @@ export default class ArrowSkill extends Skill {
     player: any
     boss: any
     
-    constructor(scene: Phaser.Scene, player: any, boss: any, cooldown: number) {
-        super(scene, cooldown)
+    constructor(scene: Phaser.Scene, player: any, boss: any) {
+        super(scene, "arrow", "Arrow", 20, 4000, 0)
+
         this.player = player
         this.boss = boss
     }
@@ -20,6 +21,6 @@ export default class ArrowSkill extends Skill {
         g.strokePath()
         this.scene.time.delayedCall(150, () => g.destroy())
 
-        this.boss.takeDamage(20)
+        this.boss.takeDamage(this.damage)
     }
 }

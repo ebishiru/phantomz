@@ -4,14 +4,13 @@ import Skill from "./Skill";
 export default class SlashSkill extends Skill {
     player: any
     boss: any
-    range: number
     facingAngle: number = 0
 
-    constructor(scene: Phaser.Scene, player: any, boss: any, range: number, cooldown: number) {
-        super(scene, cooldown)
+    constructor(scene: Phaser.Scene, player: any, boss: any) {
+        super(scene, "slash", "Slash", 25, 3000, 50)
+
         this.player = player
         this.boss = boss
-        this.range = range
     }
 
     updateFacing() {
@@ -22,6 +21,7 @@ export default class SlashSkill extends Skill {
     activate() {
         this.updateFacing()
 
+        //Create graphics
         const g = this.scene.add.graphics()
         g.fillStyle(0x00ff00, 0.25)
         g.slice(
@@ -47,7 +47,7 @@ export default class SlashSkill extends Skill {
         const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
         if (Math.abs(diff) > Math.PI/2) return
 
-        this.boss.takeDamage(25)
+        this.boss.takeDamage(this.damage)
 
     }
 }

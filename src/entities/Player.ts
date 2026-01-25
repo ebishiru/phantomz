@@ -38,10 +38,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.play("player-idle")
 
         //Initialize skills
-        this.slashSkill = new SlashSkill(scene, this, boss, 50, 3000)
-        this.arrowSkill = new ArrowSkill(scene, this, boss, 4000)
-        this.pulseSkill = new PulseSkill(scene, this, boss, 50, 8000)
+        this.slashSkill = new SlashSkill(scene, this, boss)
+        this.arrowSkill = new ArrowSkill(scene, this, boss)
+        this.pulseSkill = new PulseSkill(scene, this, boss)
     
+        //Have all other skills locked at first
+        this.slashSkill.enabled = true
+        this.arrowSkill.enabled = false
+        this.pulseSkill.enabled = false
     }
 
     takeDamage(amount: number) {
@@ -79,7 +83,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         if(this.exp >= this.expToNextLevel) {
             this.scene.scene.pause()
-            this.scene.scene.launch("level-up")
+            this.scene.scene.launch("level-up", { player: this})
             this.levelUp()
         }
     }

@@ -4,13 +4,12 @@ import Skill from "./Skill"
 export default class PulseSkill extends Skill {
     player: any
     boss: any
-    range: number
 
-    constructor(scene: Phaser.Scene, player: any, boss: any, range: number, cooldown: number) {
-        super(scene, cooldown)
+    constructor(scene: Phaser.Scene, player: any, boss: any) {
+        super(scene, "pulse", "Pulse", 10, 8000, 50)
+
         this.player = player
         this.boss = boss
-        this.range = range
     }
 
     activate() {
@@ -55,7 +54,7 @@ export default class PulseSkill extends Skill {
                 attackCircle, bossCircle
             )
             if (hit) {
-                this.boss.takeDamage(10)
+                this.boss.takeDamage(this.damage)
             }
 
             this.scene.tweens.add({
@@ -70,7 +69,7 @@ export default class PulseSkill extends Skill {
         //hit once immediately, then every 0.5s
         hitBoss()
         this.scene.time.addEvent({
-            delay: 500, repeat: 5, callback: hitBoss
+            delay: 500, repeat: 4, callback: hitBoss
         })
     }
 }
