@@ -21,6 +21,7 @@ export default class GameScene extends Phaser.Scene {
     num4Key!: Phaser.Input.Keyboard.Key
     num8Key!: Phaser.Input.Keyboard.Key
     num6Key!: Phaser.Input.Keyboard.Key
+    num7Key!: Phaser.Input.Keyboard.Key
 
     skillCooldownUIs!: SkillCooldown[]
 
@@ -99,6 +100,8 @@ export default class GameScene extends Phaser.Scene {
         this.num8Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT)
         //Pulse Skill
         this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
+        //Caltrops Skill
+        this.num7Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN)
 
         this.updateSkillUIPositions()
 
@@ -120,6 +123,7 @@ export default class GameScene extends Phaser.Scene {
         if (this.player.slashSkill.enabled) enabledSkills.push({ skill: this.player.slashSkill, iconKey: "slash-icon"})
         if (this.player.arrowSkill.enabled) enabledSkills.push({ skill: this.player.arrowSkill, iconKey: "arrow-icon"})
         if (this.player.pulseSkill.enabled) enabledSkills.push({ skill: this.player.pulseSkill, iconKey: "pulse-icon"})
+        if (this.player.caltropsSkill.enabled) enabledSkills.push({ skill: this.player.caltropsSkill, iconKey: ""})
         
         this.skillCooldownUIs = []
 

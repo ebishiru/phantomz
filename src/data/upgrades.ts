@@ -41,4 +41,19 @@ export const upgrades = {
             apply: (player: Player) => player.pulseSkill.buffRange(10)
         }
     ],
+
+    caltrops: [
+        {
+            desc: "Damage x1.25",
+            apply: (player: Player) => player.caltropsSkill.buffDamage(player.caltropsSkill.damage * 0.25)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.caltropsSkill.buffCooldown(player.caltropsSkill.cooldown * 0.25)
+        },
+        {
+            desc: "+10 Range",
+            apply: (player: Player) => player.caltropsSkill.buffRange(10)
+        }
+    ]
 }

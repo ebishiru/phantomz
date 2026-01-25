@@ -48,13 +48,13 @@ BASIC:
 INTERMEDIATE:
 - Thrust: Melee line w/ dash
 
-- Boomerang: Ranged Line that goes and comes back
+- Caltrops: Placeable AOE DOT
 
-- Poison: Placeable AOE DOT
+- Lightning: Ranged boosts movement for next 1s
 
 - Devour: Melee cone that dmgs and heals player
 
-- Ricochet: Ranged projectile that deals 2x dmg if bounced off wall
+- Hook: Ranged auto that pulls you to the boss.
 
 - Fireball: Delayed circle AOE in front
 

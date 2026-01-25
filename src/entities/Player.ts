@@ -3,6 +3,7 @@ import Skill from "../skills/Skill"
 import SlashSkill from "../skills/SlashSkill"
 import ArrowSkill from "../skills/ArrowSkill"
 import PulseSkill from "../skills/PulseSkill"
+import CaltopsSkill from "../skills/CaltropsSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -17,6 +18,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     slashSkill!: SlashSkill
     arrowSkill!: ArrowSkill
     pulseSkill!: PulseSkill
+    caltropsSkill!: CaltopsSkill
 
     facing!: Phaser.Math.Vector2
 
@@ -43,13 +45,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.slashSkill = new SlashSkill(scene, this, boss)
         this.arrowSkill = new ArrowSkill(scene, this, boss)
         this.pulseSkill = new PulseSkill(scene, this, boss)
+        this.caltropsSkill = new CaltopsSkill(scene, this)
 
-        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill]
+        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill, this.caltropsSkill]
     
         //Have all other skills locked at first
         this.slashSkill.enabled = true
         this.arrowSkill.enabled = false
         this.pulseSkill.enabled = false
+        this.caltropsSkill.enabled = false
     }
 
     takeDamage(amount: number) {
@@ -80,6 +84,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX))) {
             this.pulseSkill.use(time)
         }
+        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN) )) {
+            this.caltropsSkill.use(time)
+        }
     }
 
     gainExp(amount: number) {
@@ -96,6 +103,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.5)
+        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.3)
     }
 }

@@ -124,6 +124,22 @@ export default class LevellingScene extends Phaser.Scene {
             })
         }
 
+        //Caltrops options
+        if (!player.caltropsSkill.enabled) {
+            options.push({
+                title: "Caltrops Unlock",
+                desc: "Drop spikes behind",
+                apply: () => { player.caltropsSkill.enabled = true}
+            })
+        } else {
+            const caltropsUpgrade = upgrades.caltrops[Math.floor(Math.random() * upgrades.caltrops.length)]
+            options.push({
+                title: "Caltops Upgrade",
+                desc: caltropsUpgrade.desc,
+                apply: () => caltropsUpgrade.apply(player)
+            })
+        }
+
         return Phaser.Utils.Array.Shuffle(options).slice(0, 3)
     }
 
@@ -141,6 +157,10 @@ export default class LevellingScene extends Phaser.Scene {
 
         if (player.pulseSkill.enabled) {
             summary += `Pulse: Dmg ${player.pulseSkill.damage}, CD ${player.pulseSkill.cooldown / 1000}s, Rng ${player.pulseSkill.range}\n`
+        }
+
+        if (player.caltropsSkill.enabled) {
+            summary += `Caltrops: Dmg ${player.caltropsSkill.damage}, CD ${player.caltropsSkill.cooldown / 1000}s, Rng ${player.caltropsSkill.range}`
         }
 
         this.add.text(width/2, y, summary, {
