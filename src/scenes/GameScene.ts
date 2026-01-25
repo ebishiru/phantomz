@@ -43,6 +43,8 @@ export default class GameScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        this.load.image("exp-orb", "assets/exp-orb.png")
+
         this.load.image("loading-border", "assets/loading-border.png")
         this.load.image("ready-border", "assets/ready-border.png")
         this.load.image("slash-icon", "assets/slash-icon.png")
@@ -51,11 +53,22 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("thrust-icon", "assets/thrust-icon.png")
         this.load.image("caltrops-icon", "assets/caltrops-icon.png")
         this.load.image("fireball-icon", "assets/fireball-icon.png")
+
+        this.load.image("dirt-texture", "assets/dirt-texture.png")
     }
 
     create() {
         // World Bounds
-        this.physics.world.setBounds(25, 70, 750, 550)
+        this.physics.world.setBounds(50, 100, 700, 500)
+
+        //Ground Texture
+        const floorBG = this.add.tileSprite(
+            50, 100, 700, 500, "dirt-texture"
+        ).setOrigin(0)
+
+        floorBG.setTint(0xB0A080)
+        floorBG.setAlpha(0.9)
+        floorBG.setDepth(0)
 
         //Player animation
         if (!this.anims.exists("player-idle")) {

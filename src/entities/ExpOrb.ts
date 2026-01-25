@@ -22,7 +22,6 @@ export default class ExpOrb extends Phaser.Physics.Arcade.Image {
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
-        this.setScale(0.25)
         this.setCircle(this.width / 2)
         this.setCollideWorldBounds(true)
 
