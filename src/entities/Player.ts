@@ -13,6 +13,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     exp = 0
     level = 1
     expToNextLevel = 10
+    hurtboxRadius = 8
 
     //Skills
     skills: Skill[] = []
@@ -62,7 +63,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     takeDamage(amount: number) {
         this.health -= amount
-        this.health = Math.max(this.health, 0)
+        this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
     }
 
     move(dir: Phaser.Math.Vector2) {

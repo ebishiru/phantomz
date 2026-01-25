@@ -50,7 +50,7 @@ INTERMEDIATE:
 
 - Caltrops: Placeable AOE DOT
 
-- Lightning: Ranged boosts movement for next 1s
+- Lightning: Ranged boosts movement for next 3s
 
 - Devour: Melee cone that dmgs and heals player
 

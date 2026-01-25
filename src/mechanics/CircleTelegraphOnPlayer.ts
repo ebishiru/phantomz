@@ -24,7 +24,7 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
                 this.player.y,
                 this.boss.x,
                 this.boss.y,
-            ) <= 80
+            ) <= (80 + this.player.hurtboxRadius)
 
             if (hit) {
                 this.player.takeDamage(20)

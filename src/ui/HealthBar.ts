@@ -45,7 +45,6 @@ export default class HealthBar {
 
     draw() {
         if (!this.bar || !this.entity) return
-        if (this.entity.health <= 0) return
         this.bar.clear()
 
         this.bar.fillStyle(0x000000, 0.6)

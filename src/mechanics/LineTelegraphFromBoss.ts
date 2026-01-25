@@ -39,7 +39,7 @@ export default class LineTelegraphFromBoss extends BossMechanic {
 
             const px = this.player.x
             const py = this.player.y
-            const pr = 16
+            const pr = this.player.hurtboxRadius
             
             const lineLen = Phaser.Math.Distance.Between(startX, startY, endX, endY);
             const t = Phaser.Math.Clamp(((px - startX) * (endX - startX) + (py - startY) * (endY - startY)) / (lineLen * lineLen), 0, 1);
