@@ -124,6 +124,22 @@ export default class LevellingScene extends Phaser.Scene {
             })
         }
 
+        //Thrust options
+        if (!player.thrustSkill.enabled) {
+            options.push({
+                title: "Thrust Unlock",
+                desc: "Propel and strike forward",
+                apply: () => { player.thrustSkill.enabled = true}
+            })
+        } else {
+            const thrustUpgrade = upgrades.thrust[Math.floor(Math.random() * upgrades.thrust.length)]
+            options.push({
+                title: "Thrust Upgrade",
+                desc: thrustUpgrade.desc,
+                apply: () => thrustUpgrade.apply(player)
+            })
+        }
+
         //Caltrops options
         if (!player.caltropsSkill.enabled) {
             options.push({
@@ -148,19 +164,23 @@ export default class LevellingScene extends Phaser.Scene {
         let summary = "Your Skills:\n\n"
 
         if (player.slashSkill.enabled) {
-            summary += `Slash: Dmg ${player.slashSkill.damage}, CD ${player.slashSkill.cooldown / 1000}s, Rng ${player.slashSkill.range}\n`
+            summary += `Slash: Dmg ${player.slashSkill.damage}, CD ${(player.slashSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.slashSkill.range}\n`
         }
 
         if (player.arrowSkill.enabled) {
-            summary += `Arrow: Dmg ${player.arrowSkill.damage}, CD ${player.arrowSkill.cooldown / 1000}s\n`
+            summary += `Arrow: Dmg ${player.arrowSkill.damage}, CD ${(player.arrowSkill.cooldown / 1000).toFixed(2)}s\n`
         }
 
         if (player.pulseSkill.enabled) {
-            summary += `Pulse: Dmg ${player.pulseSkill.damage}, CD ${player.pulseSkill.cooldown / 1000}s, Rng ${player.pulseSkill.range}\n`
+            summary += `Pulse: Dmg ${player.pulseSkill.damage}, CD ${(player.pulseSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.pulseSkill.range}\n`
+        }
+
+        if (player.thrustSkill.enabled) {
+            summary += `Thrust: Dmg ${player.thrustSkill.damage}, CD ${(player.thrustSkill.cooldown / 1000).toFixed(2)}s\n`
         }
 
         if (player.caltropsSkill.enabled) {
-            summary += `Caltrops: Dmg ${player.caltropsSkill.damage}, CD ${player.caltropsSkill.cooldown / 1000}s, Rng ${player.caltropsSkill.range}`
+            summary += `Caltrops: Dmg ${player.caltropsSkill.damage}, CD ${(player.caltropsSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.caltropsSkill.range}\n`
         }
 
         this.add.text(width/2, y, summary, {

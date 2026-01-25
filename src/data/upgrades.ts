@@ -55,5 +55,16 @@ export const upgrades = {
             desc: "+10 Range",
             apply: (player: Player) => player.caltropsSkill.buffRange(10)
         }
-    ]
+    ],
+
+    thrust: [
+        {
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.thrustSkill.buffDamage(player.thrustSkill.damage * 0.5)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.thrustSkill.buffCooldown(player.thrustSkill.cooldown * 0.25)
+        }
+    ],
 }
