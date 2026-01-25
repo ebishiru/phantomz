@@ -24,6 +24,7 @@ export default class GameScene extends Phaser.Scene {
     num6Key!: Phaser.Input.Keyboard.Key
     num5Key!: Phaser.Input.Keyboard.Key
     num7Key!: Phaser.Input.Keyboard.Key
+    num9Key!: Phaser.Input.Keyboard.Key
 
     skillCooldownUIs!: SkillCooldown[]
 
@@ -49,6 +50,7 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("pulse-icon", "assets/pulse-icon.png")
         this.load.image("thrust-icon", "assets/thrust-icon.png")
         this.load.image("caltrops-icon", "assets/caltrops-icon.png")
+        this.load.image("fireball-icon", "assets/fireball-icon.png")
     }
 
     create() {
@@ -115,6 +117,8 @@ export default class GameScene extends Phaser.Scene {
         this.num5Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE)
         //Caltrops Skill
         this.num7Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN)
+        //Fireball Skill
+        this.num9Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE)
 
         this.updateSkillUIPositions()
 
@@ -138,6 +142,7 @@ export default class GameScene extends Phaser.Scene {
         if (this.player.pulseSkill.enabled) enabledSkills.push({ skill: this.player.pulseSkill, iconKey: "pulse-icon"})
         if (this.player.thrustSkill.enabled) enabledSkills.push({ skill: this.player.thrustSkill, iconKey: "thrust-icon"})
         if (this.player.caltropsSkill.enabled) enabledSkills.push({ skill: this.player.caltropsSkill, iconKey: "caltrops-icon"})
+        if (this.player.fireballSkill.enabled) enabledSkills.push({ skill: this.player.fireballSkill, iconKey: "fireball-icon"})
         
         this.skillCooldownUIs = []
 

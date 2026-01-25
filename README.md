@@ -50,13 +50,13 @@ INTERMEDIATE:
 
 - Caltrops: Placeable AOE DOT
 
-- Lightning: Ranged boosts movement for next 3s
+- Fireball: Delayed circle AOE in front
 
 - Devour: Melee cone that dmgs and heals player
 
 - Hook: Ranged auto that pulls you to the boss.
 
-- Fireball: Delayed circle AOE in front
+- Lightning: Ranged boosts movement for next 3s
 
 ADVANCED:
 - Blood: AOE around player, Use HP to deal dmg, no cd

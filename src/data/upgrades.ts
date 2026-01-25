@@ -11,8 +11,8 @@ export const upgrades = {
             apply: (player: Player) => player.slashSkill.buffCooldown(player.slashSkill.cooldown * 0.25)
         },
         {
-            desc: "+15 Range",
-            apply: (player: Player) => player.slashSkill.buffRange(15)
+            desc: "+20 Range",
+            apply: (player: Player) => player.slashSkill.buffRange(20)
         }
     ],
 
@@ -37,8 +37,19 @@ export const upgrades = {
             apply: (player: Player) => player.pulseSkill.buffCooldown(player.pulseSkill.cooldown * 0.25)
         },
         {
-            desc: "+10 Range",
-            apply: (player: Player) => player.pulseSkill.buffRange(10)
+            desc: "+15 Range",
+            apply: (player: Player) => player.pulseSkill.buffRange(15)
+        }
+    ],
+
+    thrust: [
+        {
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.thrustSkill.buffDamage(player.thrustSkill.damage * 0.5)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.thrustSkill.buffCooldown(player.thrustSkill.cooldown * 0.25)
         }
     ],
 
@@ -52,19 +63,19 @@ export const upgrades = {
             apply: (player: Player) => player.caltropsSkill.buffCooldown(player.caltropsSkill.cooldown * 0.25)
         },
         {
-            desc: "+10 Range",
-            apply: (player: Player) => player.caltropsSkill.buffRange(10)
+            desc: "+15 Range",
+            apply: (player: Player) => player.caltropsSkill.buffRange(15)
         }
     ],
 
-    thrust: [
+    fireball: [
         {
-            desc: "Damage x1.5",
-            apply: (player: Player) => player.thrustSkill.buffDamage(player.thrustSkill.damage * 0.5)
+            desc: "Damage x1.25",
+            apply: (player: Player) => player.fireballSkill.buffDamage(player.fireballSkill.damage * 0.25)
         },
         {
             desc: "Cooldown x0.75",
-            apply: (player: Player) => player.thrustSkill.buffCooldown(player.thrustSkill.cooldown * 0.25)
-        }
+            apply: (player: Player) => player.fireballSkill.buffCooldown(player.fireballSkill.cooldown * 0.25)
+        },
     ],
 }

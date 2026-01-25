@@ -189,6 +189,24 @@ export default class LevellingScene extends Phaser.Scene {
             })
         }
 
+        //Fireball option
+        if (!player.fireballSkill.enabled) {
+            options.push({
+                title: "Fireball Unlock",
+                desc: "Cast down an explosion of flame",
+                iconKey: "fireball-icon",
+                apply: () => { player.fireballSkill.enabled = true}
+            })
+        } else {
+            const fireballUpgrade = upgrades.fireball[Math.floor(Math.random() * upgrades.fireball.length)]
+            options.push({
+                title: "Fireball Upgrade",
+                desc: fireballUpgrade.desc,
+                iconKey: "fireball-icon",
+                apply: () => fireballUpgrade.apply(player)
+            })
+        }
+
         return Phaser.Utils.Array.Shuffle(options).slice(0, 3)
     }
 
@@ -214,6 +232,10 @@ export default class LevellingScene extends Phaser.Scene {
 
         if (player.caltropsSkill.enabled) {
             summary += `Caltrops: Dmg ${player.caltropsSkill.damage}, CD ${(player.caltropsSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.caltropsSkill.range}\n`
+        }
+
+        if (player.fireballSkill.enabled) {
+            summary += `Fireball: Dmg ${player.fireballSkill.damage}, CD ${(player.fireballSkill.cooldown / 1000).toFixed(2)}s\n`
         }
 
         this.add.text(width/2, y, summary, {

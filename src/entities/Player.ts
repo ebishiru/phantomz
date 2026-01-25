@@ -5,6 +5,7 @@ import ArrowSkill from "../skills/ArrowSkill"
 import PulseSkill from "../skills/PulseSkill"
 import ThrustSkill from "../skills/ThrustSkill"
 import CaltopsSkill from "../skills/CaltropsSkill"
+import FireballSkill from "../skills/FireballSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -22,6 +23,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     pulseSkill!: PulseSkill
     thrustSkill!: ThrustSkill
     caltropsSkill!: CaltopsSkill
+    fireballSkill!: FireballSkill
 
     facing!: Phaser.Math.Vector2
 
@@ -50,8 +52,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.pulseSkill = new PulseSkill(scene, this, boss)
         this.thrustSkill = new ThrustSkill(scene, this)
         this.caltropsSkill = new CaltopsSkill(scene, this)
+        this.fireballSkill = new FireballSkill(scene, this)
 
-        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill, this.thrustSkill, this.caltropsSkill]
+        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill, this.thrustSkill, this.caltropsSkill, this.fireballSkill]
     
         //Have all other skills locked at first
         this.slashSkill.enabled = true
@@ -59,6 +62,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.pulseSkill.enabled = false
         this.thrustSkill.enabled = false
         this.caltropsSkill.enabled = false
+        this.fireballSkill.enabled = false
     }
 
     takeDamage(amount: number) {
@@ -94,6 +98,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
         if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN) )) {
             this.caltropsSkill.use(time)
+        }
+        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE))) {
+            this.fireballSkill.use(time)
         }
     }
 
