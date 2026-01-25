@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import GameScene from "./GameScene";
 import Player from "../entities/Player";
 import { upgrades } from "../data/upgrades";
 
@@ -62,7 +63,10 @@ export default class LevellingScene extends Phaser.Scene {
             text.on("pointerdown", () => {
                 option.apply()
                 this.scene.stop()
+                const gameScene = this.scene.get("game") as GameScene
+                this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
                 this.scene.resume("game")
+                gameScene.updateSkillUIPositions()
             })
         })
 

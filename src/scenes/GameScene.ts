@@ -100,14 +100,33 @@ export default class GameScene extends Phaser.Scene {
         //Pulse Skill
         this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
 
-        this.skillCooldownUIs = [
-            new SkillCooldown(this, this.player.slashSkill, 550, 670, "slash-icon"),
-            new SkillCooldown(this, this.player.arrowSkill, 600, 670, "arrow-icon"),
-            new SkillCooldown(this, this.player.pulseSkill, 650, 670, "pulse-icon"),
-        ]
+        this.updateSkillUIPositions()
 
         //Exp
         this.expOrbs = []
+    }
+
+    updateSkillUIPositions() {
+        const baseX = 550
+        const baseY = 670
+        const spacing = 50
+
+        if (this.skillCooldownUIs) {
+            this.skillCooldownUIs.forEach( ui => ui.destroy())
+        }
+
+        const enabledSkills: { skill: any, iconKey: string }[] = []
+
+        if (this.player.slashSkill.enabled) enabledSkills.push({ skill: this.player.slashSkill, iconKey: "slash-icon"})
+        if (this.player.arrowSkill.enabled) enabledSkills.push({ skill: this.player.arrowSkill, iconKey: "arrow-icon"})
+        if (this.player.pulseSkill.enabled) enabledSkills.push({ skill: this.player.pulseSkill, iconKey: "pulse-icon"})
+        
+        this.skillCooldownUIs = []
+
+        enabledSkills.forEach((s, index) => {
+            const x = baseX + (index * spacing)
+            this.skillCooldownUIs.push(new SkillCooldown(this, s.skill, x, baseY, s.iconKey))
+        })
     }
 
     spawnExp(x: number, y: number) {
@@ -143,8 +162,10 @@ export default class GameScene extends Phaser.Scene {
             this.expOrbs.push(orb)
         }
     }
-
+    
     update() {
+        if (this.scene.isPaused()) return
+
         this.healthBar.draw()
         this.expBar.draw()
         if (this.bossManager.boss && this.bossManager.bossHealthBar) {
@@ -153,10 +174,10 @@ export default class GameScene extends Phaser.Scene {
 
         //Player Movement and Skills
         const dir = new Phaser.Math.Vector2(0, 0)
-        if (this.aKey.isDown) dir.x -= 1 // A → left
-        if (this.dKey.isDown) dir.x += 1 // D → right
-        if (this.wKey.isDown) dir.y -= 1 // W → up
-        if (this.sKey.isDown) dir.y += 1 // S → down
+        if (this.aKey.isDown) dir.x -= 1 // left
+        if (this.dKey.isDown) dir.x += 1 // right
+        if (this.wKey.isDown) dir.y -= 1 // up
+        if (this.sKey.isDown) dir.y += 1 // down
         dir.normalize()
         this.player.move(dir)
 

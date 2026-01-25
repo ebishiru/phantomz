@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import Skill from "../skills/Skill"
 import SlashSkill from "../skills/SlashSkill"
 import ArrowSkill from "../skills/ArrowSkill"
 import PulseSkill from "../skills/PulseSkill"
@@ -12,6 +13,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     expToNextLevel = 10
 
     //Skills
+    skills: Skill[] = []
     slashSkill!: SlashSkill
     arrowSkill!: ArrowSkill
     pulseSkill!: PulseSkill
@@ -41,6 +43,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.slashSkill = new SlashSkill(scene, this, boss)
         this.arrowSkill = new ArrowSkill(scene, this, boss)
         this.pulseSkill = new PulseSkill(scene, this, boss)
+
+        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill]
     
         //Have all other skills locked at first
         this.slashSkill.enabled = true
@@ -82,7 +86,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.exp += amount
 
         if(this.exp >= this.expToNextLevel) {
-            this.scene.scene.pause()
+            this.skills.forEach(skill => skill.pause(this.scene.time.now))
+            this.scene.scene.pause("game")
             this.scene.scene.launch("level-up", { player: this})
             this.levelUp()
         }

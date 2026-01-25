@@ -3,42 +3,42 @@ import Player from "../entities/Player";
 export const upgrades = {
     slash: [
         {
-            desc: "+10 Damage",
-            apply: (player: Player) => player.slashSkill.buffDamage(10)
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.slashSkill.buffDamage(player.slashSkill.damage * 0.5)
         },
         {
-            desc: "-0.25s Cooldown",
-            apply: (player: Player) => player.slashSkill.buffCooldown(250)
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.slashSkill.buffCooldown(player.slashSkill.cooldown * 0.25)
         },
         {
-            desc: "+10 Range",
-            apply: (player: Player) => player.slashSkill.buffRange(10)
+            desc: "+15 Range",
+            apply: (player: Player) => player.slashSkill.buffRange(15)
         }
     ],
 
     arrow: [
         {
-            desc: "+10 Damage",
-            apply: (player: Player) => player.arrowSkill.buffDamage(10)
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.arrowSkill.buffDamage(player.arrowSkill.damage * 0.5)
         },
         {
-            desc: "-0.25s Cooldown",
-            apply: (player: Player) => player.arrowSkill.buffCooldown(250)
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.arrowSkill.buffCooldown(player.arrowSkill.cooldown * 0.25)
         }
     ],
 
     pulse: [
         {
-            desc: "+5 Damage",
-            apply: (player: Player) => player.pulseSkill.buffDamage(5)
+            desc: "Damage x1.25",
+            apply: (player: Player) => player.pulseSkill.buffDamage(player.pulseSkill.damage * 0.25)
         },
         {
-            desc: "-0.25s Cooldown",
-            apply: (player: Player) => player.pulseSkill.buffCooldown(250)
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.pulseSkill.buffCooldown(player.pulseSkill.cooldown * 0.25)
         },
         {
-            desc: "+5 Range",
-            apply: (player: Player) => player.pulseSkill.buffRange(5)
+            desc: "+10 Range",
+            apply: (player: Player) => player.pulseSkill.buffRange(10)
         }
     ],
 }

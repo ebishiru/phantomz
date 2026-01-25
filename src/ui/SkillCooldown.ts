@@ -58,7 +58,10 @@ export default class SkillCooldown {
     }
 
     update(time: number) {
-        let ratio = (time - this.skill.lastUsed) / this.skill.cooldown
+        if (!this.scene.scene.isActive()) return
+
+        let remaining = this.skill.remainingCooldown(time)
+        let ratio = 1 - remaining / this.skill.cooldown
         ratio = Phaser.Math.Clamp(ratio, 0, 1)
 
         const top = this.y - this.size

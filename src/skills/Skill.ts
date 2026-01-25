@@ -9,6 +9,7 @@ export default class Skill {
     lastUsed: number
     enabled: boolean
     scene: Phaser.Scene
+    pausedAt?: number
 
     constructor(scene: Phaser.Scene, id: string, name: string, damage: number, cooldown: number, range: number) {
         this.scene = scene
@@ -29,6 +30,21 @@ export default class Skill {
         if (!this.canUse(time)) return
         this.lastUsed = time
         this.activate()
+    }
+
+    remainingCooldown(time: number) {
+        return Math.max(0, this.cooldown - (time - this.lastUsed))
+    }
+
+    pause(time: number) {
+        this.pausedAt = this.remainingCooldown(time)
+    }
+
+    resume(time: number) {
+        if (this.pausedAt !== undefined) {
+            this.lastUsed = time - (this.cooldown - this.pausedAt)
+            this.pausedAt = undefined
+        }
     }
 
     buffDamage(amount: number) {
