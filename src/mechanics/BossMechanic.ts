@@ -4,9 +4,11 @@ export default class BossMechanic {
     scene: Phaser.Scene
     boss: any
     player: any
-    active: boolean = true
 
+    active = true
+    isCasting = false
     lastUsedAt = 0
+    telegraph?: any
 
     config = {
         id: "",
@@ -27,24 +29,30 @@ export default class BossMechanic {
 
     trigger() {
         if (!this.active || this.boss.health <= 0 ) return
+        if (this.isCasting) return
         if (this.isOnCooldown()) return
 
-        this.lastUsedAt = this.scene.time.now
-
         const castTime = this.config.castTime || 0
+        this.isCasting = true
+
+        this.onCastStart(castTime)
 
         if (this.config.showCastBar && castTime > 0) {
             this.onCastStart(castTime)
         }
 
         if (castTime <= 0) {
+            this.lastUsedAt = this.scene.time.now
             this.execute()
+            this.isCasting = false
             return
         }
 
         this.scene.time.delayedCall(castTime, () => {
             if (!this.active || this.boss.health <= 0 ) return
+            this.lastUsedAt = this.scene.time.now
             this.execute()
+            this.isCasting = false
         })
     }
 
@@ -58,6 +66,9 @@ export default class BossMechanic {
     execute() {}
 
     destroy() {
+        this.telegraph?.destroy()
+        this.telegraph = undefined
         this.active = false
+        this.isCasting = false
     }
 }

@@ -15,7 +15,7 @@ export default class LineTelegraphFromBoss extends BossMechanic {
         width: 80,
     }
 
-    execute() {
+    onCastStart() {
         const angle = Phaser.Math.Angle.Between(
             this.boss.x,
             this.boss.y,
@@ -24,7 +24,7 @@ export default class LineTelegraphFromBoss extends BossMechanic {
         )
 
         //Draw Telegraph
-        const telegraph = new LineTelegraph(
+        this.telegraph = new LineTelegraph(
             this.scene,
             this.boss.x,
             this.boss.y,
@@ -32,7 +32,10 @@ export default class LineTelegraphFromBoss extends BossMechanic {
             this.config.range,
             this.config.width,
         )
+    }
 
+    execute() {
+        const angle = this.telegraph.angle
         const startX = this.boss.x
         const startY = this.boss.y
         const endX = startX + Math.cos(angle) * this.config.range
@@ -53,6 +56,7 @@ export default class LineTelegraphFromBoss extends BossMechanic {
             this.player.takeDamage(this.config.damage);
         }
 
-        telegraph.destroy()
+        this.telegraph?.destroy()
+        this.telegraph = undefined
     }
 }

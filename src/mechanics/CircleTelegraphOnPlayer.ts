@@ -14,15 +14,17 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
         width: 0,
     }
 
-    execute() {
+    onCastStart() {
         //Draw telegraph
-        const telegraph = new CircleTelegraph(
+        this.telegraph = new CircleTelegraph(
             this.scene,
             this.player.x,
             this.player.y,
             this.config.range,
         )
+    }
 
+    execute() {
         //Check hit
         const hit = Phaser.Math.Distance.Between(
             this.player.x,
@@ -35,7 +37,7 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
             this.player.takeDamage(this.config.damage)
         }
 
-        telegraph.destroy()
-
+        this.telegraph?.destroy()
+        this.telegraph = undefined
     }
 }

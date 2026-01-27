@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import GameScene from "../scenes/GameScene";
 import Boss from "../entities/Boss";
+import BossMechanic from "../mechanics/BossMechanic";
 import HealthBar from "../ui/HealthBar";
 import Player from "../entities/Player";
 import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss";
@@ -12,7 +13,7 @@ export default class BossManager {
     boss: Boss | null = null;
     bossHealthBar: HealthBar | null = null;
     player: Player;
-    bossMechanics: any[] = [];
+    bossMechanics: BossMechanic[] = [];
     bossMechanicTimer: Phaser.Time.TimerEvent | null = null;
     bossesKilled = 0;
 
@@ -108,40 +109,51 @@ export default class BossManager {
         this.boss.health = this.boss.maxHealth;
 
         // Boss attack timer
-        const attackDelay = 5000 * Math.pow(0.8, lowAtkCount);
         this.bossMechanicTimer = this.scene.time.addEvent({
-            delay: attackDelay,
+            delay: 5000,
             loop: true,
-            callback: () => {
-                if (!this.boss) return;
-                const mechanic = Phaser.Utils.Array.GetRandom(this.bossMechanics);
-                if (mechanic) mechanic.trigger();
-                this.boss.play("boss-attack");
+            callback: () => this.triggerMechanics()
+        })
+    }
 
-                this.scene.time.delayedCall(1000, () => {
-                    if (this.boss) this.boss.play("boss-idle");
-                });
-            }
-        });
+    triggerMechanics() {
+        if (!this.boss) return
+
+        //Only choose from mechanics that are not on cooldown and enabled
+        const availableMechanics = this.bossMechanics.filter( m => 
+            m.active && !m.isCasting && !m.isOnCooldown()
+        )
+
+        if (availableMechanics.length === 0) return
+        
+        const mechanic = Phaser.Utils.Array.GetRandom(availableMechanics)
+        mechanic.trigger()
+
+        //Animation sync
+        this.boss.play("boss-attack")
+
+        const castTime = mechanic.config.castTime || 0
+
+        if (castTime > 0) {
+            this.scene.time.delayedCall(castTime, () => {
+                if (this.boss) this.boss.play("boss-idle")
+            })
+        } else {
+            this.boss.play("boss-idle")
+        }
     }
 
     destroyAllMechanics() {
-        if (this.bossMechanicTimer) {
-            this.bossMechanicTimer.remove(false);
-            this.bossMechanicTimer = null;
-        }
+        this.bossMechanicTimer?.remove(false);
+        this.bossMechanicTimer = null;
 
-        this.bossMechanics.forEach(mech => mech.destroy?.());
+        this.bossMechanics.forEach(m => m.destroy());
         this.bossMechanics = [];
 
-        if (this.boss) {
-            this.boss.destroyBoss();
-            this.boss = null;
-        }
+        this.boss?.destroyBoss();
+        this.boss = null;
 
-        if (this.bossHealthBar) {
-            this.bossHealthBar.destroy();
-            this.bossHealthBar = null;
-        }
+        this.bossHealthBar?.destroy();
+        this.bossHealthBar = null;
     }
 }
