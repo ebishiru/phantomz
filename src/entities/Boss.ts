@@ -8,22 +8,25 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     bossName!: Phaser.GameObjects.Text
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
 
-    constructor(scene: Phaser.Scene, x: number, y: number, name: string) {
-        super(scene, x, y, "")
+    config: any
+
+    constructor(scene: Phaser.Scene, x: number, y: number, config: any) {
+        super(scene, x, y, config.spriteKey)
+        this.config = config
 
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
         this.setScale(3)
-
         this.body?.setSize(16, 16)
         this.body?.setOffset(0, 0)
-
         this.setCollideWorldBounds(true)
-
         this.play("boss-idle")
 
-        this.bossName = this.scene.add.text(150, 10, name, {
+        this.speed = config.speed
+        this.hurtRadius = config.hurtRadius
+
+        this.bossName = this.scene.add.text(150, 10, config.name, {
             font: "16px Roboto",
             color: "#ffffff",
         })
@@ -36,9 +39,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     }
 
     takeDamage(amount: number) {
-        this.health -= amount
-        this.health = Math.max(this.health, 0)
-        console.log(`Boss HP: ${this.health}`)
+        this.health = Math.max(this.health - amount, 0)
     }
 
     destroyBoss() {

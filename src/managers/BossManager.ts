@@ -1,36 +1,34 @@
 import Phaser from "phaser";
-import GameScene from "../scenes/GameScene";
 import Boss from "../entities/Boss";
+import { Bosses } from "../data/bosses";
 import BossMechanic from "../mechanics/BossMechanic";
 import HealthBar from "../ui/HealthBar";
-import Player from "../entities/Player";
-import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss";
-import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer";
-import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss";
-import CirclesAroundBoss from "../mechanics/CirclesAroundBoss";
 
 export default class BossManager {
     scene: Phaser.Scene;
+    player: any
     boss: Boss | null = null;
-    bossHealthBar: HealthBar | null = null;
-    player: Player;
+    bossHealthBar: HealthBar | null = null
     bossMechanics: BossMechanic[] = [];
     bossMechanicTimer: Phaser.Time.TimerEvent | null = null;
-    bossesKilled = 0;
 
     // Buff system
-    buffPool: string[] = ["INC_HP","INC_HP","INC_HP","LOW_ATK_CD","LOW_ATK_CD","LOW_ATK_CD"];
     activeBuffs: string[] = [];
+    buffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
 
     // Global timer UI
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
 
-    constructor(scene: Phaser.Scene, player: Player) {
+    constructor(scene: Phaser.Scene, player: any) {
         this.scene = scene;
         this.player = player;
 
-        // Timer text
+        this.startBuffTimer();
+        this.createTimerText();
+    }
+
+    createTimerText() {
         this.globalTimerText = this.scene.add.text(700, 10, "Time: 00:00", { 
             fontSize: "16px", 
             fontFamily: `"Old English Text MT", Georgia, serif`, 
@@ -48,8 +46,9 @@ export default class BossManager {
                 this.globalTimerText.setText(`Time: ${min}:${sec}`);
             }
         });
+    }
 
-        // 30-second global buff timer
+    startBuffTimer() {
         this.scene.time.addEvent({
             delay: 30000,
             loop: true,
@@ -57,8 +56,30 @@ export default class BossManager {
                 if (this.buffPool.length === 0) return;
                 const buff = Phaser.Utils.Array.RemoveRandomElement(this.buffPool) as unknown as string;
                 this.activeBuffs.push(buff);
+                this.applyBuffToBoss();
             }
         });
+    }
+
+    applyBuffToBoss() {
+        if (!this.boss) return
+
+        const hpCount = this.activeBuffs.filter(b => b === "HP").length
+        const cdCount = this.activeBuffs.filter(b => b === "CD").length
+
+        this.boss.maxHealth += 50 * hpCount
+        this.boss.health = this.boss.maxHealth
+
+        const newDelay = Math.max(800, 5000 - 200 * cdCount)
+
+        if (this.bossMechanicTimer) {
+            this.bossMechanicTimer.remove(false)
+            this.bossMechanicTimer = this.scene.time.addEvent({
+                delay: newDelay,
+                loop: true,
+                callback: () => this.triggerMechanics(),
+            })
+        }
     }
 
     spawnBoss(x = 400, y = 350, respawnDelay = 2000) {
@@ -71,9 +92,7 @@ export default class BossManager {
             this.destroyAllMechanics();
 
             // Spawn EXP at old boss position
-            (this.scene as GameScene).spawnExp(bossX, bossY);
-
-            this.bossesKilled++;
+            (this.scene as any).spawnExp(bossX, bossY);
 
             // Respawn after delay
             this.scene.time.delayedCall(respawnDelay, () => {
@@ -86,10 +105,8 @@ export default class BossManager {
 
     createBoss(x: number, y: number) {
         // Create boss
-        this.boss = new Boss(this.scene, x, y, `BOSS ${this.bossesKilled}`);
-
-        // Health bar
-        this.bossHealthBar = new HealthBar(this.scene, 150, 30, 500, 20, this.boss, 0xff0000);
+        const bossConfig = Bosses[0]
+        this.boss = new Boss(this.scene, x, y, bossConfig);
 
         // Assign boss to player skills
         this.player.slashSkill.boss = this.boss;
@@ -97,18 +114,13 @@ export default class BossManager {
         this.player.pulseSkill.boss = this.boss;
 
         // Mechanics
-        this.bossMechanics = [
-            new CircleTelegraphOnBoss(this.scene, this.boss, this.player),
-            new CircleTelegraphOnPlayer(this.scene, this.boss, this.player),
-            new LineTelegraphFromBoss(this.scene, this.boss, this.player),
-            new CirclesAroundBoss(this.scene, this.boss, this.player)
-        ];
+        this.bossMechanics = bossConfig.mechanics.map(MechClass => new MechClass(this.scene, this.boss, this.player))
 
-        // Apply buffs
-        const lowAtkCount = this.activeBuffs.filter(b => b === "LOW_ATK_CD").length;
-        const hpCount = this.activeBuffs.filter(b => b === "INC_HP").length;
-        this.boss.maxHealth += 50 * hpCount;
-        this.boss.health = this.boss.maxHealth;
+        // Apply boss buffs
+        this.applyBuffToBoss()
+
+        // Boss Health bar
+        this.bossHealthBar = new HealthBar(this.scene, 150, 30, 500, 20, this.boss, 0xff0000)
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({
@@ -155,7 +167,7 @@ export default class BossManager {
         this.boss?.destroyBoss();
         this.boss = null;
 
-        this.bossHealthBar?.destroy();
-        this.bossHealthBar = null;
+        this.bossHealthBar?.destroy()
+        this.bossHealthBar = null
     }
 }
