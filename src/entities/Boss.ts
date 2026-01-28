@@ -4,8 +4,8 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     maxHealth = 100
     health = 100
     speed = 0
-    bossName!: Phaser.GameObjects.Text
     hurtRadius = 80
+    bossName!: Phaser.GameObjects.Text
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
 
     constructor(scene: Phaser.Scene, x: number, y: number, name: string) {
