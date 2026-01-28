@@ -229,6 +229,13 @@ export default class GameScene extends Phaser.Scene {
             this.bossManager.spawnBoss()
         }
 
+        // Depth sorting (top-down)
+        this.player.setDepth(this.player.y)
+
+        if (this.bossManager.boss) {
+            this.bossManager.boss.setDepth(this.bossManager.boss.y)
+        }
+
         //Exp
         this.expOrbs.forEach((orb, index) => {
             if (!orb.active) return

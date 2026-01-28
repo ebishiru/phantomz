@@ -7,6 +7,7 @@ import Player from "../entities/Player";
 import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss";
 import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer";
 import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss";
+import CirclesAroundBoss from "../mechanics/CirclesAroundBoss";
 
 export default class BossManager {
     scene: Phaser.Scene;
@@ -99,7 +100,8 @@ export default class BossManager {
         this.bossMechanics = [
             new CircleTelegraphOnBoss(this.scene, this.boss, this.player),
             new CircleTelegraphOnPlayer(this.scene, this.boss, this.player),
-            new LineTelegraphFromBoss(this.scene, this.boss, this.player)
+            new LineTelegraphFromBoss(this.scene, this.boss, this.player),
+            new CirclesAroundBoss(this.scene, this.boss, this.player)
         ];
 
         // Apply buffs

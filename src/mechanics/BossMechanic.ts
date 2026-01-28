@@ -35,10 +35,10 @@ export default class BossMechanic {
         const castTime = this.config.castTime || 0
         this.isCasting = true
 
-        this.onCastStart(castTime)
+        this.onCastStart()
 
         if (this.config.showCastBar && castTime > 0) {
-            this.onCastStart(castTime)
+            this.onCastStart()
         }
 
         if (castTime <= 0) {
@@ -61,7 +61,7 @@ export default class BossMechanic {
         return this.scene.time.now < this.lastUsedAt + this.config.cooldown
     }
 
-    onCastStart(castTime: number) {}
+    onCastStart() {}
 
     execute() {}
 

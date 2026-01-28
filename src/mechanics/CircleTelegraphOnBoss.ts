@@ -6,7 +6,7 @@ export default class CircleTelegraphOnBoss extends BossMechanic {
 
     config = {
         id: "circle-boss",
-        name: "Quake",
+        name: "Tail Spin",
         castTime: 1000,
         cooldown: 2000,
         showCastBar: false,
