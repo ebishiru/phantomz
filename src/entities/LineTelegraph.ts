@@ -1,5 +1,4 @@
 import Phaser from "phaser"
-import Player from "./Player"
 
 export default class LineTelegraph {
     graphics: Phaser.GameObjects.Graphics

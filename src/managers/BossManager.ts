@@ -14,18 +14,29 @@ export default class BossManager {
 
     // Buff system
     activeBuffs: string[] = [];
-    buffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
+    baseBuffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
+    buffPool: string[] = []
 
     // Global timer UI
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
 
+    // Kill Count
+    bossesKilled = 0
+    bossKillText!: Phaser.GameObjects.Text;
+
     constructor(scene: Phaser.Scene, player: any) {
         this.scene = scene;
         this.player = player;
 
+        this.resetBuffPool();
         this.startBuffTimer();
         this.createTimerText();
+        this.createBossKillText();
+    }
+
+    resetBuffPool() {
+        this.buffPool = [...this.baseBuffPool]
     }
 
     createTimerText() {
@@ -48,12 +59,22 @@ export default class BossManager {
         });
     }
 
+    createBossKillText() {
+        this.bossKillText = this.scene.add.text(700, 30, "Bosses: 0", {
+            fontSize: "16px",
+            fontFamily: `"Old English Text MT", Georgia, serif`, 
+            color: "#ffffff" 
+        });
+    }
+
     startBuffTimer() {
         this.scene.time.addEvent({
             delay: 30000,
             loop: true,
             callback: () => {
-                if (this.buffPool.length === 0) return;
+                if (this.buffPool.length === 0) {
+                    this.resetBuffPool()
+                }
                 const buff = Phaser.Utils.Array.RemoveRandomElement(this.buffPool) as unknown as string;
                 this.activeBuffs.push(buff);
                 this.applyBuffToBoss();
@@ -67,9 +88,11 @@ export default class BossManager {
         const hpCount = this.activeBuffs.filter(b => b === "HP").length
         const cdCount = this.activeBuffs.filter(b => b === "CD").length
 
+        // Giving Boss more HP
         this.boss.maxHealth += 50 * hpCount
         this.boss.health = this.boss.maxHealth
 
+        // Giving Boss attacks lower delay
         const newDelay = Math.max(800, 5000 - 200 * cdCount)
 
         if (this.bossMechanicTimer) {
@@ -87,6 +110,10 @@ export default class BossManager {
         if (this.boss) {
             const bossX = this.boss.x;
             const bossY = this.boss.y;
+
+            // Increase kill count
+            this.bossesKilled++
+            this.bossKillText.setText(`Bosses: ${this.bossesKilled}`)
 
             // Destroy old boss & mechanics
             this.destroyAllMechanics();
@@ -107,11 +134,6 @@ export default class BossManager {
         // Create boss
         const bossConfig = Bosses[0]
         this.boss = new Boss(this.scene, x, y, bossConfig);
-
-        // Assign boss to player skills
-        this.player.slashSkill.boss = this.boss;
-        this.player.arrowSkill.boss = this.boss;
-        this.player.pulseSkill.boss = this.boss;
 
         // Mechanics
         this.bossMechanics = bossConfig.mechanics.map(MechClass => new MechClass(this.scene, this.boss, this.player))

@@ -3,14 +3,12 @@ import Skill from "./Skill";
 
 export default class SlashSkill extends Skill {
     player: any
-    boss: any
     facingAngle: number = 0
 
-    constructor(scene: Phaser.Scene, player: any, boss: any) {
+    constructor(scene: Phaser.Scene, player: any) {
         super(scene, "slash", "Slash", 25, 3000, 50)
 
         this.player = player
-        this.boss = boss
     }
 
     updateFacing() {
@@ -38,16 +36,19 @@ export default class SlashSkill extends Skill {
         this.scene.time.delayedCall(150, () => g.destroy())
 
         //Check hit 
-        const dx = this.boss.x - this.player.x
-        const dy = this.boss.y - this.player.y
+        const boss = (this.scene as any).bossManager?.boss
+        if (!boss || !boss.active) return
+
+        const dx = boss.x - this.player.x
+        const dy = boss.y - this.player.y
         const distance = Math.sqrt(dx*dx + dy*dy)
 
-        if (distance > this.range + this.boss.hurtRadius) return
+        if (distance > this.range + boss.hurtRadius) return
 
         const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
         if (Math.abs(diff) > Math.PI/2) return
 
-        this.boss.takeDamage(this.damage)
+        boss.takeDamage(this.damage)
 
     }
 }

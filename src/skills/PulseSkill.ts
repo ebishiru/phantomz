@@ -3,13 +3,11 @@ import Skill from "./Skill"
 
 export default class PulseSkill extends Skill {
     player: any
-    boss: any
 
-    constructor(scene: Phaser.Scene, player: any, boss: any) {
+    constructor(scene: Phaser.Scene, player: any) {
         super(scene, "pulse", "Pulse", 10, 8000, 50)
 
         this.player = player
-        this.boss = boss
     }
 
     activate() {
@@ -40,21 +38,24 @@ export default class PulseSkill extends Skill {
         
         //Check hit
         const hitBoss = () => {
+            const boss = (this.scene as any).bossManager?.boss
+            if (!boss || !boss.active) return
+
             const attackCircle = new Phaser.Geom.Circle(
                 this.player.x,
                 this.player.y,
                 this.range
             )
             const bossCircle = new Phaser.Geom.Circle(
-                this.boss.x,
-                this.boss.y,
-                this.boss.hurtRadius
+                boss.x,
+                boss.y,
+                boss.hurtRadius
             )
             const hit = Phaser.Geom.Intersects.CircleToCircle(
                 attackCircle, bossCircle
             )
             if (hit) {
-                this.boss.takeDamage(this.damage)
+                boss.takeDamage(this.damage)
             }
 
             this.scene.tweens.add({
