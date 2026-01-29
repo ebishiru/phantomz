@@ -36,7 +36,7 @@ export default class ConeTelegraph {
         this.graphics.beginPath()
 
         const startAngle = this.angle - this.coneAngle / 2
-        const endAngle = this.angle - this.coneAngle / 2
+        const endAngle = this.angle + this.coneAngle / 2
 
         this.graphics.slice(
             this.x,

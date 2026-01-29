@@ -132,7 +132,7 @@ export default class BossManager {
 
     createBoss(x: number, y: number) {
         // Create boss
-        const bossConfig = Bosses[0]
+        const bossConfig = Bosses[1]
         this.boss = new Boss(this.scene, x, y, bossConfig);
 
         // Mechanics
