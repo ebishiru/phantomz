@@ -5,6 +5,8 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     health = 100
     speed = 0
     hurtRadius = 80
+    chaseDistance = 80
+    isCasting = false
     bossName!: Phaser.GameObjects.Text
     hurtBoxGraphics!: Phaser.GameObjects.Graphics
 
@@ -32,10 +34,43 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         })
 
         this.hurtBoxGraphics = scene.add.graphics()
+    }
+
+    drawHurtBox() {
+        if (!this.hurtBoxGraphics) return
+
+        this.hurtBoxGraphics.clear()
+
         this.hurtBoxGraphics.fillStyle(0xAAAAAAa, 0.2)
         this.hurtBoxGraphics.fillCircle(this.x, this.y, this.hurtRadius)
         this.hurtBoxGraphics.lineStyle(2, 0xAAAAAA, 0.4)
         this.hurtBoxGraphics.strokeCircle(this.x, this.y, this.hurtRadius)
+    }
+
+    update(player: Phaser.GameObjects.Sprite) {
+        this.drawHurtBox()
+
+        if (!this.body) return
+
+        const body = this.body as Phaser.Physics.Arcade.Body
+
+        if (this.isCasting || this.speed <= 0 || this.health <= 0) {
+            body.setVelocity(0, 0)
+            return
+        }
+
+        const dist = Phaser.Math.Distance.Between(
+            this.x,
+            this.y,
+            player.x,
+            player.y,
+        )
+
+        if (dist > this.chaseDistance) {
+            this.scene.physics.moveToObject(this, player, this.speed)
+        } else {
+            body.setVelocity(0, 0)
+        }
     }
 
     takeDamage(amount: number) {

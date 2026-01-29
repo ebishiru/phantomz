@@ -20,10 +20,11 @@ export const Bosses = [
     {
         name: "Cave Bat",
         spriteKey: "boss1",
-        speed: 0,
+        speed: 100,
         hurtRadius: 80,
         mechanics: [
             ConeFromBoss,
+            CirclesAroundBoss,
         ]
     }
 ]

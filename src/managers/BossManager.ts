@@ -163,6 +163,9 @@ export default class BossManager {
         if (availableMechanics.length === 0) return
         
         const mechanic = Phaser.Utils.Array.GetRandom(availableMechanics)
+
+        this.boss.isCasting = true
+
         mechanic.trigger()
 
         //Animation sync
@@ -172,9 +175,13 @@ export default class BossManager {
 
         if (castTime > 0) {
             this.scene.time.delayedCall(castTime, () => {
-                if (this.boss) this.boss.play("boss-idle")
+                if (this.boss) {
+                    this.boss.isCasting = false
+                    this.boss.play("boss-idle")
+                }
             })
         } else {
+            this.boss.isCasting = false
             this.boss.play("boss-idle")
         }
     }
