@@ -1,28 +1,41 @@
-import Phaser from "phaser"
-import BossMechanic from "./BossMechanic"
-import ConeTelegraph from "../entities/ConeTelegraph"
+import Phaser from "phaser";
+import BossMechanic from "./BossMechanic";
+import ConeTelegraph from "../entities/ConeTelegraph";
 
-export default class ConeFromBoss extends BossMechanic {
+export default class TeleportConeFromBoss extends BossMechanic {
 
     config = {
-        id: "cone-boss",
-        name: "Supersonic",
-        castTime: 1000,
-        cooldown: 2000,
-        showCastBar: false,
+        id: "teleport-cone-boss",
+        name: "Megasonic",
+        castTime: 2000,
+        cooldown: 6000,
+        showCastBar: true,
         damage: 20,
-        range: 200,
+        range: 700,
         width: 0,
     }
 
     coneAngle = Math.PI / 3
 
     onCastStart() {
+        //Teleport to corners
+        const location = Phaser.Utils.Array.GetRandom(
+            (this.scene as any).bossManager.cornerCoordinates
+        ) as { x: number; y: number }
+
+        this.boss.setPosition(location.x, location.y)
+        this.boss.body?.stop()
+
+        //Aim towards center
+
+        const centerX = this.scene.scale.width / 2
+        const centerY = this.scene.scale.height / 2
+
         const angle = Phaser.Math.Angle.Between(
             this.boss.x,
             this.boss.y,
-            this.player.x,
-            this.player.y
+            centerX,
+            centerY,
         )
 
         //Draw Telegraph
@@ -32,7 +45,7 @@ export default class ConeFromBoss extends BossMechanic {
             this.boss.y,
             angle,
             this.config.range,
-            this.coneAngle
+            this.coneAngle,
         )
     }
 
@@ -44,15 +57,15 @@ export default class ConeFromBoss extends BossMechanic {
             this.boss.x,
             this.boss.y,
             this.player.x,
-            this.player.y,
+            this.player.y
         )
-        if (dist <= this.config.range + this.player.hurtboxRadius) {
 
+        if (dist <= this.config.range + this.player.hurtboxRadius) {
             const angleToPlayer = Phaser.Math.Angle.Between(
                 this.boss.x,
                 this.boss.y,
                 this.player.x,
-                this.player.y
+                this.player.y,
             )
 
             const angleDiff = Phaser.Math.Angle.Wrap(
@@ -63,7 +76,7 @@ export default class ConeFromBoss extends BossMechanic {
                 hit = true
             }
         }
-        
+
         if (hit) {
             this.player.takeDamage(this.config.damage)
         }

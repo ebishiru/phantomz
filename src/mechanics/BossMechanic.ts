@@ -32,14 +32,13 @@ export default class BossMechanic {
         if (this.isCasting) return
         if (this.isOnCooldown()) return
 
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+
         const castTime = this.config.castTime || 0
         this.isCasting = true
 
         this.onCastStart()
-
-        if (this.config.showCastBar && castTime > 0) {
-            this.onCastStart()
-        }
 
         if (castTime <= 0) {
             this.lastUsedAt = this.scene.time.now

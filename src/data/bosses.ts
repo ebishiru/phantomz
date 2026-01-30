@@ -3,6 +3,7 @@ import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer";
 import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss";
 import CirclesAroundBoss from "../mechanics/CirclesAroundBoss";
 import ConeFromBoss from "../mechanics/ConeFromBoss";
+import TeleportConeFromBoss from "../mechanics/TeleportConeFromBoss";
 
 export const Bosses = [
     {
@@ -23,8 +24,9 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 80,
         mechanics: [
-            ConeFromBoss,
-            CirclesAroundBoss,
+            // ConeFromBoss,
+            // CirclesAroundBoss,
+            TeleportConeFromBoss,
         ]
     }
 ]

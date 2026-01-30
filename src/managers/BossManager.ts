@@ -25,6 +25,14 @@ export default class BossManager {
     bossesKilled = 0
     bossKillText!: Phaser.GameObjects.Text;
 
+    // Preset Map Locations
+    cornerCoordinates = [
+        { x: 200, y: 200 },
+        { x: 500, y: 200 },
+        { x: 500, y: 500 },
+        { x: 200, y: 500 }
+    ]
+
     constructor(scene: Phaser.Scene, player: any) {
         this.scene = scene;
         this.player = player;
@@ -57,6 +65,19 @@ export default class BossManager {
                 this.globalTimerText.setText(`Time: ${min}:${sec}`);
             }
         });
+    }
+
+    moveToRandomCorner(cornerCoordinates: { x: number, y: number}[]) {
+        if (!this.boss) return
+
+        const location = Phaser.Utils.Array.GetRandom(cornerCoordinates)
+
+        this.scene.physics.moveTo(
+            this.boss,
+            location.x,
+            location.y,
+            300
+        )
     }
 
     createBossKillText() {
