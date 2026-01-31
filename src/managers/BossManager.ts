@@ -25,14 +25,6 @@ export default class BossManager {
     bossesKilled = 0
     bossKillText!: Phaser.GameObjects.Text;
 
-    // Preset Map Locations
-    cornerCoordinates = [
-        { x: 200, y: 200 },
-        { x: 500, y: 200 },
-        { x: 500, y: 500 },
-        { x: 200, y: 500 }
-    ]
-
     constructor(scene: Phaser.Scene, player: any) {
         this.scene = scene;
         this.player = player;
@@ -67,10 +59,28 @@ export default class BossManager {
         });
     }
 
-    moveToRandomCorner(cornerCoordinates: { x: number, y: number}[]) {
+    getCenteredSquareCorners(scale = 0.6) {
+        const bounds = this.scene.physics.world.bounds
+
+        const size = Math.min(bounds.width, bounds.height) * scale
+        const half = size / 2
+
+        const centerX = bounds.centerX
+        const centerY = bounds.centerY
+
+        return [
+            { x: centerX - half, y: centerY - half },
+            { x: centerX + half, y: centerY - half },
+            { x: centerX + half, y: centerY + half },
+            { x: centerX - half, y: centerY + half }
+        ]
+    }
+
+    moveToRandomCorner() {
         if (!this.boss) return
 
-        const location = Phaser.Utils.Array.GetRandom(cornerCoordinates)
+        const corners = this.getCenteredSquareCorners(0.6)
+        const location = Phaser.Utils.Array.GetRandom(corners)
 
         this.scene.physics.moveTo(
             this.boss,

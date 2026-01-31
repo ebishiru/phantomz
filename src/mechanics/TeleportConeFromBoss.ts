@@ -11,7 +11,7 @@ export default class TeleportConeFromBoss extends BossMechanic {
         cooldown: 6000,
         showCastBar: true,
         damage: 20,
-        range: 700,
+        range: 450,
         width: 0,
     }
 
@@ -19,34 +19,42 @@ export default class TeleportConeFromBoss extends BossMechanic {
 
     onCastStart() {
         //Teleport to corners
-        const location = Phaser.Utils.Array.GetRandom(
-            (this.scene as any).bossManager.cornerCoordinates
-        ) as { x: number; y: number }
+        const bossManager = (this.scene as any).bossManager as any
+        const corners: { x: number; y: number }[] = bossManager.getCenteredSquareCorners(0.6)
 
-        this.boss.setPosition(location.x, location.y)
+        const location = Phaser.Utils.Array.GetRandom(corners)
+
         this.boss.body?.stop()
 
-        //Aim towards center
+        this.scene.tweens.add({
+            targets: this.boss,
+            x: location.x,
+            y: location.y,
+            duration: 300,
+            ease: "Sine.easeInOut",
+            onStart: () => this.boss.body?.stop(),
+            onComplete: () => {
+                //Aim towards center
+                const bounds = this.scene.physics.world.bounds
 
-        const centerX = this.scene.scale.width / 2
-        const centerY = this.scene.scale.height / 2
+                const angle = Phaser.Math.Angle.Between(
+                    this.boss.x,
+                    this.boss.y,
+                    bounds.centerX,
+                    bounds.centerY,
+                )
 
-        const angle = Phaser.Math.Angle.Between(
-            this.boss.x,
-            this.boss.y,
-            centerX,
-            centerY,
-        )
-
-        //Draw Telegraph
-        this.telegraph = new ConeTelegraph(
-            this.scene,
-            this.boss.x,
-            this.boss.y,
-            angle,
-            this.config.range,
-            this.coneAngle,
-        )
+                //Draw Telegraph
+                this.telegraph = new ConeTelegraph(
+                    this.scene,
+                    this.boss.x,
+                    this.boss.y,
+                    angle,
+                    this.config.range,
+                    this.coneAngle,
+                )
+            }
+        })
     }
 
     execute() {
