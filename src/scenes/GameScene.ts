@@ -43,6 +43,10 @@ export default class GameScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        this.load.spritesheet("boss2", "assets/boss2.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
         this.load.image("exp-orb", "assets/exp-orb.png")
 
         this.load.image("loading-border", "assets/loading-border.png")
@@ -84,7 +88,7 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // Player Info
-        this.player = new Player(this, 400, 550, "player", null)
+        this.player = new Player(this, 400, 550, "player")
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
@@ -94,21 +98,6 @@ export default class GameScene extends Phaser.Scene {
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffffff",
         }).setOrigin(0.5, 0)
-
-        //Boss animation
-        this.anims.create({
-            key: "boss-idle",
-            frames: [{ key: "boss", frame: 0}],
-            frameRate: 1,
-            repeat: -1
-        })
-
-        this.anims.create({
-            key: "boss-attack",
-            frames: [{ key: "boss", frame: 1}],
-            frameRate: 1,
-            repeat: 0
-        })
 
         //Boss Info
         this.bossManager = new BossManager(this, this.player)
@@ -239,6 +228,11 @@ export default class GameScene extends Phaser.Scene {
         // Boss movement
         if (this.bossManager.boss) {
             this.bossManager.boss.update(this.player)
+        }
+
+        // Boss castbar follow
+        if (this.bossManager.castBar && this.bossManager.boss) {
+            this.bossManager.castBar.setPosition(this.bossManager.boss.x, this.bossManager.boss.y - 60)
         }
 
         //Exp

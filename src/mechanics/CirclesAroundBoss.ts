@@ -6,12 +6,12 @@ export default class CirclesAroundBoss extends BossMechanic {
 
     config = {
         id: "circles-around-boss",
-        name: "Quadrant Rock Drop",
+        name: "Stalactite Rain",
         castTime: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 60,
+        range: 75,
         width: 0,
     }
 
@@ -66,7 +66,12 @@ export default class CirclesAroundBoss extends BossMechanic {
         if (hit) {
             this.player.takeDamage(this.config.damage)
         }
+    }
 
+    destroy() {
+        this.telegraphs.forEach(t => t.destroy())
         this.telegraphs.length = 0
+
+        super.destroy?.()
     }
 }

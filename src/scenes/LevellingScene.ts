@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import GameScene from "./GameScene";
 import Player from "../entities/Player";
+import { skills } from "../data/skills";
 import { upgrades } from "../data/upgrades";
 
 export default class LevellingScene extends Phaser.Scene {
@@ -98,116 +99,31 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     generateOptions(player: Player) {
-        const options = []
+        const unlockedCount = skills.filter(skill => (player as any)[skill.key].enabled).length;
+        const options: {title: string, desc: string, iconKey?: string, apply: () => void}[] = [];
 
-        //Slash options
-        if (!player.slashSkill.enabled) {
-            options.push({
-                title: "Slash Unlock",
-                desc: "Attack in a frontal arc",
-                iconKey: "slash-icon",
-                apply: () => { player.slashSkill.enabled = true }
-            })
-        }
-        const slashUpgrade = upgrades.slash[Math.floor(Math.random() * upgrades.slash.length)]
-        options.push({
-            title: "Slash Upgrade",
-            desc: slashUpgrade.desc,
-            iconKey: "slash-icon",
-            apply: () => slashUpgrade.apply(player)
+        skills.forEach(skill => {
+            const skillObj = (player as any)[skill.key]
+
+            if (!skillObj.enabled && unlockedCount < 4) {
+                options.push({
+                    title: `${skill.name} Unlock`,
+                    desc: skill.desc,
+                    iconKey: skill.iconKey,
+                    apply: () => { skillObj.enabled = true}
+                })
+            } else if (skillObj.enabled) {
+                const upgrade = skill.upgrades[Math.floor(Math.random() * skill.upgrades.length)]
+                options.push({
+                    title: `${skill.name} Upgrade`,
+                    desc: upgrade.desc,
+                    iconKey: skill.iconKey,
+                    apply: () => upgrade.apply(player)
+                })
+            }
         })
 
-        //Arrow options
-        if(!player.arrowSkill.enabled) {
-            options.push({
-                title: "Arrow Unlock",
-                desc: "Fire a guaranteed missile",
-                iconKey: "arrow-icon",
-                apply: () => { player.arrowSkill.enabled = true }
-            })
-        } else {
-            const arrowUpgrade = upgrades.arrow[Math.floor(Math.random() * upgrades.arrow.length)]
-            options.push({
-                title: "Arrow Upgrade",
-                desc: arrowUpgrade.desc,
-                iconKey: "arrow-icon",
-                apply: () => arrowUpgrade.apply(player)
-            })
-        }
-
-        //Pulse options
-        if (!player.pulseSkill.enabled) {
-            options.push({
-                title: "Pulse Unlock",
-                desc: "Unleash an energy pulse repeatedly",
-                iconKey: "pulse-icon",
-                apply: () => { player.pulseSkill.enabled = true}
-            }) 
-        } else {
-            const pulseUpgrade = upgrades.pulse[Math.floor(Math.random() * upgrades.pulse.length)]
-            options.push({
-                title: "Pulse Upgrade",
-                desc: pulseUpgrade.desc,
-                iconKey: "pulse-icon",
-                apply: () => pulseUpgrade.apply(player)
-            })
-        }
-
-        //Thrust options
-        if (!player.thrustSkill.enabled) {
-            options.push({
-                title: "Thrust Unlock",
-                desc: "Propel and strike forward",
-                iconKey: "thrust-icon",
-                apply: () => { player.thrustSkill.enabled = true}
-            })
-        } else {
-            const thrustUpgrade = upgrades.thrust[Math.floor(Math.random() * upgrades.thrust.length)]
-            options.push({
-                title: "Thrust Upgrade",
-                desc: thrustUpgrade.desc,
-                iconKey: "thrust-icon",
-                apply: () => thrustUpgrade.apply(player)
-            })
-        }
-
-        //Caltrops options
-        if (!player.caltropsSkill.enabled) {
-            options.push({
-                title: "Caltrops Unlock",
-                desc: "Drop spikes behind",
-                iconKey: "caltrops-icon",
-                apply: () => { player.caltropsSkill.enabled = true}
-            })
-        } else {
-            const caltropsUpgrade = upgrades.caltrops[Math.floor(Math.random() * upgrades.caltrops.length)]
-            options.push({
-                title: "Caltops Upgrade",
-                desc: caltropsUpgrade.desc,
-                iconKey: "caltrops-icon",
-                apply: () => caltropsUpgrade.apply(player)
-            })
-        }
-
-        //Fireball option
-        if (!player.fireballSkill.enabled) {
-            options.push({
-                title: "Fireball Unlock",
-                desc: "Cast down an explosion of flame",
-                iconKey: "fireball-icon",
-                apply: () => { player.fireballSkill.enabled = true}
-            })
-        } else {
-            const fireballUpgrade = upgrades.fireball[Math.floor(Math.random() * upgrades.fireball.length)]
-            options.push({
-                title: "Fireball Upgrade",
-                desc: fireballUpgrade.desc,
-                iconKey: "fireball-icon",
-                apply: () => fireballUpgrade.apply(player)
-            })
-        }
-
-        return Phaser.Utils.Array.Shuffle(options).slice(0, 3)
+        return Phaser.Utils.Array.Shuffle(options).slice(0, 3);
     }
 
     displaySummary(player: Player, y: number, menuWidth: number) {

@@ -11,7 +11,7 @@ export default class ConeFromBoss extends BossMechanic {
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 200,
+        range: 250,
         width: 0,
     }
 

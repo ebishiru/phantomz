@@ -27,7 +27,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     facing!: Phaser.Math.Vector2
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, boss: any) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture)
 
         scene.add.existing(this)
@@ -47,9 +47,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.play("player-idle")
 
         //Initialize skills
-        this.slashSkill = new SlashSkill(scene, this, boss)
-        this.arrowSkill = new ArrowSkill(scene, this, boss)
-        this.pulseSkill = new PulseSkill(scene, this, boss)
+        this.slashSkill = new SlashSkill(scene, this)
+        this.arrowSkill = new ArrowSkill(scene, this)
+        this.pulseSkill = new PulseSkill(scene, this)
         this.thrustSkill = new ThrustSkill(scene, this)
         this.caltropsSkill = new CaltopsSkill(scene, this)
         this.fireballSkill = new FireballSkill(scene, this)
@@ -118,6 +118,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.3)
+        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
     }
 }

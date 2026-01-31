@@ -11,6 +11,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: "arcade",
     arcade: { debug: false },
   },
+  pixelArt: true,
   scene: [GameScene, LevellingScene],
 }
 

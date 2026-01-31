@@ -43,7 +43,8 @@ export default class BossMechanic {
         if (castTime <= 0) {
             this.lastUsedAt = this.scene.time.now
             this.execute()
-            this.isCasting = false
+            this.isCasting = false;
+            (this.scene as any).bossManager?.castBar?.destroy()
             return
         }
 
@@ -51,7 +52,10 @@ export default class BossMechanic {
             if (!this.active || this.boss.health <= 0 ) return
             this.lastUsedAt = this.scene.time.now
             this.execute()
-            this.isCasting = false
+            this.isCasting = false;
+
+            (this.scene as any).bossManager?.castBar?.destroy();
+            (this.scene as any).bossManager.castBar = null
         })
     }
 
@@ -68,6 +72,7 @@ export default class BossMechanic {
         this.telegraph?.destroy()
         this.telegraph = undefined
         this.active = false
-        this.isCasting = false
+        this.isCasting = false;
+        (this.scene as any).bossManager?.castBar?.destroy()
     }
 }

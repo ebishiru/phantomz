@@ -3,6 +3,7 @@ import Boss from "../entities/Boss";
 import { Bosses } from "../data/bosses";
 import BossMechanic from "../mechanics/BossMechanic";
 import HealthBar from "../ui/HealthBar";
+import CastBar from "../ui/CastBar";
 
 export default class BossManager {
     scene: Phaser.Scene;
@@ -11,11 +12,14 @@ export default class BossManager {
     bossHealthBar: HealthBar | null = null
     bossMechanics: BossMechanic[] = [];
     bossMechanicTimer: Phaser.Time.TimerEvent | null = null;
+    castBar: CastBar | null = null
+    mechanicNameText?: Phaser.GameObjects.Text
 
     // Buff system
     activeBuffs: string[] = [];
     baseBuffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
     buffPool: string[] = []
+    nextBossMaxHealth = 100
 
     // Global timer UI
     globalTimerSeconds = 0;
@@ -120,8 +124,7 @@ export default class BossManager {
         const cdCount = this.activeBuffs.filter(b => b === "CD").length
 
         // Giving Boss more HP
-        this.boss.maxHealth += 50 * hpCount
-        this.boss.health = this.boss.maxHealth
+        this.nextBossMaxHealth = 100 + hpCount * 50
 
         // Giving Boss attacks lower delay
         const newDelay = Math.max(800, 5000 - 200 * cdCount)
@@ -162,17 +165,43 @@ export default class BossManager {
     }
 
     createBoss(x: number, y: number) {
-        // Create boss
+        // Choose Boss
         const bossConfig = Bosses[1]
+        const spriteKey = bossConfig.spriteKey
+
+        // Spawn Boss
         this.boss = new Boss(this.scene, x, y, bossConfig);
 
-        // Mechanics
+        //Create animations
+        if (!this.scene.anims.exists(`${spriteKey}-idle`)) {
+            this.scene.anims.create({
+                key: `${spriteKey}-idle`,
+                frames: [{ key: spriteKey, frame: 0}],
+                frameRate: 1,
+                repeat: -1
+            })
+        }
+
+        if (!this.scene.anims.exists(`${spriteKey}-attack`)) {
+            this.scene.anims.create({
+                key: `${spriteKey}-attack`,
+                frames: [{ key: spriteKey, frame: 1}],
+                frameRate: 1,
+                repeat: 0
+            })
+        }
+
+        this.boss.play(`${spriteKey}-idle`)
+
+        // Initialize Mechanics
         this.bossMechanics = bossConfig.mechanics.map(MechClass => new MechClass(this.scene, this.boss, this.player))
 
         // Apply boss buffs
         this.applyBuffToBoss()
 
-        // Boss Health bar
+        // Boss Health & Health bar
+        this.boss.maxHealth = this.nextBossMaxHealth
+        this.boss.health = this.nextBossMaxHealth
         this.bossHealthBar = new HealthBar(this.scene, 150, 30, 500, 20, this.boss, 0xff0000)
 
         // Boss attack timer
@@ -197,10 +226,19 @@ export default class BossManager {
 
         this.boss.isCasting = true
 
+        // Activate mechanic
         mechanic.trigger()
 
         //Animation sync
-        this.boss.play("boss-attack")
+        this.boss.play(`${this.boss.config.spriteKey}-attack`)
+
+        // Display mechanic name
+        this.displayMechanicName(mechanic)
+
+        // Cast Bar if applicable
+        if (mechanic.config.showCastBar && mechanic.config.castTime > 0) {
+            this.showCastBar(mechanic.config.castTime)
+        }
 
         const castTime = mechanic.config.castTime || 0
 
@@ -208,20 +246,71 @@ export default class BossManager {
             this.scene.time.delayedCall(castTime, () => {
                 if (this.boss) {
                     this.boss.isCasting = false
-                    this.boss.play("boss-idle")
+                    this.boss.play(`${this.boss.config.spriteKey}-idle`)
                 }
             })
         } else {
             this.boss.isCasting = false
-            this.boss.play("boss-idle")
+            this.boss.play(`${this.boss.config.spriteKey}-idle`)
         }
+    }
+
+    displayMechanicName(mechanic: any) {
+        if (!mechanic?.config?.name || !this.bossHealthBar) return
+        
+        if (this.mechanicNameText) {
+            this.mechanicNameText.destroy()
+        }
+
+        const x = this.bossHealthBar.x + this.bossHealthBar.width / 2
+        const y = this.bossHealthBar.y + this.bossHealthBar.height + 12
+
+        this.mechanicNameText = this.scene.add.text( x, y, mechanic.config.name, {
+            fontSize: "20px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: "#ffcc00",
+        }).setOrigin(0.5, 0)
+        .setAlpha(0)
+
+        const duration = (mechanic.config.castTime || 0) + 1000
+
+        this.scene.tweens.add({
+            targets: this.mechanicNameText,
+            alpha: 1,
+            duration: 200,
+            ease: "Linear",
+            onComplete: () => {
+                this.scene.tweens.add({
+                    targets: this.mechanicNameText,
+                    alpha: 0,
+                    delay: duration - 200,
+                    duration: 200,
+                    ease: "Linear"
+                })
+            }
+        })
+
+        this.scene.time.delayedCall(duration, () => {
+            this.mechanicNameText?.destroy()
+            this.mechanicNameText = undefined
+        })
+    }
+
+    showCastBar(castTime: number) {
+        if (!this.boss) return
+
+        this.castBar?.destroy()
+
+        this.castBar = new CastBar(this.scene, this.boss.x, this.boss.y - 60)
+
+        this.castBar.start(castTime)
     }
 
     destroyAllMechanics() {
         this.bossMechanicTimer?.remove(false);
         this.bossMechanicTimer = null;
 
-        this.bossMechanics.forEach(m => m.destroy());
+        this.bossMechanics?.forEach(m => m.destroy());
         this.bossMechanics = [];
 
         this.boss?.destroyBoss();
@@ -229,5 +318,8 @@ export default class BossManager {
 
         this.bossHealthBar?.destroy()
         this.bossHealthBar = null
+
+        this.castBar?.destroy()
+        this.castBar = null;
     }
 }
