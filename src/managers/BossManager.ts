@@ -19,7 +19,8 @@ export default class BossManager {
     activeBuffs: string[] = [];
     baseBuffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
     buffPool: string[] = []
-    nextBossMaxHealth = 100
+    baseBossHealth = 150
+    nextBossMaxHealth = this.baseBossHealth
 
     // Global timer UI
     globalTimerSeconds = 0;
@@ -124,10 +125,10 @@ export default class BossManager {
         const cdCount = this.activeBuffs.filter(b => b === "CD").length
 
         // Giving Boss more HP
-        this.nextBossMaxHealth = 100 + hpCount * 50
+        this.nextBossMaxHealth = this.baseBossHealth + hpCount * 50
 
         // Giving Boss attacks lower delay
-        const newDelay = Math.max(800, 5000 - 200 * cdCount)
+        const newDelay = Math.max(2000, 4000 - 200 * cdCount)
 
         if (this.bossMechanicTimer) {
             this.bossMechanicTimer.remove(false)

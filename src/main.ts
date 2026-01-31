@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 import GameScene from "./scenes/GameScene"
 import LevellingScene from "./scenes/LevellingScene"
+import GameOverScene from "./scenes/GameOverScene"
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -12,7 +13,7 @@ const config: Phaser.Types.Core.GameConfig = {
     arcade: { debug: false },
   },
   pixelArt: true,
-  scene: [GameScene, LevellingScene],
+  scene: [GameScene, LevellingScene, GameOverScene],
 }
 
 new Phaser.Game(config)

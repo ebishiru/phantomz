@@ -1,8 +1,8 @@
 import Phaser from "phaser"
 
 export default class Boss extends Phaser.Physics.Arcade.Sprite {
-    maxHealth = 100
-    health = 100
+    maxHealth = 150
+    health = 150
     speed = 0
     hurtRadius = 80
     chaseDistance = 80

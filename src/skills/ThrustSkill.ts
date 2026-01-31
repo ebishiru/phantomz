@@ -5,7 +5,7 @@ export default class ThrustSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "thrust", "Thrust", 25, 3500, 100)
+        super(scene, "thrust", "Thrust", 20, 3500, 100)
 
         this.player = player
     }

@@ -43,7 +43,7 @@ export default class LevellingScene extends Phaser.Scene {
         options.push({
             title: "Skip",
             desc: "Gain no upgrades this level",
-            iconKey: "",
+            iconKey: "skip-icon",
             apply: () => {}
         })
 

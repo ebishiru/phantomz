@@ -14,7 +14,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     exp = 0
     level = 1
     expToNextLevel = 10
-    hurtboxRadius = 8
+    hurtboxRadius = 4
 
     //Skills
     skills: Skill[] = []
@@ -68,6 +68,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     takeDamage(amount: number) {
         this.health -= amount
         this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
+
+        this.setTint(0xff0000)
+        this.scene.time.delayedCall(300, () => {
+            this.clearTint()
+        })
+
+        if (this.health <= 0) {
+            this.die()
+        }
     }
 
     move(dir: Phaser.Math.Vector2) {
@@ -119,5 +128,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.exp -= this.expToNextLevel
         this.level++
         this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
+    }
+    
+    die() {
+        this.setVelocity(0, 0),
+        this.anims.stop()
+
+        const gameScene = this.scene.scene.get("game") as any
+        const bossManager = gameScene.bossManager
+
+        const score = bossManager.globalTimerSeconds + bossManager.bossesKilled * 50
+
+        this.scene.scene.pause("game")
+        this.scene.scene.launch("game-over", { score })
     }
 }
