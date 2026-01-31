@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import GameScene from "./GameScene";
 import Player from "../entities/Player";
 import { skills } from "../data/skills";
-import { upgrades } from "../data/upgrades";
 
 export default class LevellingScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -40,8 +39,16 @@ export default class LevellingScene extends Phaser.Scene {
 
         //Upgrade Options (mid)
         const options = this.generateOptions(this.player)
-        const optionsStartY = menuY - menuHeight / 6 - 20
-        const optionsSpacing = menuHeight / 6
+
+        options.push({
+            title: "Skip",
+            desc: "Gain no upgrades this level",
+            iconKey: "",
+            apply: () => {}
+        })
+
+        const optionsStartY = menuY - menuHeight / 6 - 40
+        const optionsSpacing = menuHeight / 8
 
         options.forEach((option, index) => {
             const y = optionsStartY + (index * optionsSpacing)
@@ -61,14 +68,24 @@ export default class LevellingScene extends Phaser.Scene {
                     fontSize: "16px",
                     fontFamily: `"Old English Text MT", Georgia, serif`,
                     align: "left",
-                    backgroundColor: "#333333",
                     color: "#ffffff",
                     padding: { x: 0, y: 0},
                     wordWrap: { width: menuWidth - 100}
                 }
             ).setOrigin(0, 0.5)
             
-            container.add([icon, text])
+            const keyCode = this.add.text(
+                menuWidth / 2 - 40,
+                0,
+                `[ ${index + 1} ]`,
+                {
+                    fontSize: "16px",
+                    fontFamily: `"Old English Text MT", Georgia, serif`,
+                    color: "#ffffff",
+                } 
+            ).setOrigin(1, 0.5)
+
+            container.add([icon, text, keyCode])
 
             container.setSize(menuWidth - 20, 50)
             container.setInteractive({ useHandCursor: true})
@@ -89,10 +106,12 @@ export default class LevellingScene extends Phaser.Scene {
         const key1 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ONE)
         const key2 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.TWO)
         const key3 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.THREE)
+        const key4 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR)
 
         key1?.on("down", () => chooseOption(0))
         key2?.on("down", () => chooseOption(1))
         key3?.on("down", () => chooseOption(2))
+        key4?.on("down", () => chooseOption(3))
 
         //Skill Summary (bottom) 
         this.displaySummary(this.player, menuY + menuHeight / 2 - 120, menuWidth)
