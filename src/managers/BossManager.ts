@@ -165,8 +165,9 @@ export default class BossManager {
     }
 
     createBoss(x: number, y: number) {
-        // Choose Boss
-        const bossConfig = Bosses[1]
+        // Random Boss
+        const bossIndex = Phaser.Math.Between(0, 1)
+        const bossConfig = Bosses[bossIndex]
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss
@@ -206,7 +207,7 @@ export default class BossManager {
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({
-            delay: 5000,
+            delay: 4000,
             loop: true,
             callback: () => this.triggerMechanics()
         })

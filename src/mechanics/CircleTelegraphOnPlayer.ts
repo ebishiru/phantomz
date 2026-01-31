@@ -10,7 +10,7 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 80,
+        range: 85,
         width: 0,
     }
 

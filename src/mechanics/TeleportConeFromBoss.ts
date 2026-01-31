@@ -15,7 +15,7 @@ export default class TeleportConeFromBoss extends BossMechanic {
         width: 0,
     }
 
-    coneAngle = Math.PI / 3
+    coneAngle = Math.PI / 2
 
     onCastStart() {
         //Teleport to corners
