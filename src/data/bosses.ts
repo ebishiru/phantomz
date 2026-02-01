@@ -4,6 +4,7 @@ import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss";
 import CirclesAroundBoss from "../mechanics/CirclesAroundBoss";
 import ConeFromBoss from "../mechanics/ConeFromBoss";
 import TeleportConeFromBoss from "../mechanics/TeleportConeFromBoss";
+import ExpandDonutFromBoss from "../mechanics/ExpandDonutFromBoss";
 
 export const Bosses = [
     {
@@ -36,7 +37,7 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            
+            ExpandDonutFromBoss
         ]
     }
 ]
