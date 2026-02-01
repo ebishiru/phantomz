@@ -55,7 +55,7 @@ export default class LevellingScene extends Phaser.Scene {
 
             const container = this.add.container(menuX, y)
 
-            const iconKey = option.iconKey || "slash-icon" //Placeholder icon
+            const iconKey = option.iconKey || "skip-icon" //Placeholder icon
             const icon = this.add.image(-menuWidth / 2 + 30, 0, iconKey)
             .setDisplaySize(32, 32)
             .setOrigin(0, 0.5)
@@ -88,8 +88,6 @@ export default class LevellingScene extends Phaser.Scene {
             container.add([icon, text, keyCode])
 
             container.setSize(menuWidth - 20, 50)
-            container.setInteractive({ useHandCursor: true})
-            container.on("pointerdown", () => chooseOption(index))
         })
 
         const chooseOption = (index: number) => {

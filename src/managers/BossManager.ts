@@ -309,6 +309,10 @@ export default class BossManager {
     }
 
     destroyAllMechanics() {
+        if (this.boss) {
+            this.scene.tweens.killTweensOf(this.boss)
+        }
+
         this.bossMechanicTimer?.remove(false);
         this.bossMechanicTimer = null;
 

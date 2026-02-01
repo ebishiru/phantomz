@@ -21,13 +21,22 @@ export const Bosses = [
     {
         name: "Cave Bat",
         spriteKey: "boss2",
-        speed: 100,
+        speed: 120,
         hurtRadius: 80,
         mechanics: [
             ConeFromBoss,
             CircleTelegraphOnPlayer,
             CirclesAroundBoss,
             TeleportConeFromBoss,
+        ]
+    },
+    {
+        name: "Cave Ogre",
+        spriteKey: "boss3",
+        speed: 60,
+        hurtRadius: 80,
+        mechanics: [
+            
         ]
     }
 ]
