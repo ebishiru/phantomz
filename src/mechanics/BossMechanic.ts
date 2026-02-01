@@ -14,6 +14,7 @@ export default class BossMechanic {
         id: "",
         name: "",
         castTime: 0,
+        castDuration: 0,
         cooldown: 0,
         showCastBar: false,
         damage: 0,

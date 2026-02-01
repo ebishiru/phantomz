@@ -8,6 +8,7 @@ export default class CirclesAroundBoss extends BossMechanic {
         id: "circles-around-boss",
         name: "Stalactite Rain",
         castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

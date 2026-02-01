@@ -128,7 +128,7 @@ export default class BossManager {
         this.nextBossMaxHealth = this.baseBossHealth + hpCount * 50
 
         // Giving Boss attacks lower delay
-        const newDelay = Math.max(2000, 4000 - 200 * cdCount)
+        const newDelay = Math.max(3000, 4500 - 200 * cdCount)
 
         if (this.bossMechanicTimer) {
             this.bossMechanicTimer.remove(false)
@@ -168,7 +168,7 @@ export default class BossManager {
     createBoss(x: number, y: number) {
         // Random Boss
         const bossIndex = Phaser.Math.Between(0, 1)
-        const bossConfig = Bosses[bossIndex]
+        const bossConfig = Bosses[2]
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss
@@ -208,7 +208,7 @@ export default class BossManager {
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({
-            delay: 4000,
+            delay: 4500,
             loop: true,
             callback: () => this.triggerMechanics()
         })
@@ -242,10 +242,10 @@ export default class BossManager {
             this.showCastBar(mechanic.config.castTime)
         }
 
-        const castTime = mechanic.config.castTime || 0
+        const castDuration = mechanic.config.castDuration ?? mechanic.config.castTime ?? 0
 
-        if (castTime > 0) {
-            this.scene.time.delayedCall(castTime, () => {
+        if (castDuration > 0) {
+            this.scene.time.delayedCall(castDuration, () => {
                 if (this.boss) {
                     this.boss.isCasting = false
                     this.boss.play(`${this.boss.config.spriteKey}-idle`)

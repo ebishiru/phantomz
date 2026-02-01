@@ -9,11 +9,12 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         id: "expand-donut-boss",
         name: "Seismic Blossom",
         castTime: 1000,
+        castDuration: 2000,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 80,
-        width: 80,
+        range: 100,
+        width: 150,
     }
 
     circleTelegraph?: CircleTelegraph
@@ -24,7 +25,7 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         const y = this.boss.y
 
         // Center Telegraph First
-        this.scene.time.delayedCall(700, () => {
+        this.scene.time.delayedCall(1400, () => {
             if (!this.boss) return
             
             this.circleTelegraph = new CircleTelegraph(
@@ -36,7 +37,7 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         })
         
         // Center Telegraph Hit Check
-        this.scene.time.delayedCall(1000, () => {
+        this.scene.time.delayedCall(1500, () => {
             if (!this.boss) return
 
             const dist = Phaser.Math.Distance.Between(
@@ -55,7 +56,7 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         })
 
         // Donut Telegraph Shows Next
-        this.scene.time.delayedCall(1700, () => {
+        this.scene.time.delayedCall(2400, () => {
             if (!this.boss) return
 
             this.donutTelegraph = new DonutTelegraph(
@@ -68,7 +69,7 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         })
 
         //Donut Aoe hit check
-        this.scene.time.delayedCall(2000, () => {
+        this.scene.time.delayedCall(2500, () => {
             if (!this.boss) return
 
             const dist = Phaser.Math.Distance.Between(

@@ -8,6 +8,7 @@ export default class ConeFromBoss extends BossMechanic {
         id: "cone-boss",
         name: "Supersonic",
         castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

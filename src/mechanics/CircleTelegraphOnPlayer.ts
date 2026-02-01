@@ -5,8 +5,9 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
 
     config = {
         id: "circle-player",
-        name: "Spire Drop",
+        name: "Stalactite Drop",
         castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

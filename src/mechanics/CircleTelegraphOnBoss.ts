@@ -6,8 +6,9 @@ export default class CircleTelegraphOnBoss extends BossMechanic {
 
     config = {
         id: "circle-boss",
-        name: "Shockwave",
+        name: "Tail Swirl",
         castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

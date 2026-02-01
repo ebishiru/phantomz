@@ -27,11 +27,10 @@ export default class DonutTelegraph {
         this.graphics.clear()
 
         this.graphics.fillStyle(0xff0000, 0.25)
-        this.graphics.beginPath()
-        this.graphics.arc(this.x, this.y, this.outerRadius, 0, Math.PI * 2)
-        this.graphics.arc(this.x, this.y, this.innerRadius, 0, Math.PI * 2)
-        this.graphics.closePath()
-        this.graphics.fillPath()
+        this.graphics.fillCircle(this.x, this.y, this.outerRadius)
+
+        this.graphics.fillStyle(0x000000, 0)
+        this.graphics.fillCircle(this.x, this.y, this.innerRadius)
 
         this.graphics.lineStyle(2, 0xff0000, 1)
         this.graphics.strokeCircle(this.x, this.y, this.outerRadius)

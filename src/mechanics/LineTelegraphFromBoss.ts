@@ -6,8 +6,9 @@ export default class LineTelegraphFromBoss extends BossMechanic {
 
     config = {
         id: "line-boss-player",
-        name: "Rock Slide",
+        name: "Minor Venom Spit",
         castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
