@@ -14,7 +14,7 @@ export default class ExpandDonutFromBoss extends BossMechanic {
         showCastBar: true,
         damage: 20,
         range: 100,
-        width: 150,
+        width: 130,
     }
 
     circleTelegraph?: CircleTelegraph

@@ -11,7 +11,7 @@ export const Bosses = [
     {
         name: "Cave Worm",
         spriteKey: "boss1",
-        speed: 0,
+        speed: 10,
         hurtRadius: 80,
         mechanics: [
             CircleTelegraphOnBoss,
@@ -40,6 +40,15 @@ export const Bosses = [
         mechanics: [
             ExpandDonutFromBoss,
             ShrinkDonutFromBoss
+        ]
+    },
+    {
+        name: "Cave Crawler",
+        spriteKey: "boss4",
+        speed: 80,
+        hurtRadius: 80,
+        mechanics: [
+            
         ]
     }
 ]
