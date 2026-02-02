@@ -116,7 +116,7 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     generateOptions(player: Player) {
-        const unlockedCount = skills.filter(skill => (player as any)[skill.key].enabled).length;
+        const unlockedCount = player.skills.length
         const options: {title: string, desc: string, iconKey?: string, apply: () => void}[] = [];
 
         skills.forEach(skill => {
@@ -127,7 +127,7 @@ export default class LevellingScene extends Phaser.Scene {
                     title: `${skill.name} Unlock`,
                     desc: skill.desc,
                     iconKey: skill.iconKey,
-                    apply: () => { skillObj.enabled = true}
+                    apply: () => { player.unlockSkill(skillObj)}
                 })
             } else if (skillObj.enabled) {
                 const upgrade = skill.upgrades[Math.floor(Math.random() * skill.upgrades.length)]

@@ -19,12 +19,7 @@ export default class GameScene extends Phaser.Scene {
     sKey!: Phaser.Input.Keyboard.Key
     dKey!: Phaser.Input.Keyboard.Key
 
-    num4Key!: Phaser.Input.Keyboard.Key
-    num8Key!: Phaser.Input.Keyboard.Key
-    num6Key!: Phaser.Input.Keyboard.Key
-    num5Key!: Phaser.Input.Keyboard.Key
-    num7Key!: Phaser.Input.Keyboard.Key
-    num9Key!: Phaser.Input.Keyboard.Key
+    skillKeys!: Phaser.Input.Keyboard.Key[]
 
     skillCooldownUIs!: SkillCooldown[]
 
@@ -124,18 +119,13 @@ export default class GameScene extends Phaser.Scene {
         this.sKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         this.dKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D)
 
-        //Slash Skill
-        this.num4Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR)
-        //Arrow Skill
-        this.num8Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT)
-        //Pulse Skill
-        this.num6Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX)
-        //Thrust Skill
-        this.num5Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE)
-        //Caltrops Skill
-        this.num7Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN)
-        //Fireball Skill
-        this.num9Key = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE)
+        // Skill keybindings
+        this.skillKeys = [
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.J),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.K),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.L),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SEMICOLON),
+        ]
 
         this.updateSkillUIPositions()
 
@@ -148,24 +138,12 @@ export default class GameScene extends Phaser.Scene {
         const baseY = 670
         const spacing = 50
 
-        if (this.skillCooldownUIs) {
-            this.skillCooldownUIs.forEach( ui => ui.destroy())
-        }
-
-        const enabledSkills: { skill: any, iconKey: string }[] = []
-
-        if (this.player.slashSkill.enabled) enabledSkills.push({ skill: this.player.slashSkill, iconKey: "slash-icon"})
-        if (this.player.arrowSkill.enabled) enabledSkills.push({ skill: this.player.arrowSkill, iconKey: "arrow-icon"})
-        if (this.player.pulseSkill.enabled) enabledSkills.push({ skill: this.player.pulseSkill, iconKey: "pulse-icon"})
-        if (this.player.thrustSkill.enabled) enabledSkills.push({ skill: this.player.thrustSkill, iconKey: "thrust-icon"})
-        if (this.player.caltropsSkill.enabled) enabledSkills.push({ skill: this.player.caltropsSkill, iconKey: "caltrops-icon"})
-        if (this.player.fireballSkill.enabled) enabledSkills.push({ skill: this.player.fireballSkill, iconKey: "fireball-icon"})
-        
+        this.skillCooldownUIs?.forEach(ui => ui.destroy())
         this.skillCooldownUIs = []
 
-        enabledSkills.forEach((s, index) => {
+        this.player.skills.forEach((s, index) => {
             const x = baseX + (index * spacing)
-            this.skillCooldownUIs.push(new SkillCooldown(this, s.skill, x, baseY, s.iconKey))
+            this.skillCooldownUIs.push(new SkillCooldown(this, s, x, baseY, s.iconKey))
         })
     }
 

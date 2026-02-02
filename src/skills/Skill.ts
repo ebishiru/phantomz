@@ -10,6 +10,7 @@ export default class Skill {
     enabled: boolean
     scene: Phaser.Scene
     pausedAt?: number
+    iconKey!: string
 
     constructor(scene: Phaser.Scene, id: string, name: string, damage: number, cooldown: number, range: number) {
         this.scene = scene

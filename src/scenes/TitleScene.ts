@@ -54,6 +54,12 @@ export default class TitleScene extends Phaser.Scene {
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: `#ffffff`,
         }).setOrigin(0.5)
+
+        this.add.text(400, 650, "WASD to move, [J], [K], [L], [;] for skills", {
+            fontSize: "16px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: `#ffcc00`,
+        }).setOrigin(0.5)
     }
 
 }

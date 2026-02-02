@@ -7,7 +7,7 @@ export default class SlashSkill extends Skill {
 
     constructor(scene: Phaser.Scene, player: any) {
         super(scene, "slash", "Slash", 25, 3000, 50)
-
+        this.iconKey = "slash-icon"
         this.player = player
     }
 

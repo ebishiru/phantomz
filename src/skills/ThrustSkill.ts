@@ -6,7 +6,7 @@ export default class ThrustSkill extends Skill {
 
     constructor(scene: Phaser.Scene, player: any) {
         super(scene, "thrust", "Thrust", 20, 3500, 100)
-
+        this.iconKey = "thrust-icon"
         this.player = player
     }
 

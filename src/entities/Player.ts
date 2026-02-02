@@ -54,15 +54,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.caltropsSkill = new CaltopsSkill(scene, this)
         this.fireballSkill = new FireballSkill(scene, this)
 
-        this.skills = [this.slashSkill, this.arrowSkill, this.pulseSkill, this.thrustSkill, this.caltropsSkill, this.fireballSkill]
+        this.skills = []
     
         //Have all other skills locked at first
-        this.slashSkill.enabled = true
+        this.slashSkill.enabled = false
         this.arrowSkill.enabled = false
         this.pulseSkill.enabled = false
         this.thrustSkill.enabled = false
         this.caltropsSkill.enabled = false
         this.fireballSkill.enabled = false
+
+        //Unlock starting skill
+        this.unlockSkill(this.slashSkill)
     }
 
     takeDamage(amount: number) {
@@ -92,25 +95,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     handleSkillInputs(time: number) {
-        const keys = this.scene.input.keyboard
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR))) {
-            this.slashSkill.use(time)
-        }
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT))) {
-            this.arrowSkill.use(time)
-        }
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX))) {
-            this.pulseSkill.use(time)
-        }
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE))) {
-            this.thrustSkill.use(time)
-        }
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN) )) {
-            this.caltropsSkill.use(time)
-        }
-        if (Phaser.Input.Keyboard.JustDown(keys!.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE))) {
-            this.fireballSkill.use(time)
-        }
+        const keys = (this.scene as any).skillKeys as Phaser.Input.Keyboard.Key[]
+        
+        this.skills.forEach( (skill, index) => {
+            const key = keys[index]
+            if (!key) return
+
+            if (Phaser.Input.Keyboard.JustDown(key)) {
+                skill.use(time)
+            }
+        })
     }
 
     gainExp(amount: number) {
@@ -130,6 +124,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
     }
     
+    unlockSkill(skill: Skill) {
+        skill.enabled = true
+        this.skills.push(skill)
+    }
+
     die() {
         this.setVelocity(0, 0),
         this.anims.stop()
