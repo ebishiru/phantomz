@@ -39,6 +39,8 @@ export default class LevellingScene extends Phaser.Scene {
 
         //Upgrade Options (mid)
         const options = this.generateOptions(this.player)
+        const optionContainers: Phaser.GameObjects.Container[] = []
+        let optionChosen = false
 
         options.push({
             title: "Skip",
@@ -54,6 +56,7 @@ export default class LevellingScene extends Phaser.Scene {
             const y = optionsStartY + (index * optionsSpacing)
 
             const container = this.add.container(menuX, y)
+            optionContainers.push(container)
 
             const iconKey = option.iconKey || "skip-icon" //Placeholder icon
             const icon = this.add.image(-menuWidth / 2 + 30, 0, iconKey)
@@ -92,13 +95,28 @@ export default class LevellingScene extends Phaser.Scene {
 
         const chooseOption = (index: number) => {
             const option = options[index]
-            if (!option) return
-                option.apply()
-                this.scene.stop()
-                const gameScene = this.scene.get("game") as GameScene
-                this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
-                this.scene.resume("game")
-                gameScene.updateSkillUIPositions()
+            const container = optionContainers[index]
+            if (!option || !container) return
+
+            if (optionChosen) return
+            optionChosen = true
+
+            this.tweens.add({
+                targets: container,
+                alpha: 0,
+                duration: 50,
+                yoyo: true,
+                repeat: 2,
+                onComplete: () => {
+                    option.apply()
+                    this.scene.stop()
+                    const gameScene = this.scene.get("game") as GameScene
+                    this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
+                    this.scene.resume("game")
+                    gameScene.updateSkillUIPositions()
+                }
+            })
+                
         }
 
         const key1 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ONE)
