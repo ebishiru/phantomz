@@ -6,6 +6,8 @@ import ConeFromBoss from "../mechanics/ConeFromBoss";
 import TeleportConeFromBoss from "../mechanics/TeleportConeFromBoss";
 import ExpandDonutFromBoss from "../mechanics/ExpandDonutFromBoss";
 import ShrinkDonutFromBoss from "../mechanics/ShrinkDonutFromBoss";
+import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
+import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
 
 export const Bosses = [
     {
@@ -48,7 +50,8 @@ export const Bosses = [
         speed: 80,
         hurtRadius: 80,
         mechanics: [
-            
+            CardinalRoomSwipe,
+            TeleportConeAtPlayer
         ]
     }
 ]
