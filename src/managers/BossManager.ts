@@ -26,6 +26,9 @@ export default class BossManager {
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
 
+    // Boss Progression
+    currentMaxBossIndex = 0
+
     // Kill Count
     bossesKilled = 0
     bossKillText!: Phaser.GameObjects.Text;
@@ -60,6 +63,9 @@ export default class BossManager {
                 const min = Math.floor(this.globalTimerSeconds / 60).toString().padStart(2, "0");
                 const sec = (this.globalTimerSeconds % 60).toString().padStart(2, "0");
                 this.globalTimerText.setText(`Time: ${min}:${sec}`);
+
+                // Introduce harder bosses every minute
+                this.currentMaxBossIndex = Math.min(3, Math.floor(this.globalTimerSeconds / 60))
             }
         });
     }
@@ -154,7 +160,11 @@ export default class BossManager {
             this.destroyAllMechanics();
 
             // Spawn EXP at old boss position
-            (this.scene as any).spawnExp(bossX, bossY);
+            const isMilestone = this.bossesKilled > 0 && this.bossesKilled % 10 === 0
+
+            const orbCount: number = isMilestone ? 45 : 15;
+
+            (this.scene as any).spawnExp(bossX, bossY, orbCount);
 
             // Respawn after delay
             this.scene.time.delayedCall(respawnDelay, () => {
@@ -167,8 +177,8 @@ export default class BossManager {
 
     createBoss(x: number, y: number) {
         // Random Boss
-        const bossIndex = Phaser.Math.Between(0, 3)
-        const bossConfig = Bosses[3]
+        const bossIndex = Phaser.Math.Between(0, this.currentMaxBossIndex)
+        const bossConfig = Bosses[bossIndex]
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss

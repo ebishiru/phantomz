@@ -73,6 +73,10 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create() {
+        // Fade In
+        this.cameras.main.fadeIn(500, 0, 0, 0)
+
+
         // World Bounds
         this.physics.world.setBounds(50, 100, 700, 500)
 
@@ -165,8 +169,7 @@ export default class GameScene extends Phaser.Scene {
         })
     }
 
-    spawnExp(x: number, y: number) {
-        const orbCount = 15
+    spawnExp(x: number, y: number, orbCount: number = 15) {
         const minRadius = 80
         const maxRadius = 120
 
