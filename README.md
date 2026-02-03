@@ -27,13 +27,13 @@ These upgrades include new skills, increased general passive stats or further up
 **2. Boss Loop**
 
 Similar to the player, the boss will level up over time. They will randomly acquire buffs as time progresses. After every milestone,
-the boss will completely change with new mechanics.
+new bosses will spawn, completely changing the game with new mechanics.
 
 **3. Game Loop**
 
-When a player reaches 0hp, the game ends. After acquiring a certain amount of score, new skills will be unlocked for the player to acquire
-during their runs. This may help the player do better on their next run. A game is fixed to last 20 ingame minutes, with a total of 4 bosses
-per level. 
+When a player reaches 0hp, the game ends. The player is locked into only a certain number of skills. The player can restart and choose different
+skills to help them on future runs if the last one didn't go as planned. Player will naturally learn the boss mechanics and find out the best
+strategies to beat them.
 
 ## List of Skills 
 
@@ -52,20 +52,19 @@ INTERMEDIATE:
 
 - Fireball: Delayed circle AOE in front
 
+ADVANCED: *probably added later
+
 - Devour: Melee cone that dmgs and heals player
 
 - Hook: Ranged auto that pulls you to the boss.
 
 - Lightning: Ranged boosts movement for next 3s
 
-ADVANCED:
 - Blood: AOE around player, Use HP to deal dmg, no cd
 
 - Knives: Ranged, set line distance. Can be picked up to reset cd. 
 
 - Restoration: Instantly heal player, long cd
-
-
 
 
 ```
