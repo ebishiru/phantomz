@@ -26,7 +26,7 @@ export default class TitleScene extends Phaser.Scene {
 
         const startText = this.add.text(400, 450, "Press [ Enter ] to Start", {
             fontSize: "24px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: `#ffffff`,
         }).setOrigin(0.5)
 
@@ -57,7 +57,7 @@ export default class TitleScene extends Phaser.Scene {
 
         this.add.text(400, 650, "WASD to move, [J], [K], [L], [;] for skills", {
             fontSize: "16px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: `#ffcc00`,
         }).setOrigin(0.5)
     }

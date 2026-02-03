@@ -19,14 +19,14 @@ export default class GameOverScene extends Phaser.Scene {
 
         this.add.text(width/2, height/2 + 20, `Final Score: ${data.score}`, {
             fontSize: "16px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
         }).setOrigin(0.5)
 
         this.add.text(width/2, height/2 + 80, "Retry [ R ]", {
             fontSize: "20px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
         }).setOrigin(0.5)
@@ -37,7 +37,7 @@ export default class GameOverScene extends Phaser.Scene {
 
         this.add.text(width/2, height/2 + 120, "Home [ Esc ]", {
             fontSize: "20px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
         }).setOrigin(0.5)

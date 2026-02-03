@@ -69,7 +69,7 @@ export default class LevellingScene extends Phaser.Scene {
                 `${option.title}\n${option.desc}`,
                 {
                     fontSize: "16px",
-                    fontFamily: `"Old English Text MT", Georgia, serif`,
+                    fontFamily: `Georgia, serif`,
                     align: "left",
                     color: "#ffffff",
                     padding: { x: 0, y: 0},
@@ -83,7 +83,7 @@ export default class LevellingScene extends Phaser.Scene {
                 `[ ${index + 1} ]`,
                 {
                     fontSize: "16px",
-                    fontFamily: `"Old English Text MT", Georgia, serif`,
+                    fontFamily: `Georgia, serif`,
                     color: "#ffffff",
                 } 
             ).setOrigin(1, 0.5)
@@ -191,7 +191,7 @@ export default class LevellingScene extends Phaser.Scene {
 
         this.add.text(width/2, y, summary, {
             fontSize: "14px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: "#ffffff",
             align: "left",
             wordWrap: { width: menuWidth - 40}

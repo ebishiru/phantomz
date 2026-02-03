@@ -103,9 +103,9 @@ export default class GameScene extends Phaser.Scene {
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
         //Player Level Text
-        this.levelText = this.add.text(400, 630, `Lv ${this.player.level}`, {
+        this.levelText = this.add.text(400, 630, `Level ${this.player.level}`, {
             fontSize: "12px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: "#ffffff",
         }).setOrigin(0.5, 0)
 
@@ -184,7 +184,7 @@ export default class GameScene extends Phaser.Scene {
         if (this.scene.isPaused()) return
 
         this.healthBar.draw()
-        this.levelText.setText(`LV ${this.player.level}`)
+        this.levelText.setText(`Level ${this.player.level}`)
         this.expBar.draw()
         if (this.bossManager.boss && this.bossManager.bossHealthBar) {
             this.bossManager.bossHealthBar.draw()
