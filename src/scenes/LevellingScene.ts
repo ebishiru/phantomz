@@ -91,6 +91,11 @@ export default class LevellingScene extends Phaser.Scene {
             container.add([icon, text, keyCode])
 
             container.setSize(menuWidth - 20, 50)
+            container.setInteractive({ useHandCursor: true})
+
+            container.on("pointerdown", () => {
+                chooseOption(index)
+            })
         })
 
         const chooseOption = (index: number) => {

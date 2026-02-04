@@ -19,6 +19,14 @@ export default class GameScene extends Phaser.Scene {
     sKey!: Phaser.Input.Keyboard.Key
     dKey!: Phaser.Input.Keyboard.Key
 
+    joystickBase!: Phaser.GameObjects.Arc
+    joystickThumb!: Phaser.GameObjects.Arc
+    joystickVector = new Phaser.Math.Vector2()
+    joystickActive = false
+    joystickRadius = 40
+
+    skillButtons: Phaser.GameObjects.Arc[] = []
+
     skillKeys!: Phaser.Input.Keyboard.Key[]
 
     skillCooldownUIs!: SkillCooldown[]
@@ -103,11 +111,11 @@ export default class GameScene extends Phaser.Scene {
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
         //Player Level Text
-        this.levelText = this.add.text(400, 630, `Level ${this.player.level}`, {
+        this.levelText = this.add.text(260, 660, `Level ${this.player.level}`, {
             fontSize: "12px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
-        }).setOrigin(0.5, 0)
+        }).setOrigin(0.5)
 
         //Boss Info
         this.bossManager = new BossManager(this, this.player)
@@ -122,10 +130,13 @@ export default class GameScene extends Phaser.Scene {
         // Skill keybindings
         this.skillKeys = [
             this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.J),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.I),
             this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.K),
             this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.L),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SEMICOLON),
         ]
+
+        // Mobile Controls
+        this.createMobileControls()
 
         this.updateSkillUIPositions()
 
@@ -134,8 +145,8 @@ export default class GameScene extends Phaser.Scene {
     }
 
     updateSkillUIPositions() {
-        const baseX = 550
-        const baseY = 670
+        const baseX = 320
+        const baseY = 640
         const spacing = 50
 
         this.skillCooldownUIs?.forEach(ui => ui.destroy())
@@ -180,6 +191,96 @@ export default class GameScene extends Phaser.Scene {
         }
     }
     
+    createMobileControls() {
+        const h = this.scale.height
+        const w = this.scale.width
+
+        //Joystick
+        this.joystickBase = this.add.circle(100, h - 100, 50, 0x000000, 0.3).setScrollFactor(0)
+        this.joystickThumb = this.add.circle(100, h - 100, 25, 0xffffff, 0.6 ).setScrollFactor(0)
+
+        //Face buttons
+        const centerX = w - 120
+        const centerY = h - 100
+        const offset = 45
+        const radius = 22
+
+        const positions = [
+            { x: centerX - offset, y: centerY },
+            { x: centerX, y: centerY - offset},
+            { x: centerX + offset, y: centerY},
+            { x: centerX, y: centerY + offset}
+        ]
+
+        const buttonColors = [0xa4ebcc, 0x5f699c, 0xf0b38d, 0xb56d7f]
+
+        positions.forEach((pos, index) => {
+            const btn = this.add.circle(pos.x, pos.y, radius, buttonColors[index], 0.6)
+                .setScrollFactor(0)
+                .setInteractive()
+
+            btn.on("pointerdown", () => {
+
+                this.tweens.add({
+                    targets: btn,
+                    scale: 0.8,
+                    duration: 50,
+                    ease: "Power1"
+                })
+
+                const skill = this.player.skills[index]
+                if (skill) skill.use(this.time.now)
+            })
+
+            const release = () => {
+                this.tweens.add({
+                    targets: btn,
+                    scale: 1,
+                    duration: 50,
+                    ease: "Power1"
+                })
+            }
+
+            btn.on("pointerup", release)
+            btn.on("pointerout", release)
+
+            this.skillButtons.push(btn)
+        })
+
+        //Convert Joystick to movement
+        this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.x < w / 4 && pointer.y > h * 3/4) {
+                this.joystickActive = true
+            }
+        })
+
+        this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
+            if (!this.joystickActive) return
+
+            const dx = pointer.x - this.joystickBase.x
+            const dy = pointer.y - this.joystickBase.y
+
+            const dist = Math.min(
+                Math.sqrt(dx * dx + dy * dy),
+                this.joystickRadius
+            )
+
+            this.joystickVector.set(dx, dy).normalize()
+
+            this.joystickThumb.setPosition(
+                this.joystickBase.x + this.joystickVector.x * dist,
+                this.joystickBase.y + this.joystickVector.y * dist
+            )
+        })
+
+        this.input.on("pointerup", () => {
+            this.joystickActive = false
+            this.joystickVector.set(0, 0)
+            this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y)
+        })
+
+    }
+
     update() {
         if (this.scene.isPaused()) return
 
@@ -196,6 +297,10 @@ export default class GameScene extends Phaser.Scene {
         if (this.dKey.isDown) dir.x += 1 // right
         if (this.wKey.isDown) dir.y -= 1 // up
         if (this.sKey.isDown) dir.y += 1 // down
+
+        //Joystick
+        dir.add(this.joystickVector)
+
         dir.normalize()
         this.player.move(dir)
 

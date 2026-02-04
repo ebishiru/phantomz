@@ -24,11 +24,13 @@ export default class TitleScene extends Phaser.Scene {
         const playerSprite = this.add.sprite(400, 300, "player", 0)
         playerSprite.setScale(4)
 
-        const startText = this.add.text(400, 450, "Press [ Enter ] to Start", {
+        const startText = this.add.text(400, 450, "Touch here or Press [ Enter ] to Start", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: `#ffffff`,
         }).setOrigin(0.5)
+
+        startText.setInteractive({ useHandCursor: true })
 
         this.tweens.add({
             targets: startText,
@@ -38,6 +40,13 @@ export default class TitleScene extends Phaser.Scene {
             repeat: -1,
             ease: "Sine.easeInOut",
         });
+
+        startText.once("pointerdown", () => {
+            this.cameras.main.fadeOut(500, 0, 0, 0)
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+                this.scene.start("game")
+            })
+        })
 
         this.enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
 
@@ -55,7 +64,7 @@ export default class TitleScene extends Phaser.Scene {
             color: `#ffffff`,
         }).setOrigin(0.5)
 
-        this.add.text(400, 650, "WASD to move, [J], [K], [L], [;] for skills", {
+        this.add.text(400, 650, "WASD to move, JIKL for skills", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: `#ffcc00`,
