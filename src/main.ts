@@ -6,7 +6,7 @@ import GameOverScene from "./scenes/GameOverScene"
 
 const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-const canvasHeight = isMobile ? 900 : 700
+const canvasHeight = isMobile ? 1200 : 700
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,

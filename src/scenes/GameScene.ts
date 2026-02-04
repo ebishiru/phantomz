@@ -200,10 +200,10 @@ export default class GameScene extends Phaser.Scene {
         const controlSpace = this.scale.height - gameHeight
 
         //Joystick
-        const joystickX = 100
+        const joystickX = 200
         const joystickY = gameHeight + controlSpace / 2
-        const joystickRadius = 60
-        const thumbRadius = 35
+        const joystickRadius = 100
+        const thumbRadius = 60
 
         this.joystickBase = this.add.circle(joystickX, joystickY, joystickRadius, 0x000000, 0.3).setScrollFactor(0)
         this.joystickThumb = this.add.circle(joystickX, joystickY, thumbRadius, 0xffffff, 0.6 ).setScrollFactor(0)
@@ -248,10 +248,10 @@ export default class GameScene extends Phaser.Scene {
         })
 
         //Face buttons
-        const centerX = w - 120
+        const centerX = w - 200
         const centerY = gameHeight + controlSpace / 2
-        const offset = 60
-        const radius = 28
+        const offset = 65
+        const radius = 35
 
         const positions = [
             { x: centerX - offset, y: centerY },
