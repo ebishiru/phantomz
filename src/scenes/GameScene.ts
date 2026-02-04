@@ -260,8 +260,8 @@ export default class GameScene extends Phaser.Scene {
         //Face buttons
         const centerX = w - 200
         const centerY = gameHeight + controlSpace / 2
-        const offset = 65
-        const radius = 35
+        const offset = 85
+        const radius = 45
 
         const positions = [
             { x: centerX - offset, y: centerY },
