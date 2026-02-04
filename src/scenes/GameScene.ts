@@ -111,11 +111,11 @@ export default class GameScene extends Phaser.Scene {
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
         //Player Level Text
-        this.levelText = this.add.text(260, 660, `Level ${this.player.level}`, {
+        this.levelText = this.add.text(400, 630, `Level ${this.player.level}`, {
             fontSize: "12px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
-        }).setOrigin(0.5)
+        }).setOrigin(0.5, 0)
 
         //Boss Info
         this.bossManager = new BossManager(this, this.player)
@@ -136,7 +136,10 @@ export default class GameScene extends Phaser.Scene {
         ]
 
         // Mobile Controls
-        this.createMobileControls()
+        const isMobile = this.sys.game.device.input.touch
+        if (isMobile) {
+            this.createMobileControls()
+        }
 
         this.updateSkillUIPositions()
 
@@ -145,8 +148,8 @@ export default class GameScene extends Phaser.Scene {
     }
 
     updateSkillUIPositions() {
-        const baseX = 320
-        const baseY = 640
+        const baseX = 550
+        const baseY = 650
         const spacing = 50
 
         this.skillCooldownUIs?.forEach(ui => ui.destroy())
@@ -192,18 +195,63 @@ export default class GameScene extends Phaser.Scene {
     }
     
     createMobileControls() {
-        const h = this.scale.height
         const w = this.scale.width
+        const gameHeight = 700
+        const controlSpace = this.scale.height - gameHeight
 
         //Joystick
-        this.joystickBase = this.add.circle(100, h - 100, 50, 0x000000, 0.3).setScrollFactor(0)
-        this.joystickThumb = this.add.circle(100, h - 100, 25, 0xffffff, 0.6 ).setScrollFactor(0)
+        const joystickX = 100
+        const joystickY = gameHeight + controlSpace / 2
+        const joystickRadius = 60
+        const thumbRadius = 35
+
+        this.joystickBase = this.add.circle(joystickX, joystickY, joystickRadius, 0x000000, 0.3).setScrollFactor(0)
+        this.joystickThumb = this.add.circle(joystickX, joystickY, thumbRadius, 0xffffff, 0.6 ).setScrollFactor(0)
+
+        let joystickPointerId: number | null = null
+
+        //Convert Joystick to movement
+        this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.x < w / 2 && pointer.y > gameHeight) {
+                this.joystickActive = true
+                joystickPointerId = pointer.id
+            }
+        })
+
+        this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
+            if (!this.joystickActive || pointer.id !== joystickPointerId) return
+
+            const dx = pointer.x - this.joystickBase.x
+            const dy = pointer.y - this.joystickBase.y
+
+            const dist = Math.min(
+                Math.sqrt(dx * dx + dy * dy),
+                this.joystickRadius
+            )
+
+            this.joystickVector.set(dx, dy).normalize()
+
+            this.joystickThumb.setPosition(
+                this.joystickBase.x + this.joystickVector.x * dist,
+                this.joystickBase.y + this.joystickVector.y * dist
+            )
+        })
+
+        this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.id === joystickPointerId) {
+                this.joystickActive = false
+                joystickPointerId = null;
+                this.joystickVector.set(0, 0)
+                this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y)
+            }
+            
+        })
 
         //Face buttons
         const centerX = w - 120
-        const centerY = h - 100
-        const offset = 45
-        const radius = 22
+        const centerY = gameHeight + controlSpace / 2
+        const offset = 60
+        const radius = 28
 
         const positions = [
             { x: centerX - offset, y: centerY },
@@ -246,39 +294,6 @@ export default class GameScene extends Phaser.Scene {
 
             this.skillButtons.push(btn)
         })
-
-        //Convert Joystick to movement
-        this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-            if (pointer.x < w / 4 && pointer.y > h * 3/4) {
-                this.joystickActive = true
-            }
-        })
-
-        this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
-            if (!this.joystickActive) return
-
-            const dx = pointer.x - this.joystickBase.x
-            const dy = pointer.y - this.joystickBase.y
-
-            const dist = Math.min(
-                Math.sqrt(dx * dx + dy * dy),
-                this.joystickRadius
-            )
-
-            this.joystickVector.set(dx, dy).normalize()
-
-            this.joystickThumb.setPosition(
-                this.joystickBase.x + this.joystickVector.x * dist,
-                this.joystickBase.y + this.joystickVector.y * dist
-            )
-        })
-
-        this.input.on("pointerup", () => {
-            this.joystickActive = false
-            this.joystickVector.set(0, 0)
-            this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y)
-        })
-
     }
 
     update() {
