@@ -6,6 +6,7 @@ import PulseSkill from "../skills/PulseSkill"
 import ThrustSkill from "../skills/ThrustSkill"
 import CaltopsSkill from "../skills/CaltropsSkill"
 import FireballSkill from "../skills/FireballSkill"
+import HookSkill from "../skills/HookSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -24,6 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     thrustSkill!: ThrustSkill
     caltropsSkill!: CaltopsSkill
     fireballSkill!: FireballSkill
+    hookSkill!: HookSkill
 
     facing!: Phaser.Math.Vector2
 
@@ -53,6 +55,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.thrustSkill = new ThrustSkill(scene, this)
         this.caltropsSkill = new CaltopsSkill(scene, this)
         this.fireballSkill = new FireballSkill(scene, this)
+        this.hookSkill = new HookSkill(scene, this)
 
         this.skills = []
     
@@ -63,6 +66,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.thrustSkill.enabled = false
         this.caltropsSkill.enabled = false
         this.fireballSkill.enabled = false
+        this.hookSkill.enabled = false
 
         //Unlock starting skill
         this.unlockSkill(this.slashSkill)

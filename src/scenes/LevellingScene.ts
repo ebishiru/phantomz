@@ -174,29 +174,25 @@ export default class LevellingScene extends Phaser.Scene {
         const { width } = this.scale
         let summary = "Your Skills:\n\n"
 
-        if (player.slashSkill.enabled) {
-            summary += `Slash: Dmg ${player.slashSkill.damage}, CD ${(player.slashSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.slashSkill.range}\n`
-        }
+        player.skills.forEach((skill: any) => {
+            if (!skill.enabled) return
 
-        if (player.arrowSkill.enabled) {
-            summary += `Arrow: Dmg ${player.arrowSkill.damage}, CD ${(player.arrowSkill.cooldown / 1000).toFixed(2)}s\n`
-        }
+            const stats: string[] = []
 
-        if (player.pulseSkill.enabled) {
-            summary += `Pulse: Dmg ${player.pulseSkill.damage}, CD ${(player.pulseSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.pulseSkill.range}\n`
-        }
+            if (skill.damage !== undefined) {
+                stats.push(`Dmg: ${(skill.damage).toFixed(2)}`)
+            }
 
-        if (player.thrustSkill.enabled) {
-            summary += `Thrust: Dmg ${player.thrustSkill.damage}, CD ${(player.thrustSkill.cooldown / 1000).toFixed(2)}s\n`
-        }
+            if (skill.cooldown !== undefined) {
+                stats.push(`CD ${(skill.cooldown / 1000).toFixed(2)}`)
+            }
 
-        if (player.caltropsSkill.enabled) {
-            summary += `Caltrops: Dmg ${player.caltropsSkill.damage}, CD ${(player.caltropsSkill.cooldown / 1000).toFixed(2)}s, Rng ${player.caltropsSkill.range}\n`
-        }
+            if (skill.range !== undefined) {
+                stats.push(`Rng ${(skill.range).toFixed(2)}`)
+            }
 
-        if (player.fireballSkill.enabled) {
-            summary += `Fireball: Dmg ${player.fireballSkill.damage}, CD ${(player.fireballSkill.cooldown / 1000).toFixed(2)}s\n`
-        }
+            summary += `${skill.name}: ${stats.join(", ")}\n`
+        })
 
         this.add.text(width/2, y, summary, {
             fontSize: "14px",

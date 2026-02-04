@@ -78,4 +78,15 @@ export const upgrades = {
             apply: (player: Player) => player.fireballSkill.buffCooldown(player.fireballSkill.cooldown * 0.25)
         },
     ],
+
+    hook: [
+        {
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.hookSkill.buffDamage(player.hookSkill.damage * 0.25)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.hookSkill.buffCooldown(player.hookSkill.cooldown * 0.25)
+        }
+    ]
 }

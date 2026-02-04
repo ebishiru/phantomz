@@ -1,12 +1,12 @@
 import Phaser from "phaser";
 import Skill from "./Skill";
 
-export default class ArrowSkill extends Skill {
+export default class HookSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "arrow", "Arrow", 20, 4000, 0)
-        this.iconKey = "arrow-icon"
+        super(scene, "hook", "Hook", 10, 7000, 0)
+        this.iconKey = ""
         this.player = player
     }
 
@@ -16,7 +16,7 @@ export default class ArrowSkill extends Skill {
 
         //Add Graphics
         const g = this.scene.add.graphics()
-        g.lineStyle(3, 0x00ff00, 0.6)
+        g.lineStyle(3, 0x00ff00, 0.8)
         g.beginPath()
         g.moveTo(this.player.x, this.player.y)
         g.lineTo(boss.x, boss.y)
@@ -24,6 +24,15 @@ export default class ArrowSkill extends Skill {
 
         boss.takeDamage(this.damage)
 
-        this.scene.time.delayedCall(150, () => g.destroy())
+        this.scene.time.delayedCall(100, () => g.destroy())
+
+        this.scene.tweens.add({
+            targets: this.player,
+            x: boss.x,
+            y: boss.y,
+            duration: 250,
+            ease: "Sine.easeInOut",
+        })
     }
+
 }

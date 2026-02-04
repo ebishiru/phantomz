@@ -42,5 +42,12 @@ export const skills = [
         iconKey: "fireball-icon",
         desc: "Cast down an explosion of flame",
         upgrades: upgrades.fireball
+    },
+    {
+        key: "hookSkill",
+        name: "Hook",
+        iconKey: "hook-icon",
+        desc: "Reel yourself to the boss' location",
+        upgrades: upgrades.hook
     }
 ]
