@@ -141,6 +141,16 @@ export default class GameScene extends Phaser.Scene {
             this.createMobileControls()
         }
 
+        this.events.on('resume', () => {
+            // Reset joystick state when coming back from a paused scene
+            this.joystickActive = false;
+            this.joystickVector.set(0, 0);
+            if (this.joystickThumb) {
+                this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y);
+            }
+        });
+
+
         this.updateSkillUIPositions()
 
         //Exp
