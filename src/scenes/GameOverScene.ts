@@ -24,23 +24,27 @@ export default class GameOverScene extends Phaser.Scene {
             color: "#ffffff",
         }).setOrigin(0.5)
 
-        this.add.text(width/2, height/2 + 80, "Retry [ R ]", {
+        const retryText = this.add.text(width/2, height/2 + 80, "Retry [ R ]", {
             fontSize: "20px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
-        }).setOrigin(0.5)
+        }).setOrigin(0.5).setInteractive({ useHandCursor: true})
+
+        retryText.on("pointerdown", () => this.restartGame())
 
         const rKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.R)
 
         rKey?.on("down", () => this.restartGame())
 
-        this.add.text(width/2, height/2 + 120, "Home [ Esc ]", {
+        const homeText = this.add.text(width/2, height/2 + 120, "Home [ Esc ]", {
             fontSize: "20px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
-        }).setOrigin(0.5)
+        }).setOrigin(0.5).setInteractive({ useHandCursor: true})
+
+        homeText.on("pointerdown", () => this.goToTitle())
 
         const escKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
