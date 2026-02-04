@@ -6,25 +6,31 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     create(data: { score: number }) {
-        const { width, height } = this.scale
+        const gameX = 50
+        const gameY = 100
+        const gameWidth = 700
+        const gameHeight = 500
+
+        const centerX = gameX + gameWidth / 2
+        const centerY = gameY + gameHeight / 2
 
         // Dim Background
-        this.add.rectangle(0, 0, width, height, 0x000000, 0.6).setOrigin(0)
+        this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 
-        this.add.text(width/2, height/2 - 60, "SOUL LOST", {
+        this.add.text(centerX, centerY - 60, "SOUL LOST", {
             fontSize: "48px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ff0000",
         }).setOrigin(0.5)
 
-        this.add.text(width/2, height/2 + 20, `Final Score: ${data.score}`, {
+        this.add.text(centerX, centerY + 20, `Final Score: ${data.score}`, {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
         }).setOrigin(0.5)
 
-        const retryText = this.add.text(width/2, height/2 + 80, "Retry [ R ]", {
+        const retryText = this.add.text(centerX, centerY + 80, "Retry [ R ]", {
             fontSize: "20px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
@@ -37,7 +43,7 @@ export default class GameOverScene extends Phaser.Scene {
 
         rKey?.on("down", () => this.restartGame())
 
-        const homeText = this.add.text(width/2, height/2 + 120, "Home [ Esc ]", {
+        const homeText = this.add.text(centerX, centerY + 120, "Home [ Esc ]", {
             fontSize: "20px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",

@@ -16,15 +16,19 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     create() {
-        const { width, height } = this.scale
+        const gameX = 50
+        const gameY = 100
+        const gameWidth = 700
+        const gameHeight = 500
 
         const menuWidth = 500
         const menuHeight = 450
-        const menuX = width / 2
-        const menuY = height / 2
+
+        const menuX = gameX + gameWidth / 2
+        const menuY = gameY + gameHeight / 2
 
         //Dim Background
-        this.add.rectangle(0, 0, width, height, 0x000000, 0.35).setOrigin(0)
+        this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.35).setOrigin(0)
 
         //Menu Box
         this.add.rectangle(menuX, menuY, menuWidth, menuHeight, 0x1e1e1e)
