@@ -80,7 +80,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.health -= amount
         this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
 
-        this.setTint(0xff0000)
+        if (amount >= 0) {
+            this.setTint(0xff0000)
+        } else {
+            this.setTint(0x00ff00)
+        }
+        
         this.scene.time.delayedCall(300, () => {
             this.clearTint()
         })

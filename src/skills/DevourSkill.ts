@@ -7,7 +7,7 @@ export default class DevourSkill extends Skill {
     healingValue: number = 5
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "devour", "Devour", 10, 6000, 30)
+        super(scene, "devour", "Devour", 10, 6000, 40)
         this.iconKey = ""
         this.player = player
     }
@@ -24,20 +24,25 @@ export default class DevourSkill extends Skill {
     activate() {
         this.updateFacing()
 
+        const startAngle = this.facingAngle - Math.PI / 3
+        const endAngle = this.facingAngle + Math.PI /3
+
         //Create graphics
         const g = this.scene.add.graphics()
         g.fillStyle(0x00ff00, 0.25)
-        g.slice(
-            this.player.x,
-            this.player.y,
-            this.range,
-            this.facingAngle - Math.PI/3,
-            this.facingAngle + Math.PI/3,
-            false
-        )
+        g.beginPath()
+        g.moveTo(this.player.x, this.player.y)
+        g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
+        g.closePath()
         g.fillPath()
+
         g.lineStyle(2, 0x00ff00, 1)
-        g.strokeCircle(this.player.x, this.player.y, this.range)
+        g.beginPath()
+        g.moveTo(this.player.x, this.player.y)
+        g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
+        g.closePath()
+        g.strokePath()
+
         this.scene.time.delayedCall(150, () => g.destroy())
 
         //Check hit
