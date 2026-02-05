@@ -44,6 +44,13 @@ export const skills = [
         upgrades: upgrades.fireball
     },
     {
+        key: "devourSkill",
+        name: "Devour",
+        iconKey: "",
+        desc: "Chew on the flesh of your enemy",
+        upgrades: upgrades.devour
+    },
+    {
         key: "hookSkill",
         name: "Hook",
         iconKey: "hook-icon",

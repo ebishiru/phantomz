@@ -79,6 +79,21 @@ export const upgrades = {
         },
     ],
 
+    devour: [
+        {
+            desc: "Damage x1.25",
+            apply: (player: Player) => player.devourSkill.buffDamage(player.devourSkill.damage * 0.25)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.devourSkill.buffCooldown(player.devourSkill.cooldown * 0.25)
+        },
+        {
+            desc: "Heal +2",
+            apply: (player: Player) => player.devourSkill.buffHeal(player.devourSkill.healingValue + 2)
+        },
+    ],
+
     hook: [
         {
             desc: "Damage x1.5",

@@ -191,6 +191,10 @@ export default class LevellingScene extends Phaser.Scene {
                 stats.push(`Rng ${(skill.range).toFixed(2)}`)
             }
 
+            if (skill.healingValue !== undefined) {
+                stats.push(`Heal ${skill.healingValue}`)
+            }
+
             summary += `${skill.name}: ${stats.join(", ")}\n`
         })
 
