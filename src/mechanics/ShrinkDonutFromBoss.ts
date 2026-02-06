@@ -26,7 +26,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
 
         // Donut Telegraph First,
         this.scene.time.delayedCall(1400, () => {
-            if (!this.boss) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             
             this.donutTelegraph = new DonutTelegraph(
                 this.scene,
@@ -39,7 +39,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
 
         //Donut Telegraph Hit Check
         this.scene.time.delayedCall(1500, () => {
-            if (!this.boss) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
             const dist = Phaser.Math.Distance.Between(
                 this.player.x,
@@ -60,7 +60,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
 
         // Center Telegraph Next
         this.scene.time.delayedCall(2400, () => {
-            if (!this.boss) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             
             this.circleTelegraph = new CircleTelegraph(
             this.scene,
@@ -72,7 +72,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
 
         // Center Telegraph Hit Check
         this.scene.time.delayedCall(2500, () => {
-            if (!this.boss) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
             const dist = Phaser.Math.Distance.Between(
                 this.player.x,

@@ -31,6 +31,7 @@ export default class BossManager {
 
     // Kill Count
     bossesKilled = 0
+    extraExpPerBoss = 0
     bossKillText!: Phaser.GameObjects.Text;
 
     constructor(scene: Phaser.Scene, player: any) {
@@ -159,10 +160,16 @@ export default class BossManager {
             // Destroy old boss & mechanics
             this.destroyAllMechanics();
 
+            // Increase bonus exp per 5 bosses killed
+            if (this.bossesKilled % 5 === 0) {
+                this.extraExpPerBoss++
+            }
+
             // Spawn EXP at old boss position
             const isMilestone = this.bossesKilled > 0 && this.bossesKilled % 10 === 0
 
-            const orbCount: number = isMilestone ? 45 : 15;
+            const baseExp = isMilestone ? 45 : 15
+            const orbCount: number = baseExp + this.extraExpPerBoss;
 
             (this.scene as any).spawnExp(bossX, bossY, orbCount);
 

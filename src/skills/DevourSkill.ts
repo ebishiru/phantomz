@@ -8,7 +8,7 @@ export default class DevourSkill extends Skill {
 
     constructor(scene: Phaser.Scene, player: any) {
         super(scene, "devour", "Devour", 10, 6000, 40)
-        this.iconKey = ""
+        this.iconKey = "devour-icon"
         this.player = player
     }
 

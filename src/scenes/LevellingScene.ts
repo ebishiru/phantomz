@@ -180,18 +180,18 @@ export default class LevellingScene extends Phaser.Scene {
             const stats: string[] = []
 
             if (skill.damage !== undefined) {
-                stats.push(`Dmg: ${(skill.damage).toFixed(2)}`)
+                stats.push(`Dmg: ${(skill.damage).toFixed(0)}`)
             }
 
             if (skill.cooldown !== undefined) {
                 stats.push(`CD ${(skill.cooldown / 1000).toFixed(2)}`)
             }
 
-            if (skill.range !== undefined) {
-                stats.push(`Rng ${(skill.range).toFixed(2)}`)
+            if (skill.range !== undefined && skill.range > 0) {
+                stats.push(`Rng ${(skill.range).toFixed(0)}`)
             }
 
-            if (skill.healingValue !== undefined) {
+            if (skill.healingValue !== undefined && skill.healingValue > 0) {
                 stats.push(`Heal ${skill.healingValue}`)
             }
 

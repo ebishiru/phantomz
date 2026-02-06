@@ -46,7 +46,7 @@ export const skills = [
     {
         key: "devourSkill",
         name: "Devour",
-        iconKey: "",
+        iconKey: "devour-icon",
         desc: "Chew on the flesh of your enemy",
         upgrades: upgrades.devour
     },
@@ -56,5 +56,12 @@ export const skills = [
         iconKey: "hook-icon",
         desc: "Reel yourself to the boss' location",
         upgrades: upgrades.hook
-    }
+    },
+    {
+        key: "lightningSkill",
+        name: "Lightning",
+        iconKey: "lightning-icon",
+        desc: "Supercharge yourself and exhaust after",
+        upgrades: upgrades.lightning
+    },
 ]

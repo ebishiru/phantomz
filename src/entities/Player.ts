@@ -8,6 +8,7 @@ import CaltopsSkill from "../skills/CaltropsSkill"
 import FireballSkill from "../skills/FireballSkill"
 import DevourSkill from "../skills/DevourSkill"
 import HookSkill from "../skills/HookSkill"
+import LightningSkill from "../skills/LightningSkill"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -28,6 +29,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     fireballSkill!: FireballSkill
     devourSkill!: DevourSkill
     hookSkill!: HookSkill
+    lightningSkill!: LightningSkill
 
     facing!: Phaser.Math.Vector2
 
@@ -59,6 +61,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.fireballSkill = new FireballSkill(scene, this)
         this.devourSkill = new DevourSkill(scene, this)
         this.hookSkill = new HookSkill(scene, this)
+        this.lightningSkill = new LightningSkill(scene, this)
 
         this.skills = []
     
@@ -71,9 +74,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.fireballSkill.enabled = false
         this.devourSkill.enabled = false
         this.hookSkill.enabled = false
+        this.lightningSkill.enabled = false
 
         //Unlock starting skill
-        this.unlockSkill(this.slashSkill)
+        this.unlockSkill(this.lightningSkill)
     }
 
     takeDamage(amount: number) {
@@ -134,7 +138,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
+        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.3)
     }
     
     unlockSkill(skill: Skill) {

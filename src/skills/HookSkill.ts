@@ -30,7 +30,7 @@ export default class HookSkill extends Skill {
             targets: this.player,
             x: boss.x,
             y: boss.y,
-            duration: 250,
+            duration: 450,
             ease: "Sine.easeInOut",
         })
     }

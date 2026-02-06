@@ -103,5 +103,16 @@ export const upgrades = {
             desc: "Cooldown x0.75",
             apply: (player: Player) => player.hookSkill.buffCooldown(player.hookSkill.cooldown * 0.25)
         }
-    ]
+    ],
+
+    lightning: [
+        {
+            desc: "Damage x1.5",
+            apply: (player: Player) => player.lightningSkill.buffDamage(player.lightningSkill.damage * 0.25)
+        },
+        {
+            desc: "Cooldown x0.75",
+            apply: (player: Player) => player.lightningSkill.buffCooldown(player.lightningSkill.cooldown * 0.25)
+        }
+    ],
 }
