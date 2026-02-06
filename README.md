@@ -52,17 +52,19 @@ INTERMEDIATE:
 
 - Fireball: Delayed circle AOE in front
 
-ADVANCED: *probably added later
-
 - Devour: Melee cone that dmgs and heals player
 
 - Hook: Ranged auto that pulls you to the boss.
 
 - Lightning: Ranged boosts movement for next 3s
 
+ADVANCED: 
+
 - Blood: AOE around player, Use HP to deal dmg, no cd
 
-- Knives: Ranged, set line distance. Can be picked up to reset cd. 
+- Knife: Starts at 1 dmg, increases with each hit.
+
+- Javelin: Ranged, set line distance. Must be picked up to reset cd. 
 
 - Restoration: Instantly heal player, long cd
 

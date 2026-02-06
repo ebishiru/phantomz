@@ -8,11 +8,11 @@ export default class LightningSkill extends Skill {
     hasteDuration = 2000
 
     constructor(scene: Phaser.Scene, player: Player) {
-        super(scene, "lightning", "Lightning", 20, 6000, 40)
+        super(scene, "volt", "Volt", 20, 6000, 40)
 
         this.player = player
         this.originalSpeed = player.speed
-        this.iconKey = "lightning-icon"
+        this.iconKey = "volt-icon"
     }
 
     activate() {
@@ -64,7 +64,7 @@ export default class LightningSkill extends Skill {
             }
         }
 
-        this.scene.time.delayedCall(500, () => updateCircle())
+        this.scene.time.delayedCall(1500, () => updateCircle())
         this.scene.time.delayedCall(this.hasteDuration, () => {
             this.player.speed = this.originalSpeed
             this.player.clearTint()

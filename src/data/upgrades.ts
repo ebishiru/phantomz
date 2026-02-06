@@ -105,14 +105,14 @@ export const upgrades = {
         }
     ],
 
-    lightning: [
+    volt: [
         {
             desc: "Damage x1.5",
-            apply: (player: Player) => player.lightningSkill.buffDamage(player.lightningSkill.damage * 0.25)
+            apply: (player: Player) => player.voltSkill.buffDamage(player.voltSkill.damage * 0.25)
         },
         {
             desc: "Cooldown x0.75",
-            apply: (player: Player) => player.lightningSkill.buffCooldown(player.lightningSkill.cooldown * 0.25)
+            apply: (player: Player) => player.voltSkill.buffCooldown(player.voltSkill.cooldown * 0.25)
         }
     ],
 }

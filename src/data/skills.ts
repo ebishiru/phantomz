@@ -58,10 +58,10 @@ export const skills = [
         upgrades: upgrades.hook
     },
     {
-        key: "lightningSkill",
-        name: "Lightning",
-        iconKey: "lightning-icon",
+        key: "voltSkill",
+        name: "Volt",
+        iconKey: "volt-icon",
         desc: "Supercharge yourself and exhaust after",
-        upgrades: upgrades.lightning
+        upgrades: upgrades.volt
     },
 ]
