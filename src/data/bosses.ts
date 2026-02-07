@@ -9,6 +9,7 @@ import ShrinkDonutFromBoss from "../mechanics/ShrinkDonutFromBoss";
 import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
 import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
 import RandomCirclesAround from "../mechanics/RandomCirclesAround";
+import HalfCircleFromBoss from "../mechanics/HalfCircleFromBoss";
 
 export const Bosses = [
     {
@@ -61,7 +62,8 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            RandomCirclesAround
+            RandomCirclesAround,
+            HalfCircleFromBoss
         ]
     }
 ]
