@@ -6,6 +6,7 @@ import ConeFromBoss from "../mechanics/ConeFromBoss";
 import TeleportConeFromBoss from "../mechanics/TeleportConeFromBoss";
 import ExpandDonutFromBoss from "../mechanics/ExpandDonutFromBoss";
 import ShrinkDonutFromBoss from "../mechanics/ShrinkDonutFromBoss";
+import TripleRectangleOnPlayer from "../mechanics/TripleRectangleOnPlayer";
 import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
 import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
 import RandomCirclesAround from "../mechanics/RandomCirclesAround";
@@ -44,7 +45,8 @@ export const Bosses = [
         hurtRadius: 80,
         mechanics: [
             ExpandDonutFromBoss,
-            ShrinkDonutFromBoss
+            ShrinkDonutFromBoss,
+            TripleRectangleOnPlayer
         ]
     },
     {

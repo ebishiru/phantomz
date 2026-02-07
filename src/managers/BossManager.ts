@@ -185,7 +185,7 @@ export default class BossManager {
     createBoss(x: number, y: number) {
         // Random Boss
         const bossIndex = Phaser.Math.Between(0, this.currentMaxBossIndex)
-        const bossConfig = Bosses[4]        // Change Index to Boss Index to Test HERE
+        const bossConfig = Bosses[2]        // Change Index to Boss Index to Test HERE
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss
