@@ -8,12 +8,13 @@ import ExpandDonutFromBoss from "../mechanics/ExpandDonutFromBoss";
 import ShrinkDonutFromBoss from "../mechanics/ShrinkDonutFromBoss";
 import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
 import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
+import RandomCirclesAround from "../mechanics/RandomCirclesAround";
 
 export const Bosses = [
     {
         name: "Cave Worm",
         spriteKey: "boss1",
-        speed: 10,
+        speed: 25,
         hurtRadius: 80,
         mechanics: [
             CircleTelegraphOnBoss,
@@ -26,7 +27,7 @@ export const Bosses = [
         name: "Cave Bat",
         spriteKey: "boss2",
         speed: 120,
-        hurtRadius: 80,
+        hurtRadius: 70,
         mechanics: [
             ConeFromBoss,
             CircleTelegraphOnPlayer,
@@ -52,6 +53,15 @@ export const Bosses = [
         mechanics: [
             CardinalRoomSwipe,
             TeleportConeAtPlayer
+        ]
+    },
+    {
+        name: "Iron Giant",
+        spriteKey: "boss5",
+        speed: 60,
+        hurtRadius: 80,
+        mechanics: [
+            RandomCirclesAround
         ]
     }
 ]

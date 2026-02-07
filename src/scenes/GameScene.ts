@@ -57,8 +57,11 @@ export default class GameScene extends Phaser.Scene {
         this.load.spritesheet("boss4", "assets/boss4.png", {
             frameWidth: 16,
             frameHeight: 16
-        }
-        )
+        })
+        this.load.spritesheet("boss5", "assets/boss5.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
 
         this.load.image("exp-orb", "assets/exp-orb.png")
 
