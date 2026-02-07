@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import ConeTelegraph from "../entities/ConeTelegraph";
+import DirectionIndicator from "../entities/DirectionIndicator";
 
 export default class HalfCircleFromBoss extends BossMechanic {
 
@@ -26,6 +27,13 @@ export default class HalfCircleFromBoss extends BossMechanic {
             this.player.y
         )
 
+        //Draw Indicator
+        this.indicator = new DirectionIndicator(
+            this.scene,
+            this.boss,
+            angle,
+        )
+
         //Draw telegraph right before hit
         this.scene.time.delayedCall((this.config.castTime - 300), () => {
             this.telegraph = new ConeTelegraph(
@@ -36,6 +44,11 @@ export default class HalfCircleFromBoss extends BossMechanic {
                 this.config.range,
                 this.coneAngle
             )
+        })
+
+        this.telegraphTimer = this.scene.time.delayedCall(this.config.castTime, () => {
+            this.indicator?.destroy()
+            this.indicator = undefined
         })
     }
 
@@ -71,6 +84,15 @@ export default class HalfCircleFromBoss extends BossMechanic {
             this.player.takeDamage(this.config.damage)
         }
 
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+    }
+
+    destroy() {
+        this.telegraphTimer?.remove(false)
+        this.telegraphTimer = undefined
+        this.indicator?.destroy()
+        this.indicator = undefined
         this.telegraph?.destroy()
         this.telegraph = undefined
     }

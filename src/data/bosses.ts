@@ -10,6 +10,7 @@ import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
 import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
 import RandomCirclesAround from "../mechanics/RandomCirclesAround";
 import HalfCircleFromBoss from "../mechanics/HalfCircleFromBoss";
+import TeleportCircleAndBack from "../mechanics/TeleportCircleAndBack";
 
 export const Bosses = [
     {
@@ -37,7 +38,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Cave Ogre",
+        name: "Cave Titan",
         spriteKey: "boss3",
         speed: 60,
         hurtRadius: 80,
@@ -63,7 +64,8 @@ export const Bosses = [
         hurtRadius: 80,
         mechanics: [
             RandomCirclesAround,
-            HalfCircleFromBoss
+            HalfCircleFromBoss,
+            TeleportCircleAndBack
         ]
     }
 ]

@@ -9,6 +9,8 @@ export default class BossMechanic {
     isCasting = false
     lastUsedAt = 0
     telegraph?: any
+    indicator?: any
+    telegraphTimer?: any
 
     config = {
         id: "",
