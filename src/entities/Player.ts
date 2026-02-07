@@ -138,7 +138,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.3)
+        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
     }
     
     unlockSkill(skill: Skill) {
@@ -153,7 +153,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const gameScene = this.scene.scene.get("game") as any
         const bossManager = gameScene.bossManager
 
-        const score = bossManager.globalTimerSeconds + bossManager.bossesKilled * 50
+        const score = bossManager.globalTimerSeconds + bossManager.bossesKilled * 60
 
         this.scene.scene.pause("game")
         this.scene.scene.launch("game-over", { score })

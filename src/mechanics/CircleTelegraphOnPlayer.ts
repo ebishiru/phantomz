@@ -30,8 +30,8 @@ export default class CircleTelegraphOnPlayer extends BossMechanic {
         const hit = Phaser.Math.Distance.Between(
             this.player.x,
             this.player.y,
-            this.boss.x,
-            this.boss.y,
+            this.telegraph.x,
+            this.telegraph.y,
         ) <= (this.config.range + this.player.hurtboxRadius)
 
         if (hit) {

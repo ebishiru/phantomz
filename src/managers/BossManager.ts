@@ -28,6 +28,7 @@ export default class BossManager {
 
     // Boss Progression
     currentMaxBossIndex = 0
+    lastBossIndex: number | null = null
 
     // Kill Count
     bossesKilled = 0
@@ -66,7 +67,7 @@ export default class BossManager {
                 this.globalTimerText.setText(`Time: ${min}:${sec}`);
 
                 // Introduce harder bosses every minute
-                this.currentMaxBossIndex = Math.min(3, Math.floor(this.globalTimerSeconds / 60))
+                this.currentMaxBossIndex = Math.min(Bosses.length - 1, Math.floor(this.globalTimerSeconds / 60))
             }
         });
     }
@@ -183,8 +184,17 @@ export default class BossManager {
     }
 
     createBoss(x: number, y: number) {
-        // Random Boss
-        const bossIndex = Phaser.Math.Between(0, this.currentMaxBossIndex)
+        // Randomize Bosses with No Repeats
+        let bossIndex: number
+        if(this.currentMaxBossIndex === 0) {
+            bossIndex = 0
+        } else {
+            do {
+                bossIndex = Phaser.Math.Between( 0, this.currentMaxBossIndex)
+            } while (bossIndex === this.lastBossIndex)
+        }
+        this.lastBossIndex = bossIndex
+
         const bossConfig = Bosses[bossIndex]        // Change Index to Boss Index to Test HERE
         const spriteKey = bossConfig.spriteKey
 

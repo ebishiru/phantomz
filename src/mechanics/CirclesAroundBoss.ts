@@ -56,7 +56,7 @@ export default class CirclesAroundBoss extends BossMechanic {
                     t.y,
                 )
 
-                if (!hit && dist <= this.config.range + this.player.hurtboxRadius) {
+                if (!hit && dist <= this.config.range) {
                     hit = true
                 }
             }

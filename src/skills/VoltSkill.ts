@@ -20,7 +20,7 @@ export default class LightningSkill extends Skill {
         const startTime = this.scene.time.now
 
         // Increase speed temporarily
-        this.player.speed = this.originalSpeed * 1.5
+        this.player.speed = this.originalSpeed * 1.75
 
         // Turn player blue
         this.player.setTint(0x9999ff)
