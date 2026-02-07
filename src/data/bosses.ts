@@ -53,7 +53,7 @@ export const Bosses = [
         name: "Cave Crawler",
         spriteKey: "boss4",
         speed: 80,
-        hurtRadius: 80,
+        hurtRadius: 65,
         mechanics: [
             CardinalRoomSwipe,
             TeleportConeAtPlayer
