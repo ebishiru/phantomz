@@ -68,6 +68,7 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("loading-border", "assets/loading-border.png")
         this.load.image("ready-border", "assets/ready-border.png")
         this.load.image("slash-icon", "assets/slash-icon.png")
+        this.load.image("slash-vfx", "assets/slash-vfx.png")
         this.load.image("arrow-icon", "assets/arrow-icon.png")
         this.load.image("pulse-icon", "assets/pulse-icon.png")
         this.load.image("thrust-icon", "assets/thrust-icon.png")
