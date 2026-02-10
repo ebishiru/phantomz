@@ -25,9 +25,9 @@ export default class FireballSkill extends Skill {
 
         const endX = originX + (dir.x * castDistance)
         const endY = originY + (dir.y * castDistance) 
-
-        //Create Graphics   
+ 
         const draw = () => {
+            //Create Graphics  
             g.clear()
             g.lineStyle(2, 0x00ff00, 1)
             g.strokeCircle(endX, endY, this.range)
@@ -40,6 +40,23 @@ export default class FireballSkill extends Skill {
                 duration: 200,
                 yoyo: true,
                 repeat: 1
+            })
+
+            //VFX
+            const fireballVFX = this.scene.add.sprite(endX, endY + this.range / 2, "fireball-vfx")
+
+            fireballVFX.setOrigin(0, 0.5)
+            fireballVFX.setAlpha(1)
+            fireballVFX.setScale(this.range / 8)
+            fireballVFX.setDepth(10)
+            fireballVFX.setRotation(Math.PI * 3 / 2)
+
+            this.scene.tweens.add({
+                targets: fireballVFX,
+                alpha: 0.5,
+                duration: 400,
+                ease: "Sine.easeOut",
+                onComplete: () => fireballVFX.destroy()
             })
         }
             
