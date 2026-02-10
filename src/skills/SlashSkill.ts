@@ -51,7 +51,7 @@ export default class SlashSkill extends Skill {
             const slashVFX = this.scene.add.sprite(this.player.x, this.player.y, "slash-vfx")
 
             slashVFX.setOrigin(0, 0.5);
-            slashVFX.setScale(3)
+            slashVFX.setScale(this.range / 16)
             slashVFX.setDepth(10)
             slashVFX.setRotation(startVFXAngle)
 
