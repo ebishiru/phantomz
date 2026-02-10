@@ -25,7 +25,7 @@ export default class FireballSkill extends Skill {
 
         const endX = originX + (dir.x * castDistance)
         const endY = originY + (dir.y * castDistance) 
- 
+
         const draw = () => {
             //Create Graphics  
             g.clear()
@@ -59,7 +59,25 @@ export default class FireballSkill extends Skill {
                 onComplete: () => fireballVFX.destroy()
             })
         }
-            
+        
+        //Fire Icon on Player 
+        const container = this.scene.add.container(this.player.x, this.player.y)
+
+        const follow = () => {
+            container.x = this.player.x
+            container.y = this.player.y
+        }
+
+        this.scene.events.on('update', follow)
+
+        const fireball2VFX = this.scene.add.sprite(0, -25, "fireball2-vfx")
+
+        fireball2VFX.setOrigin(0.5, 0.5)
+        fireball2VFX.setScale(1.5)
+        fireball2VFX.setDepth(10)
+        container.add(fireball2VFX)
+
+        this.scene.time.delayedCall(800, () => container.destroy())
 
         //Check hit
         const hitBoss = () => {
