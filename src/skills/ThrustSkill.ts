@@ -14,6 +14,8 @@ export default class ThrustSkill extends Skill {
         const dx = this.player.facing.x
         const dy = this.player.facing.y
 
+        const facingAngle = Math.atan2(dy, dx);
+
         const startX = this.player.x
         const startY = this.player.y
 
@@ -34,6 +36,28 @@ export default class ThrustSkill extends Skill {
             alpha: 0,
             duration: 200,
             onComplete: () => g.destroy()
+        })
+
+        //VFX
+        this.scene.time.delayedCall(16, () => {
+            const thrustVFX = this.scene.add.sprite(this.player.x, this.player.y, "thrust-vfx")
+
+            thrustVFX.setOrigin(0, 0.5)
+            thrustVFX.setScale(3)
+            thrustVFX.setDepth(10)
+            thrustVFX.setRotation(facingAngle)
+
+            this.scene.tweens.add({
+                targets: { t: 0},
+                t: 1,
+                duration: 120,
+                ease: "Sine.easeOut",
+                onUpdate: (tween, target: any) => {
+                    thrustVFX.x = this.player.x
+                    thrustVFX.y = this.player.y
+                },
+                onComplete: () => thrustVFX.destroy()
+            })
         })
 
         //Player Dash
