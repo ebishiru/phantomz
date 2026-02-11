@@ -76,6 +76,7 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("thrust-icon", "assets/thrust-icon.png")
         this.load.image("thrust-vfx", "assets/thrust-vfx.png")
         this.load.image("caltrops-icon", "assets/caltrops-icon.png")
+        this.load.image("caltrops-vfx", "assets/caltrops-vfx.png")
         this.load.image("fireball-icon", "assets/fireball-icon.png")
         this.load.image("fireball-vfx", "assets/fireball-vfx.png")
         this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")

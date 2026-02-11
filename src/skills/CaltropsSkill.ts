@@ -16,7 +16,6 @@ export default class CaltopsSkill extends Skill {
         const originX = this.player.x
         const originY = this.player.y
 
-        //Check hit
         const hitBoss = () => {
 
             //Create graphics
@@ -32,6 +31,22 @@ export default class CaltopsSkill extends Skill {
                 ease: 'Sine.easeOut'
             })
 
+            //VFX
+            const caltropsVFX = this.scene.add.sprite(originX, originY, "caltrops-vfx")
+            caltropsVFX.setOrigin(0.5, 0.5)
+            caltropsVFX.setAlpha(0.75)
+            caltropsVFX.setScale(5)
+            caltropsVFX.setDepth(10)
+            
+            this.scene.tweens.add({
+                targets: caltropsVFX,
+                alpha: 0,
+                duration: 250,
+                ease: "Sine.easeOut",
+                onComplete: () => caltropsVFX.destroy()
+            })
+
+            //Check hit
             const boss = (this.scene as any).bossManager?.boss
             if (!boss || !boss.active) return
 
