@@ -45,6 +45,26 @@ export default class DevourSkill extends Skill {
 
         this.scene.time.delayedCall(150, () => g.destroy())
 
+        //VFX
+        const offsetDistance = this.range * 0.75
+        
+        const vfxX = this.player.x + Math.cos(this.facingAngle) * offsetDistance
+        const vfxY = this.player.y + Math.sin(this.facingAngle) * offsetDistance
+
+        const devourVFX = this.scene.add.sprite(vfxX, vfxY, "devour-vfx")
+
+        devourVFX.setRotation(this.facingAngle)
+        devourVFX.setAlpha(1)
+        devourVFX.setScale(2.5)
+        devourVFX.setDepth(10)
+
+        this.scene.tweens.add({
+            targets: devourVFX,
+            alpha: 0.5,
+            duration: 150,
+            onComplete: () => devourVFX.destroy()
+        })
+
         //Check hit
         const boss = (this.scene as any).bossManager?.boss
         if (!boss || !boss.active) return
