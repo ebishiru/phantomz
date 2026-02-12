@@ -25,7 +25,7 @@ export default class ThrustSkill extends Skill {
 
         //Add Graphics
         const g = this.scene.add.graphics()
-        g.lineStyle(width, 0x00ff00, 0.8)
+        g.lineStyle(width/2, 0xeffae6, 0.5)
         g.beginPath()
         g.moveTo(startX, startY)
         g.lineTo(endX, endY)

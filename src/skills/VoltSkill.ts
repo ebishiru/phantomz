@@ -22,17 +22,63 @@ export default class LightningSkill extends Skill {
         // Increase speed temporarily
         this.player.speed = this.originalSpeed * 1.75
 
-        // Turn player blue
-        this.player.setTint(0x9999ff)
-
         //Draw graphics
-        const draw = () => {
-            g.clear()
-            g.lineStyle(2, 0x00ff00, 1)
-            g.strokeCircle(this.player.x, this.player.y, this.range)
-            g.fillStyle(0x00ff00, 0.25)
-            g.fillCircle(this.player.x, this.player.y, this.range)
+        // const draw = () => {
+        //     g.clear()
+        //     g.lineStyle(2, 0x00ff00, 1)
+        //     g.strokeCircle(this.player.x, this.player.y, this.range)
+        //     g.fillStyle(0x00ff00, 0.25)
+        //     g.fillCircle(this.player.x, this.player.y, this.range)
+        // }
+
+        //VFX
+        const container = this.scene.add.container(this.player.x, this.player.y)
+
+        const follow = () => {
+            container.x = this.player.x
+            container.y = this.player.y
         }
+        this.scene.events.on('update', follow)
+
+        const drawVFX = () => {
+            const voltVFX = this.scene.add.sprite(0, 0, "volt-vfx")
+            voltVFX.setOrigin(0.5, 0.5)
+            voltVFX.setAlpha(0.75)
+            voltVFX.setScale(this.range / 8)
+            voltVFX.setDepth(10)
+            container.add(voltVFX)
+
+            this.scene.tweens.add({
+                targets: voltVFX,
+                alpha: 0.25,
+                duration: 400,
+                ease: "Sine.easeOut",
+                onComplete: () => {
+                    voltVFX.destroy()
+                    container.destroy()
+                }
+            })
+        }
+
+        //Bolt Icon on Player
+        const volt2VFX = this.scene.add.sprite(0, -25, "volt2-vfx")
+
+        volt2VFX.setOrigin(0.5, 0.5)
+        volt2VFX.setAlpha(1)
+        volt2VFX.setScale(1.5)
+        volt2VFX.setDepth(10)
+        container.add(volt2VFX)
+
+        this.scene.time.delayedCall(this.hasteDuration - 1000, () => {
+            this.scene.tweens.add({
+                targets: volt2VFX,
+                alpha: 0,
+                duration: 100,
+                yoyo: true,
+                repeat: 4,
+                onComplete: () => volt2VFX.destroy()
+            })
+        })
 
         //Check hit
         const hitBoss = () => {
@@ -57,17 +103,18 @@ export default class LightningSkill extends Skill {
             }
         }
 
-        const updateCircle = () => {
-            draw()
-            if (this.scene.time.now - startTime < this.hasteDuration) {
-                this.scene.time.delayedCall(32, updateCircle)
-            }
-        }
+        // const updateCircle = () => {
+        //     draw()
+        //     if (this.scene.time.now - startTime < this.hasteDuration) {
+        //         this.scene.time.delayedCall(32, updateCircle)
+        //     }
+        // }
 
-        this.scene.time.delayedCall(1500, () => updateCircle())
+        // this.scene.time.delayedCall(1500, () => updateCircle())
         this.scene.time.delayedCall(this.hasteDuration, () => {
+            drawVFX()
             this.player.speed = this.originalSpeed
-            this.player.clearTint()
+            this.scene.events.off('update', follow)
             hitBoss()
             g.destroy()
         })

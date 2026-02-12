@@ -77,7 +77,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.voltSkill.enabled = false
 
         //Unlock starting skill
-        this.unlockSkill(this.hookSkill)
+        this.unlockSkill(this.slashSkill)
     }
 
     takeDamage(amount: number) {

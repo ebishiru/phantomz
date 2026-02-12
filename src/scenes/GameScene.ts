@@ -85,6 +85,8 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("hook-icon", "assets/hook-icon.png")
         this.load.image("hook-vfx", "assets/hook-vfx.png")
         this.load.image("volt-icon", "assets/volt-icon.png")
+        this.load.image("volt-vfx", "assets/volt-vfx.png")
+        this.load.image("volt2-vfx", "assets/volt2-vfx.png")
         this.load.image("skip-icon", "assets/skip-icon.png")
 
         this.load.image("dirt-texture", "assets/dirt-texture.png")
