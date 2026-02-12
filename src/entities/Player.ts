@@ -50,7 +50,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.facing = new Phaser.Math.Vector2(0, 1)
 
         //Idle animation
-        this.play("player-idle")
+        this.anims.play(`${this.texture.key}-idle`, true)
 
         //Initialize skills
         this.slashSkill = new SlashSkill(scene, this)

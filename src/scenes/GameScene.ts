@@ -8,6 +8,7 @@ import SkillCooldown from "../ui/SkillCooldown"
 import ExpOrb from "../entities/ExpOrb"
 
 export default class GameScene extends Phaser.Scene {
+    selectedCharacter!: string
     player!: Player
     healthBar!: HealthBar
     levelText!: Phaser.GameObjects.Text
@@ -38,7 +39,15 @@ export default class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet("player", "assets/player.png", {
+        this.load.spritesheet("player1", "assets/player1.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+        this.load.spritesheet("player2", "assets/player2.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+        this.load.spritesheet("player3", "assets/player3.png", {
             frameWidth: 16,
             frameHeight: 16
         })
@@ -92,10 +101,12 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("dirt-texture", "assets/dirt-texture.png")
     }
 
-    create() {
+    create(data: { characterKey?: string}) {
+        //Load Title Screen Selection Character
+        this.selectedCharacter = data?.characterKey || "player1"
+
         // Fade In
         this.cameras.main.fadeIn(500, 0, 0, 0)
-
 
         // World Bounds
         this.physics.world.setBounds(50, 100, 700, 500)
@@ -110,10 +121,12 @@ export default class GameScene extends Phaser.Scene {
         floorBG.setDepth(0)
 
         //Player animation
-        if (!this.anims.exists("player-idle")) {
+        const animKey = `${this.selectedCharacter}-idle`
+
+        if (!this.anims.exists(animKey)) {
             this.anims.create({
-                key: "player-idle",
-                frames: this.anims.generateFrameNumbers("player", {
+                key: animKey,
+                frames: this.anims.generateFrameNumbers(this.selectedCharacter, {
                     start: 0,
                     end: 1
                 }),
@@ -123,7 +136,7 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // Player Info
-        this.player = new Player(this, 400, 550, "player")
+        this.player = new Player(this, 400, 550, this.selectedCharacter)
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
