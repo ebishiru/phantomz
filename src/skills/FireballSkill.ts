@@ -28,19 +28,19 @@ export default class FireballSkill extends Skill {
 
         const draw = () => {
             //Create Graphics  
-            g.clear()
-            g.lineStyle(2, 0x00ff00, 1)
-            g.strokeCircle(endX, endY, this.range)
-            g.fillStyle(0x00ff00, 0.25)
-            g.fillCircle(endX, endY, this.range)
+            // g.clear()
+            // g.lineStyle(2, 0x00ff00, 1)
+            // g.strokeCircle(endX, endY, this.range)
+            // g.fillStyle(0x00ff00, 0.25)
+            // g.fillCircle(endX, endY, this.range)
 
-            this.scene.tweens.add({
-                targets: g,
-                alpha: { from: 0.3, to: 0.6 },
-                duration: 200,
-                yoyo: true,
-                repeat: 1
-            })
+            // this.scene.tweens.add({
+            //     targets: g,
+            //     alpha: { from: 0.3, to: 0.6 },
+            //     duration: 200,
+            //     yoyo: true,
+            //     repeat: 1
+            // })
 
             //VFX
             const fireballVFX = this.scene.add.sprite(endX, endY + this.range / 2, "fireball-vfx")
@@ -104,6 +104,6 @@ export default class FireballSkill extends Skill {
 
         this.scene.time.delayedCall(800, () => draw())
         this.scene.time.delayedCall(1000, () => hitBoss())
-        this.scene.time.delayedCall(1200, () => g.destroy())
+        // this.scene.time.delayedCall(1200, () => g.destroy())
     }
 }

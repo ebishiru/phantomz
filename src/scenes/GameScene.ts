@@ -101,9 +101,10 @@ export default class GameScene extends Phaser.Scene {
         this.load.image("dirt-texture", "assets/dirt-texture.png")
     }
 
-    create(data: { characterKey?: string}) {
-        //Load Title Screen Selection Character
+    create(data: { characterKey?: string, startingSkill?: string}) {
+        //Load Title Screen Selection
         this.selectedCharacter = data?.characterKey || "player1"
+        const startingSkill = data?.startingSkill || "slash"
 
         // Fade In
         this.cameras.main.fadeIn(500, 0, 0, 0)
@@ -136,7 +137,7 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // Player Info
-        this.player = new Player(this, 400, 550, this.selectedCharacter)
+        this.player = new Player(this, 400, 550, this.selectedCharacter, startingSkill)
         this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
         this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
 
@@ -296,11 +297,11 @@ export default class GameScene extends Phaser.Scene {
         const positions = [
             { x: centerX - offset, y: centerY },
             { x: centerX, y: centerY - offset},
+            { x: centerX, y: centerY + offset},
             { x: centerX + offset, y: centerY},
-            { x: centerX, y: centerY + offset}
         ]
 
-        const buttonColors = [0xa4ebcc, 0x5f699c, 0xf0b38d, 0xb56d7f]
+        const buttonColors = [0xa4ebcc, 0x5f699c, 0xb56d7f, 0xf0b38d,]
 
         positions.forEach((pos, index) => {
             const btn = this.add.circle(pos.x, pos.y, radius, buttonColors[index], 0.6)

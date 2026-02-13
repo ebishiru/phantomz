@@ -6,7 +6,15 @@ export default class TitleScene extends Phaser.Scene {
     selectedCharacter: string = "player1"
     selectedIndex: number = 0
     characters = ["player1", "player2", "player3"]
-    selectionOutline!: Phaser.GameObjects.Rectangle
+    charOutline!: Phaser.GameObjects.Rectangle
+
+    selectedSkillKey: string = "slash"
+    skillOutline!: Phaser.GameObjects.Rectangle
+    skills = [
+        { key: "slash", icon: "slash-icon"},
+        { key: "arrow", icon: "arrow-icon"},
+        { key: "pulse", icon: "pulse-icon"}
+    ]
 
     constructor() {
         super("title")
@@ -25,26 +33,29 @@ export default class TitleScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
+        this.load.image("slash-icon", "assets/slash-icon.png")
+        this.load.image("arrow-icon", "assets/arrow-icon.png")
+        this.load.image("pulse-icon", "assets/pulse-icon.png")
     }
 
 
     create() {
         //Main Title
-        this.add.text(400, 150, "Project PhantomZ", {
+        this.add.text(400, 125, "Project PhantomZ", {
             fontSize: "48px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
         }).setOrigin(0.5)
 
         //Character selection
-        const startX = 250
-        const spacing = 150
-        const y = 280
+        const startCharX = 250
+        const charSpacing = 150
+        const charY = 255
 
         const sprites: Phaser.GameObjects.Sprite[] = []
 
         this.characters.forEach((key, index) => {
-            const sprite = this.add.sprite(startX + index * spacing, y, key, 0)
+            const sprite = this.add.sprite(startCharX + index * charSpacing, charY, key, 0)
             .setScale(4)
             .setInteractive({ useHandCursor: true})
 
@@ -53,12 +64,12 @@ export default class TitleScene extends Phaser.Scene {
             sprite.on("pointerdown", () => {
                 this.selectedIndex = index
                 this.selectedCharacter = key
-                this.moveOutline(sprite)
+                this.moveCharOutline(sprite)
             })
         })
 
         //Character chosen outline
-        this.selectionOutline = this.add.rectangle(
+        this.charOutline = this.add.rectangle(
             sprites[0].x,
             sprites[0].y,
             80,
@@ -67,23 +78,54 @@ export default class TitleScene extends Phaser.Scene {
         .setStrokeStyle(4, 0xffffff)
         .setDepth(10)
 
-        this.add.text(400, 350, "Choose your Hero and Starting Skill", {
+        //Menu Text
+        this.add.text(400, 325, "Choose your Hero and Starting Skill", {
             fontSize: "16px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: `#ffffff`,
         }).setOrigin(0.5)
 
+        //Starting Skill Selection
+        const startSkillX = 250
+        const skillSpacing = 150
+        const skillY = 395
+
+        const skillIcons: Phaser.GameObjects.Image[] = []
+
+        this.skills.forEach((skill, index) => {
+            const icon = this.add.image(startSkillX + index * skillSpacing, skillY, skill.icon)
+            .setScale(3)
+            .setInteractive({ useHandCursor: true})
+
+            skillIcons.push(icon)
+
+            icon.on("pointerdown", () => {
+                this.selectedSkillKey = skill.key
+                this.moveSkillOutline(icon)
+            })
+        })
+
+        //Skill chosen outline
+        this.skillOutline = this.add.rectangle(
+            skillIcons[0].x,
+            skillIcons[0].y,
+            80,
+            80,
+        )
+        .setStrokeStyle(4, 0xffffff)
+        .setDepth(10)
+
         //Start Button
         const buttonWidth = 220
         const buttonHeight = 60
 
-        const buttonBg = this.add.rectangle(400, 550, buttonWidth, buttonHeight, 0x222222)
+        const buttonBg = this.add.rectangle(400, 525, buttonWidth, buttonHeight, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
         //Button Text
-        const startText = this.add.text(400, 550, "START GAME", {
+        const startText = this.add.text(400, 525, "START GAME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: `#ffffff`,
@@ -109,6 +151,14 @@ export default class TitleScene extends Phaser.Scene {
         })
 
         //Bottom Text
+
+        this.add.text(400, 600, "Press ESC for controls", {
+            fontSize: "16px",
+            fontFamily: `Georgia, serif`,
+            color: `#ffffff`,
+        })
+        .setOrigin(0.5)
+
         this.add.text(400, 650, "Created by Kevin Lo", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
@@ -117,11 +167,21 @@ export default class TitleScene extends Phaser.Scene {
 
     }
 
-    moveOutline(sprite: Phaser.GameObjects.Sprite) {
+    moveCharOutline(sprite: Phaser.GameObjects.Sprite) {
         this.tweens.add({
-            targets: this.selectionOutline,
+            targets: this.charOutline,
             x: sprite.x,
             y: sprite.y,
+            duration: 150,
+            ease: "Power2"
+        })
+    }
+
+    moveSkillOutline(icon: Phaser.GameObjects.Image) {
+        this.tweens.add({
+            targets: this.skillOutline,
+            x: icon.x,
+            y: icon.y,
             duration: 150,
             ease: "Power2"
         })
@@ -133,7 +193,8 @@ export default class TitleScene extends Phaser.Scene {
         this.cameras.main.once(
             Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
                 this.scene.start("game", {
-                    characterKey: this.selectedCharacter
+                    characterKey: this.selectedCharacter,
+                    startingSkill: this.selectedSkillKey
                 })
             }
         )

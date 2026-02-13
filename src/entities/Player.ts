@@ -33,7 +33,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     facing!: Phaser.Math.Vector2
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, startingSkill: string) {
         super(scene, x, y, texture)
 
         scene.add.existing(this)
@@ -77,7 +77,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.voltSkill.enabled = false
 
         //Unlock starting skill
-        this.unlockSkill(this.slashSkill)
+        switch (startingSkill) {
+            case "slash":
+                this.unlockSkill(this.slashSkill)
+                break
+            case "arrow":
+                this.unlockSkill(this.arrowSkill)
+                break
+            case "pulse":
+                this.unlockSkill(this.pulseSkill)
+                break
+        }
     }
 
     takeDamage(amount: number) {
