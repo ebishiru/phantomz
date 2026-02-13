@@ -39,7 +39,7 @@ export default class TitleScene extends Phaser.Scene {
         //Character selection
         const startX = 250
         const spacing = 150
-        const y = 320
+        const y = 280
 
         const sprites: Phaser.GameObjects.Sprite[] = []
 
@@ -67,54 +67,54 @@ export default class TitleScene extends Phaser.Scene {
         .setStrokeStyle(4, 0xffffff)
         .setDepth(10)
 
+        this.add.text(400, 350, "Choose your Hero and Starting Skill", {
+            fontSize: "16px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: `#ffffff`,
+        }).setOrigin(0.5)
+
         //Start Button
-        const startButton = this.add.text(400, 450, "START GAME [ Enter ]", {
-            fontSize: "32px",
+        const buttonWidth = 220
+        const buttonHeight = 60
+
+        const buttonBg = this.add.rectangle(400, 550, buttonWidth, buttonHeight, 0x222222)
+        .setStrokeStyle(3, 0xffcc00)
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true})
+
+        //Button Text
+        const startText = this.add.text(400, 550, "START GAME", {
+            fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: `#ffffff`,
         })
         .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
 
         this.tweens.add({
-            targets: startButton,
+            targets: [buttonBg, startText],
             alpha: { from: 1, to: 0.5 },
             duration: 800,
             yoyo: true,
             repeat: -1,
         });
 
-        startButton.on("pointerdown", () => {
+        buttonBg.on("pointerdown", () => {
             this.startGame()
         })
 
-        this.add.text(400, 650, "Select Character • Click Start", {
+        this.enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+
+        this.enterKey.once("down", () => {
+            this.startGame()
+        })
+
+        //Bottom Text
+        this.add.text(400, 650, "Created by Kevin Lo", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: `#ffcc00`
         }).setOrigin(0.5)
 
-        this.enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-
-        this.enterKey.once("down", () => {
-            this.cameras.main.fadeOut(500, 0, 0, 0)
-            
-            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-                this.scene.start("game")
-            })
-        })
-
-        this.add.text(400, 550, "Created by Kevin Lo", {
-            fontSize: "18px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
-            color: `#ffffff`,
-        }).setOrigin(0.5)
-
-        this.add.text(400, 650, "WASD to move, JIKL for skills", {
-            fontSize: "16px",
-            fontFamily: `Georgia, serif`,
-            color: `#ffcc00`,
-        }).setOrigin(0.5)
     }
 
     moveOutline(sprite: Phaser.GameObjects.Sprite) {
