@@ -19,8 +19,8 @@ export default class SlashSkill extends Skill {
     activate() {
         this.updateFacing()
 
-        // const startAngle = this.facingAngle - Math.PI / 2
-        // const endAngle   = this.facingAngle + Math.PI / 2
+        const startAngle = this.facingAngle - Math.PI / 2
+        const endAngle   = this.facingAngle + Math.PI / 2
 
         //Create graphics
         // const g = this.scene.add.graphics()
@@ -60,7 +60,7 @@ export default class SlashSkill extends Skill {
                 t: 1,
                 duration: 150,
                 ease: "Sine-easeOut",
-                onUpdate: (target: any) => {
+                onUpdate: (tweens, target: any) => {
                     //Rotate based on completion percentage
                     const rot = Phaser.Math.Linear(startVFXAngle, endVFXAngle, target.t)
                     slashVFX.setRotation(rot)
