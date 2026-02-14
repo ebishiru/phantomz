@@ -60,7 +60,7 @@ export default class SlashSkill extends Skill {
                 t: 1,
                 duration: 150,
                 ease: "Sine-easeOut",
-                onUpdate: (tween, target: any) => {
+                onUpdate: (target: any) => {
                     //Rotate based on completion percentage
                     const rot = Phaser.Math.Linear(startVFXAngle, endVFXAngle, target.t)
                     slashVFX.setRotation(rot)

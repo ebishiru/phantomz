@@ -17,7 +17,7 @@ export default class LightningSkill extends Skill {
 
     activate() {
         const g = this.scene.add.graphics()
-        const startTime = this.scene.time.now
+        // const startTime = this.scene.time.now
 
         // Increase speed temporarily
         this.player.speed = this.originalSpeed * 1.75

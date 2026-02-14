@@ -52,7 +52,7 @@ export default class ThrustSkill extends Skill {
                 t: 1,
                 duration: 120,
                 ease: "Sine.easeOut",
-                onUpdate: (tween, target: any) => {
+                onUpdate: () => {
                     thrustVFX.x = this.player.x
                     thrustVFX.y = this.player.y
                 },
