@@ -5,7 +5,7 @@ export default class FireballSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "fireball", "Fireball", 60, 7000, 65)
+        super(scene, "fireball", "Fireball", 50, 7000, 65)
         this.iconKey = "fireball-icon"
         this.player = player
     }

@@ -160,10 +160,10 @@ export default class GameScene extends Phaser.Scene {
 
         // Skill keybindings
         this.skillKeys = [
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.J),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.I),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.K),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.L),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.R),
+            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.F),
         ]
 
         // Mobile Controls

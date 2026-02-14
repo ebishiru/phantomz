@@ -4,10 +4,10 @@ import Skill from "./Skill";
 export default class DevourSkill extends Skill {
     player: any
     facingAngle: number = 0
-    healingValue: number = 5
+    healingValue: number = 2
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "devour", "Devour", 10, 6000, 40)
+        super(scene, "devour", "Devour", 20, 6000, 40)
         this.iconKey = "devour-icon"
         this.player = player
     }
@@ -28,22 +28,22 @@ export default class DevourSkill extends Skill {
         const endAngle = this.facingAngle + Math.PI /3
 
         //Create graphics
-        const g = this.scene.add.graphics()
-        g.fillStyle(0x00ff00, 0.25)
-        g.beginPath()
-        g.moveTo(this.player.x, this.player.y)
-        g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
-        g.closePath()
-        g.fillPath()
+        // const g = this.scene.add.graphics()
+        // g.fillStyle(0x00ff00, 0.25)
+        // g.beginPath()
+        // g.moveTo(this.player.x, this.player.y)
+        // g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
+        // g.closePath()
+        // g.fillPath()
 
-        g.lineStyle(2, 0x00ff00, 1)
-        g.beginPath()
-        g.moveTo(this.player.x, this.player.y)
-        g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
-        g.closePath()
-        g.strokePath()
+        // g.lineStyle(2, 0x00ff00, 1)
+        // g.beginPath()
+        // g.moveTo(this.player.x, this.player.y)
+        // g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
+        // g.closePath()
+        // g.strokePath()
 
-        this.scene.time.delayedCall(150, () => g.destroy())
+        // this.scene.time.delayedCall(150, () => g.destroy())
 
         //VFX
         const offsetDistance = this.range * 0.75

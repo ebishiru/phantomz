@@ -133,10 +133,10 @@ export default class BossManager {
         const cdCount = this.activeBuffs.filter(b => b === "CD").length
 
         // Giving Boss more HP
-        this.nextBossMaxHealth = this.baseBossHealth + hpCount * 50
+        this.nextBossMaxHealth = this.baseBossHealth + hpCount * 25
 
         // Giving Boss attacks lower delay
-        const newDelay = Math.max(3000, 4500 - 200 * cdCount)
+        const newDelay = Math.max(3000, 4500 - 150 * cdCount)
 
         if (this.bossMechanicTimer) {
             this.bossMechanicTimer.remove(false)

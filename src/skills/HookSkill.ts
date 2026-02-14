@@ -5,7 +5,7 @@ export default class HookSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "hook", "Hook", 10, 7000, 0)
+        super(scene, "hook", "Hook", 15, 6000, 0)
         this.iconKey = "hook-icon"
         this.player = player
     }

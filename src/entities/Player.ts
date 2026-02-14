@@ -148,7 +148,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel = Math.floor(this.expToNextLevel * 1.4)
+        this.expToNextLevel += 8 + this.level * 4
     }
     
     unlockSkill(skill: Skill) {

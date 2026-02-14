@@ -17,7 +17,7 @@ export default class RandomCirclesAround extends BossMechanic {
     }
 
     onCastStart() {
-        const timings = [1000, 1800, 2400, 3000]
+        const timings = [800, 1500, 2200, 2900]
         const telegraphDuration = 1000
 
         timings.forEach((time, index) => {

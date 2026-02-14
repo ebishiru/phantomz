@@ -5,7 +5,7 @@ export default class CaltopsSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "caltrops", "Caltrops", 20, 7000, 40)
+        super(scene, "caltrops", "Caltrops", 15, 7000, 40)
         this.iconKey = "caltrops-icon"
         this.player = player
     }
@@ -19,17 +19,17 @@ export default class CaltopsSkill extends Skill {
         const hitBoss = () => {
 
             //Create graphics
-            g.lineStyle(2, 0x00ff00, 1)
-            g.strokeCircle(originX, originY, this.range)
-            g.fillStyle(0x00ff00, 0.25)
-            g.fillCircle(originX, originY, this.range)
+            // g.lineStyle(2, 0x00ff00, 1)
+            // g.strokeCircle(originX, originY, this.range)
+            // g.fillStyle(0x00ff00, 0.25)
+            // g.fillCircle(originX, originY, this.range)
 
-            this.scene.tweens.add({
-                targets: g,
-                alpha: { from: 1, to: 0},
-                duration: 300,
-                ease: 'Sine.easeOut'
-            })
+            // this.scene.tweens.add({
+            //     targets: g,
+            //     alpha: { from: 1, to: 0},
+            //     duration: 300,
+            //     ease: 'Sine.easeOut'
+            // })
 
             //VFX
             const caltropsVFX = this.scene.add.sprite(originX, originY, "caltrops-vfx")
@@ -75,6 +75,6 @@ export default class CaltopsSkill extends Skill {
             delay: 1000, repeat: 1, callback: hitBoss
         })
 
-        this.scene.time.delayedCall(3000, () => g.destroy())
+        // this.scene.time.delayedCall(3000, () => g.destroy())
     }
 }

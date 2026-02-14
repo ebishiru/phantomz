@@ -50,7 +50,7 @@ export default class TitleScene extends Phaser.Scene {
         //Character selection
         const startCharX = 250
         const charSpacing = 150
-        const charY = 255
+        const charY = 245
 
         const sprites: Phaser.GameObjects.Sprite[] = []
 
@@ -79,7 +79,7 @@ export default class TitleScene extends Phaser.Scene {
         .setDepth(10)
 
         //Menu Text
-        this.add.text(400, 325, "Choose your Hero and Starting Skill", {
+        this.add.text(400, 315, "Choose your Hero and Starting Skill", {
             fontSize: "16px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: `#ffffff`,
@@ -88,7 +88,7 @@ export default class TitleScene extends Phaser.Scene {
         //Starting Skill Selection
         const startSkillX = 250
         const skillSpacing = 150
-        const skillY = 395
+        const skillY = 385
 
         const skillIcons: Phaser.GameObjects.Image[] = []
 
@@ -115,17 +115,18 @@ export default class TitleScene extends Phaser.Scene {
         .setStrokeStyle(4, 0xffffff)
         .setDepth(10)
 
-        //Start Button
+        //Buttons
         const buttonWidth = 220
         const buttonHeight = 60
 
-        const buttonBg = this.add.rectangle(400, 525, buttonWidth, buttonHeight, 0x222222)
+        //Start button
+        const startButtonBg = this.add.rectangle(400, 505, buttonWidth, buttonHeight, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
         //Button Text
-        const startText = this.add.text(400, 525, "START GAME", {
+        const startText = this.add.text(400, 505, "START GAME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: `#ffffff`,
@@ -133,14 +134,14 @@ export default class TitleScene extends Phaser.Scene {
         .setOrigin(0.5)
 
         this.tweens.add({
-            targets: [buttonBg, startText],
+            targets: [startButtonBg, startText],
             alpha: { from: 1, to: 0.5 },
             duration: 800,
             yoyo: true,
             repeat: -1,
         });
 
-        buttonBg.on("pointerdown", () => {
+        startButtonBg.on("pointerdown", () => {
             this.startGame()
         })
 
@@ -150,21 +151,28 @@ export default class TitleScene extends Phaser.Scene {
             this.startGame()
         })
 
-        //Bottom Text
+        //Controls Button
+        const controlButtonBg = this.add.rectangle(400, 580, buttonWidth, buttonHeight, 0x222222)
+        .setStrokeStyle(3, 0xffcc00)
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true})
 
-        this.add.text(400, 600, "Press ESC for controls", {
-            fontSize: "16px",
+        controlButtonBg.on("pointerdown", () => this.scene.start("controls"));
+
+        //Control button text
+        this.add.text(400, 580, "CONTROLS", {
+            fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: `#ffffff`,
         })
         .setOrigin(0.5)
 
+        //Bottom Text
         this.add.text(400, 650, "Created by Kevin Lo", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: `#ffcc00`
         }).setOrigin(0.5)
-
     }
 
     moveCharOutline(sprite: Phaser.GameObjects.Sprite) {

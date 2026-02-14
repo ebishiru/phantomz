@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import TitleScene from "./scenes/TitleScene"
+import ControlScene from "./scenes/ControlsScene"
 import GameScene from "./scenes/GameScene"
 import LevellingScene from "./scenes/LevellingScene"
 import GameOverScene from "./scenes/GameOverScene"
@@ -25,7 +26,7 @@ const config: Phaser.Types.Core.GameConfig = {
     activePointers: 3
   },
   pixelArt: true,
-  scene: [TitleScene, GameScene, LevellingScene, GameOverScene],
+  scene: [TitleScene, ControlScene, GameScene, LevellingScene, GameOverScene],
 }
 
 new Phaser.Game(config)
