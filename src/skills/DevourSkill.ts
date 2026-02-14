@@ -24,8 +24,8 @@ export default class DevourSkill extends Skill {
     activate() {
         this.updateFacing()
 
-        const startAngle = this.facingAngle - Math.PI / 3
-        const endAngle = this.facingAngle + Math.PI /3
+        // const startAngle = this.facingAngle - Math.PI / 3
+        // const endAngle = this.facingAngle + Math.PI /3
 
         //Create graphics
         // const g = this.scene.add.graphics()

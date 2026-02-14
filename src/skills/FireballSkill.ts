@@ -11,7 +11,7 @@ export default class FireballSkill extends Skill {
     }
 
     activate() {
-        const g = this.scene.add.graphics()
+        // const g = this.scene.add.graphics()
 
         const dir = new Phaser.Math.Vector2(
             this.player.facing.x,

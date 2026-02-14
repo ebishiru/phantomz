@@ -11,7 +11,7 @@ export default class CaltopsSkill extends Skill {
     }
 
     activate() {
-        const g = this.scene.add.graphics()
+        // const g = this.scene.add.graphics()
 
         const originX = this.player.x
         const originY = this.player.y
