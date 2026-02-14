@@ -14,6 +14,7 @@ import HalfCircleFromBoss from "../mechanics/HalfCircleFromBoss";
 import TeleportCircleAndBack from "../mechanics/TeleportCircleAndBack";
 import DoubleDonutFromBoss from "../mechanics/DoubleDonutFromBoss";
 import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBoss";
+import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
 
 export const Bosses = [
     {
@@ -80,6 +81,7 @@ export const Bosses = [
         mechanics: [
             DoubleDonutFromBoss,
             PersisLineTelegraphFromBoss,
+            CirclesSequenceAroundBoss
         ]
     }
 ]
