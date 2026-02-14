@@ -78,7 +78,7 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            // DoubleDonutFromBoss,
+            DoubleDonutFromBoss,
             PersisLineTelegraphFromBoss,
         ]
     }

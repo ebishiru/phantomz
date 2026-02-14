@@ -10,7 +10,7 @@ export default class PersisLineTelegraphFromBoss extends BossMechanic {
         castTime: 1000,
         castDuration: 1000,
         cooldown: 2000,
-        showCastBar: false,
+        showCastBar: true,
         damage: 20,
         range: 700,
         width: 80,
@@ -67,12 +67,20 @@ export default class PersisLineTelegraphFromBoss extends BossMechanic {
         const py = this.player.y
         const pr = this.player.hurtboxRadius
 
-        const lineLen = Phaser.Math.Distance.Between(startX, startY, endX, endY);
-        const t = Phaser.Math.Clamp(((px - startX) * (endX - startX) + (py - startY) * (endY - startY)) / (lineLen * lineLen), 0, 1);
-        const closestX = startX + t * (endX - startX);
-        const closestY = startY + t * (endY - startY);
+        const lineDX = endX - startX
+        const lineDY = endY - startY
+        const lineLenSq = lineDX * lineDX + lineDY * lineDY
 
-        const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY);
+        // projection factor t along the line
+        let t = ((px - startX) * lineDX + (py - startY) * lineDY) / lineLenSq
+
+        // reject points behind the start
+        if (t < 0 || t > 1) return
+
+        const closestX = startX + t * lineDX
+        const closestY = startY + t * lineDY
+
+        const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY)
 
         if (distanceToLine <= (this.config.width / 2) + pr) {
             this.player.takeDamage(this.config.damage)
