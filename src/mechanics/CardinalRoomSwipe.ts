@@ -19,7 +19,7 @@ export default class CardinalRoomSwipe extends BossMechanic {
     direction: string = "North"
 
     onCastStart() {
-        if (!this.boss) return
+        if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
         const directions = ["North", "South", "East", "West"]
         this.direction = Phaser.Utils.Array.GetRandom(directions)
@@ -52,7 +52,7 @@ export default class CardinalRoomSwipe extends BossMechanic {
 
         // Rectangle Telegraph First
         this.scene.time.delayedCall(this.config.castTime - 300, () => {
-            if (!this.boss) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new RectangleTelegraph(
                 this.scene,
                 x,
@@ -64,7 +64,7 @@ export default class CardinalRoomSwipe extends BossMechanic {
 
         //Hit Check
         this.scene.time.delayedCall(this.config.castTime, () => {
-            if (!this.boss || !this.telegraph) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
             const { x: rx, y: ry, width: rw, height: rh } = this.telegraph
             const px = this.player.x

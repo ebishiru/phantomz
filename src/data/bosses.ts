@@ -12,6 +12,8 @@ import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
 import RandomCirclesAround from "../mechanics/RandomCirclesAround";
 import HalfCircleFromBoss from "../mechanics/HalfCircleFromBoss";
 import TeleportCircleAndBack from "../mechanics/TeleportCircleAndBack";
+import DoubleDonutFromBoss from "../mechanics/DoubleDonutFromBoss";
+import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBoss";
 
 export const Bosses = [
     {
@@ -68,6 +70,16 @@ export const Bosses = [
             RandomCirclesAround,
             HalfCircleFromBoss,
             TeleportCircleAndBack
+        ]
+    },
+    {
+        name: "Naga",
+        spriteKey: "boss6",
+        speed: 60,
+        hurtRadius: 80,
+        mechanics: [
+            // DoubleDonutFromBoss,
+            PersisLineTelegraphFromBoss,
         ]
     }
 ]
