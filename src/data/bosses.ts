@@ -17,10 +17,11 @@ import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBo
 import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
 import ConeFrontBackFromBoss from "../mechanics/ConeFrontBackFromBoss";
 import TeleportConeBiggerFromBoss from "../mechanics/TeleportConeBiggerFromBoss";
+import TeleportClockwiseCones from "../mechanics/TeleportClockwiseCones";
 
 export const Bosses = [
     {
-        name: "Cave Worm",
+        name: "Wyrm",
         spriteKey: "boss1",
         speed: 25,
         hurtRadius: 80,
@@ -32,7 +33,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Cave Bat",
+        name: "Shrieker",
         spriteKey: "boss2",
         speed: 120,
         hurtRadius: 70,
@@ -44,7 +45,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Cave Titan",
+        name: "Titanus",
         spriteKey: "boss3",
         speed: 60,
         hurtRadius: 80,
@@ -55,7 +56,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Cave Crawler",
+        name: "Buzzerax",
         spriteKey: "boss4",
         speed: 80,
         hurtRadius: 65,
@@ -65,7 +66,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Iron Giant",
+        name: "Black Knight",
         spriteKey: "boss5",
         speed: 60,
         hurtRadius: 80,
@@ -79,7 +80,7 @@ export const Bosses = [
         name: "Naga",
         spriteKey: "boss6",
         speed: 60,
-        hurtRadius: 80,
+        hurtRadius: 75,
         mechanics: [
             DoubleDonutFromBoss,
             PersisLineTelegraphFromBoss,
@@ -93,7 +94,32 @@ export const Bosses = [
         hurtRadius: 70,
         mechanics: [
             ConeFrontBackFromBoss,
-            TeleportConeBiggerFromBoss
+            TeleportConeBiggerFromBoss,
+            TeleportClockwiseCones
         ]
-    }
+    },
+    // {
+    //     name: "Titanus Prime",
+    //     spriteKey: "boss8",
+    //     speed: 60,
+    //     hurtRadius: 75,
+    //     mecahnics: [
+    //     ]
+    // },
+    // {
+    //     name: "Hive Lord",
+    //     spriteKey: "boss9",
+    //     speed: 80,
+    //     hurtRadius: 60,
+    //     mecahnics: [
+    //     ]
+    // },
+    // {
+    //     name: "Phantom Knight",
+    //     spriteKey: "boss10",
+    //     speed: 80,
+    //     hurtRadius: 75,
+    //     mecahnics: [
+    //     ]
+    // },
 ]
