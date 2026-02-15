@@ -16,6 +16,7 @@ import DoubleDonutFromBoss from "../mechanics/DoubleDonutFromBoss";
 import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBoss";
 import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
 import ConeFrontBackFromBoss from "../mechanics/ConeFrontBackFromBoss";
+import TeleportConeBiggerFromBoss from "../mechanics/TeleportConeBiggerFromBoss";
 
 export const Bosses = [
     {
@@ -91,7 +92,8 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 70,
         mechanics: [
-            ConeFrontBackFromBoss
+            ConeFrontBackFromBoss,
+            TeleportConeBiggerFromBoss
         ]
     }
 ]
