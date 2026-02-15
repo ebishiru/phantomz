@@ -36,6 +36,7 @@ export default class HalfCircleFromBoss extends BossMechanic {
 
         //Draw telegraph right before hit
         this.scene.time.delayedCall((this.config.castTime - 300), () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new ConeTelegraph(
                 this.scene,
                 this.boss.x,
@@ -47,6 +48,7 @@ export default class HalfCircleFromBoss extends BossMechanic {
         })
 
         this.telegraphTimer = this.scene.time.delayedCall(this.config.castTime, () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.indicator?.destroy()
             this.indicator = undefined
         })

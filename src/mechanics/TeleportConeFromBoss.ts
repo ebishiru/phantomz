@@ -6,7 +6,7 @@ export default class TeleportConeFromBoss extends BossMechanic {
 
     config = {
         id: "teleport-cone-boss",
-        name: "Megasonic",
+        name: "Megasonic Shift",
         castTime: 1500,
         castDuration: 1500,
         cooldown: 2000,

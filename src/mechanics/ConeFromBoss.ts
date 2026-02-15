@@ -6,7 +6,7 @@ export default class ConeFromBoss extends BossMechanic {
 
     config = {
         id: "cone-boss",
-        name: "Supersonic",
+        name: "Supersonic Pulse",
         castTime: 1000,
         castDuration: 1000,
         cooldown: 2000,

@@ -15,6 +15,7 @@ import TeleportCircleAndBack from "../mechanics/TeleportCircleAndBack";
 import DoubleDonutFromBoss from "../mechanics/DoubleDonutFromBoss";
 import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBoss";
 import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
+import ConeFrontBackFromBoss from "../mechanics/ConeFrontBackFromBoss";
 
 export const Bosses = [
     {
@@ -82,6 +83,15 @@ export const Bosses = [
             DoubleDonutFromBoss,
             PersisLineTelegraphFromBoss,
             CirclesSequenceAroundBoss
+        ]
+    },
+    {
+        name: "Vrykolakas",
+        spriteKey: "boss7",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            ConeFrontBackFromBoss
         ]
     }
 ]
