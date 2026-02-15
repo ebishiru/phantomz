@@ -107,8 +107,8 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            // SuckExpandDonutFromBoss,
-            // SuckShrinkDonutFromBoss,
+            SuckExpandDonutFromBoss,
+            SuckShrinkDonutFromBoss,
             TeleportTripleRectangleOnPlayer
         ]
     },
