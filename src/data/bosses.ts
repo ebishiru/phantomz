@@ -18,6 +18,9 @@ import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
 import ConeFrontBackFromBoss from "../mechanics/ConeFrontBackFromBoss";
 import TeleportConeBiggerFromBoss from "../mechanics/TeleportConeBiggerFromBoss";
 import TeleportClockwiseCones from "../mechanics/TeleportClockwiseCones";
+import SuckExpandDonutFromBoss from "../mechanics/SuckExpandDonutFromBoss";
+import SuckShrinkDonutFromBoss from "../mechanics/SuckShrinkDonutFromBoss";
+import TeleportTripleRectangleOnPlayer from "../mechanics/TeleportTripleRectangleOnPlayer";
 
 export const Bosses = [
     {
@@ -98,20 +101,23 @@ export const Bosses = [
             TeleportClockwiseCones
         ]
     },
-    // {
-    //     name: "Titanus Prime",
-    //     spriteKey: "boss8",
-    //     speed: 60,
-    //     hurtRadius: 75,
-    //     mecahnics: [
-    //     ]
-    // },
+    {
+        name: "Titanus Prime",
+        spriteKey: "boss8",
+        speed: 60,
+        hurtRadius: 80,
+        mechanics: [
+            // SuckExpandDonutFromBoss,
+            // SuckShrinkDonutFromBoss,
+            TeleportTripleRectangleOnPlayer
+        ]
+    },
     // {
     //     name: "Hive Lord",
     //     spriteKey: "boss9",
     //     speed: 80,
     //     hurtRadius: 60,
-    //     mecahnics: [
+    //     mechanics: [
     //     ]
     // },
     // {
@@ -119,7 +125,7 @@ export const Bosses = [
     //     spriteKey: "boss10",
     //     speed: 80,
     //     hurtRadius: 75,
-    //     mecahnics: [
+    //     mechanics: [
     //     ]
     // },
 ]
