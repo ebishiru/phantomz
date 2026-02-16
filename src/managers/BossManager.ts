@@ -185,17 +185,22 @@ export default class BossManager {
 
     createBoss(x: number, y: number) {
         // Randomize Bosses with No Repeats
+        const maxIndex = this.currentMaxBossIndex
+        const minIndex = Math.max(0, maxIndex - 4)
+
         let bossIndex: number
-        if(this.currentMaxBossIndex === 0) {
-            bossIndex = 0
+
+        if (minIndex === maxIndex) {
+            bossIndex = maxIndex
         } else {
             do {
-                bossIndex = Phaser.Math.Between( 0, this.currentMaxBossIndex)
+                bossIndex = Phaser.Math.Between(minIndex, maxIndex)
             } while (bossIndex === this.lastBossIndex)
         }
+
         this.lastBossIndex = bossIndex
 
-        const bossConfig = Bosses[7]        // Change Index to Boss Index to Test HERE
+        const bossConfig = Bosses[bossIndex]        // Change Index to Boss Index to Test HERE
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss
