@@ -19,8 +19,8 @@ export default class SlashSkill extends Skill {
     activate() {
         this.updateFacing()
 
-        const startAngle = this.facingAngle - Math.PI / 2
-        const endAngle   = this.facingAngle + Math.PI / 2
+        // const startAngle = this.facingAngle - Math.PI / 2
+        // const endAngle   = this.facingAngle + Math.PI / 2
 
         //Create graphics
         // const g = this.scene.add.graphics()
