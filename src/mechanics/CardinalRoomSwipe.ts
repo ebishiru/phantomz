@@ -51,7 +51,7 @@ export default class CardinalRoomSwipe extends BossMechanic {
         }
 
         // Rectangle Telegraph First
-        this.scene.time.delayedCall(this.config.castTime - 300, () => {
+        this.scene.time.delayedCall(this.config.castTime - 800, () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new RectangleTelegraph(
                 this.scene,

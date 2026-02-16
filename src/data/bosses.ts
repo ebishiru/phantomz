@@ -21,6 +21,7 @@ import TeleportClockwiseCones from "../mechanics/TeleportClockwiseCones";
 import SuckExpandDonutFromBoss from "../mechanics/SuckExpandDonutFromBoss";
 import SuckShrinkDonutFromBoss from "../mechanics/SuckShrinkDonutFromBoss";
 import TeleportTripleRectangleOnPlayer from "../mechanics/TeleportTripleRectangleOnPlayer";
+import DoubleCardinalRoomSwipe from "../mechanics/DoubleCardinalRoomSwipe";
 
 export const Bosses = [
     {
@@ -112,14 +113,15 @@ export const Bosses = [
             TeleportTripleRectangleOnPlayer
         ]
     },
-    // {
-    //     name: "Hive Lord",
-    //     spriteKey: "boss9",
-    //     speed: 80,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //     ]
-    // },
+    {
+        name: "Hive Lord",
+        spriteKey: "boss9",
+        speed: 80,
+        hurtRadius: 60,
+        mechanics: [
+            DoubleCardinalRoomSwipe
+        ]
+    },
     // {
     //     name: "Phantom Knight",
     //     spriteKey: "boss10",
