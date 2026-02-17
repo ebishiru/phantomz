@@ -53,6 +53,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
 
         //First Hit Check
         this.scene.time.delayedCall(this.config.castTime, () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.checkHit(firstRect)
             this.firstTelegraph?.destroy()
             this.firstTelegraph = undefined
@@ -69,7 +70,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
 
         //Second Hit Check
         this.scene.time.delayedCall(this.config.castDuration, () => {
-            if (!this.active) return
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
             this.checkHit(secondRect)
             this.secondTelegraph?.destroy()
