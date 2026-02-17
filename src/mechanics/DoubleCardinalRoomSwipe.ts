@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import RectangleTelegraph from "../entities/RectangleTelegraph";
-import DirectionIndicator from "../entities/DirectionIndicator";
+import WallIndicator from "../entities/WallIndicator";
 
 export default class DoubleCardinalRoomSwipe extends BossMechanic {
 
@@ -18,6 +18,8 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
     }
 
     direction: string = "North"
+    firstTelegraph?: RectangleTelegraph
+    secondTelegraph?: RectangleTelegraph
 
     onCastStart() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
@@ -33,9 +35,6 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
         const firstRect = this.getRectangleFromDirection(firstDirection)
         const secondRect = this.getRectangleFromDirection(secondDirection)
 
-        let firstTelegraph: RectangleTelegraph | undefined
-        let secondTelegraph: RectangleTelegraph | undefined
-
         // SpawnArrow Telegraph
         this.spawnWallIndicators(secondDirection)
 
@@ -43,7 +42,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
         this.scene.time.delayedCall(this.config.castTime - 300, () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
-            firstTelegraph = new RectangleTelegraph(
+            this.firstTelegraph = new RectangleTelegraph(
                 this.scene,
                 firstRect.x,
                 firstRect.y,
@@ -55,11 +54,11 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
         //First Hit Check
         this.scene.time.delayedCall(this.config.castTime, () => {
             this.checkHit(firstRect)
-            firstTelegraph?.destroy()
-            firstTelegraph = undefined
+            this.firstTelegraph?.destroy()
+            this.firstTelegraph = undefined
 
             //Spawn 2nd Telegraph
-            secondTelegraph = new RectangleTelegraph(
+            this.secondTelegraph = new RectangleTelegraph(
                 this.scene,
                 secondRect.x,
                 secondRect.y,
@@ -73,8 +72,8 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
             if (!this.active) return
 
             this.checkHit(secondRect)
-            secondTelegraph?.destroy()
-            secondTelegraph = undefined
+            this.secondTelegraph?.destroy()
+            this.secondTelegraph = undefined
         })
     }
 
@@ -85,7 +84,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
         let width = bounds.width
         let height = bounds.height
 
-        const roomPercent = 0.5 
+        const roomPercent = 0.6 
 
         switch( direction ) {
             case "North":
@@ -117,9 +116,9 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
 
     spawnWallIndicators(direction: string) {
         const bounds = this.scene.physics.world.bounds
-        const indicators: DirectionIndicator[] = []
+        const indicators: WallIndicator[] = []
 
-        const count = 8
+        const count = 5
         const spacingX = bounds.width / count
         const spacingY = bounds.height / count
 
@@ -131,7 +130,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
                 for (let i = 0; i < count; i++) {
                     const x = bounds.x + i * spacingX
                     const y = bounds.y
-                    indicators.push(new DirectionIndicator(this.scene, this.boss, angle, 16))
+                    indicators.push(new WallIndicator(this.scene, x, y, angle, 16))
                 }
                 break
 
@@ -140,7 +139,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
                 for (let i = 0; i < count; i++) {
                     const x = bounds.x + i * spacingX
                     const y = bounds.bottom
-                    indicators.push(new DirectionIndicator(this.scene, this.boss, angle, 16))
+                    indicators.push(new WallIndicator(this.scene, x, y, angle, 16))
                 }
                 break
 
@@ -149,7 +148,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
                 for (let i = 0; i < count; i++) {
                     const x = bounds.right
                     const y = bounds.y + i * spacingY
-                    indicators.push(new DirectionIndicator(this.scene, this.boss, angle, 16))
+                    indicators.push(new WallIndicator(this.scene, x, y, angle, 16))
                 }
                 break
 
@@ -158,7 +157,7 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
                 for (let i = 0; i < count; i++) {
                     const x = bounds.x
                     const y = bounds.y + i * spacingY
-                    indicators.push(new DirectionIndicator(this.scene, this.boss, angle, 16))
+                    indicators.push(new WallIndicator(this.scene, x, y, angle, 16))
                 }
                 break
         }
@@ -187,15 +186,12 @@ export default class DoubleCardinalRoomSwipe extends BossMechanic {
         }
     }
 
-
     execute() {
-        firstTelegraph?.destroy()
-        secondTelegraph?.destroy()
     }
 
     destroy() {
-        firstTelegraph?.destroy()
-        secondTelegraph?.destroy()
+        this.firstTelegraph?.destroy()
+        this.secondTelegraph?.destroy()
         super.destroy?.()
     }
 }
