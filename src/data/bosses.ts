@@ -23,6 +23,7 @@ import SuckShrinkDonutFromBoss from "../mechanics/SuckShrinkDonutFromBoss";
 import TeleportTripleRectangleOnPlayer from "../mechanics/TeleportTripleRectangleOnPlayer";
 import DoubleCardinalRoomSwipe from "../mechanics/DoubleCardinalRoomSwipe";
 import PersistCircleTelegraph from "../mechanics/PersistCircleTelegraph";
+import CheckboardTelegraph from "../mechanics/CheckboardTelegraph";
 
 export const Bosses = [
     {
@@ -121,7 +122,8 @@ export const Bosses = [
         hurtRadius: 60,
         mechanics: [
             DoubleCardinalRoomSwipe,
-            PersistCircleTelegraph
+            PersistCircleTelegraph,
+            CheckboardTelegraph
         ]
     },
     // {

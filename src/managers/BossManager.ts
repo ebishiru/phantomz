@@ -70,6 +70,17 @@ export default class BossManager {
                 this.currentMaxBossIndex = Math.min(Bosses.length - 1, Math.floor(this.globalTimerSeconds / 60))
             }
         });
+
+        //healing passive +1 every 10seconds
+        this.scene.time.addEvent({
+            delay: 10000,
+            loop: true,
+            callback: () => {
+                if (this.player && this.player.health < this.player.maxHealth) {
+                    this.player.health += 1
+                }
+            }
+        })
     }
 
     getCenteredSquareCorners(scale = 0.6) {
