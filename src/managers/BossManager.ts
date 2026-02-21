@@ -211,7 +211,7 @@ export default class BossManager {
 
         this.lastBossIndex = bossIndex
 
-        const bossConfig = Bosses[9]        // Change Index to Boss Index to Test HERE
+        const bossConfig = Bosses[bossIndex]        // Change Index to Boss Index to Test HERE
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss
