@@ -24,6 +24,7 @@ import TeleportTripleRectangleOnPlayer from "../mechanics/TeleportTripleRectangl
 import DoubleCardinalRoomSwipe from "../mechanics/DoubleCardinalRoomSwipe";
 import PersistCircleTelegraph from "../mechanics/PersistCircleTelegraph";
 import CheckboardTelegraph from "../mechanics/CheckboardTelegraph";
+import MoreRandomCirclesAround from "../mechanics/MoreRandomCirclesAround";
 
 export const Bosses = [
     {
@@ -126,12 +127,13 @@ export const Bosses = [
             CheckboardTelegraph
         ]
     },
-    // {
-    //     name: "Phantom Knight",
-    //     spriteKey: "boss10",
-    //     speed: 80,
-    //     hurtRadius: 75,
-    //     mechanics: [
-    //     ]
-    // },
+    {
+        name: "Phantom Knight",
+        spriteKey: "boss10",
+        speed: 80,
+        hurtRadius: 75,
+        mechanics: [
+            MoreRandomCirclesAround,
+        ]
+    },
 ]
