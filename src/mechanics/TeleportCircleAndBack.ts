@@ -6,7 +6,7 @@ export default class TeleportCircleAndBack extends BossMechanic {
 
     config = {
         id: "teleport-circle-player",
-        name: "Leaping Swing",
+        name: "Leaping Strike",
         castTime: 1500,
         castDuration: 2000,
         cooldown: 2000,

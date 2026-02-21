@@ -25,6 +25,8 @@ import DoubleCardinalRoomSwipe from "../mechanics/DoubleCardinalRoomSwipe";
 import PersistCircleTelegraph from "../mechanics/PersistCircleTelegraph";
 import CheckboardTelegraph from "../mechanics/CheckboardTelegraph";
 import MoreRandomCirclesAround from "../mechanics/MoreRandomCirclesAround";
+import DoubleHalfCircleFromBoss from "../mechanics/DoubleHalfCircleFromBoss";
+import TeleportCircleDonutAndBack from "../mechanics/TeleportCircleDonutAndBack";
 
 export const Bosses = [
     {
@@ -134,6 +136,8 @@ export const Bosses = [
         hurtRadius: 75,
         mechanics: [
             MoreRandomCirclesAround,
+            DoubleHalfCircleFromBoss,
+            TeleportCircleDonutAndBack
         ]
     },
 ]
