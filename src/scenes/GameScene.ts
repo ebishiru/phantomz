@@ -20,6 +20,11 @@ export default class GameScene extends Phaser.Scene {
     sKey!: Phaser.Input.Keyboard.Key
     dKey!: Phaser.Input.Keyboard.Key
 
+    upKey!: Phaser.Input.Keyboard.Key
+    rightKey!: Phaser.Input.Keyboard.Key
+    leftKey!: Phaser.Input.Keyboard.Key
+    downKey!: Phaser.Input.Keyboard.Key
+
     joystickBase!: Phaser.GameObjects.Arc
     joystickThumb!: Phaser.GameObjects.Arc
     joystickVector = new Phaser.Math.Vector2()
@@ -177,6 +182,11 @@ export default class GameScene extends Phaser.Scene {
         this.aKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A)
         this.sKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         this.dKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+
+        this.upKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
+        this.rightKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        this.leftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
+        this.downKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
 
         // Skill keybindings
         this.skillKeys = [
@@ -369,10 +379,10 @@ export default class GameScene extends Phaser.Scene {
 
         //Player Movement and Skills
         const dir = new Phaser.Math.Vector2(0, 0)
-        if (this.aKey.isDown) dir.x -= 1 // left
-        if (this.dKey.isDown) dir.x += 1 // right
-        if (this.wKey.isDown) dir.y -= 1 // up
-        if (this.sKey.isDown) dir.y += 1 // down
+        if (this.aKey.isDown || this.leftKey.isDown) dir.x -= 1 // left
+        if (this.dKey.isDown || this.rightKey.isDown) dir.x += 1 // right
+        if (this.wKey.isDown || this.upKey.isDown) dir.y -= 1 // up
+        if (this.sKey.isDown || this.downKey.isDown) dir.y += 1 // down
 
         //Joystick
         dir.add(this.joystickVector)

@@ -16,7 +16,7 @@ export default class ControlScene extends Phaser.Scene {
 
         //Controls Text
         this.add.text(400, 210,
-            "Movement: WASD / Joystick\n" +
+            "Movement: Arrow Keys / WASD / Joystick\n" +
             "Skill 1: Q / Green \n" +
             "Skill 2: E / Blue \n" +
             "Skill 3: R / Red \n" +
