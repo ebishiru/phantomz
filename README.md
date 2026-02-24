@@ -56,17 +56,33 @@ INTERMEDIATE:
 
 - Hook: Ranged auto that pulls you to the boss.
 
-- Lightning: Ranged boosts movement for next 3s
+- Volt: Boost move temporarily then aoe damage.
 
-ADVANCED: 
+To ADD:
 
-- Blood: AOE around player, Use HP to deal dmg, no cd
+- Blood: AOE around player, Use HP to deal dmg
+[Total: 15000pts]
 
-- Knife: Starts at 1 dmg, increases with each hit.
+- Jab: Starts at 1 dmg, increases with each hit.
+[Total: 9000pts]
 
-- Javelin: Ranged, set line distance. Must be picked up to reset cd. 
+- Lob: Ranged, throw bowling ball set distance. Must be picked up to reset cd. 
+[Highscore: 2500pts]
 
 - Restoration: Instantly heal player, long cd
+[Highscore: 500pts]
+
+- Ward: Invulnerability for 2s.
+[Highscore: 1500pts]
+
+- Gust: Cone attack with knockback
+[Total: 3000pts]
+
+- Ironburst: shoot 3 pellets in direction
+[Total: 6000pts]
+
+- Laser: Bounce off wall to deal damage.
+[Total: 12000pts]
 
 
 ```
