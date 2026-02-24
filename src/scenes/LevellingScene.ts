@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import GameScene from "./GameScene";
 import Player from "../entities/Player";
-import { skills } from "../data/skills";
+import { generateLevelOptions } from "../systems/generateLevelOptions";
 
 export default class LevellingScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -42,7 +42,7 @@ export default class LevellingScene extends Phaser.Scene {
         }).setOrigin(0.5)
 
         //Upgrade Options (mid)
-        const options = this.generateOptions(this.player)
+        const options = generateLevelOptions(this.player)
         const optionContainers: Phaser.GameObjects.Container[] = []
         let optionChosen = false
 
@@ -140,34 +140,6 @@ export default class LevellingScene extends Phaser.Scene {
 
         //Skill Summary (bottom) 
         this.displaySummary(this.player, menuY + menuHeight / 2 - 120, menuWidth)
-    }
-
-    generateOptions(player: Player) {
-        const unlockedCount = player.skills.length
-        const options: {title: string, desc: string, iconKey?: string, apply: () => void}[] = [];
-
-        skills.forEach(skill => {
-            const skillObj = (player as any)[skill.key]
-
-            if (!skillObj.enabled && unlockedCount < 4) {
-                options.push({
-                    title: `${skill.name} Unlock`,
-                    desc: skill.desc,
-                    iconKey: skill.iconKey,
-                    apply: () => { player.unlockSkill(skillObj)}
-                })
-            } else if (skillObj.enabled) {
-                const upgrade = skill.upgrades[Math.floor(Math.random() * skill.upgrades.length)]
-                options.push({
-                    title: `${skill.name} Upgrade`,
-                    desc: upgrade.desc,
-                    iconKey: skill.iconKey,
-                    apply: () => upgrade.apply(player)
-                })
-            }
-        })
-
-        return Phaser.Utils.Array.Shuffle(options).slice(0, 3);
     }
 
     displaySummary(player: Player, y: number, menuWidth: number) {
