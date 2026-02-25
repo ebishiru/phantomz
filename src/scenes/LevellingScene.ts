@@ -4,7 +4,6 @@ import Player from "../entities/Player";
 import { generateLevelOptions } from "../systems/generateLevelOptions";
 
 export default class LevellingScene extends Phaser.Scene {
-    enterKey!: Phaser.Input.Keyboard.Key
     player!: Player
 
     init(data: { player: Player }) {
@@ -45,13 +44,6 @@ export default class LevellingScene extends Phaser.Scene {
         const options = generateLevelOptions(this.player)
         const optionContainers: Phaser.GameObjects.Container[] = []
         let optionChosen = false
-
-        options.push({
-            title: "Skip",
-            desc: "Gain no upgrades this level",
-            iconKey: "skip-icon",
-            apply: () => {}
-        })
 
         const optionsStartY = menuY - menuHeight / 6 - 40
         const optionsSpacing = menuHeight / 8

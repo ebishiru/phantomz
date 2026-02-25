@@ -37,9 +37,9 @@ export default class ControlScene extends Phaser.Scene {
 
         //How to play text
         this.add.text(400, 440,
-            "Stay alive as long as possible. \n" +
-            "Kill enemies to level up skills. \n" +
-            "New variations are added every minute. \n" +
+            "Kill enemies to get or level up skills. \n" +
+            "Grey circle around boss is its hurtbox. \n" +
+            "New bosses are added every minute. \n" +
             "Score is based on kills and survival time. \n" +
             "Have fun!",
             {

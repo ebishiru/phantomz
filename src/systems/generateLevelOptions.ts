@@ -38,5 +38,15 @@ export function generateLevelOptions(player: Player) {
         }
     })
 
-    return Phaser.Utils.Array.Shuffle(options).slice(0, 3);
+    const finalOptions = Phaser.Utils.Array.Shuffle(options).slice(0, 3);
+
+    //Add skip for option 4
+    finalOptions.push({
+        title: "Skip",
+        desc: "Gain no upgrades this level",
+        iconKey: "skip-icon",
+        apply: () => {}
+    })
+
+    return finalOptions
 }
