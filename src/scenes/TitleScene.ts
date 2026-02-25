@@ -20,25 +20,6 @@ export default class TitleScene extends Phaser.Scene {
         super("title")
     }
 
-    preload() {
-        this.load.spritesheet("player1", "assets/player1.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        })
-        this.load.spritesheet("player2", "assets/player2.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        })
-        this.load.spritesheet("player3", "assets/player3.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        })
-        this.load.image("slash-icon", "assets/slash-icon.png")
-        this.load.image("arrow-icon", "assets/arrow-icon.png")
-        this.load.image("pulse-icon", "assets/pulse-icon.png")
-    }
-
-
     create() {
         //Main Title
         this.add.text(400, 125, "Project PhantomZ", {

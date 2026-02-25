@@ -1,0 +1,71 @@
+import Phaser from "phaser";
+
+export default class PreloadScene extends Phaser.Scene {
+    constructor() {
+        super("preload")
+    }
+
+    preload() {
+        this.loadCharacters()
+        this.loadBosses()
+        this.loadSkills()
+        this.loadUI()
+        this.loadEnvironment()
+    }
+
+    loadCharacters() {
+        for (let i = 0; i <= 3; i++) {
+            this.load.spritesheet(`player${i}`, `assets/player${i}.png`, {
+                frameWidth: 16,
+                frameHeight: 16
+            })
+        }
+    }
+
+    loadBosses() {
+        for (let i = 0; i <= 10; i++) {
+            this.load.spritesheet(`boss${i}`, `assets/boss${i}.png`, {
+                frameWidth: 16,
+                frameHeight: 16
+            })
+        }
+    }
+
+    loadSkills() {
+        const skillKeys = [
+            "slash",
+            "arrow",
+            "pulse",
+            "thrust",
+            "caltrops",
+            "fireball",
+            "devour",
+            "hook",
+            "volt",
+        ]
+
+        skillKeys.forEach(key => {
+            this.load.image(`${key}-icon`, `assets/${key}-icon.png`)
+            this.load.image(`${key}-vfx`, `assets/${key}-vfx.png`)
+        })
+
+        //Extra skill assets
+        this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
+        this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
+        this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
+    }
+
+    loadUI() {
+        this.load.image("exp-orb", "assets/exp-orb.png")
+        this.load.image("loading-border", "assets/loading-border.png")
+        this.load.image("ready-border", "assets/ready-border.png")
+    }
+
+    loadEnvironment() {
+        this.load.image("dirt-texture", "assets/dirt-texture.png")
+    }
+
+    create() {
+        this.scene.start("title")
+    }
+}
