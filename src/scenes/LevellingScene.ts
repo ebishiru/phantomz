@@ -15,6 +15,14 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     create() {
+        // this.createOverlay()
+        // this.createMenuBox()
+        // this.createOptions()
+        // this.bindKeys()
+        // this.displaySummary()
+
+
+
         const gameX = 50
         const gameY = 100
         const gameWidth = 700
