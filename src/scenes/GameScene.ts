@@ -1,4 +1,3 @@
-// src/scenes/GameScene.ts
 import Phaser from "phaser"
 import Player from "../entities/Player"
 import HealthBar from "../ui/HealthBar"

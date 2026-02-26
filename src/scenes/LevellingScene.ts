@@ -6,6 +6,15 @@ import { generateLevelOptions } from "../systems/generateLevelOptions";
 export default class LevellingScene extends Phaser.Scene {
     player!: Player
 
+    menuX!: number
+    menuY!: number
+    menuWidth!: number
+    menuHeight!: number
+
+    options: any[] = []
+    optionContainers: Phaser.GameObjects.Container[] = []
+    optionChosen = false
+
     init(data: { player: Player }) {
         this.player = data.player
     }
@@ -15,60 +24,64 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     create() {
-        // this.createOverlay()
-        // this.createMenuBox()
-        // this.createOptions()
-        // this.bindKeys()
-        // this.displaySummary()
+        this.createOverlay()
+        this.createMenuBox()
+        this.createOptions()
+        this.bindKeys()
+        this.displaySummary()
+    }
 
-
-
+    createOverlay() {
         const gameX = 50
         const gameY = 100
         const gameWidth = 700
         const gameHeight = 500
 
-        const menuWidth = 500
-        const menuHeight = 450
+        this.menuWidth = 500
+        this.menuHeight = 450
 
-        const menuX = gameX + gameWidth / 2
-        const menuY = gameY + gameHeight / 2
+        this.menuX = gameX + gameWidth / 2
+        this.menuY = gameY + gameHeight / 2
 
         //Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.35).setOrigin(0)
+    }
 
+    createMenuBox() {
         //Menu Box
-        this.add.rectangle(menuX, menuY, menuWidth, menuHeight, 0x1e1e1e)
+        this.add.rectangle(this.menuX, this.menuY, this.menuWidth, this.menuHeight, 0x1e1e1e)
         .setStrokeStyle(2, 0xffffff)
 
         //Title (top)
-        this.add.text(menuX, menuY - menuHeight / 2 + 40, "LEVEL UP", {
+        this.add.text(this.menuX, this.menuY - this.menuHeight / 2 + 40, "LEVEL UP", {
             fontSize: "24px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffffff"
         }).setOrigin(0.5)
+    }
 
+    createOptions() {
         //Upgrade Options (mid)
-        const options = generateLevelOptions(this.player)
-        const optionContainers: Phaser.GameObjects.Container[] = []
-        let optionChosen = false
+        this.options = generateLevelOptions(this.player)
+        this.optionContainers = []
+        this.optionChosen = false
 
-        const optionsStartY = menuY - menuHeight / 6 - 40
-        const optionsSpacing = menuHeight / 8
+        const optionsStartY = this.menuY - this.menuHeight / 6 - 40
+        const optionsSpacing = this.menuHeight / 8
 
-        options.forEach((option, index) => {
+        this.options.forEach((option, index) => {
             const y = optionsStartY + (index * optionsSpacing)
 
-            const container = this.add.container(menuX, y)
-            optionContainers.push(container)
+            const container = this.add.container(this.menuX, y)
+            this.optionContainers.push(container)
 
             const iconKey = option.iconKey || "skip-icon" //Placeholder icon
-            const icon = this.add.image(-menuWidth / 2 + 30, 0, iconKey)
+            const icon = this.add.image(-this.menuWidth / 2 + 30, 0, iconKey)
             .setDisplaySize(32, 32)
             .setOrigin(0, 0.5)
 
             const text = this.add.text(
-                -menuWidth / 2 + 70,
+                -this.menuWidth / 2 + 70,
                 0,
                 `${option.title}\n${option.desc}`,
                 {
@@ -77,12 +90,12 @@ export default class LevellingScene extends Phaser.Scene {
                     align: "left",
                     color: "#ffffff",
                     padding: { x: 0, y: 0},
-                    wordWrap: { width: menuWidth - 100}
+                    wordWrap: { width: this.menuWidth - 100}
                 }
             ).setOrigin(0, 0.5)
             
             const keyCode = this.add.text(
-                menuWidth / 2 - 40,
+                this.menuWidth / 2 - 40,
                 0,
                 `[ ${index + 1} ]`,
                 {
@@ -94,59 +107,60 @@ export default class LevellingScene extends Phaser.Scene {
 
             container.add([icon, text, keyCode])
 
-            container.setSize(menuWidth - 20, 50)
+            container.setSize(this.menuWidth - 20, 50)
             container.setInteractive({ useHandCursor: true})
 
             container.on("pointerdown", () => {
-                chooseOption(index)
+                this.chooseOption(index)
             })
         })
+    }
 
-        const chooseOption = (index: number) => {
-            const option = options[index]
-            const container = optionContainers[index]
-            if (!option || !container) return
+    chooseOption(index: number) {
+        if (this.optionChosen) return
 
-            if (optionChosen) return
-            optionChosen = true
+        const option = this.options[index]
+        const container = this.optionContainers[index]
+        if (!option || !container) return
 
-            this.tweens.add({
-                targets: container,
-                alpha: 0,
-                duration: 50,
-                yoyo: true,
-                repeat: 2,
-                onComplete: () => {
-                    option.apply()
-                    this.scene.stop()
-                    const gameScene = this.scene.get("game") as GameScene
-                    this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
-                    this.scene.resume("game")
-                    gameScene.updateSkillUIPositions()
-                }
-            })
-                
-        }
+        this.optionChosen = true
 
+        this.tweens.add({
+            targets: container,
+            alpha: 0,
+            duration: 50,
+            yoyo: true,
+            repeat: 2,
+            onComplete: () => {
+                option.apply()
+                this.scene.stop()
+                const gameScene = this.scene.get("game") as GameScene
+                this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
+                this.scene.resume("game")
+                gameScene.updateSkillUIPositions()
+            }
+        })
+    }
+
+    bindKeys() {
         const key1 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ONE)
         const key2 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.TWO)
         const key3 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.THREE)
         const key4 = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR)
 
-        key1?.on("down", () => chooseOption(0))
-        key2?.on("down", () => chooseOption(1))
-        key3?.on("down", () => chooseOption(2))
-        key4?.on("down", () => chooseOption(3))
-
-        //Skill Summary (bottom) 
-        this.displaySummary(this.player, menuY + menuHeight / 2 - 120, menuWidth)
+        key1?.on("down", () => this.chooseOption(0))
+        key2?.on("down", () => this.chooseOption(1))
+        key3?.on("down", () => this.chooseOption(2))
+        key4?.on("down", () => this.chooseOption(3))
     }
 
-    displaySummary(player: Player, y: number, menuWidth: number) {
+    displaySummary() {
+        const y = this.menuY + this.menuHeight / 2 - 120
         const { width } = this.scale
+
         let summary = "Your Skills:\n\n"
 
-        player.skills.forEach((skill: any) => {
+        this.player.skills.forEach((skill: any) => {
             if (!skill.enabled) return
 
             const stats: string[] = []
@@ -175,7 +189,7 @@ export default class LevellingScene extends Phaser.Scene {
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
             align: "left",
-            wordWrap: { width: menuWidth - 40}
+            wordWrap: { width: this.menuWidth - 40}
         }).setOrigin(0.5, 0)
     }
 }
