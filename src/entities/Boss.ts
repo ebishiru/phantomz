@@ -23,7 +23,6 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         this.body?.setSize(16, 16)
         this.body?.setOffset(0, 0)
         this.setCollideWorldBounds(true)
-        this.play("boss-idle")
 
         this.speed = config.speed
         this.hurtRadius = config.hurtRadius

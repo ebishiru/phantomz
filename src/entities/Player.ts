@@ -117,21 +117,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    update(time: number) {
-        this.handleSkillInputs(time)
-    }
-
-    handleSkillInputs(time: number) {
-        const keys = (this.scene as any).skillKeys as Phaser.Input.Keyboard.Key[]
-        
-        this.skills.forEach( (skill, index) => {
-            const key = keys[index]
-            if (!key) return
-
-            if (Phaser.Input.Keyboard.JustDown(key)) {
-                skill.use(time)
-            }
-        })
+    update() {
+        //empty
     }
 
     gainExp(amount: number) {

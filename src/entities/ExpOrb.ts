@@ -26,7 +26,10 @@ export default class ExpOrb extends Phaser.Physics.Arcade.Image {
         this.setCollideWorldBounds(true)
 
         this.spawnTime = scene.time.now
-        this.setVelocity(Phaser.Math.Between(-120, 120), Phaser.Math.Between(-120, 120))
+
+        const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+        const speed = 300
+        this.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed)
     }
 
     update(player: Player, time: number) {

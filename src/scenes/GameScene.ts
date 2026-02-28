@@ -1,42 +1,23 @@
 import Phaser from "phaser"
 import Player from "../entities/Player"
-import HealthBar from "../ui/HealthBar"
-import ExpBar from "../ui/ExpBar"
 import BossManager from "../managers/BossManager"
-import SkillCooldown from "../ui/SkillCooldown"
-import ExpOrb from "../entities/ExpOrb"
+
+import InputSystem from "../systems/InputSystem"
+import MobileControlSystem from "../systems/MobileControlSystem"
+import ExpSystem from "../systems/ExpSystem"
+import UISystem from "../systems/UISystem"
 
 export default class GameScene extends Phaser.Scene {
-    selectedCharacter!: string
+
     player!: Player
-    healthBar!: HealthBar
-    levelText!: Phaser.GameObjects.Text
-    expBar!: ExpBar
     bossManager!: BossManager
 
-    wKey!: Phaser.Input.Keyboard.Key
-    aKey!: Phaser.Input.Keyboard.Key
-    sKey!: Phaser.Input.Keyboard.Key
-    dKey!: Phaser.Input.Keyboard.Key
-
-    upKey!: Phaser.Input.Keyboard.Key
-    rightKey!: Phaser.Input.Keyboard.Key
-    leftKey!: Phaser.Input.Keyboard.Key
-    downKey!: Phaser.Input.Keyboard.Key
-
-    joystickBase!: Phaser.GameObjects.Arc
-    joystickThumb!: Phaser.GameObjects.Arc
-    joystickVector = new Phaser.Math.Vector2()
-    joystickActive = false
-    joystickRadius = 40
-
-    skillButtons: Phaser.GameObjects.Arc[] = []
+    inputSystem!: InputSystem
+    mobileSystem!: MobileControlSystem
+    expSystem!: ExpSystem
+    uiSystem!: UISystem
 
     skillKeys!: Phaser.Input.Keyboard.Key[]
-
-    skillCooldownUIs!: SkillCooldown[]
-
-    expOrbs!: ExpOrb[]
 
     constructor() {
         super("game")
@@ -44,7 +25,7 @@ export default class GameScene extends Phaser.Scene {
 
     create(data: { characterKey?: string, startingSkill?: string}) {
         //Load Title Screen Selection
-        this.selectedCharacter = data?.characterKey || "player1"
+        const character = data?.characterKey || "player1"
         const startingSkill = data?.startingSkill || "slash"
 
         // Fade In
@@ -54,21 +35,20 @@ export default class GameScene extends Phaser.Scene {
         this.physics.world.setBounds(50, 100, 700, 500)
 
         //Ground Texture
-        const floorBG = this.add.tileSprite(
+        const floor = this.add.tileSprite(
             50, 100, 700, 500, "dirt-texture"
         ).setOrigin(0)
 
-        floorBG.setTint(0xB0A080)
-        floorBG.setAlpha(0.9)
-        floorBG.setDepth(0)
+        floor.setTint(0xB0A080)
+        floor.setAlpha(0.9)
 
         //Player animation
-        const animKey = `${this.selectedCharacter}-idle`
+        const animKey = `${character}-idle`
 
         if (!this.anims.exists(animKey)) {
             this.anims.create({
                 key: animKey,
-                frames: this.anims.generateFrameNumbers(this.selectedCharacter, {
+                frames: this.anims.generateFrameNumbers(character, {
                     start: 0,
                     end: 1
                 }),
@@ -77,245 +57,81 @@ export default class GameScene extends Phaser.Scene {
             })
         }
 
-        // Player Info
-        this.player = new Player(this, 400, 550, this.selectedCharacter, startingSkill)
-        this.healthBar = new HealthBar(this, 300, 650, 200, 20, this.player, 0x006400)
-        this.expBar = new ExpBar(this, 0, 685, 800, 15, this.player)
+        //Player
+        this.player = new Player(this, 400, 550, character, startingSkill)
 
-        //Player Level Text
-        this.levelText = this.add.text(400, 630, `Level ${this.player.level}`, {
-            fontSize: "12px",
-            fontFamily: `Georgia, serif`,
-            color: "#ffffff",
-        }).setOrigin(0.5, 0)
+        //Systems
+        this.inputSystem = new InputSystem(this, this.player)
+        this.mobileSystem = new MobileControlSystem(this, this.player)
+        this.expSystem = new ExpSystem(this)
+        this.uiSystem = new UISystem(this, this.player)
 
-        //Boss Info
-        this.bossManager = new BossManager(this, this.player)
+        //Boss
+        this.bossManager = new BossManager(this, this.player, this.expSystem)
         this.bossManager.spawnBoss()
 
-        // Inputs
-        this.wKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W)
-        this.aKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-        this.sKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S)
-        this.dKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-
-        this.upKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
-        this.rightKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
-        this.leftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-        this.downKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
-
-        // Skill keybindings
+        //Skills
         this.skillKeys = [
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.E),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.R),
-            this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.F),
+            // 1 2 3 4
+            this.input.keyboard!.addKey("ONE"),
+            this.input.keyboard!.addKey("TWO"),
+            this.input.keyboard!.addKey("THREE"),
+            this.input.keyboard!.addKey("FOUR"),
+
+            // U I O P
+            this.input.keyboard!.addKey("U"),
+            this.input.keyboard!.addKey("I"),
+            this.input.keyboard!.addKey("O"),
+            this.input.keyboard!.addKey("P"),
         ]
 
-        // Mobile Controls
-        const isMobile = this.sys.game.device.input.touch
-        if (isMobile) {
-            this.createMobileControls()
-        }
-
-        this.events.on('resume', () => {
-            // Reset joystick state when coming back from a paused scene
-            this.joystickActive = false;
-            this.joystickVector.set(0, 0);
-            if (this.joystickThumb) {
-                this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y);
-            }
-        });
-
-
-        this.updateSkillUIPositions()
-
-        //Exp
-        this.expOrbs = []
     }
 
-    updateSkillUIPositions() {
-        const baseX = 550
-        const baseY = 650
-        const spacing = 50
+    update(time: number) {
 
-        this.skillCooldownUIs?.forEach(ui => ui.destroy())
-        this.skillCooldownUIs = []
-
-        this.player.skills.forEach((s, index) => {
-            const x = baseX + (index * spacing)
-            this.skillCooldownUIs.push(new SkillCooldown(this, s, x, baseY, s.iconKey))
-        })
-    }
-
-    spawnExp(x: number, y: number, orbCount: number = 15) {
-        const minRadius = 80
-        const maxRadius = 120
-
-        for (let i = 0; i < orbCount; i++) {
-            const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
-            const distance = Phaser.Math.FloatBetween(minRadius, maxRadius)
-
-            const spawnX = x + Math.cos(angle) * distance
-            const spawnY = y + Math.sin(angle) * distance
-
-            const orb = new ExpOrb(
-                this,
-                spawnX,
-                spawnY,
-                1
-            )
-
-            orb.setScale(0)
-
-            this.tweens.add({
-                targets: orb,
-                x: spawnX,
-                y: spawnY,
-                scale: 0.5,
-                duration: 800,
-                ease: "Back.Out"
-            })
-
-            this.expOrbs.push(orb)
-        }
-    }
-    
-    createMobileControls() {
-        const w = this.scale.width
-        const gameHeight = 700
-        const controlSpace = this.scale.height - gameHeight
-
-        //Joystick
-        const joystickX = 200
-        const joystickY = gameHeight + controlSpace / 2
-        const joystickRadius = 100
-        const thumbRadius = 60
-
-        this.joystickBase = this.add.circle(joystickX, joystickY, joystickRadius, 0x000000, 0.3).setScrollFactor(0)
-        this.joystickThumb = this.add.circle(joystickX, joystickY, thumbRadius, 0xffffff, 0.6 ).setScrollFactor(0)
-
-        let joystickPointerId: number | null = null
-
-        //Convert Joystick to movement
-        this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-            if (pointer.x < w / 2 && pointer.y > gameHeight) {
-                this.joystickActive = true
-                joystickPointerId = pointer.id
-            }
-        })
-
-        this.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
-            if (!this.joystickActive || pointer.id !== joystickPointerId) return
-
-            const dx = pointer.x - this.joystickBase.x
-            const dy = pointer.y - this.joystickBase.y
-
-            const dist = Math.min(
-                Math.sqrt(dx * dx + dy * dy),
-                this.joystickRadius
-            )
-
-            this.joystickVector.set(dx, dy).normalize()
-
-            this.joystickThumb.setPosition(
-                this.joystickBase.x + this.joystickVector.x * dist,
-                this.joystickBase.y + this.joystickVector.y * dist
-            )
-        })
-
-        this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
-            if (pointer.id === joystickPointerId) {
-                this.joystickActive = false
-                joystickPointerId = null;
-                this.joystickVector.set(0, 0)
-                this.joystickThumb.setPosition(this.joystickBase.x, this.joystickBase.y)
-            }
-            
-        })
-
-        //Face buttons
-        const centerX = w - 200
-        const centerY = gameHeight + controlSpace / 2
-        const offset = 85
-        const radius = 45
-
-        const positions = [
-            { x: centerX - offset, y: centerY },
-            { x: centerX, y: centerY - offset},
-            { x: centerX, y: centerY + offset},
-            { x: centerX + offset, y: centerY},
-        ]
-
-        const buttonColors = [0xa4ebcc, 0x5f699c, 0xb56d7f, 0xf0b38d,]
-
-        positions.forEach((pos, index) => {
-            const btn = this.add.circle(pos.x, pos.y, radius, buttonColors[index], 0.6)
-                .setScrollFactor(0)
-                .setInteractive()
-
-            btn.on("pointerdown", () => {
-
-                this.tweens.add({
-                    targets: btn,
-                    scale: 0.8,
-                    duration: 50,
-                    ease: "Power1"
-                })
-
-                const skill = this.player.skills[index]
-                if (skill) skill.use(this.time.now)
-            })
-
-            const release = () => {
-                this.tweens.add({
-                    targets: btn,
-                    scale: 1,
-                    duration: 50,
-                    ease: "Power1"
-                })
-            }
-
-            btn.on("pointerup", release)
-            btn.on("pointerout", release)
-
-            this.skillButtons.push(btn)
-        })
-    }
-
-    update() {
         if (this.scene.isPaused()) return
 
-        this.healthBar.draw()
-        this.levelText.setText(`Level ${this.player.level}`)
-        this.expBar.draw()
-        if (this.bossManager.boss && this.bossManager.bossHealthBar) {
-            this.bossManager.bossHealthBar.draw()
+        //Player Movement
+        const keyboardDir = this.inputSystem.getMovementVector()
+        const mobileDir = this.mobileSystem.getMovementVector()
+
+        keyboardDir.add(mobileDir)
+
+        this.player.move(keyboardDir)
+
+        //Systems update
+        this.uiSystem.update(time)
+        this.expSystem.update(this.player, time)
+
+        //Boss update
+        if (this.bossManager.boss) {
+            this.bossManager.boss.update(this.player)
+
+            // Redraw health bar
+            this.bossManager.bossHealthBar?.draw()
+
+            if (this.bossManager.boss.health <= 0) {
+                this.bossManager.spawnBoss()
+            }
         }
 
-        //Player Movement and Skills
-        const dir = new Phaser.Math.Vector2(0, 0)
-        if (this.aKey.isDown || this.leftKey.isDown) dir.x -= 1 // left
-        if (this.dKey.isDown || this.rightKey.isDown) dir.x += 1 // right
-        if (this.wKey.isDown || this.upKey.isDown) dir.y -= 1 // up
-        if (this.sKey.isDown || this.downKey.isDown) dir.y += 1 // down
+        // Skill input
+        const skillMapping = [
+            [0, 4], // skill 0: keys 0 and 4 in skillKeys array
+            [1, 5], // skill 1: keys 1 and 5
+            [2, 6], // skill 2: keys 2 and 6
+            [3, 7], // skill 3: keys 3 and 7
+        ]
 
-        //Joystick
-        dir.add(this.joystickVector)
-
-        dir.normalize()
-        this.player.move(dir)
-
-        this.player.update(this.time.now)
-
-        this.skillCooldownUIs.forEach( ui => {
-            ui.update(this.time.now)
+        skillMapping.forEach((keyIndices, skillIndex) => {
+            keyIndices.forEach(i => {
+                const key = this.skillKeys[i]
+                if (Phaser.Input.Keyboard.JustDown(key)) {
+                    const skill = this.player.skills[skillIndex]
+                    if (skill) skill.use(time)
+                }
+            })
         })
-
-        //Boss Respawn
-        if (this.bossManager.boss && this.bossManager.boss.health <= 0) {
-            this.bossManager.spawnBoss()
-        }
 
         // Depth sorting (top-down)
         this.player.setDepth(this.player.y)
@@ -323,37 +139,5 @@ export default class GameScene extends Phaser.Scene {
         if (this.bossManager.boss) {
             this.bossManager.boss.setDepth(this.bossManager.boss.y)
         }
-
-        // Boss movement
-        if (this.bossManager.boss) {
-            this.bossManager.boss.update(this.player)
-        }
-
-        // Boss castbar follow
-        if (this.bossManager.castBar && this.bossManager.boss) {
-            this.bossManager.castBar.setPosition(this.bossManager.boss.x, this.bossManager.boss.y - 60)
-        }
-
-        //Exp
-        this.expOrbs.forEach((orb, index) => {
-            if (!orb.active) return
-
-            const distance = Phaser.Math.Distance.Between(
-                this.player.x,
-                this.player.y,
-                orb.x,
-                orb.y,
-            )
-
-            if (distance < 20) {
-                this.player.gainExp(orb.expValue)
-                orb.destroy()
-                this.expOrbs.splice(index, 1)
-            }
-        })
-
-        this.expOrbs.forEach((orb) => {
-            orb.update(this.player, this.time.now)
-        })
     }
 }

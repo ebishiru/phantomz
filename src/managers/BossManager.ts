@@ -4,6 +4,7 @@ import { Bosses } from "../data/bosses";
 import BossMechanic from "../mechanics/BossMechanic";
 import HealthBar from "../ui/HealthBar";
 import CastBar from "../ui/CastBar";
+import ExpSystem from "../systems/ExpSystem";
 
 export default class BossManager {
     scene: Phaser.Scene;
@@ -14,6 +15,7 @@ export default class BossManager {
     bossMechanicTimer: Phaser.Time.TimerEvent | null = null;
     castBar: CastBar | null = null
     mechanicNameText?: Phaser.GameObjects.Text
+    expSystem: ExpSystem
 
     // Buff system
     activeBuffs: string[] = [];
@@ -35,9 +37,10 @@ export default class BossManager {
     extraExpPerBoss = 0
     bossKillText!: Phaser.GameObjects.Text;
 
-    constructor(scene: Phaser.Scene, player: any) {
+    constructor(scene: Phaser.Scene, player: any, expSystem: ExpSystem) {
         this.scene = scene;
         this.player = player;
+        this.expSystem = expSystem;
 
         this.resetBuffPool();
         this.startBuffTimer();
@@ -183,7 +186,7 @@ export default class BossManager {
             const baseExp = isMilestone ? 45 : 15
             const orbCount: number = baseExp + this.extraExpPerBoss;
 
-            (this.scene as any).spawnExp(bossX, bossY, orbCount);
+            this.expSystem.spawn(bossX, bossY, orbCount);
 
             // Respawn after delay
             this.scene.time.delayedCall(respawnDelay, () => {
