@@ -3,9 +3,9 @@ import Player from "../entities/Player"
 import BossManager from "../managers/BossManager"
 
 import InputSystem from "../systems/InputSystem"
-import MobileControlSystem from "../systems/MobileControlSystem"
 import ExpSystem from "../systems/ExpSystem"
 import UISystem from "../systems/UISystem"
+import MobileControls from "../systems/MobileControls"
 
 export default class GameScene extends Phaser.Scene {
 
@@ -13,10 +13,10 @@ export default class GameScene extends Phaser.Scene {
     bossManager!: BossManager
 
     inputSystem!: InputSystem
-    mobileSystem!: MobileControlSystem
     expSystem!: ExpSystem
     uiSystem!: UISystem
-
+    mobileControls!: MobileControls
+    
     skillKeys!: Phaser.Input.Keyboard.Key[]
 
     constructor() {
@@ -62,13 +62,17 @@ export default class GameScene extends Phaser.Scene {
 
         //Systems
         this.inputSystem = new InputSystem(this, this.player)
-        this.mobileSystem = new MobileControlSystem(this, this.player)
         this.expSystem = new ExpSystem(this)
         this.uiSystem = new UISystem(this, this.player)
 
         //Boss
         this.bossManager = new BossManager(this, this.player, this.expSystem)
         this.bossManager.spawnBoss()
+
+        //Mobile Controls
+        if (this.sys.game.device.input.touch) {
+            this.mobileControls = new MobileControls(this.player);
+        }
 
         //Skills
         this.skillKeys = [
@@ -93,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
 
         //Player Movement
         const keyboardDir = this.inputSystem.getMovementVector()
-        const mobileDir = this.mobileSystem.getMovementVector()
+        const mobileDir = this.mobileControls?.getMovementVector() || new Phaser.Math.Vector2(0, 0)
 
         keyboardDir.add(mobileDir)
 
