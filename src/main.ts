@@ -23,17 +23,6 @@ const config: Phaser.Types.Core.GameConfig = {
 
 const game = new Phaser.Game(config)
 
-window.addEventListener("orientationchange", () => {
-    const canvas = document.querySelector("canvas") as HTMLCanvasElement
-    if (window.innerWidth < window.innerHeight) {
-        // Portrait → hide game or show warning
-        canvas.style.display = "none"
-    } else {
-        // Landscape
-        canvas.style.display = "block"
-    }
-})
-
 window.addEventListener("resize", () => {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement
     const w = window.innerWidth
