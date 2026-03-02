@@ -65,13 +65,16 @@ export default class MobileControls {
         let dy = clientY - centerY;
 
         const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist > this.joystickRadius) {
-        dx = (dx / dist) * this.joystickRadius;
-        dy = (dy / dist) * this.joystickRadius;
+
+        const maxRadius = ((rect.width / 2) - (this.joystickThumb.offsetWidth / 2)) * 0.8;
+
+        if (dist > maxRadius) {
+        dx = (dx / dist) * maxRadius
+        dy = (dy / dist) * maxRadius
         }
 
-        this.vector.x = dx / this.joystickRadius;
-        this.vector.y = dy / this.joystickRadius;
+        this.vector.x = dx / maxRadius;
+        this.vector.y = dy / maxRadius;
 
         this.joystickThumb.style.transform = `translate(${dx}px, ${dy}px)`;
     }
