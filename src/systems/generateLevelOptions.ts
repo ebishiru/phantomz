@@ -26,7 +26,7 @@ export function generateLevelOptions(player: Player) {
         }
 
         //Upgrade options
-        else if (!skillObj.enabled) {
+        else if (skillObj.enabled) {
             const upgrade = skill.upgrades[Math.floor(Math.random() * skill.upgrades.length)]
 
             options.push({
