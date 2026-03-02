@@ -81,11 +81,27 @@ export default class MobileControls {
 
     initButtons() {
         this.skillButtons.forEach((btn, index) => {
-        btn.addEventListener("touchstart", e => {
-            e.preventDefault();
-            const skill = this.player.skills[index];
-            if (skill) skill.use(performance.now());
-        });
+
+            const originalTransform = btn.style.transform;
+
+            btn.addEventListener("touchstart", e => {
+                e.preventDefault();
+
+                // Reduce size when pressed on and reduce brightness too
+                btn.style.transform = originalTransform + " scale(0.88)";
+                btn.style.filter = "brightness(0.8)";
+
+                const skill = this.player.skills[index];
+                if (skill) skill.use(performance.now());
+            });
+
+            const resetButton = () => {
+                btn.style.transform = originalTransform;
+                btn.style.filter = "";
+            };
+
+            btn.addEventListener("touchend", resetButton);
+            btn.addEventListener("touchcancel", resetButton);
         });
     }
 
