@@ -32,16 +32,11 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     createOverlay() {
-        const gameX = 50
-        const gameY = 100
-        const gameWidth = 700
-        const gameHeight = 500
+        this.menuWidth = this.scale.width * 0.75
+        this.menuHeight = this.scale.height * 0.75
 
-        this.menuWidth = 500
-        this.menuHeight = 450
-
-        this.menuX = gameX + gameWidth / 2
-        this.menuY = gameY + gameHeight / 2
+        this.menuX = this.scale.width / 2
+        this.menuY = this.scale.height / 2
 
         //Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.35).setOrigin(0)
@@ -67,7 +62,9 @@ export default class LevellingScene extends Phaser.Scene {
         this.optionChosen = false
 
         const optionsStartY = this.menuY - this.menuHeight / 6 - 40
-        const optionsSpacing = this.menuHeight / 8
+        const optionsSpacing = this.menuHeight / 7
+        const buttonWidth = this.menuWidth - 80
+        const buttonHeight = 60
 
         this.options.forEach((option, index) => {
             const y = optionsStartY + (index * optionsSpacing)
@@ -75,13 +72,21 @@ export default class LevellingScene extends Phaser.Scene {
             const container = this.add.container(this.menuX, y)
             this.optionContainers.push(container)
 
+            const buttonBG = this.add.rectangle(0, 0, buttonWidth, buttonHeight, 0x222222)
+                .setStrokeStyle(3, 0xffcc00)
+                .setOrigin(0.5)
+                .setInteractive({ useHandCursor: true})
+            container.add(buttonBG)
+
+            buttonBG.on("pointerdown", () => this.chooseOption(index))
+
             const iconKey = option.iconKey || "skip-icon" //Placeholder icon
-            const icon = this.add.image(-this.menuWidth / 2 + 30, 0, iconKey)
-            .setDisplaySize(32, 32)
-            .setOrigin(0, 0.5)
+            const icon = this.add.image(-buttonWidth / 2 + 30, 0, iconKey)
+                .setDisplaySize(32, 32)
+                .setOrigin(0, 0.5)
 
             const text = this.add.text(
-                -this.menuWidth / 2 + 70,
+                -buttonWidth / 2 + 70,
                 0,
                 `${option.title}\n${option.desc}`,
                 {
@@ -90,12 +95,12 @@ export default class LevellingScene extends Phaser.Scene {
                     align: "left",
                     color: "#ffffff",
                     padding: { x: 0, y: 0},
-                    wordWrap: { width: this.menuWidth - 100}
+                    wordWrap: { width: buttonWidth - 120}
                 }
             ).setOrigin(0, 0.5)
             
             const keyCode = this.add.text(
-                this.menuWidth / 2 - 40,
+                buttonWidth / 2 - 40,
                 0,
                 `[ ${index + 1} ]`,
                 {
@@ -106,13 +111,6 @@ export default class LevellingScene extends Phaser.Scene {
             ).setOrigin(1, 0.5)
 
             container.add([icon, text, keyCode])
-
-            container.setSize(this.menuWidth - 20, 50)
-            container.setInteractive({ useHandCursor: true})
-
-            container.on("pointerdown", () => {
-                this.chooseOption(index)
-            })
         })
     }
 
