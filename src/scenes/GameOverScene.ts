@@ -59,8 +59,7 @@ export default class GameOverScene extends Phaser.Scene {
 
     restartGame() {
         this.scene.stop("game-over")
-        this.scene.stop("game")
-        this.scene.start("game")
+        this.scene.get("game").scene.restart()
     }
 
     goToTitle() {

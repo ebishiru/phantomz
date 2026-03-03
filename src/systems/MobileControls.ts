@@ -6,7 +6,7 @@ export default class MobileControls {
     joystickThumb!: HTMLDivElement;
     skillButtons!: NodeListOf<HTMLDivElement>;
     vector = { x: 0, y: 0 };
-    joystickRadius = 90;
+    joystickRadius = 100;
     activePointer: number | null = null;
 
     constructor(player: Player) {
@@ -66,7 +66,7 @@ export default class MobileControls {
 
         const dist = Math.sqrt(dx*dx + dy*dy);
 
-        const maxRadius = ((rect.width / 2) - (this.joystickThumb.offsetWidth / 2)) * 0.8;
+        const maxRadius = ((rect.width / 2) - (this.joystickThumb.offsetWidth / 2)) * 1;
 
         if (dist > maxRadius) {
         dx = (dx / dist) * maxRadius

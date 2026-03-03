@@ -21,17 +21,4 @@ const config: Phaser.Types.Core.GameConfig = {
   scene: [PreloadScene, TitleScene, ControlScene, GameScene, LevellingScene, GameOverScene],
 }
 
-const game = new Phaser.Game(config)
-
-window.addEventListener("resize", () => {
-    const canvas = document.querySelector("canvas") as HTMLCanvasElement
-    const w = window.innerWidth
-    const h = window.innerHeight
-
-    if (w < h) {
-        canvas.style.display = "none"
-    } else {
-        canvas.style.display = "block"
-        game.scale.resize(w, h)
-    }
-})
+new Phaser.Game(config)
