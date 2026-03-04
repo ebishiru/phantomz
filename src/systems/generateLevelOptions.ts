@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import Player from "../entities/Player";
+import SkillSystem from "./SkillSystem";
 import { skills } from "../data/skills";
 
-export function generateLevelOptions(player: Player) {
-    const unlockedCount = player.skills.length
+export function generateLevelOptions(skillSystem: SkillSystem) {
+    const unlockedCount = skillSystem.skills.length
     const options: {
         title: string
         desc: string
@@ -11,29 +11,31 @@ export function generateLevelOptions(player: Player) {
         apply: () => void 
     }[] = []
 
-    skills.forEach(skill => {
-        const skillObj = (player as any)[skill.key]
-        if (!skillObj) return
+    skills.forEach(skillData => {
+        const existingSkill = skillSystem.skills.find(s => s.id === skillData.key)
 
         //Unlock options
-        if (!skillObj.enabled && unlockedCount < 4) {
+        if (!existingSkill && unlockedCount < 4) {
             options.push({
-                title: `${skill.name} Unlock`,
-                desc: skill.desc,
-                iconKey: skill.iconKey,
-                apply: () => { player.unlockSkill(skillObj)}
+                title: `${skillData.name} Unlock`,
+                desc: skillData.desc,
+                iconKey: skillData.iconKey,
+                apply: () => { skillSystem.unlockSkill(skillData.key)}
             })
         }
 
         //Upgrade options
-        else if (skillObj.enabled) {
-            const upgrade = skill.upgrades[Math.floor(Math.random() * skill.upgrades.length)]
+        else if (existingSkill) {
+
+            const upgrade = Phaser.Utils.Array.GetRandom(skillData.upgrades)
 
             options.push({
-                title: `${skill.name} Upgrade`,
+                title: `${skillData.name} Upgrade`,
                 desc: upgrade.desc,
-                iconKey: skill.iconKey,
-                apply: () => upgrade.apply(player)
+                iconKey: skillData.iconKey,
+                apply: () => {
+                    upgrade.apply(existingSkill)
+                }
             })
         }
     })

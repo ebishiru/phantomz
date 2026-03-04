@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Skill from "./Skill";
 
-export default class CaltopsSkill extends Skill {
+export default class CaltropsSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {

@@ -1,10 +1,12 @@
 import Phaser from "phaser";
 import GameScene from "./GameScene";
 import Player from "../entities/Player";
+import SkillSystem from "../systems/SkillSystem";
 import { generateLevelOptions } from "../systems/generateLevelOptions";
 
 export default class LevellingScene extends Phaser.Scene {
     player!: Player
+    skillSystem!: SkillSystem
 
     menuX!: number
     menuY!: number
@@ -15,8 +17,9 @@ export default class LevellingScene extends Phaser.Scene {
     optionContainers: Phaser.GameObjects.Container[] = []
     optionChosen = false
 
-    init(data: { player: Player }) {
+    init(data: { player: Player, skillSystem: SkillSystem }) {
         this.player = data.player
+        this.skillSystem = data.skillSystem
     }
 
     constructor() {
@@ -57,7 +60,7 @@ export default class LevellingScene extends Phaser.Scene {
 
     createOptions() {
         //Upgrade Options (mid)
-        this.options = generateLevelOptions(this.player)
+        this.options = generateLevelOptions(this.skillSystem)
         this.optionContainers = []
         this.optionChosen = false
 
@@ -133,7 +136,7 @@ export default class LevellingScene extends Phaser.Scene {
                 option.apply()
                 this.scene.stop()
                 const gameScene = this.scene.get("game") as GameScene
-                this.player.skills.forEach(skill => skill.resume(gameScene.time.now))
+                gameScene.skillSystem.resumeAll(gameScene.time.now)
                 gameScene.uiSystem.createSkillUI()
                 this.scene.resume("game")
             }
@@ -158,7 +161,9 @@ export default class LevellingScene extends Phaser.Scene {
 
         let summary = "Your Skills:\n\n"
 
-        this.player.skills.forEach((skill: any) => {
+        const gameScene = this.scene.get("game") as GameScene
+
+        gameScene.skillSystem.skills.forEach((skill: any) => {
             if (!skill.enabled) return
 
             const stats: string[] = []

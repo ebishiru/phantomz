@@ -6,6 +6,7 @@ export default class Skill {
     damage: number
     cooldown: number
     range: number
+    healingValue?: number
     lastUsed: number
     enabled: boolean
     scene: Phaser.Scene
@@ -58,6 +59,12 @@ export default class Skill {
 
     buffRange(amount: number) {
         this.range += amount
+    }
+
+    buffHeal(amount: number) {
+        if (this.healingValue !== undefined) {
+            this.healingValue += amount
+        }
     }
 
     activate() {}

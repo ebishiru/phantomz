@@ -1,14 +1,5 @@
 import Phaser from "phaser"
-import Skill from "../skills/Skill"
-import SlashSkill from "../skills/SlashSkill"
-import ArrowSkill from "../skills/ArrowSkill"
-import PulseSkill from "../skills/PulseSkill"
-import ThrustSkill from "../skills/ThrustSkill"
-import CaltopsSkill from "../skills/CaltropsSkill"
-import FireballSkill from "../skills/FireballSkill"
-import DevourSkill from "../skills/DevourSkill"
-import HookSkill from "../skills/HookSkill"
-import VoltSkill from "../skills/VoltSkill"
+import GameScene from "../scenes/GameScene"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -19,21 +10,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     expToNextLevel = 10
     hurtboxRadius = 4
 
-    //Skills
-    skills: Skill[] = []
-    slashSkill!: SlashSkill
-    arrowSkill!: ArrowSkill
-    pulseSkill!: PulseSkill
-    thrustSkill!: ThrustSkill
-    caltropsSkill!: CaltopsSkill
-    fireballSkill!: FireballSkill
-    devourSkill!: DevourSkill
-    hookSkill!: HookSkill
-    voltSkill!: VoltSkill
-
     facing!: Phaser.Math.Vector2
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, startingSkill: string) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture)
 
         scene.add.existing(this)
@@ -51,43 +30,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         //Idle animation
         this.anims.play(`${this.texture.key}-idle`, true)
-
-        //Initialize skills
-        this.slashSkill = new SlashSkill(scene, this)
-        this.arrowSkill = new ArrowSkill(scene, this)
-        this.pulseSkill = new PulseSkill(scene, this)
-        this.thrustSkill = new ThrustSkill(scene, this)
-        this.caltropsSkill = new CaltopsSkill(scene, this)
-        this.fireballSkill = new FireballSkill(scene, this)
-        this.devourSkill = new DevourSkill(scene, this)
-        this.hookSkill = new HookSkill(scene, this)
-        this.voltSkill = new VoltSkill(scene, this)
-
-        this.skills = []
-    
-        //Have all other skills locked at first
-        this.slashSkill.enabled = false
-        this.arrowSkill.enabled = false
-        this.pulseSkill.enabled = false
-        this.thrustSkill.enabled = false
-        this.caltropsSkill.enabled = false
-        this.fireballSkill.enabled = false
-        this.devourSkill.enabled = false
-        this.hookSkill.enabled = false
-        this.voltSkill.enabled = false
-
-        //Unlock starting skill
-        switch (startingSkill) {
-            case "slash":
-                this.unlockSkill(this.slashSkill)
-                break
-            case "arrow":
-                this.unlockSkill(this.arrowSkill)
-                break
-            case "pulse":
-                this.unlockSkill(this.pulseSkill)
-                break
-        }
     }
 
     takeDamage(amount: number) {
@@ -125,10 +67,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.exp += amount
 
         if(this.exp >= this.expToNextLevel) {
-            this.skills.forEach(skill => skill.pause(this.scene.time.now))
-            this.scene.scene.pause("game")
-            this.scene.scene.launch("level-up", { player: this})
+            const gameScene = this.scene.scene.get("game") as GameScene;
             this.levelUp()
+            
+            gameScene.skillSystem.pauseAll(this.scene.time.now)
+
+            this.scene.scene.pause("game")
+            this.scene.scene.launch("level-up", { player: this, skillSystem: gameScene.skillSystem})
         }
     }
 
@@ -138,11 +83,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.expToNextLevel += 8 + this.level * 4
     }
     
-    unlockSkill(skill: Skill) {
-        skill.enabled = true
-        this.skills.push(skill)
-    }
-
     die() {
         this.setVelocity(0, 0),
         this.anims.stop()

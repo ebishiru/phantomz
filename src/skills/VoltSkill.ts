@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Skill from "./Skill";
 import Player from "../entities/Player";
 
-export default class LightningSkill extends Skill {
+export default class VoltSkill extends Skill {
     player: Player
     originalSpeed: number
     hasteDuration = 2000

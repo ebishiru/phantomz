@@ -3,6 +3,7 @@ import Player from "../entities/Player"
 import BossManager from "../managers/BossManager"
 
 import InputSystem from "../systems/InputSystem"
+import SkillSystem from "../systems/SkillSystem"
 import ExpSystem from "../systems/ExpSystem"
 import UISystem from "../systems/UISystem"
 import MobileControls from "../systems/MobileControls"
@@ -13,6 +14,7 @@ export default class GameScene extends Phaser.Scene {
     bossManager!: BossManager
 
     inputSystem!: InputSystem
+    skillSystem!: SkillSystem
     expSystem!: ExpSystem
     uiSystem!: UISystem
     mobileControls!: MobileControls
@@ -58,12 +60,16 @@ export default class GameScene extends Phaser.Scene {
         }
 
         //Player
-        this.player = new Player(this, 400, 550, character, startingSkill)
+        this.player = new Player(this, 400, 550, character)
 
         //Systems
         this.inputSystem = new InputSystem(this, this.player)
+        this.skillSystem = new SkillSystem(this, this.player)
+
         this.expSystem = new ExpSystem(this)
-        this.uiSystem = new UISystem(this, this.player)
+        this.uiSystem = new UISystem(this, this.player, this.skillSystem)
+
+        this.skillSystem.unlockSkill(startingSkill) //Unlock starting skill
 
         //Boss
         this.bossManager = new BossManager(this, this.player, this.expSystem)
@@ -74,7 +80,7 @@ export default class GameScene extends Phaser.Scene {
             this.mobileControls = new MobileControls(this.player);
         }
 
-        //Skills
+        //Skill Keybinds
         this.skillKeys = [
             // 1 2 3 4
             this.input.keyboard!.addKey("ONE"),
@@ -131,8 +137,7 @@ export default class GameScene extends Phaser.Scene {
             keyIndices.forEach(i => {
                 const key = this.skillKeys[i]
                 if (Phaser.Input.Keyboard.JustDown(key)) {
-                    const skill = this.player.skills[skillIndex]
-                    if (skill) skill.use(time)
+                    this.skillSystem.useSkill(skillIndex, time)
                 }
             })
         })

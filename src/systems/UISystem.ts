@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Player from "../entities/Player";
+import SkillSystem from "./SkillSystem";
 import HealthBar from "../ui/HealthBar";
 import ExpBar from "../ui/ExpBar";
 import SkillCooldown from "../ui/SkillCooldown";
@@ -7,6 +8,7 @@ import SkillCooldown from "../ui/SkillCooldown";
 export default class UISystem {
     scene: Phaser.Scene
     player: Player
+    skillSystem!: SkillSystem
 
     healthBar: HealthBar
     expBar: ExpBar
@@ -14,9 +16,10 @@ export default class UISystem {
 
     skillCooldownUIs: SkillCooldown[] = []
 
-    constructor(scene: Phaser.Scene, player: Player) {
+    constructor(scene: Phaser.Scene, player: Player, skillSystem: SkillSystem) {
         this.scene = scene
         this.player = player
+        this.skillSystem = skillSystem
 
         this.healthBar = new HealthBar(scene, 300, 650, 200, 20, player, 0x006400)
         this.expBar = new ExpBar(scene, 0, 685, 800, 15, player)
@@ -34,7 +37,7 @@ export default class UISystem {
         this.skillCooldownUIs.forEach(ui => ui.destroy())
         this.skillCooldownUIs = []
 
-        this.player.skills.forEach((skill, index) => {
+        this.skillSystem.skills.forEach((skill, index) => {
             const x = 550 + (index * 50)
             const y = 650
 
