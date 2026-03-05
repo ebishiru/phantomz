@@ -5,7 +5,7 @@ export default class PulseSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "pulse", "Pulse", 8, 8000, 50)
+        super(scene, player, "pulse", "Pulse", 8, 8000, 50)
         this.iconKey = "pulse-icon"
         this.player = player
     }
@@ -55,7 +55,7 @@ export default class PulseSkill extends Skill {
                 attackCircle, bossCircle
             )
             if (hit) {
-                boss.takeDamage(this.damage)
+                boss.takeDamage(this.getDamage())
             }
 
             // this.scene.tweens.add({

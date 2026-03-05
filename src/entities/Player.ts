@@ -10,6 +10,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     expToNextLevel = 10
     hurtboxRadius = 4
 
+    //Passive effects:
+    statModifiers = {
+        flatDamage: 0,
+        damageMultiplier: 1,
+        cooldownMultiplier: 1,
+        aoeMultiplier: 1,
+        speedMultiplier: 1,
+        damageReductionFlat: 0,
+        executionerLevel: 0,
+        echoChance: 0, 
+    }
+
     facing!: Phaser.Math.Vector2
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
@@ -33,6 +45,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     takeDamage(amount: number) {
+        //Passive
+        amount -= this.statModifiers.damageReductionFlat
+        amount = Math.max(1, amount)
+
         this.health -= amount
         this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
 

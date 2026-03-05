@@ -5,7 +5,7 @@ export default class HookSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "hook", "Hook", 15, 6000, 0)
+        super(scene, player, "hook", "Hook", 15, 6000, 0)
         this.iconKey = "hook-icon"
         this.player = player
     }
@@ -56,7 +56,7 @@ export default class HookSkill extends Skill {
 
         this.scene.time.delayedCall(400, () => hookVFX.destroy())
 
-        boss.takeDamage(this.damage)
+        boss.takeDamage(this.getDamage())
 
         this.scene.tweens.add({
             targets: this.player,

@@ -5,7 +5,7 @@ export default class ArrowSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "arrow", "Arrow", 20, 4000, 0)
+        super(scene, player, "arrow", "Arrow", 20, 4000, 0)
         this.iconKey = "arrow-icon"
         this.player = player
     }
@@ -45,7 +45,7 @@ export default class ArrowSkill extends Skill {
         })
 
 
-        boss.takeDamage(this.damage)
+        boss.takeDamage(this.getDamage())
 
     }
 }

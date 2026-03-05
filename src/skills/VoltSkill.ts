@@ -8,7 +8,7 @@ export default class VoltSkill extends Skill {
     hasteDuration = 2000
 
     constructor(scene: Phaser.Scene, player: Player) {
-        super(scene, "volt", "Volt", 25, 6000, 40)
+        super(scene, player, "volt", "Volt", 25, 6000, 40)
 
         this.player = player
         this.originalSpeed = player.speed
@@ -99,7 +99,7 @@ export default class VoltSkill extends Skill {
                 attackCircle, bossCircle
             )
             if (hit) {
-                boss.takeDamage(this.damage)
+                boss.takeDamage(this.getDamage())
             }
         }
 

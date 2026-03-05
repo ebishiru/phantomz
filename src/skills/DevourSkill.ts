@@ -7,7 +7,7 @@ export default class DevourSkill extends Skill {
     healingValue: number = 2
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "devour", "Devour", 20, 6000, 40)
+        super(scene, player, "devour", "Devour", 20, 6000, 40)
         this.iconKey = "devour-icon"
         this.player = player
     }
@@ -79,7 +79,7 @@ export default class DevourSkill extends Skill {
 
         if (Math.abs(diff) > Math.PI/3) return
 
-        boss.takeDamage(this.damage)
+        boss.takeDamage(this.getDamage())
         this.player.takeDamage(-this.healingValue)
 
     }

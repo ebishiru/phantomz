@@ -5,7 +5,7 @@ export default class FireballSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "fireball", "Fireball", 50, 7000, 65)
+        super(scene, player, "fireball", "Fireball", 50, 7000, 65)
         this.iconKey = "fireball-icon"
         this.player = player
     }
@@ -98,7 +98,7 @@ export default class FireballSkill extends Skill {
                 attackCircle, bossCircle
             )
             if (hit) {
-                boss.takeDamage(this.damage)
+                boss.takeDamage(this.getDamage())
             }
         }
 

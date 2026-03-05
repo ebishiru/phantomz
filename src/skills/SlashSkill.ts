@@ -6,7 +6,7 @@ export default class SlashSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "slash", "Slash", 25, 3000, 50)
+        super(scene, player, "slash", "Slash", 25, 3000, 50)
         this.iconKey = "slash-icon"
         this.player = player
     }
@@ -86,7 +86,7 @@ export default class SlashSkill extends Skill {
         const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
         if (Math.abs(diff) > Math.PI/2) return
 
-        boss.takeDamage(this.damage)
+        boss.takeDamage(this.getDamage())
 
     }
 }

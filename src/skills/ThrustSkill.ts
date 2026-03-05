@@ -5,7 +5,7 @@ export default class ThrustSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, "thrust", "Thrust", 20, 3500, 100)
+        super(scene, player, "thrust", "Thrust", 20, 3500, 100)
         this.iconKey = "thrust-icon"
         this.player = player
     }
@@ -89,7 +89,7 @@ export default class ThrustSkill extends Skill {
         const dist = Phaser.Math.Distance.Between(boss.x, boss.y, closestX, closestY)
 
         if (dist <= width / 2 + boss.hurtRadius) {
-            boss.takeDamage(this.damage)
+            boss.takeDamage(this.getDamage())
         }
     }
 }
