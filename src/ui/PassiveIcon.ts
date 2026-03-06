@@ -4,6 +4,7 @@ export default class PassiveIcon {
     scene: Phaser.Scene
     icon: Phaser.GameObjects.Image
     levelText: Phaser.GameObjects.Text
+    readyBorder: Phaser.GameObjects.Image
 
     passive: any
 
@@ -20,13 +21,17 @@ export default class PassiveIcon {
         this.icon = scene.add.image(x, y, iconKey)
         this.icon.setDisplaySize(32, 32)
 
+        this.readyBorder = scene.add.image(x, y, "ready-border");
+        this.readyBorder.setDisplaySize(36, 36); // slightly bigger than icon
+        this.readyBorder.setDepth(4);
+
         this.levelText = scene.add.text(
-            x + 10,
-            y + 8,
+            x + 12,
+            y + 12,
             `${passive.level}`,
             {
                 fontSize: "12px",
-                color: "#ffffff"
+                color: "#ffd700"
             }
         ).setOrigin(0.5)
     }
@@ -38,5 +43,6 @@ export default class PassiveIcon {
     destroy() {
         this.icon.destroy()
         this.levelText.destroy()
+        this.readyBorder.destroy()
     }
 }

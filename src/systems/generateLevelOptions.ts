@@ -44,24 +44,17 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
 
     passives.forEach(passive => {
 
-        const owned = player.passives.find(p => p.key === passive.key)
+        const owned = skillSystem.passives.find(p => p.key === passive.key)
 
         // Unlock new passive
-        if (!owned && player.passives.length < 4) {
+        if (!owned && skillSystem.passives.length < 4) {
 
             options.push({
                 title: passive.name,
                 desc: passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {
-
-                    player.passives.push({
-                        key: passive.key,
-                        level: 1
-                    })
-
-                    passive.apply(player)
-
+                    skillSystem.addPassive(passive.key)
                 }
             })
         }
@@ -74,10 +67,8 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 desc: passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {
-
                     owned.level += 1
-                    passive.apply(player)
-
+                    passive.apply(skillSystem.player)
                 }
             })
         }

@@ -34,7 +34,7 @@ export default class SkillSystem {
 
     addPassive(passiveKey: string) {
         const passive = createPassive(passiveKey, this.player)
-        
+        console.log("passivs", this.passives)
         this.passives.push(passive)
 
         const gameScene = this.scene.scene.get("game") as GameScene

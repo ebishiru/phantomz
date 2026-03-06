@@ -53,9 +53,12 @@ export default class UISystem {
         this.passiveUIs.forEach(ui => ui.destroy())
         this.passiveUIs = []
 
+        const startX = 300 - this.skillSystem.passives.length * 50
+        const skillSize = 32
+        const y = 650 - skillSize / 2
+
         this.skillSystem.passives.forEach((passive, index) => {
-            const x = 200 + (index * 50)
-            const y = 650
+            const x = startX + index * 50
 
             this.passiveUIs.push(
                 new PassiveIcon(this.scene, passive, x, y, passive.iconKey)
