@@ -5,7 +5,6 @@ import { passives } from "../data/passives";
 import { passiveUpgrades } from "../data/passiveUpgrades";
 
 export function generateLevelOptions(skillSystem: SkillSystem) {
-    const player = skillSystem.player
     const unlockedCount = skillSystem.skills.length
     const options: {
         title: string

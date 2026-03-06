@@ -22,6 +22,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         echoChance: 0, 
     }
 
+    skills: any[] = []
     passives: { key: string, level: number }[] = []
 
     facing!: Phaser.Math.Vector2
