@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import SkillSystem from "./SkillSystem";
 import { skills } from "../data/skills";
 import { passives } from "../data/passives";
+import { passiveUpgrades } from "../data/passiveUpgrades";
 
 export function generateLevelOptions(skillSystem: SkillSystem) {
     const player = skillSystem.player
@@ -19,7 +20,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         //Unlock options
         if (!existingSkill && unlockedCount < 4) {
             options.push({
-                title: `${skillData.name} Unlock`,
+                title: `Learn ${skillData.name}`,
                 desc: skillData.desc,
                 iconKey: skillData.iconKey,
                 apply: () => { skillSystem.unlockSkill(skillData.key)}
@@ -32,7 +33,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
             const upgrade = Phaser.Utils.Array.GetRandom(skillData.upgrades)
 
             options.push({
-                title: `${skillData.name} Upgrade`,
+                title: `Enhance ${skillData.name}`,
                 desc: upgrade.desc,
                 iconKey: skillData.iconKey,
                 apply: () => {
@@ -50,7 +51,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         if (!owned && skillSystem.passives.length < 4) {
 
             options.push({
-                title: passive.name,
+                title: `Acquire passive: ${passive.name}`,
                 desc: passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {
@@ -62,9 +63,11 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         // Upgrade passive
         else if (owned && owned.level < passive.maxLevel) {
 
+            const upgrade = passiveUpgrades[passive.key as keyof typeof passiveUpgrades]
+
             options.push({
                 title: `${passive.name} Lv.${owned.level + 1}`,
-                desc: passive.desc,
+                desc: upgrade?.desc ?? passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {
                     owned.level += 1
