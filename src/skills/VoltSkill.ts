@@ -44,7 +44,7 @@ export default class VoltSkill extends Skill {
             const voltVFX = this.scene.add.sprite(0, 0, "volt-vfx")
             voltVFX.setOrigin(0.5, 0.5)
             voltVFX.setAlpha(0.75)
-            voltVFX.setScale(this.range / 8)
+            voltVFX.setScale(this.getRange() / 8)
             voltVFX.setDepth(10)
             container.add(voltVFX)
 
@@ -88,7 +88,7 @@ export default class VoltSkill extends Skill {
             const attackCircle = new Phaser.Geom.Circle(
                 this.player.x,
                 this.player.y,
-                this.range
+                this.getRange()
             )
             const bossCircle = new Phaser.Geom.Circle(
                 boss.x,

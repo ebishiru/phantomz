@@ -20,7 +20,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         //Unlock options
         if (!existingSkill && unlockedCount < 4) {
             options.push({
-                title: `Learn ${skillData.name}`,
+                title: `LEARN SKILL: ${skillData.name}`,
                 desc: skillData.desc,
                 iconKey: skillData.iconKey,
                 apply: () => { skillSystem.unlockSkill(skillData.key)}
@@ -33,7 +33,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
             const upgrade = Phaser.Utils.Array.GetRandom(skillData.upgrades)
 
             options.push({
-                title: `Enhance ${skillData.name}`,
+                title: `ENHANCE SKILL: ${skillData.name}`,
                 desc: upgrade.desc,
                 iconKey: skillData.iconKey,
                 apply: () => {
@@ -51,7 +51,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         if (!owned && skillSystem.passives.length < 4) {
 
             options.push({
-                title: `Acquire passive: ${passive.name}`,
+                title: `GET PASSIVE: ${passive.name}`,
                 desc: passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {
@@ -66,7 +66,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
             const upgrade = passiveUpgrades[passive.key as keyof typeof passiveUpgrades]
 
             options.push({
-                title: `${passive.name} Lv.${owned.level + 1}`,
+                title: `UPGRADE PASSIVE: ${passive.name}`,
                 desc: upgrade?.desc ?? passive.desc,
                 iconKey: passive.iconKey,
                 apply: () => {

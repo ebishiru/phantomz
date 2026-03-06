@@ -43,11 +43,11 @@ export default class FireballSkill extends Skill {
             // })
 
             //VFX
-            const fireballVFX = this.scene.add.sprite(endX, endY + this.range / 2, "fireball-vfx")
+            const fireballVFX = this.scene.add.sprite(endX, endY + this.getRange() / 2, "fireball-vfx")
 
             fireballVFX.setOrigin(0, 0.5)
             fireballVFX.setAlpha(1)
-            fireballVFX.setScale(this.range / 8)
+            fireballVFX.setScale(this.getRange() / 8)
             fireballVFX.setDepth(10)
             fireballVFX.setRotation(Math.PI * 3 / 2)
 
@@ -87,7 +87,7 @@ export default class FireballSkill extends Skill {
             const attackCircle = new Phaser.Geom.Circle(
                 endX,
                 endY,
-                this.range
+                this.getRange()
             )
             const bossCircle = new Phaser.Geom.Circle(
                 boss.x,

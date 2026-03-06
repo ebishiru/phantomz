@@ -54,12 +54,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.health -= amount
         this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
 
-        if (amount >= 0) {
-            this.setTint(0xff0000)
-        } else {
-            this.setTint(0x00ff00)
-        }
-        
+        this.setTint(0xff0000)
+
         this.scene.time.delayedCall(300, () => {
             this.clearTint()
         })
@@ -67,6 +63,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.health <= 0) {
             this.die()
         }
+    }
+
+    heal(amount: number) {
+        if (this.health >= this.maxHealth) return
+
+        this.health += amount
+        this.health = Math.min(this.health, this.maxHealth)
+
+        this.setTint(0x00ff00)
+
+        this.scene.time.delayedCall(300, () => {
+            this.clearTint()
+        })
     }
 
     move(dir: Phaser.Math.Vector2) {

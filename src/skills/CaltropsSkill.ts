@@ -53,7 +53,7 @@ export default class CaltropsSkill extends Skill {
             const attackCircle = new Phaser.Geom.Circle(
                 originX,
                 originY,
-                this.range
+                this.getRange()
             )
             const bossCircle = new Phaser.Geom.Circle(
                 boss.x,

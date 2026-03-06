@@ -7,8 +7,8 @@ export const passives = [
         desc: "Permanently increase your health pool by 30.",
         maxLevel: 5,
         apply: (player: any) => {
-            player.maxHP += 30
-            player.health += 30
+            player.maxHealth += 30
+            player.health += 30 * 0.5
         }
     },
     {

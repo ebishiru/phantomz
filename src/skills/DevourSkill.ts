@@ -46,7 +46,7 @@ export default class DevourSkill extends Skill {
         // this.scene.time.delayedCall(150, () => g.destroy())
 
         //VFX
-        const offsetDistance = this.range * 0.75
+        const offsetDistance = this.getRange() * 0.75
         
         const vfxX = this.player.x + Math.cos(this.facingAngle) * offsetDistance
         const vfxY = this.player.y + Math.sin(this.facingAngle) * offsetDistance
@@ -73,14 +73,14 @@ export default class DevourSkill extends Skill {
         const dy = boss.y - this.player.y
         const distance = Math.sqrt(dx*dx + dy*dy)
 
-        if (distance > this.range + boss.hurtRadius) return
+        if (distance > this.getRange() + boss.hurtRadius) return
 
         const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
 
         if (Math.abs(diff) > Math.PI/3) return
 
         boss.takeDamage(this.getDamage())
-        this.player.takeDamage(-this.healingValue)
+        this.player.heal(this.healingValue)
 
     }
 }

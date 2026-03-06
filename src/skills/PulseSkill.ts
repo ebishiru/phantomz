@@ -44,7 +44,7 @@ export default class PulseSkill extends Skill {
             const attackCircle = new Phaser.Geom.Circle(
                 this.player.x,
                 this.player.y,
-                this.range
+                this.getRange()
             )
             const bossCircle = new Phaser.Geom.Circle(
                 boss.x,
@@ -77,7 +77,7 @@ export default class PulseSkill extends Skill {
 
             this.scene.tweens.add({
                 targets: pulseVFX,
-                scale: this.range / 8,
+                scale: this.getRange() / 8,
                 alpha: 0.5,
                 duration: 400,
                 ease: "Sine.easeOut",
