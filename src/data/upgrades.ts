@@ -10,10 +10,6 @@ export const upgrades = {
             desc: "Cooldown reduced by 300ms",
             apply: (skill: Skill) => skill.buffCooldown(300)
         },
-        {
-            desc: "+15 Range",
-            apply: (skill: Skill) => skill.buffRange(15)
-        }
     ],
 
     arrow: [
@@ -36,10 +32,6 @@ export const upgrades = {
             desc: "Cooldown reduced by 500ms",
             apply: (skill: Skill) => skill.buffCooldown(500)
         },
-        {
-            desc: "Range increased by 10%",
-            apply: (skill: Skill) => skill.buffRange(skill.range * 0.1)
-        }
     ],
 
     thrust: [
@@ -62,10 +54,6 @@ export const upgrades = {
             desc: "Cooldown reduced by 500ms",
             apply: (skill: Skill) => skill.buffCooldown(500)
         },
-        {
-            desc: "+15 Range",
-            apply: (skill: Skill) => skill.buffRange(15)
-        }
     ],
 
     fireball: [

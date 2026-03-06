@@ -9,6 +9,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.loadCharacters()
         this.loadBosses()
         this.loadSkills()
+        this.loadPassives()
         this.loadUI()
         this.loadEnvironment()
     }
@@ -53,6 +54,23 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
         this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
         this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
+    }
+
+    loadPassives() {
+        const passiveKeys = [
+            "vitality",
+            "strength",
+            "swiftness",
+            "amplifier",
+            "haste",
+            "executioner",
+            "fortify",
+            "echo"
+        ]
+
+        passiveKeys.forEach(key => {
+            this.load.image(`${key}-icon`, `assets/${key}-icon.png`)
+        })
     }
 
     loadUI() {

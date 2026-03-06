@@ -4,6 +4,7 @@ import SkillSystem from "./SkillSystem";
 import HealthBar from "../ui/HealthBar";
 import ExpBar from "../ui/ExpBar";
 import SkillCooldown from "../ui/SkillCooldown";
+import PassiveIcon from "../ui/PassiveIcon";
 
 export default class UISystem {
     scene: Phaser.Scene
@@ -15,6 +16,7 @@ export default class UISystem {
     levelText: Phaser.GameObjects.Text
 
     skillCooldownUIs: SkillCooldown[] = []
+    passiveUIs: PassiveIcon[] = []
 
     constructor(scene: Phaser.Scene, player: Player, skillSystem: SkillSystem) {
         this.scene = scene
@@ -47,6 +49,20 @@ export default class UISystem {
         })
     }
 
+    createPassiveUI() {
+        this.passiveUIs.forEach(ui => ui.destroy())
+        this.passiveUIs = []
+
+        this.skillSystem.passives.forEach((passive, index) => {
+            const x = 200 + (index * 50)
+            const y = 650
+
+            this.passiveUIs.push(
+                new PassiveIcon(this.scene, passive, x, y, passive.iconKey)
+            )
+        })
+    }
+
     update(time: number) {
         this.healthBar.draw()
         this.expBar.draw()
@@ -54,6 +70,10 @@ export default class UISystem {
 
         this.skillCooldownUIs.forEach(ui => {
             ui.update(time)
+        })
+
+        this.passiveUIs.forEach(ui => {
+            ui.update()
         })
     }
 

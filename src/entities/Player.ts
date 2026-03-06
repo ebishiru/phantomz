@@ -22,6 +22,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         echoChance: 0, 
     }
 
+    passives: { key: string, level: number }[] = []
+
     facing!: Phaser.Math.Vector2
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {

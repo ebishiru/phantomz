@@ -3,7 +3,7 @@ export const passives = [
     {
         key: "vitality",
         name: "Vitality",
-        iconKey: "",
+        iconKey: "vitality-icon",
         desc: "Permanently increase your health pool by 30.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -14,7 +14,7 @@ export const passives = [
     {
         key: "strength",
         name: "Strength",
-        iconKey: "",
+        iconKey: "strength-icon",
         desc: "Deal an extra +2 damage to all skills.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -24,7 +24,7 @@ export const passives = [
     {
         key: "swiftness",
         name: "Swiftness",
-        iconKey: "",
+        iconKey: "swiftness-icon",
         desc: "Move quicker 15% faster.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -34,7 +34,7 @@ export const passives = [
     {
         key: "amplifier",
         name: "Amplifier",
-        iconKey: "",
+        iconKey: "amplifier-icon",
         desc: "Increase the size of all aoe skills by 15%.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -44,7 +44,7 @@ export const passives = [
     {
         key: "haste",
         name: "Haste",
-        iconKey: "",
+        iconKey: "haste-icon",
         desc: "Decrease the cooldown of all skills by 10%.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -54,7 +54,7 @@ export const passives = [
     {
         key: "executioner",
         name: "Executioner",
-        iconKey: "",
+        iconKey: "executioner-icon",
         desc: "Increase damage by 25% when Boss is lower than 25% HP.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -64,7 +64,7 @@ export const passives = [
     {
         key: "fortify",
         name: "Fortify",
-        iconKey: "",
+        iconKey: "fortify-icon",
         desc: "Reduce all damage taken by 1.",
         maxLevel: 5,
         apply: (player: any) => {
@@ -74,7 +74,7 @@ export const passives = [
     {
         key: "echo",
         name: "Echo",
-        iconKey: "",
+        iconKey: "echo-icon",
         desc: "Skills have a 5% chance of triggering twice.",
         maxLevel: 5,
         apply: (player: any) => {

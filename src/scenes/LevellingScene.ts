@@ -138,6 +138,7 @@ export default class LevellingScene extends Phaser.Scene {
                 const gameScene = this.scene.get("game") as GameScene
                 gameScene.skillSystem.resumeAll(gameScene.time.now)
                 gameScene.uiSystem.createSkillUI()
+                gameScene.uiSystem.createPassiveUI()
                 this.scene.resume("game")
             }
         })

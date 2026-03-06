@@ -1,8 +1,10 @@
 import Phaser from "phaser";
 import SkillSystem from "./SkillSystem";
 import { skills } from "../data/skills";
+import { passives } from "../data/passives";
 
 export function generateLevelOptions(skillSystem: SkillSystem) {
+    const player = skillSystem.player
     const unlockedCount = skillSystem.skills.length
     const options: {
         title: string
@@ -38,6 +40,48 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 }
             })
         }
+    })
+
+    passives.forEach(passive => {
+
+        const owned = player.passives.find(p => p.key === passive.key)
+
+        // Unlock new passive
+        if (!owned && player.passives.length < 4) {
+
+            options.push({
+                title: passive.name,
+                desc: passive.desc,
+                iconKey: passive.iconKey,
+                apply: () => {
+
+                    player.passives.push({
+                        key: passive.key,
+                        level: 1
+                    })
+
+                    passive.apply(player)
+
+                }
+            })
+        }
+
+        // Upgrade passive
+        else if (owned && owned.level < passive.maxLevel) {
+
+            options.push({
+                title: `${passive.name} Lv.${owned.level + 1}`,
+                desc: passive.desc,
+                iconKey: passive.iconKey,
+                apply: () => {
+
+                    owned.level += 1
+                    passive.apply(player)
+
+                }
+            })
+        }
+
     })
 
     const finalOptions = Phaser.Utils.Array.Shuffle(options).slice(0, 3);
