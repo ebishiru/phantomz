@@ -38,6 +38,7 @@ export default class Skill {
         //Echo Chance
         if (Math.random() < this.player.statModifiers.echoChance) {
             this.activate()
+            this.triggerEchoVFX()
         }
     }
 
@@ -100,6 +101,21 @@ export default class Skill {
 
     getRange() {
         return (this.range) * this.player.statModifiers.aoeMultiplier
+    }
+
+    triggerEchoVFX() {
+        const icon = this.scene.add.image(this.player.x, this.player.y - 50, "echo-icon")
+        icon.setScale(1)
+        icon.setDepth(1000);
+
+        this.scene.tweens.add({
+            targets: icon,
+            y: icon.y - 30,
+            alpha: 0,
+            duration: 800,
+            ease: "Cubic-easeOut",
+            onComplete: () => icon.destroy()
+        })
     }
 
     activate() {}

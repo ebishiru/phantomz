@@ -75,8 +75,15 @@ export default class LevellingScene extends Phaser.Scene {
             const container = this.add.container(this.menuX, y)
             this.optionContainers.push(container)
 
+            // Determine border color based on option type
+            let strokeColor = 0x372e4d // default
+            if (option.type === "newSkill") strokeColor = 0xb56d7f
+            else if (option.type === "skillUpgrade") strokeColor = 0xf0b38d
+            else if (option.type === "newPassive") strokeColor = 0xa4ebcc
+            else if (option.type === "passiveUpgrade") strokeColor = 0x65aed6
+
             const buttonBG = this.add.rectangle(0, 0, buttonWidth, buttonHeight, 0x222222)
-                .setStrokeStyle(3, 0xffcc00)
+                .setStrokeStyle(3, strokeColor)
                 .setOrigin(0.5)
                 .setInteractive({ useHandCursor: true})
             container.add(buttonBG)
@@ -103,7 +110,7 @@ export default class LevellingScene extends Phaser.Scene {
             ).setOrigin(0, 0.5)
             
             const keyCode = this.add.text(
-                buttonWidth / 2 - 40,
+                buttonWidth / 2 - 35,
                 0,
                 `[ ${index + 1} ]`,
                 {
@@ -169,21 +176,21 @@ export default class LevellingScene extends Phaser.Scene {
 
             const stats: string[] = []
 
-            if (skill.damage !== undefined) {
-                stats.push(`Dmg: ${(skill.damage).toFixed(0)}`)
-            }
+        if (skill.damage !== undefined) {
+            stats.push(`Dmg: ${skill.getDamage().toFixed(0)}`)
+        }
 
-            if (skill.cooldown !== undefined) {
-                stats.push(`CD ${(skill.cooldown / 1000).toFixed(2)}`)
-            }
+        if (skill.cooldown !== undefined) {
+            stats.push(`CD: ${(skill.getCooldown() / 1000).toFixed(2)}`)
+        }
 
-            if (skill.range !== undefined && skill.range > 0) {
-                stats.push(`Rng ${(skill.range).toFixed(0)}`)
-            }
+        if (skill.range !== undefined && skill.range > 0) {
+            stats.push(`Rng: ${skill.getRange().toFixed(0)}`)
+        }
 
-            if (skill.healingValue !== undefined && skill.healingValue > 0) {
-                stats.push(`Heal ${skill.healingValue}`)
-            }
+        if (skill.healingValue !== undefined && skill.healingValue > 0) {
+            stats.push(`Heal: ${skill.healingValue}`)
+        }
 
             summary += `${skill.name}: ${stats.join(", ")}\n`
         })

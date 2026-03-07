@@ -10,6 +10,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         title: string
         desc: string
         iconKey: string
+        type: string
         apply: () => void 
     }[] = []
 
@@ -22,6 +23,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 title: `LEARN SKILL: ${skillData.name}`,
                 desc: skillData.desc,
                 iconKey: skillData.iconKey,
+                type: "newSkill",
                 apply: () => { skillSystem.unlockSkill(skillData.key)}
             })
         }
@@ -35,6 +37,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 title: `ENHANCE SKILL: ${skillData.name}`,
                 desc: upgrade.desc,
                 iconKey: skillData.iconKey,
+                type: "skillUpgrade",
                 apply: () => {
                     upgrade.apply(existingSkill)
                 }
@@ -53,6 +56,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 title: `GET PASSIVE: ${passive.name}`,
                 desc: passive.desc,
                 iconKey: passive.iconKey,
+                type: "newPassive",
                 apply: () => {
                     skillSystem.addPassive(passive.key)
                 }
@@ -68,6 +72,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 title: `UPGRADE PASSIVE: ${passive.name}`,
                 desc: upgrade?.desc ?? passive.desc,
                 iconKey: passive.iconKey,
+                type: "passiveUpgrade",
                 apply: () => {
                     owned.level += 1
                     passive.apply(skillSystem.player)
@@ -84,6 +89,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
         title: "Skip",
         desc: "Gain no upgrades this level",
         iconKey: "skip-icon",
+        type: "none",
         apply: () => {}
     })
 

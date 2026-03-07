@@ -1,7 +1,9 @@
 import Player from "../entities/Player";
+import SkillSystem from "./SkillSystem";
 
 export default class MobileControls {
     player: Player;
+    skillSystem: SkillSystem
     joystickBase!: HTMLDivElement;
     joystickThumb!: HTMLDivElement;
     skillButtons!: NodeListOf<HTMLDivElement>;
@@ -9,8 +11,9 @@ export default class MobileControls {
     joystickRadius = 100;
     activePointer: number | null = null;
 
-    constructor(player: Player) {
+    constructor(player: Player, skillSystem: SkillSystem) {
         this.player = player;
+        this.skillSystem = skillSystem
 
         const controls = document.getElementById("mobile-controls") as HTMLDivElement;
         if (!controls) return;
@@ -91,8 +94,7 @@ export default class MobileControls {
                 btn.style.transform = originalTransform + " scale(0.88)";
                 btn.style.filter = "brightness(0.8)";
 
-                const skill = this.player.skills[index];
-                if (skill) skill.use(performance.now());
+                this.skillSystem.useSkill(index, this.player.scene.time.now)
             });
 
             const resetButton = () => {

@@ -77,7 +77,7 @@ export default class GameScene extends Phaser.Scene {
 
         //Mobile Controls
         if (this.sys.game.device.input.touch) {
-            this.mobileControls = new MobileControls(this.player);
+            this.mobileControls = new MobileControls(this.player, this.skillSystem);
         }
 
         //Skill Keybinds
