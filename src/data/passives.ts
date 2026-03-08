@@ -55,7 +55,7 @@ export const passives = [
         key: "executioner",
         name: "Executioner",
         iconKey: "executioner-icon",
-        desc: "Increase damage by 25% when Boss is lower than 25% HP.",
+        desc: "Deal 25% more dmg when Boss is under 25% HP.",
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.executionerLevel += 1

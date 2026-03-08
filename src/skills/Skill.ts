@@ -105,7 +105,7 @@ export default class Skill {
 
     triggerEchoVFX() {
         const icon = this.scene.add.image(this.player.x, this.player.y - 50, "echo-icon")
-        icon.setScale(1)
+        icon.setScale(2)
         icon.setDepth(1000);
 
         this.scene.tweens.add({

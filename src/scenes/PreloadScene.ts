@@ -17,6 +17,8 @@ export default class PreloadScene extends Phaser.Scene {
 
     preloadMusic() {
         this.load.audio("titleMusic", "assets/title-music.mp3")
+        this.load.audio("caveMusic", "assets/cave-music.mp3")
+        this.load.audio("gameOverMusic", "assets/game-over-music.mp3")
         this.load.image("audio-icon", "assets/audio-icon.png")
         this.load.image("mute-icon", "assets/mute-icon.png")
     }
@@ -84,6 +86,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("exp-orb", "assets/exp-orb.png")
         this.load.image("loading-border", "assets/loading-border.png")
         this.load.image("ready-border", "assets/ready-border.png")
+        this.load.image("settings-icon", "assets/settings-icon.png")
     }
 
     loadEnvironment() {

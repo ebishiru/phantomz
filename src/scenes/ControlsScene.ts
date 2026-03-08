@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { createMusicToggle } from "../ui/MusicToggle";
+import { OptionsButton } from "../ui/OptionsButton";
 
 export default class ControlScene extends Phaser.Scene {
     constructor() {
@@ -7,8 +7,8 @@ export default class ControlScene extends Phaser.Scene {
     }
 
     create() {
-        //Audio Toggle
-        createMusicToggle(this)
+        //Options Button
+        OptionsButton(this)
 
         //Controls Title
         this.add.text(400, 100, "Controls", {

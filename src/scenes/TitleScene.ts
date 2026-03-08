@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { createMusicToggle } from "../ui/MusicToggle";
+import { OptionsButton } from "../ui/OptionsButton";
 
 export default class TitleScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -23,13 +23,17 @@ export default class TitleScene extends Phaser.Scene {
 
     create() {
         //Title Music
-        if (!this.sound.get("titleMusic")) {
-            this.sound.play("titleMusic", {
+        let titleMusic = this.sound.get("titleMusic")
+        if (!titleMusic) {
+            titleMusic = this.sound.add("titleMusic", {
                 loop: true,
                 volume: 0.5
             })
+            titleMusic.play()
         }
-        createMusicToggle(this)
+
+        //Options Button
+        OptionsButton(this)
 
         //Main Title
         this.add.text(400, 125, "The Last Phantom Z", {
@@ -187,6 +191,18 @@ export default class TitleScene extends Phaser.Scene {
     }
 
     startGame() {
+        const music = this.sound.get("titleMusic")
+
+        if (music) {
+            this.tweens.add({
+                targets: music,
+                volume: 0,
+                duration: 500,
+                onComplete: () => {
+                    music.stop()
+                }
+            })
+        }
         this.cameras.main.fadeOut(500, 0, 0, 0)
 
         this.cameras.main.once(

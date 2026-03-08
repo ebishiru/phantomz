@@ -2,6 +2,7 @@ import Phaser from "phaser"
 import Player from "../entities/Player"
 import BossManager from "../managers/BossManager"
 
+import { OptionsButton } from "../ui/OptionsButton"
 import InputSystem from "../systems/InputSystem"
 import SkillSystem from "../systems/SkillSystem"
 import ExpSystem from "../systems/ExpSystem"
@@ -43,6 +44,26 @@ export default class GameScene extends Phaser.Scene {
 
         floor.setTint(0xB0A080)
         floor.setAlpha(0.9)
+
+        //Play music
+        let music = this.sound.get("caveMusic")
+
+        if (!music) {
+            music = this.sound.add("caveMusic", {
+                loop: true,
+                volume: 0
+            })
+            music.play()
+
+            this.tweens.add({
+                targets: music,
+                volume: 0.5,
+                duration: 1000
+            })
+        }
+
+        //Options Button
+        OptionsButton(this)
 
         //Player animation
         const animKey = `${character}-idle`
