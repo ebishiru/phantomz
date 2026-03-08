@@ -6,12 +6,19 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     preload() {
+        this.preloadMusic()
         this.loadCharacters()
         this.loadBosses()
         this.loadSkills()
         this.loadPassives()
         this.loadUI()
         this.loadEnvironment()
+    }
+
+    preloadMusic() {
+        this.load.audio("titleMusic", "assets/title-music.mp3")
+        this.load.image("audio-icon", "assets/audio-icon.png")
+        this.load.image("mute-icon", "assets/mute-icon.png")
     }
 
     loadCharacters() {

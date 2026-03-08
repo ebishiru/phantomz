@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { createMusicToggle } from "../ui/MusicToggle";
 
 export default class TitleScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -21,8 +22,17 @@ export default class TitleScene extends Phaser.Scene {
     }
 
     create() {
+        //Title Music
+        if (!this.sound.get("titleMusic")) {
+            this.sound.play("titleMusic", {
+                loop: true,
+                volume: 0.5
+            })
+        }
+        createMusicToggle(this)
+
         //Main Title
-        this.add.text(400, 125, "Project PhantomZ", {
+        this.add.text(400, 125, "The Last Phantom Z", {
             fontSize: "48px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
