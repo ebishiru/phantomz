@@ -15,33 +15,44 @@ export default class OptionsScene extends Phaser.Scene {
 
     create() {
 
+        this.input.setDefaultCursor("default")
+
         const { width, height } = this.scale
         this.scene.bringToTop()
         //dim background
         const overlay = this.add.rectangle(0,0,width,height,0x000000,0.45)
             .setOrigin(0)
-            .setInteractive()
+            .setInteractive({ useHandCursor: false })
 
         overlay.on("pointerdown", () => this.close())
 
-        const panelWidth = width * 0.8
-        const panelHeight = height * 0.8
+        const panelWidth = width * 0.75
+        const panelHeight = height * 0.75
 
         const panel = this.add.rectangle(width/2, height/2, panelWidth, panelHeight, 0x1e1e1e)
             .setStrokeStyle(2, 0xffffff)
+            .setInteractive({ useHandCursor: false })
+
+        panel.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            pointer.event.stopPropagation()
+        })
 
         //clicking outside window closes it
 
         //Title text
-        this.add.text(width/2, height/2 - panelHeight/2 + 40, "OPTIONS", {
-            fontSize: "24px",
+        this.add.text(width/2, height/2 - panelHeight/2 + 60, "OPTIONS", {
+            fontSize: "32px",
             fontFamily: "Georgia",
-            color: "#ffffff"
+            color: "#ffcc00"
         }).setOrigin(0.5)
         
-        this.createVolumeSlider(width/2, height/2 - 60)
+        //Volume controls
+        const volumeIcon = this.add.image(width/2 - 175, height/2 - 120, "audio-icon")
+            .setScale(2)
 
-        const closeBtn = this.add.text(width/2, height/2 + panelHeight/2 - 40, "CLOSE", {
+        this.createVolumeSlider(width/2, height/2 - 120, volumeIcon)
+
+        const closeBtn = this.add.text(width/2, height/2 + panelHeight/2 - 40, "BACK", {
             fontSize: "18px",
             fontFamily: "Georgia",
             color: "#ffffff",
@@ -60,14 +71,14 @@ export default class OptionsScene extends Phaser.Scene {
         this.input.keyboard?.once("keydown-ESC", () => this.close())
     }
 
-    createVolumeSlider(x: number, y: number) {
-        const sliderWidth = 300
+    createVolumeSlider(x: number, y: number, icon: Phaser.GameObjects.Image) {
+        const sliderWidth = 250
 
         const bar = this.add.rectangle(x, y, sliderWidth, 8, 0x555555)
-        bar.setInteractive()
+        bar.setInteractive({ useHandCursor: true })
 
-        const knob = this.add.circle(x + sliderWidth/2, y, 10, 0xffffff)
-            .setInteractive({ draggable: true})
+        const knob = this.add.circle(x + sliderWidth/2, y, 10, 0xffcc00)
+            .setInteractive({ draggable: true, useHandCursor: true})
         
             const updateVolume = (pointerX: number) => {
 
@@ -81,6 +92,13 @@ export default class OptionsScene extends Phaser.Scene {
                 const volume = (clamped-left)/sliderWidth
 
                 this.sound.setVolume(volume)
+
+                // change icon
+                if (volume <= 0.01) {
+                    icon.setTexture("mute-icon")
+                } else {
+                    icon.setTexture("audio-icon")
+                }
             }
 
         knob.on("drag", (pointer: Phaser.Input.Pointer, dragX:number) => {
@@ -97,11 +115,15 @@ export default class OptionsScene extends Phaser.Scene {
 
         const gameScene = this.scene.get("game") as GameScene
 
-        let y = 420
+        let y = 320
+        const startX = 300
 
         gameScene.skillSystem.skills.forEach((skill:any)=>{
 
             if(!skill.enabled) return
+
+            this.add.image(startX - 80, y, skill.iconKey)
+            .setScale(2)
 
             const text = `${skill.name}  Dmg:${skill.getDamage().toFixed(0)}  CD:${(skill.getCooldown()/1000).toFixed(2)}`
 
