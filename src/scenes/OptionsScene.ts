@@ -101,7 +101,7 @@ export default class OptionsScene extends Phaser.Scene {
                 }
             }
 
-        knob.on("drag", (pointer: Phaser.Input.Pointer, dragX:number) => {
+        knob.on("drag", (_pointer: Phaser.Input.Pointer, dragX:number) => {
             updateVolume(dragX)
         })
 
