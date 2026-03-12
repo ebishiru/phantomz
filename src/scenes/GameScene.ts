@@ -3,7 +3,9 @@ import Player from "../entities/Player"
 import BossManager from "../managers/BossManager"
 
 import { playMusic } from "../systems/MusicSystem"
+import { setupEscapeMenu } from "../systems/setupEscapeMenu"
 import { OptionsButton } from "../ui/OptionsButton"
+
 import InputSystem from "../systems/InputSystem"
 import SkillSystem from "../systems/SkillSystem"
 import ExpSystem from "../systems/ExpSystem"
@@ -11,7 +13,6 @@ import UISystem from "../systems/UISystem"
 import MobileControls from "../systems/MobileControls"
 
 export default class GameScene extends Phaser.Scene {
-
     player!: Player
     bossManager!: BossManager
 
@@ -27,109 +28,93 @@ export default class GameScene extends Phaser.Scene {
         super("game")
     }
 
-    create(data: { characterKey?: string, startingSkill?: string}) {
-        //Load Title Screen Selection
-        const character = data?.characterKey || "player1"
-        const startingSkill = data?.startingSkill || "slash"
+    create(data: { characterKey?: string, startingSkill?: string }) {
+        const character = data?.characterKey || "player1";
+        const startingSkill = data?.startingSkill || "slash";
 
         // Fade In
-        this.cameras.main.fadeIn(500, 0, 0, 0)
+        this.cameras.main.fadeIn(500, 0, 0, 0);
 
         // World Bounds
-        this.physics.world.setBounds(50, 100, 700, 500)
+        this.physics.world.setBounds(50, 100, 700, 500);
 
-        //Ground Texture
-        const floor = this.add.tileSprite(
-            50, 100, 700, 500, "dirt-texture"
-        ).setOrigin(0)
+        // Ground Texture
+        const floor = this.add.tileSprite(50, 100, 700, 500, "dirt-texture").setOrigin(0);
+        floor.setTint(0xb0a080);
+        floor.setAlpha(0.9);
 
-        floor.setTint(0xB0A080)
-        floor.setAlpha(0.9)
+        // Play music
+        playMusic(this, "caveMusic");
 
-        //Play music
-        playMusic(this, "caveMusic")
+        // Options Button
+        setupEscapeMenu(this);
+        OptionsButton(this);
 
-        //Options Button
-        OptionsButton(this)
-
-        //Player animation
-        const animKey = `${character}-idle`
-
+        // Player animation
+        const animKey = `${character}-idle`;
         if (!this.anims.exists(animKey)) {
             this.anims.create({
                 key: animKey,
-                frames: this.anims.generateFrameNumbers(character, {
-                    start: 0,
-                    end: 1
-                }),
+                frames: this.anims.generateFrameNumbers(character, { start: 0, end: 1 }),
                 frameRate: 3,
                 repeat: -1
-            })
+            });
         }
 
-        //Player
-        this.player = new Player(this, 400, 550, character)
+        // Player
+        this.player = new Player(this, 400, 550, character);
 
-        //Systems
-        this.inputSystem = new InputSystem(this, this.player)
-        this.skillSystem = new SkillSystem(this, this.player)
+        // Systems
+        this.inputSystem = new InputSystem(this, this.player);
+        this.skillSystem = new SkillSystem(this, this.player);
+        this.expSystem = new ExpSystem(this);
+        this.uiSystem = new UISystem(this, this.player, this.skillSystem);
 
-        this.expSystem = new ExpSystem(this)
-        this.uiSystem = new UISystem(this, this.player, this.skillSystem)
+        // Unlock starting skill
+        this.skillSystem.unlockSkill(startingSkill);
 
-        this.skillSystem.unlockSkill(startingSkill) //Unlock starting skill
+        // Boss
+        this.bossManager = new BossManager(this, this.player, this.expSystem);
+        this.bossManager.spawnBoss();
 
-        //Boss
-        this.bossManager = new BossManager(this, this.player, this.expSystem)
-        this.bossManager.spawnBoss()
-
-        //Mobile Controls
+        // Mobile Controls
         if (this.sys.game.device.input.touch) {
             this.mobileControls = new MobileControls(this.player, this.skillSystem);
         }
 
-        //Skill Keybinds
+        // Skill Keybinds
         this.skillKeys = [
-            // 1 2 3 4
             this.input.keyboard!.addKey("ONE"),
             this.input.keyboard!.addKey("TWO"),
             this.input.keyboard!.addKey("THREE"),
             this.input.keyboard!.addKey("FOUR"),
-
-            // U I O P
             this.input.keyboard!.addKey("U"),
             this.input.keyboard!.addKey("I"),
             this.input.keyboard!.addKey("O"),
             this.input.keyboard!.addKey("P"),
-        ]
-
+        ];
     }
 
     update(time: number) {
+        if (this.scene.isPaused()) return;
 
-        if (this.scene.isPaused()) return
+        // Player Movement
+        const keyboardDir = this.inputSystem.getMovementVector();
+        const mobileDir = this.mobileControls?.getMovementVector() || new Phaser.Math.Vector2(0, 0);
+        keyboardDir.add(mobileDir);
+        this.player.move(keyboardDir);
 
-        //Player Movement
-        const keyboardDir = this.inputSystem.getMovementVector()
-        const mobileDir = this.mobileControls?.getMovementVector() || new Phaser.Math.Vector2(0, 0)
+        // Systems update
+        this.uiSystem.update();
+        this.expSystem.update(this.player, time);
 
-        keyboardDir.add(mobileDir)
-
-        this.player.move(keyboardDir)
-
-        //Systems update
-        this.uiSystem.update(time)
-        this.expSystem.update(this.player, time)
-
-        //Boss update
+        // Boss update
         if (this.bossManager.boss) {
-            this.bossManager.boss.update(this.player)
-
-            // Redraw health bar
-            this.bossManager.bossHealthBar?.draw()
+            this.bossManager.boss.update(this.player);
+            this.bossManager.bossHealthBar?.draw();
 
             if (this.bossManager.boss.health <= 0) {
-                this.bossManager.spawnBoss()
+                this.bossManager.spawnBoss();
             }
         }
 
@@ -139,22 +124,21 @@ export default class GameScene extends Phaser.Scene {
             [1, 5], // skill 1: keys 1 and 5
             [2, 6], // skill 2: keys 2 and 6
             [3, 7], // skill 3: keys 3 and 7
-        ]
+        ];
 
         skillMapping.forEach((keyIndices, skillIndex) => {
             keyIndices.forEach(i => {
-                const key = this.skillKeys[i]
+                const key = this.skillKeys[i];
                 if (Phaser.Input.Keyboard.JustDown(key)) {
-                    this.skillSystem.useSkill(skillIndex, time)
+                    this.skillSystem.useSkill(skillIndex);
                 }
-            })
-        })
+            });
+        });
 
         // Depth sorting (top-down)
-        this.player.setDepth(this.player.y)
-
+        this.player.setDepth(this.player.y);
         if (this.bossManager.boss) {
-            this.bossManager.boss.setDepth(this.bossManager.boss.y)
+            this.bossManager.boss.setDepth(this.bossManager.boss.y);
         }
     }
 }

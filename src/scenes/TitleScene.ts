@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
+import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
 
 export default class TitleScene extends Phaser.Scene {
@@ -27,6 +28,7 @@ export default class TitleScene extends Phaser.Scene {
         playMusic(this, "titleMusic")
 
         //Options Button
+        setupEscapeMenu(this)
         OptionsButton(this)
 
         //Main Title

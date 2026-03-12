@@ -14,43 +14,41 @@ export default class OptionsScene extends Phaser.Scene {
     }
 
     create() {
+        this.input.setDefaultCursor("default");
 
-        this.input.setDefaultCursor("default")
+        const { width, height } = this.scale;
+        this.scene.bringToTop();
 
-        const { width, height } = this.scale
-        this.scene.bringToTop()
-        //dim background
-        const overlay = this.add.rectangle(0,0,width,height,0x000000,0.45)
+        // Dim background
+        const overlay = this.add.rectangle(0, 0, width, height, 0x000000, 0.45)
             .setOrigin(0)
-            .setInteractive({ useHandCursor: false })
+            .setInteractive({ useHandCursor: false });
 
-        overlay.on("pointerdown", () => this.close())
+        overlay.on("pointerdown", () => this.close());
 
-        const panelWidth = width * 0.75
-        const panelHeight = height * 0.75
+        const panelWidth = width * 0.75;
+        const panelHeight = height * 0.75;
 
         const panel = this.add.rectangle(width/2, height/2, panelWidth, panelHeight, 0x1e1e1e)
             .setStrokeStyle(2, 0xffffff)
-            .setInteractive({ useHandCursor: false })
+            .setInteractive({ useHandCursor: false });
 
         panel.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-            pointer.event.stopPropagation()
-        })
+            pointer.event.stopPropagation();
+        });
 
-        //clicking outside window closes it
-
-        //Title text
+        // Title
         this.add.text(width/2, height/2 - panelHeight/2 + 60, "OPTIONS", {
             fontSize: "32px",
             fontFamily: "Georgia",
             color: "#ffcc00"
-        }).setOrigin(0.5)
-        
-        //Volume controls
-        const volumeIcon = this.add.image(width/2 - 175, height/2 - 120, "audio-icon")
-            .setScale(2)
+        }).setOrigin(0.5);
 
-        this.createVolumeSlider(width/2, height/2 - 120, volumeIcon)
+        // Volume controls
+        const volumeIcon = this.add.image(width/2 - 175, height/2 - 120, "audio-icon")
+            .setScale(2);
+
+        this.createVolumeSlider(width/2, height/2 - 120, volumeIcon);
 
         const closeBtn = this.add.text(width/2, height/2 + panelHeight/2 - 40, "BACK", {
             fontSize: "18px",
@@ -60,15 +58,15 @@ export default class OptionsScene extends Phaser.Scene {
             padding: { x: 10, y: 6 }
         })
         .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
+        .setInteractive({ useHandCursor: true });
 
-        closeBtn.on("pointerup", () => this.close())
+        closeBtn.on("pointerup", () => this.close());
 
         if (this.fromGame) {
-            this.displaySkillSummary()
+            this.displaySkillSummary();
         }
 
-        this.input.keyboard?.once("keydown-ESC", () => this.close())
+        this.input.keyboard?.once("keydown-ESC", () => this.close());
     }
 
     createVolumeSlider(x: number, y: number, icon: Phaser.GameObjects.Image) {
@@ -138,11 +136,11 @@ export default class OptionsScene extends Phaser.Scene {
     }
 
     close() {
-
         if (this.fromGame) {
-            this.scene.resume("game")
+            const game = this.scene.get("game") as any;
+            game.skillSystem.resumeAll();
+            this.scene.resume("game");
         }
-
-        this.scene.stop()
+        this.scene.stop();
     }
 }

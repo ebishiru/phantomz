@@ -1,5 +1,6 @@
-import Phaser from "phaser";
-import Skill from "../skills/Skill";
+import Phaser from "phaser"
+import Skill from "../skills/Skill"
+import { CooldownManager } from "../systems/CooldownManager"
 
 export default class SkillCooldown {
     scene: Phaser.Scene
@@ -32,8 +33,8 @@ export default class SkillCooldown {
         this.radius = radius
 
         if (bgKey) {
-            this.bg = scene.add.image(x, y - size / 2, bgKey);
-            this.bg.setDisplaySize(size, size) 
+            this.bg = scene.add.image(x, y - size / 2, bgKey)
+            this.bg.setDisplaySize(size, size)
         } else {
             this.bg = scene.add.graphics()
             this.bg.fillStyle(0x444444, 1)
@@ -45,7 +46,6 @@ export default class SkillCooldown {
 
         this.readyBorder = scene.add.image(x, y - size / 2, "ready-border")
         this.readyBorder.setDisplaySize(size + 2, size + 2)
-
         this.readyBorder.setVisible(false)
 
         this.fg = scene.add.graphics()
@@ -54,15 +54,14 @@ export default class SkillCooldown {
         this.loadingBorder.setDepth(2)
         this.fg.setDepth(3)
         this.readyBorder.setDepth(4)
-
     }
 
-    update(time: number) {
+    update() {
         if (!this.scene.scene.isActive()) return
 
-        let remaining = this.skill.remainingCooldown(time)
-        let ratio = 1 - remaining / this.skill.cooldown
-        ratio = Phaser.Math.Clamp(ratio, 0, 1)
+        // Use the new cooldown manager
+        const remaining = CooldownManager.getRemaining(this.skill.id)
+        const ratio = Phaser.Math.Clamp(1 - remaining / this.skill.getCooldown(), 0, 1)
 
         const top = this.y - this.size
         const fillHeight = this.size * ratio
@@ -71,14 +70,14 @@ export default class SkillCooldown {
         this.fg.clear()
 
         if (ratio < 1) {
-            //loading state
+            // loading state
             this.loadingBorder.setVisible(true)
             this.readyBorder.setVisible(false)
 
             this.fg.fillStyle(0xffffff, 0.3)
             this.fg.fillRect(this.x - this.size / 2, fillY, this.size, fillHeight)
         } else {
-            //ready state
+            // ready state
             this.loadingBorder.setVisible(false)
             this.readyBorder.setVisible(true)
         }

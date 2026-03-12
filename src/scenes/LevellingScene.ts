@@ -27,11 +27,14 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     create() {
-        this.createOverlay()
-        this.createMenuBox()
-        this.createOptions()
-        this.bindKeys()
-        this.displaySummary()
+        const gameScene = this.scene.get("game") as GameScene;
+        gameScene.skillSystem.pauseAll();
+
+        this.createOverlay();
+        this.createMenuBox();
+        this.createOptions();
+        this.bindKeys();
+        this.displaySummary();
     }
 
     createOverlay() {
@@ -125,13 +128,13 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     chooseOption(index: number) {
-        if (this.optionChosen) return
+        if (this.optionChosen) return;
 
-        const option = this.options[index]
-        const container = this.optionContainers[index]
-        if (!option || !container) return
+        const option = this.options[index];
+        const container = this.optionContainers[index];
+        if (!option || !container) return;
 
-        this.optionChosen = true
+        this.optionChosen = true;
 
         this.tweens.add({
             targets: container,
@@ -140,15 +143,20 @@ export default class LevellingScene extends Phaser.Scene {
             yoyo: true,
             repeat: 2,
             onComplete: () => {
-                option.apply()
-                this.scene.stop()
-                const gameScene = this.scene.get("game") as GameScene
-                gameScene.skillSystem.resumeAll(gameScene.time.now)
-                gameScene.uiSystem.createSkillUI()
-                gameScene.uiSystem.createPassiveUI()
-                this.scene.resume("game")
+                option.apply();
+
+                // Resume skills naturally
+                const gameScene = this.scene.get("game") as GameScene;
+                gameScene.skillSystem.resumeAll();
+
+                // Refresh UI
+                gameScene.uiSystem.createSkillUI();
+                gameScene.uiSystem.createPassiveUI();
+
+                this.scene.stop();
+                this.scene.resume("game");
             }
-        })
+        });
     }
 
     bindKeys() {

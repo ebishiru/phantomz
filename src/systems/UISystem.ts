@@ -66,18 +66,13 @@ export default class UISystem {
         })
     }
 
-    update(time: number) {
+    update() {
         this.healthBar.draw()
         this.expBar.draw()
         this.levelText.setText(`Level ${this.player.level}`)
 
-        this.skillCooldownUIs.forEach(ui => {
-            ui.update(time)
-        })
-
-        this.passiveUIs.forEach(ui => {
-            ui.update()
-        })
+        this.skillCooldownUIs.forEach(ui => ui.update())
+        this.passiveUIs.forEach(ui => ui.update())
     }
 
 }

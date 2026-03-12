@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { playMusic } from "../systems/MusicSystem";
 import ScoreManager from "../systems/ScoreManager";
 
 export default class GameOverScene extends Phaser.Scene {
@@ -11,6 +12,9 @@ export default class GameOverScene extends Phaser.Scene {
     create(data: { score: number }) {
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
+
+        //Play Game Over music
+        playMusic(this, "gameOverMusic")
 
         // Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
