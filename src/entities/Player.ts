@@ -98,7 +98,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             const gameScene = this.scene.scene.get("game") as GameScene;
             this.levelUp()
             
-            gameScene.skillSystem.pauseAll(this.scene.time.now)
+            gameScene.skillSystem.pauseAll()
 
             this.scene.scene.pause("game")
             this.scene.scene.launch("level-up", { player: this, skillSystem: gameScene.skillSystem})

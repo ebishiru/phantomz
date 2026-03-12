@@ -50,7 +50,7 @@ export default class ConeTelegraph {
         this.graphics.closePath()
         this.graphics.fillPath()
 
-        this.graphics.lineStyle(2, 0xff0000, 0.6)
+        this.graphics.lineStyle(2, 0xff0000, 1)
         this.graphics.strokePath()
     }
 

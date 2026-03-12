@@ -25,7 +25,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
         const y = this.boss.y
 
         // Donut Telegraph First,
-        this.scene.time.delayedCall(1400, () => {
+        this.scene.time.delayedCall(1000, () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             
             this.donutTelegraph = new DonutTelegraph(
@@ -59,7 +59,7 @@ export default class ShrinkDonutFromBoss extends BossMechanic {
         })
 
         // Center Telegraph Next
-        this.scene.time.delayedCall(2400, () => {
+        this.scene.time.delayedCall(2000, () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             
             this.circleTelegraph = new CircleTelegraph(
