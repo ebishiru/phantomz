@@ -4,6 +4,7 @@ import Player from "../entities/Player";
 import GameScene from "../scenes/GameScene";
 import { createSkill } from "./createSkill";
 import { createPassive } from "./createPassive";
+import { CooldownManager } from "./CooldownManager";
 
 export default class SkillSystem {
     scene: Phaser.Scene;
@@ -41,12 +42,14 @@ export default class SkillSystem {
     }
 
     pauseAll() {
+        CooldownManager.pauseAll();
         this.skills.forEach(skill => {
             skill.enabled = false;
         });
     }
 
     resumeAll() {
+        CooldownManager.resumeAll();
         this.skills.forEach(skill => {
             skill.enabled = true;
         });
