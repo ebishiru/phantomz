@@ -21,6 +21,9 @@ export default class GameSetupScene extends Phaser.Scene {
 
     create() {
 
+        //Fade in from black
+        this.cameras.main.fadeIn(500, 0, 0, 0);
+        
         const { width } = this.scale
 
         this.add.text(width/2, 100, "Game Setup", {

@@ -6,6 +6,8 @@ import ControlScene from "./scenes/ControlsScene"
 import GameScene from "./scenes/GameScene"
 import LevellingScene from "./scenes/LevellingScene"
 import GameOverScene from "./scenes/GameOverScene"
+import MainMenuScene from "./scenes/MainMenuScene"
+import GameSetupScene from "./scenes/GameSetupScene"
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -19,7 +21,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: { default: "arcade", arcade: { debug: false } },
   input: { activePointers: 3 },
   pixelArt: true,
-  scene: [PreloadScene, TitleScene, OptionsScene, ControlScene, GameScene, LevellingScene, GameOverScene],
+  scene: [PreloadScene, TitleScene, OptionsScene, MainMenuScene, GameSetupScene, ControlScene, GameScene, LevellingScene, GameOverScene],
 }
 
 new Phaser.Game(config)

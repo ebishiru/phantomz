@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { setupEscapeMenu } from "../systems/setupEscapeMenu";
+import { OptionsButton } from "../ui/OptionsButton";
 
 export default class MainMenuScene extends Phaser.Scene {
     constructor() {
@@ -7,17 +9,24 @@ export default class MainMenuScene extends Phaser.Scene {
 
     create() {
 
+        //Fade in from black
+        this.cameras.main.fadeIn(500, 0, 0, 0);
+
+        //Options Button
+        setupEscapeMenu(this)
+        OptionsButton(this)
+
         const { width, height } = this.scale;
 
         const options = [
-            { text: "Play", scene: "gamesetup"},
-            { text: "Controls", scene: "controls"},
-            { text: "Unlockables", scene: "unlocks"},
-            { text: "Credits", scene: "credits"},    
+            { text: "PLAY", scene: "gamesetup"},
+            { text: "CONTROLS", scene: "controls"},
+            { text: "UNLOCKABLES", scene: "unlocks"},
+            { text: "CREDITS", scene: "credits"},    
         ]
 
-        const buttonWidth = 200
-        const buttonHeight = 50
+        const buttonWidth = 260
+        const buttonHeight = 70
 
         options.forEach((option, index) => {
 
@@ -29,6 +38,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
             this.add.text(width/2, y, option.text, {
                 fontSize: "24px",
+                fontFamily: `Georgia, serif`,
                 color: "#ffffff"
             }).setOrigin(0.5)
             

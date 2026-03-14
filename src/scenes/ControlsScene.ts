@@ -58,7 +58,7 @@ export default class ControlScene extends Phaser.Scene {
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
-        backButtonBg.on("pointerdown", () => this.scene.start("title"))
+        backButtonBg.on("pointerdown", () => this.scene.start("mainmenu"))
 
         this.add.text(400, 600, "HOME", {
             fontSize: "24px",
