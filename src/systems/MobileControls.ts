@@ -94,7 +94,7 @@ export default class MobileControls {
                 btn.style.transform = originalTransform + " scale(0.88)";
                 btn.style.filter = "brightness(0.8)";
 
-                this.skillSystem.useSkill(index, this.player.scene.time.now)
+                this.skillSystem.useSkill(index)
             });
 
             const resetButton = () => {
