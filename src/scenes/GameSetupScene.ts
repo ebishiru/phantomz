@@ -32,10 +32,16 @@ export default class GameSetupScene extends Phaser.Scene {
             color: "#ffcc00"
         }).setOrigin(0.5)
 
+        this.add.text(width/2, 180, "Select your Character and Starting Skill", {
+            fontSize: "24px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff"
+        }).setOrigin(0.5)
+
         //Character selection
         const startCharX = 250
         const charSpacing = 150
-        const charY = 245
+        const charY = 280
 
         const sprites: Phaser.GameObjects.Sprite[] = []
 

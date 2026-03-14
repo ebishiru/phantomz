@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { playMusic } from "../systems/MusicSystem";
 import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
 
@@ -8,7 +9,9 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     create() {
-
+        //Title Music
+        playMusic(this, "titleMusic")
+        
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
@@ -18,6 +21,27 @@ export default class MainMenuScene extends Phaser.Scene {
 
         const { width, height } = this.scale;
 
+        //Title Text
+        this.add.text(width/2, 125, `The Last  \n   Phantom Z`, {
+            fontSize: "48px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: "#ffcc00",
+        }).setOrigin(0.5)
+
+        //Add Main Menu Art
+        this.anims.create({
+            key: "menu-idle",
+            frames: this.anims.generateFrameNumbers("main-menu-art", { start: 0, end: 1 }),
+            frameRate: 2,
+            repeat: -1
+        });
+
+        this.add.sprite(width/2, 260, "main-menu-art")
+        .setScale(5)
+        .setOrigin(0.5)
+        .play("menu-idle")
+
+        //Main Menu buttons
         const options = [
             { text: "PLAY", scene: "gamesetup"},
             { text: "CONTROLS", scene: "controls"},
@@ -30,7 +54,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
         options.forEach((option, index) => {
 
-            const y = height/2 + index * 80
+            const y = height/2 + 50 + index * 80
 
             const bg = this.add.rectangle(width/2, y, buttonWidth, buttonHeight, 0x222222)
             .setStrokeStyle(3, 0xffcc00)

@@ -102,6 +102,6 @@ export default class GameOverScene extends Phaser.Scene {
     goToTitle() {
         this.scene.stop("game-over")
         this.scene.stop("game")
-        this.scene.start("title")
+        this.scene.start("mainmenu")
     }
 }

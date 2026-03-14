@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { playMusic } from "../systems/MusicSystem";
 
 export default class TitleScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -9,19 +8,11 @@ export default class TitleScene extends Phaser.Scene {
     }
 
     create() {
-        //Title Music
-        playMusic(this, "titleMusic")
-
-        //Main Title
-        this.add.text(400, 200, `The Last  \n   Phantom Z`, {
-            fontSize: "48px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
-            color: "#ffcc00",
-        }).setOrigin(0.5)
+        const { width, height } = this.scale;
 
         //Menu Text
-        const startText =this.add.text(400, 500, "CLICK TO START", {
-            fontSize: "24px",
+        const startText = this.add.text(width/2, height/2, "CLICK TO START", {
+            fontSize: "32px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: `#ffffff`,
         }).setOrigin(0.5)

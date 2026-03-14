@@ -20,10 +20,10 @@ export default class ControlScene extends Phaser.Scene {
         //Controls Text
         this.add.text(400, 210,
             "Movement: Arrow Keys / WASD / Joystick\n" +
-            "Skill 1: Q / Green \n" +
-            "Skill 2: E / Blue \n" +
-            "Skill 3: R / Red \n" +
-            "Skill 4: F / Yellow \n",
+            "Skill 1: [ 1 ] / [ U ] / Green \n" +
+            "Skill 2: [ 2 ] / [ I ] / Blue \n" +
+            "Skill 3: [ 3 ] / [ O ] / Red \n" +
+            "Skill 4: [ 4 ] / [ P ] / Yellow \n",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",
@@ -40,7 +40,7 @@ export default class ControlScene extends Phaser.Scene {
 
         //How to play text
         this.add.text(400, 440,
-            "Kill enemies to get or level up skills. \n" +
+            "Kill enemies to level up skills. \n" +
             "Grey circle around boss is its hurtbox. \n" +
             "New bosses are added every minute. \n" +
             "Score is based on kills and survival time. \n" +
