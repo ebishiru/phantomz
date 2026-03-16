@@ -103,4 +103,26 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffCooldown(400)
         }
     ],
+
+    restoration: [
+        {
+            desc: "Heal + 3",
+            apply: (skill: Skill) => skill.buffHeal(3)
+        },
+        {
+            desc: "Cooldown reduced by 300ms",
+            apply: (skill: Skill) => skill.buffCooldown(300)
+        }
+    ],
+
+    ward: [
+        {
+            desc: "Shield duration + 250ms",
+            apply: (skill: Skill) => skill.buffShieldDuration(250)
+        },
+        {
+            desc: "Cooldown reduced by 300ms",
+            apply: (skill: Skill) => skill.buffCooldown(300)
+        }
+    ],
 }

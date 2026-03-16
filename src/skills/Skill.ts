@@ -8,6 +8,7 @@ export default class Skill {
     cooldown: number;
     range: number;
     healingValue?: number;
+    shieldDuration?: number;
     enabled: boolean;
     scene: Phaser.Scene;
     iconKey!: string;
@@ -68,6 +69,10 @@ export default class Skill {
 
     buffHeal(amount: number) {
         if (this.healingValue !== undefined) this.healingValue += amount;
+    }
+
+    buffShieldDuration(amount: number) {
+        if (this.shieldDuration !== undefined) this.shieldDuration += amount;
     }
 
     getDamage() {

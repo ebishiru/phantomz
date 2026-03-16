@@ -9,6 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     level = 1
     expToNextLevel = 10
     hurtboxRadius = 4
+    isInvulnerable = false
 
     //Passive effects:
     statModifiers = {
@@ -48,6 +49,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     takeDamage(amount: number) {
+
+        //Ward Skill
+        if (this.isInvulnerable) return
+        
         //Passive
         amount -= this.statModifiers.damageReductionFlat
         amount = Math.max(1, amount)

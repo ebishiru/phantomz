@@ -72,7 +72,7 @@ To ADD:
 - Restoration: Instantly heal player, long cd
 [Highscore: 500pts]
 
-- Ward: Invulnerability for 2s.
+- Ward: Invulnerability for 1s.
 [Highscore: 1500pts]
 
 - Gust: Cone attack with knockback

@@ -64,4 +64,18 @@ export const skills = [
         desc: "Supercharge yourself and exhaust after",
         upgrades: upgrades.volt
     },
+    {
+        key: "restoration",
+        name: "Restoration",
+        iconKey: "restoration-icon",
+        desc: "Fix your wounds and restore health",
+        upgrades: upgrades.restoration
+    },
+    {
+        key: "ward",
+        name: "Ward",
+        iconKey: "ward-icon",
+        desc: "Create a temporary shield that blocks all damage",
+        upgrades: upgrades.ward
+    },
 ]
