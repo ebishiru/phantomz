@@ -10,6 +10,8 @@ import FireballSkill from "../skills/FireballSkill";
 import DevourSkill from "../skills/DevourSkill";
 import HookSkill from "../skills/HookSkill";
 import VoltSkill from "../skills/VoltSkill";
+import RestorationSkill from "../skills/RestorationSkill";
+import WardSkill from "../skills/WardSkill";
 
 export function createSkill(
     key: string,
@@ -26,6 +28,8 @@ export function createSkill(
         case "devour": return new DevourSkill(scene, player)
         case "hook": return new HookSkill(scene, player)
         case "volt": return new VoltSkill(scene, player)
+        case "restoration": return new RestorationSkill(scene, player)
+        case "ward": return new WardSkill(scene, player)
         default: return null
     }
 }

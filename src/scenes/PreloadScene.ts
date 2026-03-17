@@ -60,6 +60,8 @@ export default class PreloadScene extends Phaser.Scene {
             "devour",
             "hook",
             "volt",
+            "restoration",
+            "ward",
         ]
 
         skillKeys.forEach(key => {
