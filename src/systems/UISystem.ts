@@ -40,8 +40,8 @@ export default class UISystem {
         this.skillCooldownUIs = []
 
         this.skillSystem.skills.forEach((skill, index) => {
-            const x = 550 + (index * 50)
-            const y = 650
+            const x = 550 + (index * 62)
+            const y = 675
 
             this.skillCooldownUIs.push(
                 new SkillCooldown(this.scene, skill, x, y, skill.iconKey)
@@ -54,11 +54,10 @@ export default class UISystem {
         this.passiveUIs = []
 
         const startX = 300 - this.skillSystem.passives.length * 50
-        const skillSize = 32
-        const y = 650 - skillSize / 2
 
         this.skillSystem.passives.forEach((passive, index) => {
-            const x = startX + index * 50
+            const x = startX + index * 62
+            const y = 675
 
             this.passiveUIs.push(
                 new PassiveIcon(this.scene, passive, x, y, passive.iconKey)

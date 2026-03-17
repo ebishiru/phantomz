@@ -22,7 +22,7 @@ export default class SkillCooldown {
         x: number,
         y: number,
         bgKey: string | null = null,
-        size = 32,
+        size = 56,
         radius = 6,
     ) {
         this.scene = scene
