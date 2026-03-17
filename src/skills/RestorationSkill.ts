@@ -12,6 +12,19 @@ export default class RestorationSkill extends Skill {
     }
 
     activate() {
+        //VFX icon
+        const icon = this.scene.add.image(this.player.x, this.player.y - 50, "restoration-icon");
+        icon.setScale(2).setDepth(1000);
+
+        this.scene.tweens.add({
+            targets: icon,
+            y: icon.y - 30,
+            alpha: 0,
+            duration: 800,
+            ease: "Cubic-easeOut",
+            onComplete: () => icon.destroy(),
+        })
+        
         this.player.heal(this.healingValue)
     }
 }
