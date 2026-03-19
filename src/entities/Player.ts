@@ -126,6 +126,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const score = bossManager.globalTimerSeconds + bossManager.bossesKilled * 60
 
         this.scene.scene.pause("game")
-        this.scene.scene.launch("game-over", { score })
+        this.scene.scene.launch("game-over", { 
+            score,
+            bossesKilled: bossManager.bossesKilled,
+            bossKills: bossManager.bossKillsThisRun 
+        })
     }
 }

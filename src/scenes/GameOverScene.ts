@@ -1,15 +1,15 @@
 import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
-import ScoreManager from "../systems/ScoreManager";
+import SaveManager from "../systems/SaveManager";
 
 export default class GameOverScene extends Phaser.Scene {
-    scoreManager: ScoreManager;
+    saveManager: SaveManager;
     constructor() {
         super("game-over")
-        this.scoreManager = new ScoreManager();
+        this.saveManager = new SaveManager();
     }
 
-    create(data: { score: number }) {
+    create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number } }) {
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
 
@@ -19,13 +19,19 @@ export default class GameOverScene extends Phaser.Scene {
         // Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 
-        this.createGameOverText(centerX, centerY - 80);
-        this.createScore(centerX, centerY - 20, data.score);
-        this.createHiScore(centerX, centerY + 20, data.score);
-        this.createButtons(centerX, centerY + 80);
+        this.createGameOverText(centerX, centerY - 100);
+        this.createScore(centerX, centerY - 40, data.score);
+        this.createHiScore(centerX, centerY, data.score);
+        this.createBossKillInfo(centerX, centerY + 50, data.bossesKilled, data.bossKills);
+        this.createButtons(centerX, centerY + 220);
         this.createKeyboardShortcuts();
 
-        this.scoreManager.updateScore(data.score)
+        //Update Save Data
+        this.saveManager.updateScore(data.score)
+        for (const bossKey in data.bossKills) {
+            const count = data.bossKills[bossKey]
+            this.saveManager.addBossKill(bossKey, count)
+        }
     }
 
     createGameOverText(x: number, y: number) {
@@ -46,7 +52,7 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     createHiScore(x: number, y:number, score: number) {
-        const currentHiScore = this.scoreManager.getHiScore();
+        const currentHiScore = this.saveManager.getHiScore();
         let highscoreText = `Hi-Score: ${currentHiScore}`
         if (score > currentHiScore) {
             highscoreText = `Hi-Score: ${score} NEW BEST!!`
@@ -58,6 +64,48 @@ export default class GameOverScene extends Phaser.Scene {
             backgroundColor: "#222222",
             color: "#ffcc00",
         }).setOrigin(0.5)
+    }
+
+    createBossKillInfo(x: number, y: number, bossesKilled: number,bossKills: { [key: string]: number }) {
+        this.add.text(x, y, `Bosses Defeated: ${bossesKilled}`, {
+            fontSize: "16px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffcc00",
+        }).setOrigin(0.5)
+
+        let startY = y + 40
+
+        const maxPerRow = 5
+        const spacingX = 60
+        const spacingY = 60
+
+        const keys = Object.keys(bossKills)
+
+        keys.forEach((bossKey, index) => {
+            const count = bossKills[bossKey]
+
+            const row = Math.floor(index / maxPerRow)
+            const col = index % maxPerRow
+
+            const totalInRow = Math.min(maxPerRow, keys.length - row * maxPerRow)
+            const rowWidth = (totalInRow - 1) * spacingX
+
+            const startX = x - rowWidth / 2
+
+            const iconX = startX + col * spacingX
+            const iconY = startY + row * spacingY
+
+            this.add.image(iconX, iconY, bossKey)
+            .setFrame(0)
+            .setScale(2)
+            .setOrigin(0.5)
+
+            this.add.text(iconX, iconY + 20, `x${count}`, {
+                fontSize: "12px",
+                fontFamily: `Georgia, serif`,
+                color: "#ffffff"
+            }).setOrigin(0.5) 
+        })
     }
 
     createButtons(centerX: number, centerY: number) {

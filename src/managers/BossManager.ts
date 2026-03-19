@@ -34,6 +34,7 @@ export default class BossManager {
 
     // Kill Count
     bossesKilled = 0
+    bossKillsThisRun: { [key: string]: number } = {}
     extraExpPerBoss = 0
     bossKillText!: Phaser.GameObjects.Text;
 
@@ -171,6 +172,15 @@ export default class BossManager {
             // Increase kill count
             this.bossesKilled++
             this.bossKillText.setText(`Bosses: ${this.bossesKilled}`)
+
+            // Track boss kills for this run
+            const bossKey = this.boss.config.spriteKey
+
+            if (!this.bossKillsThisRun[bossKey]) {
+                this.bossKillsThisRun[bossKey] = 0
+            }
+
+            this.bossKillsThisRun[bossKey] += 1
 
             // Destroy old boss & mechanics
             this.destroyAllMechanics();

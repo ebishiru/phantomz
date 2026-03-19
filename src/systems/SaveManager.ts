@@ -1,0 +1,90 @@
+
+const SAVE_KEY = "phantomz_save_data"
+
+export default class SaveManager {
+    data: {
+        caveHighscore: number,
+        caveTotalScore: number,
+        bossKills: { [key: string]: number },
+        unlockedSkills: string[]
+    }
+
+    constructor() {
+        this.data = this.load()
+    }
+
+    load() {
+        const raw = localStorage.getItem(SAVE_KEY)
+
+        if (!raw) {
+            return {
+                caveHighscore: 0,
+                caveTotalScore: 0,
+                bossKills: {},
+                unlockedSkills: []
+            }
+        }
+
+        return JSON.parse(raw)
+    }
+
+    save() {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(this.data))
+    }
+
+    //SCORE MANAGEMENT:
+
+    getHiScore(): number {
+        return Number(this.data.caveHighscore || 0)
+    }
+
+    getTotalScore(): number {
+        return Number(this.data.caveTotalScore || 0)
+    }
+
+    updateScore(score: number) {
+
+        const currentHiScore = this.getHiScore()
+        if (score > currentHiScore) {
+            this.data.caveHighscore = score
+        }
+
+        this.data.caveTotalScore += score
+
+        this.save()
+    }
+
+    //BOSS DATA MANAGEMENT:
+
+    addBossKill(bossKey: string, count: number) {
+        if (!this.data.bossKills[bossKey]) {
+            this.data.bossKills[bossKey] = 0
+        }
+
+        this.data.bossKills[bossKey] += count
+        this.save()
+    }
+
+    getBossKills(bossKey: string): number {
+        return this.data.bossKills[bossKey] || 0
+    }
+
+    //SKILLS DATA MANAGEMENT:
+
+    unlockSkill(skillKey: string) {
+        if (!this.data.unlockedSkills.includes(skillKey)) {
+            this.data.unlockedSkills.push(skillKey)
+            this.save()
+        }
+    }
+
+    isSkillUnlocked(skillKey: string): boolean {
+        return this.data.unlockedSkills.includes(skillKey)
+    }
+
+    //DATA RESET:
+    reset() {
+        localStorage.removeItem(SAVE_KEY)
+        this.data = this.load()
+    }
+}
