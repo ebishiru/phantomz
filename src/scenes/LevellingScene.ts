@@ -34,7 +34,6 @@ export default class LevellingScene extends Phaser.Scene {
         this.createMenuBox();
         this.createOptions();
         this.bindKeys();
-        this.displaySummary();
     }
 
     createOverlay() {
@@ -57,7 +56,7 @@ export default class LevellingScene extends Phaser.Scene {
         this.add.text(this.menuX, this.menuY - this.menuHeight / 2 + 40, "LEVEL UP", {
             fontSize: "24px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
-            color: "#ffffff"
+            color: "#ffcc00"
         }).setOrigin(0.5)
     }
 
@@ -67,8 +66,8 @@ export default class LevellingScene extends Phaser.Scene {
         this.optionContainers = []
         this.optionChosen = false
 
-        const optionsStartY = this.menuY - this.menuHeight / 6 - 40
-        const optionsSpacing = this.menuHeight / 7
+        const optionsStartY = this.menuY - this.menuHeight / 6 - 30
+        const optionsSpacing = this.menuHeight / 5
         const buttonWidth = this.menuWidth - 80
         const buttonHeight = 60
 
@@ -169,46 +168,5 @@ export default class LevellingScene extends Phaser.Scene {
         key2?.on("down", () => this.chooseOption(1))
         key3?.on("down", () => this.chooseOption(2))
         key4?.on("down", () => this.chooseOption(3))
-    }
-
-    displaySummary() {
-        const y = this.menuY + this.menuHeight / 2 - 120
-        const { width } = this.scale
-
-        let summary = "Your Skills:\n\n"
-
-        const gameScene = this.scene.get("game") as GameScene
-
-        gameScene.skillSystem.skills.forEach((skill: any) => {
-            if (!skill.enabled) return
-
-            const stats: string[] = []
-
-        if (skill.damage !== undefined) {
-            stats.push(`Dmg: ${skill.getDamage().toFixed(0)}`)
-        }
-
-        if (skill.cooldown !== undefined) {
-            stats.push(`CD: ${(skill.getCooldown() / 1000).toFixed(2)}`)
-        }
-
-        if (skill.range !== undefined && skill.range > 0) {
-            stats.push(`Rng: ${skill.getRange().toFixed(0)}`)
-        }
-
-        if (skill.healingValue !== undefined && skill.healingValue > 0) {
-            stats.push(`Heal: ${skill.healingValue}`)
-        }
-
-            summary += `${skill.name}: ${stats.join(", ")}\n`
-        })
-
-        this.add.text(width/2, y, summary, {
-            fontSize: "14px",
-            fontFamily: `Georgia, serif`,
-            color: "#ffffff",
-            align: "left",
-            wordWrap: { width: this.menuWidth - 40}
-        }).setOrigin(0.5, 0)
     }
 }

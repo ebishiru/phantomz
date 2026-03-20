@@ -38,29 +38,33 @@ export default class OptionsScene extends Phaser.Scene {
         });
 
         // Title
-        this.add.text(width/2, height/2 - panelHeight/2 + 60, "OPTIONS", {
+        this.add.text(width/2, height/2 - panelHeight/2 + 80, "OPTIONS", {
             fontSize: "32px",
             fontFamily: "Georgia",
             color: "#ffcc00"
         }).setOrigin(0.5);
 
         // Volume controls
-        const volumeIcon = this.add.image(width/2 - 175, height/2 - 120, "audio-icon")
+        const volumeIcon = this.add.image(width/2 - 175, height/2 - 70, "audio-icon")
             .setScale(2);
 
-        this.createVolumeSlider(width/2, height/2 - 120, volumeIcon);
+        this.createVolumeSlider(width/2, height/2 - 70, volumeIcon);
 
-        const closeBtn = this.add.text(width/2, height/2 + panelHeight/2 - 40, "BACK", {
-            fontSize: "18px",
-            fontFamily: "Georgia",
+        //Back Button
+        const backButtonBg = this.add.rectangle(width/2, panelHeight, 220, 60, 0x222222)
+        .setStrokeStyle(3, 0xffcc00)
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true})
+
+        backButtonBg.on("pointerdown", () => this.close())
+
+        this.add.text(width/2, panelHeight, "BACK", {
+            fontSize: "24px",
+            fontFamily: "Georgia, serif",
             color: "#ffffff",
-            backgroundColor: "#333333",
-            padding: { x: 10, y: 6 }
         })
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true });
-
-        closeBtn.on("pointerup", () => this.close());
 
         if (this.fromGame) {
             this.displaySkillSummary();

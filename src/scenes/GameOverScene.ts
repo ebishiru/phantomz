@@ -19,11 +19,11 @@ export default class GameOverScene extends Phaser.Scene {
         // Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 
-        this.createGameOverText(centerX, centerY - 100);
-        this.createScore(centerX, centerY - 40, data.score);
-        this.createHiScore(centerX, centerY, data.score);
-        this.createBossKillInfo(centerX, centerY + 50, data.bossesKilled, data.bossKills);
-        this.createButtons(centerX, centerY + 220);
+        this.createGameOverText(centerX, centerY - 150);
+        this.createScore(centerX, centerY - 80, data.score);
+        this.createHiScore(centerX, centerY - 40, data.score);
+        this.createBossKillInfo(centerX, centerY, data.bossesKilled, data.bossKills);
+        this.createButtons(centerX, centerY + 170);
         this.createKeyboardShortcuts();
 
         //Update Save Data
@@ -70,7 +70,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.add.text(x, y, `Bosses Defeated: ${bossesKilled}`, {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
-            color: "#ffcc00",
+            color: "#ffffff",
         }).setOrigin(0.5)
 
         let startY = y + 40
@@ -101,7 +101,7 @@ export default class GameOverScene extends Phaser.Scene {
             .setOrigin(0.5)
 
             this.add.text(iconX, iconY + 20, `x${count}`, {
-                fontSize: "12px",
+                fontSize: "16px",
                 fontFamily: `Georgia, serif`,
                 color: "#ffffff"
             }).setOrigin(0.5) 
