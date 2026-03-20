@@ -27,10 +27,11 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         this.speed = config.speed
         this.hurtRadius = config.hurtRadius
 
-        this.bossName = this.scene.add.text(150, 10, config.name, {
-            font: "16px Roboto",
+        this.bossName = this.scene.add.text(50, 17, `${config.name}:`, {
+            fontSize: "16px",
+            fontFamily: "Georgia, serif",
             color: "#ffffff",
-        })
+        }).setOrigin(0.5)
 
         this.hurtBoxGraphics = scene.add.graphics()
     }

@@ -13,6 +13,7 @@ export default class UISystem {
 
     healthBar: HealthBar
     expBar: ExpBar
+    playerName: Phaser.GameObjects.Text
     levelText: Phaser.GameObjects.Text
 
     skillCooldownUIs: SkillCooldown[] = []
@@ -23,13 +24,20 @@ export default class UISystem {
         this.player = player
         this.skillSystem = skillSystem
 
-        this.healthBar = new HealthBar(scene, 300, 650, 200, 20, player, 0x006400)
-        this.expBar = new ExpBar(scene, 0, 685, 800, 15, player)
+        this.healthBar = new HealthBar(scene, 155, 40, 300, 15, player, 0x006400)
+        this.expBar = new ExpBar(scene, 0, 535, 960, 5, player)
 
-        this.levelText = scene.add.text(400, 630, `Level ${player.level}`, {
-            fontSize: "12px",
-            fontFamily: "Georgia",
-            color: "#ffffff"
+        this.playerName = scene.add.text(50, 47, `The Phantom:`, {
+            fontSize: "16px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff",
+        }).setOrigin(0.5)
+
+        this.levelText = scene.add.text(480, 500, `LEVEL\n${player.level}`, {
+            fontSize: "16px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff",
+            align: "center",
         }).setOrigin(0.5)
 
         this.createSkillUI()
@@ -40,8 +48,8 @@ export default class UISystem {
         this.skillCooldownUIs = []
 
         this.skillSystem.skills.forEach((skill, index) => {
-            const x = 550 + (index * 62)
-            const y = 675
+            const x = 560 + (index * 70)
+            const y = 530
 
             this.skillCooldownUIs.push(
                 new SkillCooldown(this.scene, skill, x, y, skill.iconKey)
@@ -53,9 +61,9 @@ export default class UISystem {
         this.passiveUIs.forEach(ui => ui.destroy())
         this.passiveUIs = []
 
-        const fixedStartX = 300
-        const spacing = 62
-        const y = 675
+        const fixedStartX = 400
+        const spacing = 70
+        const y = 530
 
         this.skillSystem.passives.forEach((passive, index) => {
             const x = fixedStartX - index * spacing
@@ -69,7 +77,7 @@ export default class UISystem {
     update() {
         this.healthBar.draw()
         this.expBar.draw()
-        this.levelText.setText(`Level ${this.player.level}`)
+        this.levelText.setText(`LEVEL\n${this.player.level}`)
 
         this.skillCooldownUIs.forEach(ui => ui.update())
         this.passiveUIs.forEach(ui => ui.update())

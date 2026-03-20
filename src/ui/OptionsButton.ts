@@ -3,12 +3,12 @@ import Phaser from "phaser";
 export function OptionsButton (scene: Phaser.Scene) {
 
     const button = scene.add.image(
-        40,
-        40,
+        930,
+        30,
         "settings-icon"
     )
     .setOrigin(0.5)
-    .setScale(2)
+    .setScale(2.5)
     .setInteractive({ useHandCursor: true})
     
     button.on("pointerup", () => {

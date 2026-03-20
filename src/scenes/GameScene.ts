@@ -32,14 +32,21 @@ export default class GameScene extends Phaser.Scene {
         const character = data?.characterKey || "player1";
         const startingSkill = data?.startingSkill || "slash";
 
+        const width = this.scale.width;
+        const height = this.scale.height;
+        const centerX = width/2;
+        const centerY = height/2;
+        const worldWidth = 650;
+        const worldHeight = 400;
+
         // Fade In
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
         // World Bounds
-        this.physics.world.setBounds(50, 100, 700, 500);
+        this.physics.world.setBounds(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight);
 
         // Ground Texture
-        const floor = this.add.tileSprite(50, 100, 700, 500, "dirt-texture").setOrigin(0);
+        const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, "dirt-texture").setOrigin(0);
         floor.setTint(0xb0a080);
         floor.setAlpha(0.9);
 
@@ -62,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // Player
-        this.player = new Player(this, 400, 550, character);
+        this.player = new Player(this, centerX, centerY + 100, character);
 
         // Systems
         this.inputSystem = new InputSystem(this, this.player);

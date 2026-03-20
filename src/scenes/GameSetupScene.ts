@@ -26,22 +26,22 @@ export default class GameSetupScene extends Phaser.Scene {
         
         const { width } = this.scale
 
-        this.add.text(width/2, 100, "Game Setup", {
+        this.add.text(width/2, 50, "Game Setup", {
             fontSize: "40px",
             fontFamily: "Georgia, serif",
             color: "#ffcc00"
         }).setOrigin(0.5)
 
-        this.add.text(width/2, 180, "Select your Character and Starting Skill", {
+        this.add.text(width/2, 130, "Select your Character and Starting Skill", {
             fontSize: "24px",
             fontFamily: "Georgia, serif",
             color: "#ffffff"
         }).setOrigin(0.5)
 
         //Character selection
-        const startCharX = 250
+        const startCharX = 330
         const charSpacing = 150
-        const charY = 280
+        const charY = 230
 
         const sprites: Phaser.GameObjects.Sprite[] = []
 
@@ -69,9 +69,9 @@ export default class GameSetupScene extends Phaser.Scene {
         .setDepth(10)
 
         //Starting Skill Selection
-        const startSkillX = 250
+        const startSkillX = 330
         const skillSpacing = 150
-        const skillY = 385
+        const skillY = 335
 
         const skillIcons: Phaser.GameObjects.Image[] = []
 
@@ -99,11 +99,11 @@ export default class GameSetupScene extends Phaser.Scene {
         .setDepth(10)
 
         //Start Game Button
-        const startBg = this.add.rectangle(width/2, 520, 260, 70, 0x222222)
+        const startBg = this.add.rectangle(width * 2/3, 490, 260, 70, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setInteractive({ useHandCursor: true})
 
-        this.add.text(width/2,520,"START GAME",{
+        this.add.text(width * 2/3, 490, "START GAME",{
             fontSize:"24px",
             fontFamily:"Georgia, serif",
             color:"#ffffff"
@@ -117,11 +117,11 @@ export default class GameSetupScene extends Phaser.Scene {
         })
 
         // BACK BUTTON
-        const backBg = this.add.rectangle(width/2, 600, 260, 70, 0x222222)
+        const backBg = this.add.rectangle(width / 3, 490, 260, 70, 0x222222)
         .setStrokeStyle(3,0xffcc00)
         .setInteractive({useHandCursor:true})
 
-        this.add.text(width/2,600,"BACK",{
+        this.add.text(width/3, 490, "BACK",{
             fontSize:"24px",
             fontFamily:"Georgia, serif",
             color:"#ffffff"

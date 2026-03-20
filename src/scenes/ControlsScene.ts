@@ -7,39 +7,39 @@ export default class ControlScene extends Phaser.Scene {
     }
 
     create() {
+        const width = this.scale.width;
+        const centerX = width/2;
+
         //Options Button
         OptionsButton(this)
 
         //Controls Title
-        this.add.text(400, 100, "Controls", {
+        this.add.text(centerX, 50, "Controls", {
             fontSize: "32px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
         }).setOrigin(0.5)
 
         //Controls Text
-        this.add.text(400, 210,
+        this.add.text(centerX, 100,
             "Movement: Arrow Keys / WASD / Joystick\n" +
-            "Skill 1: [ 1 ] / [ U ] / Green \n" +
-            "Skill 2: [ 2 ] / [ I ] / Blue \n" +
-            "Skill 3: [ 3 ] / [ O ] / Red \n" +
-            "Skill 4: [ 4 ] / [ P ] / Yellow \n",
+            "Skills: 1 / 2 / 3 / 4 or UIOP or Buttons\n",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",
                 color: "#FFFFFF",
             }
-        ).setOrigin(0.5)
+        ).setOrigin(0.5, 0)
 
         //How to Play Title
-        this.add.text(400, 340, "How to Play", {
+        this.add.text(centerX, 200, "How to Play", {
             fontSize: "32px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
-        }).setOrigin(0.5)
+        }).setOrigin(0.5, 0)
 
         //How to play text
-        this.add.text(400, 440,
+        this.add.text(centerX, 250,
             "Kill enemies to level up skills. \n" +
             "Grey circle around boss is its hurtbox. \n" +
             "New bosses are added every minute. \n" +
@@ -51,16 +51,16 @@ export default class ControlScene extends Phaser.Scene {
                 color: "#FFFFFF",
                 align: "center",
             }
-        ).setOrigin(0.5)
+        ).setOrigin(0.5, 0)
 
-        const backButtonBg = this.add.rectangle(400, 600, 220, 60, 0x222222)
+        const backButtonBg = this.add.rectangle(centerX, 475, 220, 60, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
         backButtonBg.on("pointerdown", () => this.scene.start("mainmenu"))
 
-        this.add.text(400, 600, "HOME", {
+        this.add.text(centerX, 475, "HOME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",

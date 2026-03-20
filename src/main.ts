@@ -13,8 +13,8 @@ import GameSetupScene from "./scenes/GameSetupScene"
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 800,        // internal game width
-  height: 700,       // internal game height, landscape aspect
+  width: 960,        // internal game width
+  height: 540,       // internal game height, landscape aspect
   scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,

@@ -54,7 +54,7 @@ export default class BossManager {
     }
 
     createTimerText() {
-        this.globalTimerText = this.scene.add.text(700, 10, "Time: 00:00", { 
+        this.globalTimerText = this.scene.add.text(850, 70, "Time: 00:00", { 
             fontSize: "16px", 
             fontFamily: `"Old English Text MT", Georgia, serif`, 
             color: "#ffffff" 
@@ -119,7 +119,7 @@ export default class BossManager {
     }
 
     createBossKillText() {
-        this.bossKillText = this.scene.add.text(700, 30, "Bosses: 0", {
+        this.bossKillText = this.scene.add.text(850, 100, "Bosses: 0", {
             fontSize: "16px",
             fontFamily: `"Old English Text MT", Georgia, serif`, 
             color: "#ffffff" 
@@ -163,7 +163,7 @@ export default class BossManager {
         }
     }
 
-    spawnBoss(x = 400, y = 350, respawnDelay = 2000) {
+    spawnBoss(x = 480, y = 220, respawnDelay = 2000) {
         // If a boss exists, destroy it first
         if (this.boss) {
             const bossX = this.boss.x;
@@ -260,7 +260,7 @@ export default class BossManager {
         // Boss Health & Health bar
         this.boss.maxHealth = this.nextBossMaxHealth
         this.boss.health = this.nextBossMaxHealth
-        this.bossHealthBar = new HealthBar(this.scene, 150, 30, 500, 20, this.boss, 0xff0000)
+        this.bossHealthBar = new HealthBar(this.scene, 155, 10, 300, 15, this.boss, 0xff0000)
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({
@@ -320,14 +320,14 @@ export default class BossManager {
             this.mechanicNameText.destroy()
         }
 
-        const x = this.bossHealthBar.x + this.bossHealthBar.width / 2
-        const y = this.bossHealthBar.y + this.bossHealthBar.height + 12
+        const x = 680
+        const y = 35
 
         this.mechanicNameText = this.scene.add.text( x, y, mechanic.config.name, {
-            fontSize: "20px",
+            fontSize: "32px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
-        }).setOrigin(0.5, 0)
+        }).setOrigin(0.5)
         .setAlpha(0)
 
         const duration = (mechanic.config.castTime || 0) + 1000
