@@ -9,6 +9,27 @@ export default class CreditsScene extends Phaser.Scene {
         const width = this.scale.width;
         const centerX = width/2;
 
+        this.add.text(centerX, 50, "Credits", {
+            fontSize: "32px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: "#ffcc00",
+        }).setOrigin(0.5)
+
+        this.add.text(centerX, 150,
+            "Game Design and Programming: \n" +
+            "Kevin Lo\n\n" +
+            "Art: \n" +
+            "Kevin Lo\n\n" +
+            "Music: \n" +
+            "xDeviruchi\n\n",
+            {
+                fontSize: "24px",
+                fontFamily: "Georgia, serif",
+                color: "#FFFFFF",
+                align: "center",
+            }
+        ).setOrigin(0.5, 0)
+
         //Back button
         const backButtonBg = this.add.rectangle(centerX, 475, 220, 60, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
