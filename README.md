@@ -63,10 +63,10 @@ To ADD:
 - Blood: AOE around player, Use HP to deal dmg
 [Total: 15000pts]
 
-- Jab: Starts at 1 dmg, increases with each hit.
+- Yo-yo: Starts at 1 dmg, increases with each hit.
 [Total: 9000pts]
 
-- Lob: Ranged, throw bowling ball set distance. Must be picked up to reset cd. 
+- Javelin: Ranged, throw javelin set distance. Must be picked up to reset cd. 
 [Highscore: 2500pts]
 
 - Restoration: Instantly heal player, long cd
