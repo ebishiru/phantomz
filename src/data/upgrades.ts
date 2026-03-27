@@ -125,4 +125,11 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffCooldown(300)
         }
     ],
+
+    javelin: [
+        {
+            desc: "Damage +5",
+            apply: (skill: Skill) => skill.buffDamage(5)
+        }
+    ]
 }

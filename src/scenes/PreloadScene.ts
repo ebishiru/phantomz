@@ -62,6 +62,7 @@ export default class PreloadScene extends Phaser.Scene {
             "volt",
             "restoration",
             "ward",
+            "javelin",
         ]
 
         skillKeys.forEach(key => {
@@ -72,7 +73,7 @@ export default class PreloadScene extends Phaser.Scene {
         //Extra skill assets
         this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
         this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
-        this.load.image("ward-vfx", "assets/ward-vfx.png")              //WARD HERO OVERLAY
+        // this.load.image("ward-vfx", "assets/ward-vfx.png")              //WARD HERO OVERLAY
         this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
     }
 

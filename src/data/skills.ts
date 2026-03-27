@@ -78,4 +78,11 @@ export const skills = [
         desc: "Create a temporary shield that blocks all damage",
         upgrades: upgrades.ward
     },
+    {
+        key: "javelin",
+        name: "Javelin",
+        iconKey: "javelin-icon",
+        desc: "Throw a javelin that can be picked up again",
+        upgrades: upgrades.javelin
+    }
 ]
