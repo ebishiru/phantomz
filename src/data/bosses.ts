@@ -77,7 +77,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Black Knight",
+        name: "Dark Knight",
         spriteKey: "boss5",
         speed: 60,
         hurtRadius: 80,
@@ -132,7 +132,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Phantom Knight",
+        name: "Pure Knight",
         spriteKey: "boss10",
         speed: 80,
         hurtRadius: 75,
