@@ -19,6 +19,7 @@ export default class PreloadScene extends Phaser.Scene {
     preloadMusic() {
         this.load.audio("titleMusic", "assets/title-music.mp3")
         this.load.audio("caveMusic", "assets/cave-music.mp3")
+        this.load.audio("snowMusic", "assets/snow-music.mp3")
         this.load.audio("gameOverMusic", "assets/game-over-music.mp3")
         this.load.image("audio-icon", "assets/audio-icon.png")
         this.load.image("mute-icon", "assets/mute-icon.png")
@@ -41,7 +42,7 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     loadBosses() {
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 20; i++) {
             this.load.spritesheet(`boss${i}`, `assets/boss${i}.png`, {
                 frameWidth: 16,
                 frameHeight: 16
@@ -102,7 +103,8 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     loadEnvironment() {
-        this.load.image("dirt-texture", "assets/dirt-texture.png")
+        this.load.image("cave-texture", "assets/cave-texture.png")
+        this.load.image("snow-texture", "assets/snow-texture.png")
     }
 
     create() {

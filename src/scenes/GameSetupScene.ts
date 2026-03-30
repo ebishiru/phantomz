@@ -6,11 +6,12 @@ export default class GameSetupScene extends Phaser.Scene {
     skills = [
         { key: "slash", icon: "slash-icon"},
         { key: "arrow", icon: "arrow-icon"},
-        { key: "", icon: "javelin-icon"}
+        { key: "javelin", icon: "javelin-icon"}
     ]
 
     selectedCharacter: string = "player1"
     selectedSkillKey: string = "slash"
+    selectedLevel!: string
 
     charOutline!: Phaser.GameObjects.Rectangle
     skillOutline!: Phaser.GameObjects.Rectangle
@@ -19,7 +20,10 @@ export default class GameSetupScene extends Phaser.Scene {
         super("gamesetup")
     }
 
-    create() {
+    create(data: { level: string}) {
+
+        // Pass level info
+        this.selectedLevel = data.level
 
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);
@@ -112,7 +116,8 @@ export default class GameSetupScene extends Phaser.Scene {
         startBg.on("pointerdown",()=>{
             this.scene.start("game",{
                 characterKey:this.selectedCharacter,
-                startingSkill:this.selectedSkillKey
+                startingSkill:this.selectedSkillKey,
+                level:this.selectedLevel,
             })
         })
 
@@ -128,7 +133,7 @@ export default class GameSetupScene extends Phaser.Scene {
         }).setOrigin(0.5)
 
         backBg.on("pointerdown",()=>{
-            this.scene.start("mainmenu")
+            this.scene.start("levelselect")
         })
     }
 

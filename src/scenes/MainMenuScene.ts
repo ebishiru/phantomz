@@ -43,7 +43,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
         //Main Menu buttons
         const options = [
-            { text: "PLAY", scene: "gamesetup"},
+            { text: "PLAY", scene: "levelselect"},
             { text: "CONTROLS", scene: "controls"},
             { text: "UNLOCKABLES", scene: "unlocks"},
             { text: "CREDITS", scene: "credits"},    

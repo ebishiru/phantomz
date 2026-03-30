@@ -1,32 +1,34 @@
-import CircleTelegraphOnBoss from "../mechanics/CircleTelegraphOnBoss";
-import CircleTelegraphOnPlayer from "../mechanics/CircleTelegraphOnPlayer";
-import LineTelegraphFromBoss from "../mechanics/LineTelegraphFromBoss";
-import CirclesAroundBoss from "../mechanics/CirclesAroundBoss";
-import ConeFromBoss from "../mechanics/ConeFromBoss";
-import TeleportConeFromBoss from "../mechanics/TeleportConeFromBoss";
-import ExpandDonutFromBoss from "../mechanics/ExpandDonutFromBoss";
-import ShrinkDonutFromBoss from "../mechanics/ShrinkDonutFromBoss";
-import TripleRectangleOnPlayer from "../mechanics/TripleRectangleOnPlayer";
-import CardinalRoomSwipe from "../mechanics/CardinalRoomSwipe";
-import TeleportConeAtPlayer from "../mechanics/TeleportConeAtPlayer";
-import RandomCirclesAround from "../mechanics/RandomCirclesAround";
-import HalfCircleFromBoss from "../mechanics/HalfCircleFromBoss";
-import TeleportCircleAndBack from "../mechanics/TeleportCircleAndBack";
-import DoubleDonutFromBoss from "../mechanics/DoubleDonutFromBoss";
-import PersisLineTelegraphFromBoss from "../mechanics/PersistLineTelegraphFromBoss";
-import CirclesSequenceAroundBoss from "../mechanics/CirclesSequenceAroundBoss";
-import ConeFrontBackFromBoss from "../mechanics/ConeFrontBackFromBoss";
-import TeleportConeBiggerFromBoss from "../mechanics/TeleportConeBiggerFromBoss";
-import TeleportClockwiseCones from "../mechanics/TeleportClockwiseCones";
-import SuckExpandDonutFromBoss from "../mechanics/SuckExpandDonutFromBoss";
-import SuckShrinkDonutFromBoss from "../mechanics/SuckShrinkDonutFromBoss";
-import TeleportTripleRectangleOnPlayer from "../mechanics/TeleportTripleRectangleOnPlayer";
-import DoubleCardinalRoomSwipe from "../mechanics/DoubleCardinalRoomSwipe";
-import PersistCircleTelegraph from "../mechanics/PersistCircleTelegraph";
-import CheckboardTelegraph from "../mechanics/CheckboardTelegraph";
-import MoreRandomCirclesAround from "../mechanics/MoreRandomCirclesAround";
-import DoubleHalfCircleFromBoss from "../mechanics/DoubleHalfCircleFromBoss";
-import TeleportCircleDonutAndBack from "../mechanics/TeleportCircleDonutAndBack";
+import Boss1MechA from "../mechanics/Boss1MechA";
+import Boss1MechB from "../mechanics/Boss1MechB";
+import Boss1MechC from "../mechanics/Boss1MechC";
+import Boss1MechD from "../mechanics/Boss1MechD";
+import Boss2MechA from "../mechanics/Boss2MechA";
+import Boss2MechB from "../mechanics/Boss2MechB";
+import Boss2MechC from "../mechanics/Boss2MechC";
+import Boss2MechD from "../mechanics/Boss2MechD";
+import Boss3MechA from "../mechanics/Boss3MechA";
+import Boss3MechB from "../mechanics/Boss3MechB";
+import Boss3MechC from "../mechanics/Boss3MechC";
+import Boss4MechA from "../mechanics/Boss4MechA";
+import Boss4MechB from "../mechanics/Boss4MechB";
+import Boss5MechA from "../mechanics/Boss5MechA";
+import Boss5MechB from "../mechanics/Boss5MechB";
+import Boss5MechC from "../mechanics/Boss5MechC";
+import Boss6MechA from "../mechanics/Boss6MechA";
+import Boss6MechB from "../mechanics/Boss6MechB";
+import Boss6MechC from "../mechanics/Boss6MechC";
+import Boss7MechA from "../mechanics/Boss7MechA";
+import Boss7MechB from "../mechanics/Boss7MechB";
+import Boss7MechC from "../mechanics/Boss7MechC";
+import Boss8MechA from "../mechanics/Boss8MechA";
+import Boss8MechB from "../mechanics/Boss8MechB";
+import Boss8MechC from "../mechanics/Boss8MechC";
+import Boss9MechA from "../mechanics/Boss9MechA";
+import Boss9MechB from "../mechanics/Boss9MechB";
+import Boss9MechC from "../mechanics/Boss9MechC";
+import Boss10MechA from "../mechanics/Boss10MechA";
+import Boss10MechB from "../mechanics/Boss10MechB";
+import Boss10MechC from "../mechanics/Boss10MechC";
 
 export const Bosses = [
     {
@@ -35,10 +37,10 @@ export const Bosses = [
         speed: 25,
         hurtRadius: 80,
         mechanics: [
-            CircleTelegraphOnBoss,
-            CircleTelegraphOnPlayer,
-            LineTelegraphFromBoss,
-            CirclesAroundBoss,
+            Boss1MechA,
+            Boss1MechB,
+            Boss1MechC,
+            Boss1MechD,
         ]
     },
     {
@@ -47,10 +49,10 @@ export const Bosses = [
         speed: 120,
         hurtRadius: 70,
         mechanics: [
-            ConeFromBoss,
-            CircleTelegraphOnPlayer,
-            CirclesAroundBoss,
-            TeleportConeFromBoss,
+            Boss2MechA,
+            Boss2MechB,
+            Boss2MechD,
+            Boss2MechC,
         ]
     },
     {
@@ -59,9 +61,9 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            ExpandDonutFromBoss,
-            ShrinkDonutFromBoss,
-            TripleRectangleOnPlayer
+            Boss3MechA,
+            Boss3MechB,
+            Boss3MechC
         ]
     },
     {
@@ -70,8 +72,8 @@ export const Bosses = [
         speed: 80,
         hurtRadius: 65,
         mechanics: [
-            CardinalRoomSwipe,
-            TeleportConeAtPlayer
+            Boss4MechA,
+            Boss4MechB
         ]
     },
     {
@@ -80,9 +82,9 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            RandomCirclesAround,
-            HalfCircleFromBoss,
-            TeleportCircleAndBack
+            Boss5MechA,
+            Boss5MechB,
+            Boss5MechC
         ]
     },
     {
@@ -91,9 +93,9 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 75,
         mechanics: [
-            DoubleDonutFromBoss,
-            PersisLineTelegraphFromBoss,
-            CirclesSequenceAroundBoss
+            Boss6MechA,
+            Boss6MechB,
+            Boss6MechC
         ]
     },
     {
@@ -102,9 +104,9 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 70,
         mechanics: [
-            ConeFrontBackFromBoss,
-            TeleportConeBiggerFromBoss,
-            TeleportClockwiseCones
+            Boss7MechA,
+            Boss7MechB,
+            Boss7MechC
         ]
     },
     {
@@ -113,9 +115,9 @@ export const Bosses = [
         speed: 60,
         hurtRadius: 80,
         mechanics: [
-            SuckExpandDonutFromBoss,
-            SuckShrinkDonutFromBoss,
-            TeleportTripleRectangleOnPlayer
+            Boss8MechA,
+            Boss8MechB,
+            Boss8MechC
         ]
     },
     {
@@ -124,9 +126,9 @@ export const Bosses = [
         speed: 80,
         hurtRadius: 60,
         mechanics: [
-            DoubleCardinalRoomSwipe,
-            PersistCircleTelegraph,
-            CheckboardTelegraph
+            Boss9MechA,
+            Boss9MechB,
+            Boss9MechC
         ]
     },
     {
@@ -135,9 +137,9 @@ export const Bosses = [
         speed: 80,
         hurtRadius: 75,
         mechanics: [
-            MoreRandomCirclesAround,
-            DoubleHalfCircleFromBoss,
-            TeleportCircleDonutAndBack
+            Boss10MechA,
+            Boss10MechB,
+            Boss10MechC
         ]
     },
 ]

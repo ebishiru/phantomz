@@ -41,9 +41,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
 
         this.hurtBoxGraphics.clear()
 
-        this.hurtBoxGraphics.fillStyle(0xAAAAAAa, 0.2)
-        this.hurtBoxGraphics.fillCircle(this.x, this.y, this.hurtRadius)
-        this.hurtBoxGraphics.lineStyle(2, 0xAAAAAA, 0.4)
+        this.hurtBoxGraphics.lineStyle(2, 0xffcc00, 0.5)
         this.hurtBoxGraphics.strokeCircle(this.x, this.y, this.hurtRadius)
     }
 

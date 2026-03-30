@@ -122,6 +122,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         const gameScene = this.scene.scene.get("game") as any
         const bossManager = gameScene.bossManager
+        const level = gameScene.level || "cave-texture"
 
         const score = bossManager.globalTimerSeconds + bossManager.bossesKilled * 60
 
@@ -129,7 +130,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.scene.launch("game-over", { 
             score,
             bossesKilled: bossManager.bossesKilled,
-            bossKills: bossManager.bossKillsThisRun 
+            bossKills: bossManager.bossKillsThisRun,
+            level
         })
     }
 }

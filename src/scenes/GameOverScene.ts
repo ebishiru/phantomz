@@ -9,7 +9,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.saveManager = new SaveManager();
     }
 
-    create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number } }) {
+    create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string }) {
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
 
@@ -21,13 +21,13 @@ export default class GameOverScene extends Phaser.Scene {
 
         this.createGameOverText(centerX, centerY - 150);
         this.createScore(centerX, centerY - 80, data.score);
-        this.createHiScore(centerX, centerY - 40, data.score);
+        this.createHiScore(centerX, centerY - 40, data.score, data.level);
         this.createBossKillInfo(centerX, centerY, data.bossesKilled, data.bossKills);
         this.createButtons(centerX, centerY + 170);
         this.createKeyboardShortcuts();
 
         //Update Save Data
-        this.saveManager.updateScore(data.score)
+        this.saveManager.updateScore(data.score, data.level)
         for (const bossKey in data.bossKills) {
             const count = data.bossKills[bossKey]
             this.saveManager.addBossKill(bossKey, count)
@@ -51,8 +51,8 @@ export default class GameOverScene extends Phaser.Scene {
         }).setOrigin(0.5)
     }
 
-    createHiScore(x: number, y:number, score: number) {
-        const currentHiScore = this.saveManager.getHiScore();
+    createHiScore(x: number, y:number, score: number, level?: string) {
+        const currentHiScore = this.saveManager.getHiScore(level);
         let highscoreText = `Hi-Score: ${currentHiScore}`
         if (score > currentHiScore) {
             highscoreText = `Hi-Score: ${score} NEW BEST!!`

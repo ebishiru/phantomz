@@ -28,9 +28,10 @@ export default class GameScene extends Phaser.Scene {
         super("game")
     }
 
-    create(data: { characterKey?: string, startingSkill?: string }) {
+    create(data: { characterKey?: string, startingSkill?: string, level?: string }) {
         const character = data?.characterKey || "player1";
         const startingSkill = data?.startingSkill || "slash";
+        const level = data?.level || "cave-texture";
 
         const width = this.scale.width;
         const height = this.scale.height;
@@ -46,12 +47,24 @@ export default class GameScene extends Phaser.Scene {
         this.physics.world.setBounds(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight);
 
         // Ground Texture
-        const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, "dirt-texture").setOrigin(0);
-        floor.setTint(0xb0a080);
-        floor.setAlpha(0.9);
+        const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, level).setOrigin(0);
+        if (level === "cave-texture") {
+            floor.setTint(0xb0a080);
+            floor.setAlpha(0.9);
+        }
+        if (level === "snow-texture") {
+            floor.setTint(0xffffff);
+            floor.setAlpha(0.7);
+        }
 
         // Play music
-        playMusic(this, "caveMusic");
+        const musicMap: Record<string, string> = {
+            "cave-texture": "caveMusic",
+            "snow-texture": "snowMusic"
+        };
+
+        const musicKey = musicMap[level] || "caveMusic";
+        playMusic(this, musicKey);
 
         // Options Button
         setupEscapeMenu(this);

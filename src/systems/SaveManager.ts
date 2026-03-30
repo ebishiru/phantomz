@@ -5,6 +5,8 @@ export default class SaveManager {
     data: {
         caveHighscore: number,
         caveTotalScore: number,
+        snowHighscore: number,
+        snowTotalScore: number,
         bossKills: { [key: string]: number },
         unlockedSkills: string[]
     }
@@ -20,6 +22,8 @@ export default class SaveManager {
             return {
                 caveHighscore: 0,
                 caveTotalScore: 0,
+                snowHighscore: 0,
+                snowTotalScore: 0,
                 bossKills: {},
                 unlockedSkills: []
             }
@@ -34,22 +38,35 @@ export default class SaveManager {
 
     //SCORE MANAGEMENT:
 
-    getHiScore(): number {
+    getHiScore(level?: string): number {
+        if (level === "snow-texture") {
+            return Number(this.data.snowHighscore || 0)
+        }
         return Number(this.data.caveHighscore || 0)
     }
 
-    getTotalScore(): number {
+    getTotalScore(level?: string): number {
+        if (level === "snow-texture") {
+            return Number(this.data.snowTotalScore || 0)
+        }
         return Number(this.data.caveTotalScore || 0)
     }
 
-    updateScore(score: number) {
-
-        const currentHiScore = this.getHiScore()
+    updateScore(score: number, level?: string) {
+        const currentHiScore = this.getHiScore(level)
         if (score > currentHiScore) {
-            this.data.caveHighscore = score
+            if (level === "snow-texture") {
+                this.data.snowHighscore = score
+            } else {
+                this.data.caveHighscore = score
+            }
         }
 
-        this.data.caveTotalScore += score
+        if (level === "snow-texture") {
+            this.data.snowTotalScore += score
+        } else {
+            this.data.caveTotalScore += score
+        }
 
         this.save()
     }

@@ -1,0 +1,44 @@
+import BossMechanic from "./BossMechanic";
+import CircleTelegraph from "../entities/CircleTelegraph";
+
+export default class Boss1MechB extends BossMechanic {
+
+    config = {
+        id: "circle-player",
+        name: "Stalactite Drop",
+        castTime: 1000,
+        castDuration: 1000,
+        cooldown: 2000,
+        showCastBar: false,
+        damage: 20,
+        range: 85,
+        width: 0,
+    }
+
+    onCastStart() {
+        //Draw telegraph
+        this.telegraph = new CircleTelegraph(
+            this.scene,
+            this.player.x,
+            this.player.y,
+            this.config.range,
+        )
+    }
+
+    execute() {
+        //Check hit
+        const hit = Phaser.Math.Distance.Between(
+            this.player.x,
+            this.player.y,
+            this.telegraph.x,
+            this.telegraph.y,
+        ) <= (this.config.range + this.player.hurtboxRadius)
+
+        if (hit) {
+            this.player.takeDamage(this.config.damage)
+        }
+
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+    }
+}
