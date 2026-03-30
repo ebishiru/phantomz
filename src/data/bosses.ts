@@ -29,18 +29,20 @@ import Boss9MechC from "../mechanics/Boss9MechC";
 import Boss10MechA from "../mechanics/Boss10MechA";
 import Boss10MechB from "../mechanics/Boss10MechB";
 import Boss10MechC from "../mechanics/Boss10MechC";
+import Boss11MechA from "../mechanics/Boss11MechA";
 
 export const Bosses = [
     {
         name: "Wyrm",
-        spriteKey: "boss1",
+        spriteKey: "boss11",
         speed: 25,
         hurtRadius: 80,
         mechanics: [
-            Boss1MechA,
-            Boss1MechB,
-            Boss1MechC,
-            Boss1MechD,
+            // Boss1MechA,
+            // Boss1MechB,
+            // Boss1MechC,
+            // Boss1MechD,
+            Boss11MechA
         ]
     },
     {
@@ -142,4 +144,11 @@ export const Bosses = [
             Boss10MechC
         ]
     },
+    // {
+    //     name: "Dire Wolf",
+    //     spriteKey: "boss11",
+    //     speed: 70,
+    //     hurtRadius: 60,
+    //     mechanics: []
+    // },
 ]
