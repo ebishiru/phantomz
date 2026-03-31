@@ -6,16 +6,17 @@ export default class LevelSelect extends Phaser.Scene {
     levels = ["cave-texture", "snow-texture"]
 
     selectedLevel: string = "cave-texture"
-    saveManager: SaveManager
+    saveManager!: SaveManager
 
     levelOutline!: Phaser.GameObjects.Rectangle
 
     constructor() {
         super("levelselect")
-        this.saveManager = new SaveManager()
     }
 
     create() {
+        // Reload SaveManager from localStorage every time we enter this scene
+        this.saveManager = new SaveManager()
 
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);

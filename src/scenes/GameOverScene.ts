@@ -3,13 +3,15 @@ import { playMusic } from "../systems/MusicSystem";
 import SaveManager from "../systems/SaveManager";
 
 export default class GameOverScene extends Phaser.Scene {
-    saveManager: SaveManager;
+    saveManager!: SaveManager;
     constructor() {
         super("game-over")
-        this.saveManager = new SaveManager();
     }
 
     create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string }) {
+        // Create SaveManager in create to ensure fresh data
+        this.saveManager = new SaveManager();
+        
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
 
