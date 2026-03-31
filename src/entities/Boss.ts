@@ -85,6 +85,16 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
+    heal(amount: number) {
+        this.health = Math.min(this.health + amount, this.maxHealth)
+
+        this.setTint(0x00ff00)
+
+        this.scene.time.delayedCall(300, () => {
+            this.clearTint()
+        })
+    }
+
     destroyBoss() {
         if (this.hurtBoxGraphics) {
             this.hurtBoxGraphics.destroy()

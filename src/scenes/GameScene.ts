@@ -54,7 +54,7 @@ export default class GameScene extends Phaser.Scene {
             floor.setAlpha(0.9);
         }
         if (this.level === "snow-texture") {
-            floor.setTint(0xffffff);
+            floor.setTint(0x8a9aa8);
             floor.setAlpha(0.7);
         }
 
