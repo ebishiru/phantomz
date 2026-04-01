@@ -79,10 +79,10 @@ export default class LevellingScene extends Phaser.Scene {
 
             // Determine border color based on option type
             let strokeColor = 0x372e4d // default
-            if (option.type === "newSkill") strokeColor = 0xb56d7f
-            else if (option.type === "skillUpgrade") strokeColor = 0xf0b38d
-            else if (option.type === "newPassive") strokeColor = 0xa4ebcc
-            else if (option.type === "passiveUpgrade") strokeColor = 0x65aed6
+            if (option.type === "newSkill") strokeColor = 0xffcc00
+            else if (option.type === "skillUpgrade") strokeColor = 0xffffff
+            else if (option.type === "newPassive") strokeColor = 0xffcc00
+            else if (option.type === "passiveUpgrade") strokeColor = 0xffffff
 
             const buttonBG = this.add.rectangle(0, 0, buttonWidth, buttonHeight, 0x222222)
                 .setStrokeStyle(3, strokeColor)

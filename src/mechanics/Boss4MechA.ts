@@ -6,7 +6,7 @@ export default class Boss4MechA extends BossMechanic {
 
     config = {
         id: "cardinal-rectangle-room",
-        name: "",
+        name: "Infestation",
         castTime: 2000,
         castDuration: 2000,
         cooldown: 3000,

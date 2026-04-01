@@ -35,18 +35,20 @@ import Boss11MechC from "../mechanics/Boss11MechC";
 import Boss12MechA from "../mechanics/Boss12MechA";
 import Boss12MechB from "../mechanics/Boss12MechB";
 import Boss12MechC from "../mechanics/Boss12MechC";
+import Boss13MechA from "../mechanics/Boss13MechA";
 
 export const Bosses = [
     {
         name: "Wyrm",
-        spriteKey: "boss1",
+        spriteKey: "boss13",
         speed: 25,
         hurtRadius: 80,
         mechanics: [
-            Boss1MechA,
-            Boss1MechB,
-            Boss1MechC,
-            Boss1MechD,
+            // Boss1MechA,
+            // Boss1MechB,
+            // Boss1MechC,
+            // Boss1MechD,
+            Boss13MechA
         ]
     },
     {
