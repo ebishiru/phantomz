@@ -48,6 +48,8 @@ export default class PreloadScene extends Phaser.Scene {
                 frameHeight: 16
             })
         }
+
+        this.load.image("zombie-minion", "assets/zombie-minion.png");
     }
 
     loadSkills() {
