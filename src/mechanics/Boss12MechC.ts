@@ -6,11 +6,11 @@ export default class Boss12MechC extends BossMechanic {
 
     config = {
         id: "chase-minion-player",
-        name: "Explodling",
+        name: "Explode-ling",
         castTime: 1000,
         castDuration: 1000,
         cooldown: 3000,
-        showCastBar: true,
+        showCastBar: false,
         damage: 20,
         range: 0,
         width: 0,

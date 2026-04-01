@@ -39,17 +39,14 @@ import Boss12MechC from "../mechanics/Boss12MechC";
 export const Bosses = [
     {
         name: "Wyrm",
-        spriteKey: "boss12",
+        spriteKey: "boss1",
         speed: 25,
         hurtRadius: 80,
         mechanics: [
-            // Boss1MechA,
-            // Boss1MechB,
-            // Boss1MechC,
-            // Boss1MechD,
-            Boss12MechA,
-            Boss12MechB,
-            Boss12MechC,
+            Boss1MechA,
+            Boss1MechB,
+            Boss1MechC,
+            Boss1MechD,
         ]
     },
     {
@@ -162,4 +159,15 @@ export const Bosses = [
             Boss11MechC,
         ]
     },
+    {
+        name: "Rotbelcher",
+        spriteKey: "boss12",
+        speed: 65,
+        hurtRadius: 60,
+        mechanics: [
+            Boss12MechA,
+            Boss12MechB,
+            Boss12MechC,
+        ]
+    }
 ]
