@@ -41,6 +41,15 @@ export default class LevelSelect extends Phaser.Scene {
             .setScale(3)
             .setInteractive({ useHandCursor: true})
 
+            if (key === "cave-texture") {
+                texture.setTint(0xb0a080);
+                texture.setAlpha(0.9);
+            }
+            if (key === "snow-texture") {
+                texture.setTint(0x8a9aa8);
+                texture.setAlpha(0.7);
+            }
+
             mapTextures.push(texture)
 
             texture.on("pointerdown", () => {
