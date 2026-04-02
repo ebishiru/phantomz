@@ -13,11 +13,11 @@ export default class Boss13MechC extends BossMechanic {
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 500,
+        range: 400,
         width: 0,
     }
 
-    coneAngle = Math.PI * 3 / 2
+    coneAngle = Math.PI
 
     clones: any[] = []
     indicators: any[] = []
