@@ -8,8 +8,8 @@ export default class Boss13MechB extends BossMechanic {
     config = {
         id: "right-left-boss-cleave",
         name: "Hex Cleave",
-        castTime: 1500,
-        castDuration: 1500,
+        castTime: 1600,
+        castDuration: 1600,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
