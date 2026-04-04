@@ -12,7 +12,7 @@ export default class Boss2MechC extends BossMechanic {
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 450,
+        range: 350,
         width: 0,
     }
 

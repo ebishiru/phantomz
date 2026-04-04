@@ -9,7 +9,7 @@ export default class Boss15MechA extends BossMechanic {
         id: "teleport-boss-player-expand-ring",
         name: "Oathbreaker's Descent",
         castTime: 1200,
-        castDuration: 2300,
+        castDuration: 2100,
         cooldown: 3000,
         showCastBar: true,
         damage: 20,

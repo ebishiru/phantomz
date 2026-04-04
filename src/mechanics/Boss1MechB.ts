@@ -11,7 +11,7 @@ export default class Boss1MechB extends BossMechanic {
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 85,
+        range: 70,
         width: 0,
     }
 

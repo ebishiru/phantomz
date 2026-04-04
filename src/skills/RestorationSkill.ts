@@ -3,7 +3,7 @@ import Skill from "./Skill";
 
 export default class RestorationSkill extends Skill {
     player: any
-    healingValue: number = 6
+    healingValue: number = 4
     
     constructor(scene: Phaser.Scene, player: any) {
         super(scene, player, "restoration", "Restoration", 0, 5000, 0)
