@@ -23,7 +23,7 @@ export default class GameScene extends Phaser.Scene {
     mobileControls!: MobileControls
     
     skillKeys!: Phaser.Input.Keyboard.Key[]
-    level: string = "cave-texture"
+    level: string = "cave"
 
     constructor() {
         super("game")
@@ -32,7 +32,7 @@ export default class GameScene extends Phaser.Scene {
     create(data: { characterKey?: string, startingSkill?: string, level?: string }) {
         const character = data?.characterKey || "player1";
         const startingSkill = data?.startingSkill || "slash";
-        this.level = data?.level || "cave-texture";
+        this.level = data?.level || "cave";
 
         const width = this.scale.width;
         const height = this.scale.height;
@@ -49,19 +49,19 @@ export default class GameScene extends Phaser.Scene {
 
         // Ground Texture
         const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, this.level).setOrigin(0);
-        if (this.level === "cave-texture") {
+        if (this.level === "cave") {
             floor.setTint(0xb0a080);
             floor.setAlpha(0.9);
         }
-        if (this.level === "snow-texture") {
+        if (this.level === "snow") {
             floor.setTint(0x8a9aa8);
             floor.setAlpha(0.7);
         }
 
         // Play music
         const musicMap: Record<string, string> = {
-            "cave-texture": "caveMusic",
-            "snow-texture": "snowMusic"
+            "cave": "caveMusic",
+            "snow": "snowMusic"
         };
 
         const musicKey = musicMap[this.level] || "caveMusic";
@@ -95,7 +95,7 @@ export default class GameScene extends Phaser.Scene {
         this.skillSystem.unlockSkill(startingSkill);
 
         // Boss
-        this.bossManager = new BossManager(this, this.player, this.expSystem);
+        this.bossManager = new BossManager(this, this.player, this.expSystem, this.level);
         this.bossManager.spawnBoss();
 
         // Mobile Controls

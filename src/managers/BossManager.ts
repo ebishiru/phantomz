@@ -10,6 +10,7 @@ export default class BossManager {
     scene: Phaser.Scene;
     player: any
     boss: Boss | null = null;
+    currentLevel: string = "cave"
     bossHealthBar: HealthBar | null = null
     bossMechanics: BossMechanic[] = [];
     bossMechanicTimer: Phaser.Time.TimerEvent | null = null;
@@ -38,10 +39,11 @@ export default class BossManager {
     extraExpPerBoss = 0
     bossKillText!: Phaser.GameObjects.Text;
 
-    constructor(scene: Phaser.Scene, player: any, expSystem: ExpSystem) {
+    constructor(scene: Phaser.Scene, player: any, expSystem: ExpSystem, level: string = "cave") {
         this.scene = scene;
         this.player = player;
         this.expSystem = expSystem;
+        this.currentLevel = level;
 
         this.resetBuffPool();
         this.startBuffTimer();
@@ -208,8 +210,11 @@ export default class BossManager {
     }
 
     createBoss(x: number, y: number) {
+        // Filter bosses by current level
+        const levelBosses = Bosses.filter(b => b.level === this.currentLevel)
+        
         // Randomize Bosses with No Repeats
-        const maxIndex = this.currentMaxBossIndex
+        const maxIndex = Math.min(this.currentMaxBossIndex, levelBosses.length - 1)
         const minIndex = Math.max(0, maxIndex - 4)
 
         let bossIndex: number
@@ -224,7 +229,7 @@ export default class BossManager {
 
         this.lastBossIndex = bossIndex
 
-        const bossConfig = Bosses[bossIndex]        // Change Index to Boss Index to Test HERE
+        const bossConfig = levelBosses[bossIndex]
         const spriteKey = bossConfig.spriteKey
 
         // Spawn Boss

@@ -39,14 +39,14 @@ export default class SaveManager {
     //SCORE MANAGEMENT:
 
     getHiScore(level?: string): number {
-        if (level === "snow-texture") {
+        if (level === "snow") {
             return Number(this.data.snowHighscore || 0)
         }
         return Number(this.data.caveHighscore || 0)
     }
 
     getTotalScore(level?: string): number {
-        if (level === "snow-texture") {
+        if (level === "snow") {
             return Number(this.data.snowTotalScore || 0)
         }
         return Number(this.data.caveTotalScore || 0)
@@ -55,14 +55,14 @@ export default class SaveManager {
     updateScore(score: number, level?: string) {
         const currentHiScore = this.getHiScore(level)
         if (score > currentHiScore) {
-            if (level === "snow-texture") {
+            if (level === "snow") {
                 this.data.snowHighscore = score
             } else {
                 this.data.caveHighscore = score
             }
         }
 
-        if (level === "snow-texture") {
+        if (level === "snow") {
             this.data.snowTotalScore += score
         } else {
             this.data.caveTotalScore += score

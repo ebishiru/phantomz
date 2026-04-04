@@ -47,19 +47,20 @@ import Boss15MechA from "../mechanics/Boss15MechA";
 export const Bosses = [
     {
         name: "Wyrm",
-        spriteKey: "boss15",
+        level: "cave",
+        spriteKey: "boss1",
         speed: 25,
         hurtRadius: 80,
         mechanics: [
-            // Boss1MechA,
-            // Boss1MechB,
-            // Boss1MechC,
-            // Boss1MechD,
-            Boss15MechA,
+            Boss1MechA,
+            Boss1MechB,
+            Boss1MechC,
+            Boss1MechD,
         ]
     },
     {
         name: "Shrieker",
+        level: "cave",
         spriteKey: "boss2",
         speed: 120,
         hurtRadius: 70,
@@ -72,6 +73,7 @@ export const Bosses = [
     },
     {
         name: "Titanus",
+        level: "cave",
         spriteKey: "boss3",
         speed: 60,
         hurtRadius: 80,
@@ -83,6 +85,7 @@ export const Bosses = [
     },
     {
         name: "Buzzerax",
+        level: "cave",
         spriteKey: "boss4",
         speed: 80,
         hurtRadius: 65,
@@ -93,6 +96,7 @@ export const Bosses = [
     },
     {
         name: "Dark Knight",
+        level: "cave",
         spriteKey: "boss5",
         speed: 60,
         hurtRadius: 80,
@@ -104,6 +108,7 @@ export const Bosses = [
     },
     {
         name: "Naga",
+        level: "cave",
         spriteKey: "boss6",
         speed: 60,
         hurtRadius: 75,
@@ -115,6 +120,7 @@ export const Bosses = [
     },
     {
         name: "Vrykolakas",
+        level: "cave",
         spriteKey: "boss7",
         speed: 100,
         hurtRadius: 70,
@@ -126,6 +132,7 @@ export const Bosses = [
     },
     {
         name: "Titanus Prime",
+        level: "cave",
         spriteKey: "boss8",
         speed: 60,
         hurtRadius: 80,
@@ -137,6 +144,7 @@ export const Bosses = [
     },
     {
         name: "Hive Lord",
+        level: "cave",
         spriteKey: "boss9",
         speed: 80,
         hurtRadius: 60,
@@ -148,6 +156,7 @@ export const Bosses = [
     },
     {
         name: "Pure Knight",
+        level: "cave",
         spriteKey: "boss10",
         speed: 80,
         hurtRadius: 75,
@@ -159,6 +168,7 @@ export const Bosses = [
     },
     {
         name: "Dire Wolf",
+        level: "snow",
         spriteKey: "boss11",
         speed: 75,
         hurtRadius: 60,
@@ -170,6 +180,7 @@ export const Bosses = [
     },
     {
         name: "Rot Belcher",
+        level: "snow",
         spriteKey: "boss12",
         speed: 60,
         hurtRadius: 70,
@@ -181,6 +192,7 @@ export const Bosses = [
     },
     {
         name: "Hag",
+        level: "snow",
         spriteKey: "boss13",
         speed: 65,
         hurtRadius: 60,
@@ -192,6 +204,7 @@ export const Bosses = [
     },
     {
         name: "Wyvern",
+        level: "snow",
         spriteKey: "boss14",
         speed: 75,
         hurtRadius: 75,
@@ -201,5 +214,15 @@ export const Bosses = [
             Boss14MechC,
             Boss14MechD,
         ]
-    }
+    },
+    {
+        name: "Fallen Knight",
+        level: "snow",
+        spriteKey: "boss15",
+        speed: 80,
+        hurtRadius: 75,
+        mechanics: [
+            Boss15MechA,
+        ]
+    },
 ]

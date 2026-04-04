@@ -77,7 +77,6 @@ export default class PreloadScene extends Phaser.Scene {
         //Extra skill assets
         this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
         this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
-        // this.load.image("ward-vfx", "assets/ward-vfx.png")              //WARD HERO OVERLAY
         this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
     }
 
@@ -106,8 +105,8 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     loadEnvironment() {
-        this.load.image("cave-texture", "assets/cave-texture.png")
-        this.load.image("snow-texture", "assets/snow-texture.png")
+        this.load.image("cave", "assets/cave.png")
+        this.load.image("snow", "assets/snow.png")
     }
 
     create() {

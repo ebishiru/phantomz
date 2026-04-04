@@ -3,9 +3,9 @@ import SaveManager from "../systems/SaveManager"
 
 export default class LevelSelect extends Phaser.Scene {
 
-    levels = ["cave-texture", "snow-texture"]
+    levels = ["cave", "snow"]
 
-    selectedLevel: string = "cave-texture"
+    selectedLevel: string = "cave"
     saveManager!: SaveManager
 
     levelOutline!: Phaser.GameObjects.Rectangle
@@ -41,11 +41,11 @@ export default class LevelSelect extends Phaser.Scene {
             .setScale(3)
             .setInteractive({ useHandCursor: true})
 
-            if (key === "cave-texture") {
+            if (key === "cave") {
                 texture.setTint(0xb0a080);
                 texture.setAlpha(0.9);
             }
-            if (key === "snow-texture") {
+            if (key === "snow") {
                 texture.setTint(0x8a9aa8);
                 texture.setAlpha(0.7);
             }
