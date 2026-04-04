@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import RectangleTelegraph from "../entities/RectangleTelegraph";
 
