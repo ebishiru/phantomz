@@ -42,11 +42,12 @@ import Boss14MechA from "../mechanics/Boss14MechA";
 import Boss14MechB from "../mechanics/Boss14MechB";
 import Boss14MechC from "../mechanics/Boss14MechC";
 import Boss14MechD from "../mechanics/Boss14MechD";
+import Boss15MechA from "../mechanics/Boss15MechA";
 
 export const Bosses = [
     {
         name: "Wyrm",
-        spriteKey: "boss14",
+        spriteKey: "boss15",
         speed: 25,
         hurtRadius: 80,
         mechanics: [
@@ -54,10 +55,7 @@ export const Bosses = [
             // Boss1MechB,
             // Boss1MechC,
             // Boss1MechD,
-            // Boss14MechA,
-            // Boss14MechB,
-            // Boss14MechC,
-            Boss14MechD,
+            Boss15MechA,
         ]
     },
     {
@@ -170,8 +168,8 @@ export const Bosses = [
             Boss11MechC,
         ]
     },
-        {
-        name: "RotBelcher",
+    {
+        name: "Rot Belcher",
         spriteKey: "boss12",
         speed: 60,
         hurtRadius: 70,
@@ -181,8 +179,8 @@ export const Bosses = [
             Boss12MechC,
         ]
     },
-        {
-        name: "Hex Hag",
+    {
+        name: "Hag",
         spriteKey: "boss13",
         speed: 65,
         hurtRadius: 60,
@@ -192,4 +190,16 @@ export const Bosses = [
             Boss13MechC,
         ]
     },
+    {
+        name: "Wyvern",
+        spriteKey: "boss14",
+        speed: 75,
+        hurtRadius: 75,
+        mechanics: [
+            Boss14MechA,
+            Boss14MechB,
+            Boss14MechC,
+            Boss14MechD,
+        ]
+    }
 ]

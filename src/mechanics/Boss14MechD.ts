@@ -9,7 +9,7 @@ export default class Boss14MechD extends BossMechanic {
         id: "knockback-circles",
         name: "",
         castTime: 1800,
-        castDuration: 2300,
+        castDuration: 2500,
         cooldown: 3000,
         showCastBar: true,
         damage: 20,
@@ -115,9 +115,12 @@ export default class Boss14MechD extends BossMechanic {
             targets: this.player,
             x: endX,
             y: endY,
-            duration: 500,
+            duration: 400,
             ease: "Cubic.easeOut",
-            onComplete: () => this.hitCheck()
+        })
+
+        this.scene.time.delayedCall(500, () => {
+            this.hitCheck()
         })
     }
 

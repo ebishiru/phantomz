@@ -11,6 +11,10 @@ export default class ThrustSkill extends Skill {
     }
 
     activate() {
+        // cancel any existing knockback/movement tween
+        this.scene.tweens.killTweensOf(this.player)
+        this.player.body?.setVelocity(0, 0)
+
         const dx = this.player.facing.x
         const dy = this.player.facing.y
 

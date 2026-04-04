@@ -14,6 +14,10 @@ export default class HookSkill extends Skill {
         const boss = (this.scene as any).bossManager?.boss
         if (!boss || !boss.active) return
 
+        // cancel any existing knockback/movement tween
+        this.scene.tweens.killTweensOf(this.player)
+        this.player.body?.setVelocity(0, 0)
+
         //Add Graphics
         const g = this.scene.add.graphics()
         g.lineStyle(2, 0xeffae6, 0.8)
