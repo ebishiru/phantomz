@@ -5,7 +5,7 @@ export default class PulseSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "pulse", "Pulse", 8, 8000, 50)
+        super(scene, player, "pulse", "Pulse", 6, 6000, 50)
         this.iconKey = "pulse-icon"
         this.player = player
     }

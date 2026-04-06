@@ -5,7 +5,7 @@ export default class CaltropsSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "caltrops", "Caltrops", 15, 7000, 40)
+        super(scene, player, "caltrops", "Caltrops", 11, 5000, 40)
         this.iconKey = "caltrops-icon"
         this.player = player
     }
