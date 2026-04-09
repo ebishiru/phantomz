@@ -45,6 +45,7 @@ import Boss14MechD from "../mechanics/Boss14MechD";
 import Boss15MechA from "../mechanics/Boss15MechA";
 import Boss15MechB from "../mechanics/Boss15MechB";
 import Boss15MechC from "../mechanics/Boss15MechC";
+import Boss16MechA from "../mechanics/Boss16MechA";
 
 export const Bosses = [
     {
@@ -168,65 +169,75 @@ export const Bosses = [
             Boss10MechC
         ]
     },
+    // {
+    //     name: "Dire Wolf",
+    //     level: "snow",
+    //     spriteKey: "boss11",
+    //     speed: 75,
+    //     hurtRadius: 60,
+    //     mechanics: [
+    //         Boss11MechA,
+    //         Boss11MechB,
+    //         Boss11MechC,
+    //     ]
+    // },
+    // {
+    //     name: "Rot Belcher",
+    //     level: "snow",
+    //     spriteKey: "boss12",
+    //     speed: 60,
+    //     hurtRadius: 70,
+    //     mechanics: [
+    //         Boss12MechA,
+    //         Boss12MechB,
+    //         Boss12MechC,
+    //     ]
+    // },
+    // {
+    //     name: "Hag",
+    //     level: "snow",
+    //     spriteKey: "boss13",
+    //     speed: 65,
+    //     hurtRadius: 60,
+    //     mechanics: [
+    //         Boss13MechA,
+    //         Boss13MechB,
+    //         Boss13MechC,
+    //     ]
+    // },
+    // {
+    //     name: "Wyvern",
+    //     level: "snow",
+    //     spriteKey: "boss14",
+    //     speed: 75,
+    //     hurtRadius: 75,
+    //     mechanics: [
+    //         Boss14MechA,
+    //         Boss14MechB,
+    //         Boss14MechC,
+    //         Boss14MechD,
+    //     ]
+    // },
+    // {
+    //     name: "Fallen Knight",
+    //     level: "snow",
+    //     spriteKey: "boss15",
+    //     speed: 80,
+    //     hurtRadius: 75,
+    //     mechanics: [
+    //         Boss15MechA,
+    //         Boss15MechB,
+    //         Boss15MechC,
+    //     ]
+    // },
     {
-        name: "Dire Wolf",
+        name: "Lycanthrope",
         level: "snow",
-        spriteKey: "boss11",
-        speed: 75,
-        hurtRadius: 60,
-        mechanics: [
-            Boss11MechA,
-            Boss11MechB,
-            Boss11MechC,
-        ]
-    },
-    {
-        name: "Rot Belcher",
-        level: "snow",
-        spriteKey: "boss12",
-        speed: 60,
-        hurtRadius: 70,
-        mechanics: [
-            Boss12MechA,
-            Boss12MechB,
-            Boss12MechC,
-        ]
-    },
-    {
-        name: "Hag",
-        level: "snow",
-        spriteKey: "boss13",
-        speed: 65,
-        hurtRadius: 60,
-        mechanics: [
-            Boss13MechA,
-            Boss13MechB,
-            Boss13MechC,
-        ]
-    },
-    {
-        name: "Wyvern",
-        level: "snow",
-        spriteKey: "boss14",
-        speed: 75,
-        hurtRadius: 75,
-        mechanics: [
-            Boss14MechA,
-            Boss14MechB,
-            Boss14MechC,
-            Boss14MechD,
-        ]
-    },
-    {
-        name: "Fallen Knight",
-        level: "snow",
-        spriteKey: "boss15",
+        spriteKey: "boss16",
         speed: 80,
-        hurtRadius: 75,
+        hurtRadius: 60,
         mechanics: [
-            Boss15MechA,
-            Boss15MechB,
-            Boss15MechC,
+            Boss16MechA,
         ]
     },
 ]
