@@ -1,18 +1,19 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import LineTelegraph from "../entities/LineTelegraph";
+import CircleTelegraph from "../entities/CircleTelegraph";
 
 export default class Boss16MechA extends BossMechanic {
 
     config = {
         id: "zig-zag-boss-player",
         name: "Savage Dash",
-        castTime: 1200,
-        castDuration: 1200,
+        castTime: 800,
+        castDuration: 800,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 0,
+        range: 80,
         width: 120,
     }
 
@@ -20,6 +21,8 @@ export default class Boss16MechA extends BossMechanic {
     startY: number = 0
     targetX: number = 0
     targetY: number = 0
+
+    circleTelegraph?: CircleTelegraph
 
     onCastStart() {
         this.startX = this.boss.x
@@ -30,22 +33,19 @@ export default class Boss16MechA extends BossMechanic {
     }
 
     execute() {
-        // Direction to locked target
         const dx = this.targetX - this.startX
         const dy = this.targetY - this.startY
         const dist = Math.sqrt(dx * dx + dy * dy)
 
-        // Normalize
         const dirX = dx / dist
         const dirY = dy / dist
 
-        // Perpendicular for zig-zag
         const perpX = -dirY
         const perpY = dirX
 
-        const offset = dist * 0.4
+        const offset = dist * 0.3
+        const EXTEND = Math.min(60, dist * 0.15)
 
-        // Points (FORCED final = player initial)
         const point1 = {
             x: this.startX + dirX * dist * 0.33 + perpX * offset,
             y: this.startY + dirY * dist * 0.33 + perpY * offset
@@ -61,39 +61,50 @@ export default class Boss16MechA extends BossMechanic {
             y: this.targetY
         }
 
-        // Angles derived from points
         const angle1 = Phaser.Math.Angle.Between(this.startX, this.startY, point1.x, point1.y)
         const angle2 = Phaser.Math.Angle.Between(point1.x, point1.y, point2.x, point2.y)
         const angle3 = Phaser.Math.Angle.Between(point2.x, point2.y, point3.x, point3.y)
 
-        //Draw telegraph 1
+        const dash1Dist = Phaser.Math.Distance.Between(this.startX, this.startY, point1.x, point1.y)
+        const dash2Dist = Phaser.Math.Distance.Between(point1.x, point1.y, point2.x, point2.y)
+        const dash3Dist = Phaser.Math.Distance.Between(point2.x, point2.y, point3.x, point3.y)
+
+        // === DASH 1 ===
         this.telegraph = new LineTelegraph(
             this.scene,
-            this.boss.x,
-            this.boss.y,
+            this.startX,
+            this.startY,
             angle1,
-            dashDistance,
+            dash1Dist + EXTEND,
             this.config.width
         )
 
-        //Move boss
         this.scene.tweens.add({
             targets: this.boss,
             x: point1.x,
             y: point1.y,
             duration: 200,
             onComplete: () => {
-                this.checkHit(this.startX, this.startY, point1.x, point1.y)
+
+                const hitEnd1 = this.getPointFromAngle(
+                    this.startX,
+                    this.startY,
+                    angle1,
+                    dash1Dist + EXTEND
+                )
+
+                this.checkHit(this.startX, this.startY, hitEnd1.x, hitEnd1.y)
 
                 this.telegraph?.destroy()
                 this.telegraph = undefined
 
+                // === DASH 2 ===
                 this.telegraph = new LineTelegraph(
                     this.scene,
                     point1.x,
                     point1.y,
                     angle2,
-                    dashDistance,
+                    dash2Dist + EXTEND,
                     this.config.width
                 )
 
@@ -103,17 +114,36 @@ export default class Boss16MechA extends BossMechanic {
                     y: point2.y,
                     duration: 200,
                     onComplete: () => {
-                        this.checkHit(point1.x, point1.y, point2.x, point2.y)
+
+                        const hitEnd2 = this.getPointFromAngle(
+                            point1.x,
+                            point1.y,
+                            angle2,
+                            dash2Dist + EXTEND
+                        )
+
+                        this.checkHit(point1.x, point1.y, hitEnd2.x, hitEnd2.y)
 
                         this.telegraph?.destroy()
                         this.telegraph = undefined
 
+                        // CIRCLE TELEGRAPH AT FINAL POINT
+                        this.circleTelegraph?.destroy()
+
+                        this.circleTelegraph = new CircleTelegraph(
+                            this.scene,
+                            point3.x,
+                            point3.y,
+                            this.config.range
+                        )
+
+                        // === DASH 3 ===
                         this.telegraph = new LineTelegraph(
                             this.scene,
                             point2.x,
                             point2.y,
                             angle3,
-                            dashDistance,
+                            dash3Dist + EXTEND,
                             this.config.width
                         )
 
@@ -123,10 +153,21 @@ export default class Boss16MechA extends BossMechanic {
                             y: point3.y,
                             duration: 200,
                             onComplete: () => {
-                                this.checkHit(point2.x, point2.y, point3.x, point3.y)
+
+                                const hitEnd3 = this.getPointFromAngle(
+                                    point2.x,
+                                    point2.y,
+                                    angle3,
+                                    dash3Dist + EXTEND
+                                )
+
+                                this.checkHit(point2.x, point2.y, hitEnd3.x, hitEnd3.y)
 
                                 this.telegraph?.destroy()
                                 this.telegraph = undefined
+
+                                this.circleTelegraph?.destroy()
+                                this.circleTelegraph = undefined
                             }
                         })
                     }
@@ -142,10 +183,6 @@ export default class Boss16MechA extends BossMechanic {
         }
     }
 
-    getDistance(x1: number, y1: number, x2: number, y2: number) {
-        return Phaser.Math.Distance.Between(x1, y1, x2, y2)
-    }
-
     checkHit(startX: number, startY: number, endX: number, endY: number) {
         const px = this.player.x
         const py = this.player.y
@@ -155,15 +192,12 @@ export default class Boss16MechA extends BossMechanic {
 
         const lengthSq = dx * dx + dy * dy
 
-        // Projection factor (0 → 1 along the segment)
         let t = ((px - startX) * dx + (py - startY) * dy) / lengthSq
         t = Phaser.Math.Clamp(t, 0, 1)
 
-        // Closest point on the segment
         const closestX = startX + t * dx
         const closestY = startY + t * dy
 
-        // Distance to player
         const dist = Phaser.Math.Distance.Between(px, py, closestX, closestY)
 
         if (dist <= this.config.width / 2) {
@@ -173,6 +207,9 @@ export default class Boss16MechA extends BossMechanic {
 
     destroy() {
         this.telegraph?.destroy()
+        this.circleTelegraph?.destroy()
+
         this.telegraph = undefined
+        this.circleTelegraph = undefined
     }
 }
