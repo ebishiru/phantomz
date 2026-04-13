@@ -46,6 +46,7 @@ import Boss15MechA from "../mechanics/Boss15MechA";
 import Boss15MechB from "../mechanics/Boss15MechB";
 import Boss15MechC from "../mechanics/Boss15MechC";
 import Boss16MechA from "../mechanics/Boss16MechA";
+import Boss16MechB from "../mechanics/Boss16MechB";
 
 export const Bosses = [
     {
@@ -238,6 +239,7 @@ export const Bosses = [
         hurtRadius: 60,
         mechanics: [
             Boss16MechA,
+            Boss16MechB,
         ]
     },
 ]
