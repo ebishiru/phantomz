@@ -17,8 +17,6 @@ export default class Boss16MechA extends BossMechanic {
         width: 120,
     }
 
-    dashOffset: number = 0
-
     startX: number = 0
     startY: number = 0
     endX: number = 0
@@ -57,9 +55,6 @@ export default class Boss16MechA extends BossMechanic {
             this.endY,
         )
 
-        this.endX = this.startX + Math.cos(angle) * this.dashOffset
-        this.endY = this.startY + Math.sin(angle) * this.dashOffset 
-
         //Jump Boss to player
         this.scene.tweens.add({
             targets: this.boss,
@@ -95,30 +90,36 @@ export default class Boss16MechA extends BossMechanic {
                     this.config.width,
                 )
 
-                this.scene.tweens.add({
-                    targets: this.boss,
-                    x: this.endX,
-                    y: this.endY,
-                    duration: 200,
-                    onComplete: () => {
-                        //Remove line telegraph
-                        if (this.lineTelegraph) {
-                            this.lineTelegraph.destroy()
-                            this.lineTelegraph = null
-                        }
+                this.scene.time.delayedCall(200, () => {
+                    this.scene.tweens.add({
+                        targets: this.boss,
+                        x: this.endX,
+                        y: this.endY,
+                        duration: 200,
+                        onComplete: () => {
+                            //Remove line telegraph
+                            if (this.lineTelegraph) {
+                                this.lineTelegraph.destroy()
+                                this.lineTelegraph = null
+                            }
 
-                        //Damage Check for Line Telegraph
-                        const hit = Phaser.Math.Distance.Between(
-                            this.player.x,
-                            this.player.y,
-                            this.endX,
-                            this.endY
-                        ) <= (this.config.width + this.player.hurtboxRadius)
+                            //Damage Check for Line Telegraph
+                            const px = this.player.x
+                            const py = this.player.y
+                            const pr = this.player.hurtboxRadius
 
-                        if (hit) {
-                            this.player.takeDamage(this.config.damage)
+                            const lineLen = Phaser.Math.Distance.Between(this.startX, this.startY, this.endX, this.endY);
+                            const t = Phaser.Math.Clamp(((px - this.startX) * (this.endX - this.startX) + (py - this.startY) * (this.endY - this.startY)) / (lineLen * lineLen), 0, 1);
+                            const closestX = this.startX + t * (this.endX - this.startX);
+                            const closestY = this.startY + t * (this.endY - this.startY);
+
+                            const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY);
+
+                            if (distanceToLine <= pr + this.config.width / 2) {
+                                this.player.takeDamage(this.config.damage);
+                            }
                         }
-                    }
+                    })
                 })
             }
         })

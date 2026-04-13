@@ -239,7 +239,7 @@ export const Bosses = [
         hurtRadius: 60,
         mechanics: [
             Boss16MechA,
-            Boss16MechB,
+            // Boss16MechB,
         ]
     },
 ]
