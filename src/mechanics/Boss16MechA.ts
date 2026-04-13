@@ -78,6 +78,7 @@ export default class Boss16MechA extends BossMechanic {
 
                 if (hit) {
                     this.player.takeDamage(this.config.damage)
+                    this.boss.heal(this.config.damage/ 4)
                 }
 
                 //Draw line telegraph
@@ -117,6 +118,7 @@ export default class Boss16MechA extends BossMechanic {
 
                             if (distanceToLine <= pr + this.config.width / 2) {
                                 this.player.takeDamage(this.config.damage);
+                                this.boss.heal(this.config.damage / 4);
                             }
                         }
                     })
