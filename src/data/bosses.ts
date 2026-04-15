@@ -48,6 +48,7 @@ import Boss15MechC from "../mechanics/Boss15MechC";
 import Boss16MechA from "../mechanics/Boss16MechA";
 import Boss16MechB from "../mechanics/Boss16MechB";
 import Boss16MechC from "../mechanics/Boss16MechC";
+import Boss17MechA from "../mechanics/Boss17MechA";
 
 export const Bosses = [
     {
@@ -232,16 +233,26 @@ export const Bosses = [
     //         Boss15MechC,
     //     ]
     // },
+    // {
+    //     name: "Lycanthrope",
+    //     level: "snow",
+    //     spriteKey: "boss16",
+    //     speed: 80,
+    //     hurtRadius: 60,
+    //     mechanics: [
+    //         Boss16MechA,
+    //         Boss16MechB,
+    //         Boss16MechC,
+    //     ]
+    // },
     {
-        name: "Lycanthrope",
+        name: "Rot Bloater",
         level: "snow",
-        spriteKey: "boss16",
-        speed: 80,
-        hurtRadius: 60,
+        spriteKey: "boss17",
+        speed: 65,
+        hurtRadius: 70,
         mechanics: [
-            // Boss16MechA,
-            // Boss16MechB,
-            Boss16MechC,
+            Boss17MechA,
         ]
-    },
+    }
 ]

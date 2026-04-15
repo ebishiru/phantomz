@@ -2,42 +2,46 @@ import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import ConeTelegraph from "../entities/ConeTelegraph";
 
-export default class Boss12MechA extends BossMechanic {
+export default class Boss17MechA extends BossMechanic {
 
     config = {
-        id: "cone-stay-boss-player",
-        name: "Putrid Projection",
+        id: "triple-cone-stay-boss-player",
+        name: "Putrid Trijectory",
         castTime: 1000,
         castDuration: 2000,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 200,
+        range: 175,
         width: 0,
     }
 
-    coneAngle = Math.PI / 2
+    coneAngle = Math.PI / 3
     damageTimer: Phaser.Time.TimerEvent | undefined
+    telegraphs: ConeTelegraph[] = []
 
     onCastStart() {
-        const angle = Phaser.Math.Angle.Between(
+        const angleToPlayer = Phaser.Math.Angle.Between(
             this.boss.x,
             this.boss.y,
             this.player.x,
             this.player.y,
         )
 
-        //Draw Telegraph
-        this.telegraph = new ConeTelegraph(
-            this.scene,
-            this.boss.x,
-            this.boss.y,
-            angle,
-            this.config.range,
-            this.coneAngle
-        )
+        const offsets = [-Math.PI * 2 / 3, 0, Math.PI * 2 / 3]
 
-        //Hit check every 1/3 second
+        //Create 3 conal telegraphs
+        this.telegraphs = offsets.map(offset => {
+            return new ConeTelegraph(
+                this.scene,
+                this.boss.x,
+                this.boss.y,
+                angleToPlayer + offset,
+                this.config.range,
+                this.coneAngle
+            )
+        })
+
         this.scene.time.delayedCall(1000, () => {
             this.damageTimer?.destroy()
 
@@ -49,7 +53,7 @@ export default class Boss12MechA extends BossMechanic {
         })
 
         this.scene.time.delayedCall(2000, () => {
-            this.telegraph?.destroy()
+            this.telegraphs.forEach(telegraph => telegraph.destroy())
             this.damageTimer?.destroy()
         })
     }
@@ -63,6 +67,7 @@ export default class Boss12MechA extends BossMechanic {
             this.player.x,
             this.player.y,
         )
+
         if (dist <= this.config.range + this.player.hurtboxRadius) {
 
             const angleToPlayer = Phaser.Math.Angle.Between(
@@ -72,12 +77,15 @@ export default class Boss12MechA extends BossMechanic {
                 this.player.y
             )
 
-            const angleDiff = Phaser.Math.Angle.Wrap(
-                angleToPlayer - this.telegraph.angle
-            )
+            for (const telegraph of this.telegraphs) {
+                const angleDiff = Phaser.Math.Angle.Wrap(
+                    angleToPlayer - telegraph.angle
+                )
 
-            if (Math.abs(angleDiff) <= this.coneAngle / 2) {
-                hit = true
+                if (Math.abs(angleDiff) <= this.coneAngle / 2) {
+                    hit = true
+                    break
+                }
             }
         }
 
@@ -87,7 +95,7 @@ export default class Boss12MechA extends BossMechanic {
     }
 
     destroy() {
-        this.telegraph?.destroy()
+        this.telegraphs?.forEach(telegraph => telegraph.destroy())
         this.damageTimer?.destroy()
     }
 }
