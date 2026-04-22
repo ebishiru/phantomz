@@ -7,54 +7,75 @@ export default class Boss17MechA extends BossMechanic {
     config = {
         id: "triple-cone-stay-boss-player",
         name: "Putrid Trijectory",
-        castTime: 1000,
+        castTime: 1500,
         castDuration: 2000,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 175,
+        range: 400,
         width: 0,
     }
 
     coneAngle = Math.PI / 3
-    damageTimer: Phaser.Time.TimerEvent | undefined
     telegraphs: ConeTelegraph[] = []
 
     onCastStart() {
-        const angleToPlayer = Phaser.Math.Angle.Between(
-            this.boss.x,
-            this.boss.y,
-            this.player.x,
-            this.player.y,
-        )
+        const bounds = this.scene.physics.world.bounds
 
-        const offsets = [-Math.PI * 2 / 3, 0, Math.PI * 2 / 3]
+        this.scene.tweens.add({
+            targets: this.boss,
+            x: bounds.centerX,
+            y: bounds.centerY,
+            duration: 200,
+            ease: "Sine.easeInOut",
+            onComplete: () => {
+                const angleToPlayer = Phaser.Math.Angle.Between(
+                    this.boss.x,
+                    this.boss.y,
+                    this.player.x,
+                    this.player.y,
+                )
+                const offsets = [-Math.PI * 2 / 3, 0, Math.PI * 2 / 3]
 
-        //Create 3 conal telegraphs
-        this.telegraphs = offsets.map(offset => {
-            return new ConeTelegraph(
-                this.scene,
-                this.boss.x,
-                this.boss.y,
-                angleToPlayer + offset,
-                this.config.range,
-                this.coneAngle
-            )
-        })
+                //Create first 3 conal telegraphs
+                this.telegraphs = offsets.map(offset => {
+                    return new ConeTelegraph(
+                        this.scene,
+                        this.boss.x,
+                        this.boss.y,
+                        angleToPlayer + offset,
+                        this.config.range,
+                        this.coneAngle
+                    )
+                })
 
-        this.scene.time.delayedCall(1000, () => {
-            this.damageTimer?.destroy()
+                this.scene.time.delayedCall(1300, () => {
+                    //First 3 cones hit
+                    this.hitCheck()
+                    this.telegraphs.forEach(telegraph => telegraph.destroy())
+                    this.telegraphs = []
 
-            this.damageTimer = this.scene.time.addEvent({
-                delay: 300,
-                loop: true,
-                callback: () => this.hitCheck()
-            })
-        })
+                    const rotatedOffset = this.coneAngle
 
-        this.scene.time.delayedCall(2000, () => {
-            this.telegraphs.forEach(telegraph => telegraph.destroy())
-            this.damageTimer?.destroy()
+                    this.telegraphs = offsets.map(offset => {
+                        return new ConeTelegraph(
+                            this.scene,
+                            this.boss.x,
+                            this.boss.y,
+                            angleToPlayer + offset + rotatedOffset,
+                            this.config.range,
+                            this.coneAngle
+                        )
+                    })
+
+                    this.scene.time.delayedCall(800, () => {
+                        //Second 3 cones hit
+                        this.hitCheck()
+                        this.telegraphs.forEach(telegraph => telegraph.destroy())
+                        this.telegraphs = []
+                    })
+                })
+            }
         })
     }
 
@@ -96,6 +117,6 @@ export default class Boss17MechA extends BossMechanic {
 
     destroy() {
         this.telegraphs?.forEach(telegraph => telegraph.destroy())
-        this.damageTimer?.destroy()
+        this.telegraphs = []
     }
 }
