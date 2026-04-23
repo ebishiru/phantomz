@@ -248,16 +248,28 @@ export const Bosses = [
     //         Boss16MechC,
     //     ]
     // },
+    // {
+    //     name: "Rot Bloater",
+    //     level: "snow",
+    //     spriteKey: "boss17",
+    //     speed: 65,
+    //     hurtRadius: 70,
+    //     mechanics: [
+    //         Boss17MechA,
+    //         Boss17MechB,
+    //         Boss17MechC,
+    //     ]
+    // },
     {
-        name: "Rot Bloater",
+        name: "Hag Matriarch",
         level: "snow",
-        spriteKey: "boss17",
-        speed: 65,
-        hurtRadius: 70,
+        spriteKey: "boss18",
+        speed: 70,
+        hurtRadius: 55,
         mechanics: [
-            Boss17MechA,
-            Boss17MechB,
-            Boss17MechC,
+            //Circle safe, donut everywhere else
+            //fake out cast ?
+            //four clones,
         ]
     }
 ]
