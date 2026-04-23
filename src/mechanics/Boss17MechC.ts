@@ -29,7 +29,7 @@ export default class Boss17MechC extends BossMechanic {
         this.scene.time.delayedCall(800, () => {
             indicator.destroy()
 
-            this.minion = this.scene.physics.add.sprite(x, y, "boss12-minion");
+            this.minion = this.scene.physics.add.sprite(x, y, "boss17-minion");
             this.minion.setScale(2);
             this.minion.setOffset(0, 0);
             this.minion.setAlpha(0);
