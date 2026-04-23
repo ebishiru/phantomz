@@ -47,4 +47,9 @@ export default class Boss13MechA extends BossMechanic {
             this.telegraph = undefined
         })
     }
+
+    destroy() {
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+    }
 }

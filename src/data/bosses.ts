@@ -51,6 +51,7 @@ import Boss16MechC from "../mechanics/Boss16MechC";
 import Boss17MechA from "../mechanics/Boss17MechA";
 import Boss17MechB from "../mechanics/Boss17MechB";
 import Boss17MechC from "../mechanics/Boss17MechC";
+import Boss18MechA from "../mechanics/Boss18MechA";
 import Boss from "../entities/Boss";
 
 export const Bosses = [
@@ -261,13 +262,13 @@ export const Bosses = [
     //     ]
     // },
     {
-        name: "Hag Matriarch",
+        name: "Hex Matriarch",
         level: "snow",
         spriteKey: "boss18",
         speed: 70,
         hurtRadius: 55,
         mechanics: [
-            //Circle safe, donut everywhere else
+            Boss18MechA
             //fake out cast ?
             //four clones,
         ]
