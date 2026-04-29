@@ -17,7 +17,7 @@ export default class Boss18MechA extends BossMechanic {
     }
 
     innerRadius = 40
-    outerRadius = 500
+    outerRadius = 600
 
     onCastStart(){
         //Randomize center point

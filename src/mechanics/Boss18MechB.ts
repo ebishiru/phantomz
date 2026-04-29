@@ -3,13 +3,13 @@ import BossMechanic from "./BossMechanic";
 import ConeTelegraph from "../entities/ConeTelegraph";
 import DirectionIndicator from "../entities/DirectionIndicator";
 
-export default class Boss13MechB extends BossMechanic {
+export default class Boss18MechB extends BossMechanic {
 
     config = {
-        id: "right-left-boss-cleave",
-        name: "Hex Cleave",
-        castTime: 2000,
-        castDuration: 2000,
+        id: "fake-out-right-left-cleave",
+        name: "Hex Cleave 2",
+        castTime: 1800,
+        castDuration: 1800,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
@@ -18,7 +18,8 @@ export default class Boss13MechB extends BossMechanic {
     }
 
     direction: string = "Right"
-    coneAngle = Math.PI
+    isDirectionReal: boolean = true
+    coneAngle = Math.PI * 7 / 5
     facingAngle: number = 0
     attackAngle: number = 0
 
@@ -27,7 +28,9 @@ export default class Boss13MechB extends BossMechanic {
 
         const directions = ["Right", "Left"]
         this.direction = Phaser.Utils.Array.GetRandom(directions)
-        this.config.name = `Hex Cleave : ${this.direction}`
+        this.config.name = `Hex Cleave : ${this.direction}?`
+
+        this.isDirectionReal = Phaser.Math.Between(0,1) === 0 ? true : false
 
         //Randomize angle
         this.facingAngle = Phaser.Math.FloatBetween(-Math.PI, Math.PI)
@@ -36,11 +39,21 @@ export default class Boss13MechB extends BossMechanic {
 
         switch( this.direction ) {
             case "Right":
-                this.attackAngle += Math.PI /2
-                break
+                if (this.isDirectionReal) {
+                    this.attackAngle += Math.PI /2
+                    break
+                } else {
+                    this.attackAngle -= Math.PI /2
+                    break
+                }
             case "Left":
-                this.attackAngle -= Math.PI /2
-                break
+                if (this.isDirectionReal) {
+                    this.attackAngle -= Math.PI /2
+                    break
+                } else {
+                    this.attackAngle += Math.PI /2
+                    break
+                }
         }
 
         //Draw indicator
@@ -50,8 +63,29 @@ export default class Boss13MechB extends BossMechanic {
             this.facingAngle,
         )
 
+        //Conditional ? Icon on Boss
+        if (!this.isDirectionReal) {
+            const container = this.scene.add.container(this.boss.x, this.boss.y)
+
+            const follow = () => {
+                container.x = this.boss.x
+                container.y = this.boss.y
+            }
+
+            this.scene.events.on('update', follow)
+
+            const fakeoutVFX = this.scene.add.sprite(0, -40, "boss18-fakeout")
+
+            fakeoutVFX.setOrigin(0.5, 0.5)
+            fakeoutVFX.setScale(1.5)
+            fakeoutVFX.setDepth(20)
+            container.add(fakeoutVFX)
+
+            this.scene.time.delayedCall(this.config.castTime, () => container.destroy())
+        }
+
         //Draw telegraph right before hit
-        this.scene.time.delayedCall((this.config.castTime - 800), () => {
+        this.scene.time.delayedCall((this.config.castTime - 300), () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new ConeTelegraph(
                 this.scene,
@@ -69,7 +103,7 @@ export default class Boss13MechB extends BossMechanic {
             this.indicator = undefined
         })
     }
-
+    
     execute() {
         //Check hit
         let hit = false

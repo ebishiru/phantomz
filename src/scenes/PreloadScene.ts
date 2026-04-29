@@ -52,6 +52,8 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("boss12-minion", "assets/boss12-minion.png");
         this.load.image("boss13-clone", "assets/boss13-clone.png");
         this.load.image("boss17-minion", "assets/boss17-minion.png");
+        this.load.image("boss18-fakeout", "assets/boss18-fakeout.png");
+        this.load.image("boss18-clone", "assets/boss18-clone.png");
     }
 
     loadSkills() {
