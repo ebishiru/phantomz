@@ -7,8 +7,8 @@ export default class Boss18MechA extends BossMechanic {
     config = {
         id: "donut-room-circle-safe",
         name: "Sanctuary Circle",
-        castTime: 1500,
-        castDuration: 1500,
+        castTime: 1800,
+        castDuration: 1800,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,

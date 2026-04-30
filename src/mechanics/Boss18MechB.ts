@@ -8,8 +8,8 @@ export default class Boss18MechB extends BossMechanic {
     config = {
         id: "fake-out-right-left-cleave",
         name: "Hex Cleave 2",
-        castTime: 1800,
-        castDuration: 1800,
+        castTime: 2300,
+        castDuration: 2300,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,

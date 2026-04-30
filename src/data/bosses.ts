@@ -53,6 +53,7 @@ import Boss17MechB from "../mechanics/Boss17MechB";
 import Boss17MechC from "../mechanics/Boss17MechC";
 import Boss18MechA from "../mechanics/Boss18MechA";
 import Boss18MechB from "../mechanics/Boss18MechB";
+import Boss18MechC from "../mechanics/Boss18MechC";
 import Boss from "../entities/Boss";
 
 export const Bosses = [
@@ -269,9 +270,9 @@ export const Bosses = [
         speed: 70,
         hurtRadius: 55,
         mechanics: [
-            // Boss18MechA
-            Boss18MechB
-            //four clones,
+            Boss18MechA,
+            Boss18MechB,
+            Boss18MechC
         ]
     }
 ]
