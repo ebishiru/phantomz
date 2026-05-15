@@ -215,7 +215,7 @@ export const Bosses = [
     //     ]
     // },
     // {
-    //     name: "Wyvern",
+    //     name: "Drake",
     //     level: "snow",
     //     spriteKey: "boss14",
     //     speed: 75,
@@ -263,16 +263,26 @@ export const Bosses = [
     //         Boss17MechC,
     //     ]
     // },
+    // {
+    //     name: "Hex Matriarch",
+    //     level: "snow",
+    //     spriteKey: "boss18",
+    //     speed: 70,
+    //     hurtRadius: 55,
+    //     mechanics: [
+    //         Boss18MechA,
+    //         Boss18MechB,
+    //         Boss18MechC
+    //     ]
+    // },
     {
-        name: "Hex Matriarch",
+        name: "Frost Wyvern",
         level: "snow",
-        spriteKey: "boss18",
-        speed: 70,
-        hurtRadius: 55,
+        spriteKey: "boss19",
+        speed: 75,
+        hurtRadius: 75,
         mechanics: [
-            Boss18MechA,
-            Boss18MechB,
-            Boss18MechC
+
         ]
-    }
+    },
 ]
