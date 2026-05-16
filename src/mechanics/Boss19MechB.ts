@@ -1,21 +1,22 @@
 import BossMechanic from "./BossMechanic";
 import RectangleTelegraph from "../entities/RectangleTelegraph";
 
-export default class Boss14MechC extends BossMechanic {
+export default class Boss19MechB extends BossMechanic {
 
     config = {
-        id: "cross-rectangle-player",
-        name: "Rimecross",
-        castTime: 1000,
-        castDuration: 1000,
+        id: "expand-cross-rectangle-player",
+        name: "Absolute Rimecross",
+        castTime: 800,
+        castDuration: 800,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
         range: 0,
-        width: 80,
+        width: 100,
     }
 
     telegraphs: RectangleTelegraph[] = []
+    thinwidth: number = this.config.width / 5
 
     onCastStart() {
         const centerX = this.player.x
@@ -23,27 +24,53 @@ export default class Boss14MechC extends BossMechanic {
 
         const bounds = this.scene.physics.world.bounds
 
-        //Draw vertical telegraph
+        //Draw preliminary vertical telegraph
         const vertical = new RectangleTelegraph(
             this.scene,
-            centerX - this.config.width /2,
+            centerX - this.thinwidth /2,
             bounds.y,
-            this.config.width,
+            this.thinwidth,
             bounds.height
         )
 
-        //Draw horizontal telegraph
+        //Draw preliminary horizontal telegraph
         const horizontal = new RectangleTelegraph(
             this.scene,
             bounds.x,
-            centerY - this.config.width /2,
+            centerY - this.thinwidth /2,
             bounds.width,
-            this.config.width,
+            this.thinwidth,
         )
         this.telegraphs.push(vertical, horizontal)
+
+        // After cast time, expand telegraphs to full size
+        this.scene.time.delayedCall(this.config.castTime - 100, () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
+            this.telegraphs.forEach(telegraph => telegraph.destroy())
+            this.telegraphs = []
+
+            const vertical = new RectangleTelegraph(
+                this.scene,
+                centerX - this.config.width /2,
+                bounds.y,
+                this.config.width,
+                bounds.height
+            )
+
+            const horizontal = new RectangleTelegraph(
+                this.scene,
+                bounds.x,
+                centerY - this.config.width /2,
+                bounds.width,
+                this.config.width,
+            )
+
+            this.telegraphs.push(vertical, horizontal)
+        })
     }
 
-    execute() {
+        execute() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
         let hit = false

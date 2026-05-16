@@ -7,9 +7,9 @@ export default class Boss14MechA extends BossMechanic {
 
     config = {
         id: "front-cone-boss",
-        name: "Swinge",
-        castTime: 1200,
-        castDuration: 1200,
+        name: "Claw Swipe",
+        castTime: 1400,
+        castDuration: 1400,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

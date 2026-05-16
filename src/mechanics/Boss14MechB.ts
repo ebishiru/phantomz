@@ -7,9 +7,9 @@ export default class Boss14MechB extends BossMechanic {
 
     config = {
         id: "front-cone-boss",
-        name: "Swipe",
-        castTime: 1200,
-        castDuration: 1200,
+        name: "Tail Sweep",
+        castTime: 1400,
+        castDuration: 1400,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
