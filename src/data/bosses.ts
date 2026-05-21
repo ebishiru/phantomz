@@ -216,19 +216,19 @@ export const Bosses = [
     //         Boss13MechC,
     //     ]
     // },
-    // {
-    //     name: "Drake",
-    //     level: "snow",
-    //     spriteKey: "boss14",
-    //     speed: 75,
-    //     hurtRadius: 75,
-    //     mechanics: [
-    //         Boss14MechA,
-    //         Boss14MechB,
-    //         Boss14MechC,
-    //         Boss14MechD,
-    //     ]
-    // },
+    {
+        name: "Drake",
+        level: "snow",
+        spriteKey: "boss14",
+        speed: 75,
+        hurtRadius: 75,
+        mechanics: [
+            // Boss14MechA,
+            // Boss14MechB,
+            // Boss14MechC,
+            Boss14MechD,
+        ]
+    },
     // {
     //     name: "Fallen Knight",
     //     level: "snow",

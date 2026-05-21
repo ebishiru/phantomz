@@ -1,15 +1,15 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import CircleTelegraph from "../entities/CircleTelegraph";
-import DirectionIndicator from "../entities/DirectionIndicator";
+import WallIndicator from "../entities/WallIndicator";
 
 export default class Boss14MechD extends BossMechanic {
 
     config = {
         id: "knockback-circles",
-        name: "",
-        castTime: 1800,
-        castDuration: 2500,
+        name: "Wingburst",
+        castTime: 1000,
+        castDuration: 1500,
         cooldown: 3000,
         showCastBar: true,
         damage: 20,
@@ -17,70 +17,75 @@ export default class Boss14MechD extends BossMechanic {
         width: 0,
     }
 
-    pattern: string = "Cross"
     distanceFromCenter = 200
-    rotationAngle = 0
     knockbackDistance = 200
+
     telegraphs: CircleTelegraph[] = []
-    indicators: DirectionIndicator[] = []
-    directionalangles = [Math.PI, Math.PI*3/4, Math.PI/2, Math.PI/4, 0, -Math.PI/4, -Math.PI/2, -Math.PI*3/4]
+    indicators: WallIndicator[] = []
+    indicatorPositions: {x: number, y: number}[] = []
 
     onCastStart() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
         
+        this.indicatorPositions = []
+
         const screen = this.scene.scale
-        const leapX = screen.width / 2
-        const leapY = screen.height / 2
+        const centerX = screen.width / 2
+        const centerY = screen.height / 2
 
-        this.scene.tweens.add({
-            targets: this.boss,
-            x: leapX,
-            y: leapY,
-            duration: 300,
-            ease: "Power2",
-            onComplete: () => {
-                //Create direcional indicators
-                this.directionalangles.forEach(dirAngle => {
-                    this.indicator = new DirectionIndicator(
-                        this.scene,
-                        this.boss,
-                        dirAngle,
-                    )
-                    this.indicators.push(this.indicator)
-                })
-            }
-        })
+        //Create 3 randomized damage indicators
+        const sliceSize = (Math.PI * 2) / 3
 
-        //Choose Cardinals or Corners
-        const patterns = ["Cross", "Oblique"]
-        this.pattern = Phaser.Utils.Array.GetRandom(patterns)
-        this.config.name = `Wingburst: ${this.pattern}`
-        this.rotationAngle = 0
-        switch (this.pattern) {
-            case "Cross":
-                break;
-            case "Oblique":
-                this.rotationAngle += Math.PI / 4
-                break
+        for ( let i = 0; i < 3; i++) {
+            //Random angle within slice
+            const angle = (i * sliceSize) + Phaser.Math.FloatBetween(0, sliceSize)
+
+            const x = centerX + Math.cos(angle) * this.distanceFromCenter
+            const y = centerY + Math.sin(angle) * this.distanceFromCenter
+            this.indicatorPositions.push({x, y})
+
+            const indicator = new WallIndicator(
+                this.scene,
+                x,
+                y,
+                Math.PI / 2,
+                10,
+            )
+            this.indicators.push(indicator)
         }
 
-        //Draw circle telegraphs
-        this.scene.time.delayedCall((this.config.castTime - 800), () => {
+        //Move boss to center
+        this.scene.time.delayedCall(700, () => {
 
-            for (let i = 0; i < 4; i++) {
-                const angle = this.rotationAngle + i * (Math.PI / 2)
+            this.scene.tweens.add({
+                targets: this.boss,
+                x: centerX,
+                y: centerY,
+                duration: 300,
+                ease: "Power2",
+                onComplete: () => {
+                    this.execute()
+                    
+                    this.scene.time.delayedCall(200, () => {
 
-                const x = this.boss.x + Math.cos(angle) * this.distanceFromCenter
-                const y = this.boss.y + Math.sin(angle) * this.distanceFromCenter
+                        this.indicatorPositions.forEach( pos => {
 
-                const telegraph = new CircleTelegraph(
-                    this.scene,
-                    x,
-                    y,
-                    this.config.range,
-                )
-                this.telegraphs.push(telegraph)
-            }
+                            const telegraph = new CircleTelegraph(
+                                this.scene,
+                                pos.x,
+                                pos.y,
+                                this.config.range,
+                            )
+                            
+                            this.telegraphs.push(telegraph)
+                        })
+                    })
+
+                    this.scene.time.delayedCall(500, () => {
+                        this.hitCheck()
+                    })
+                }
+            })
         })
     }
 
@@ -115,12 +120,8 @@ export default class Boss14MechD extends BossMechanic {
             targets: this.player,
             x: endX,
             y: endY,
-            duration: 400,
+            duration: 300,
             ease: "Cubic.easeOut",
-        })
-
-        this.scene.time.delayedCall(500, () => {
-            this.hitCheck()
         })
     }
 
@@ -144,6 +145,8 @@ export default class Boss14MechD extends BossMechanic {
             t.destroy()
         })
 
+        this.telegraphs = []
+
         if (hit) {
             this.player.takeDamage(this.config.damage)
         }
@@ -154,5 +157,6 @@ export default class Boss14MechD extends BossMechanic {
         this.telegraphs = []
         this.indicators.forEach( i => i.destroy())
         this.indicators = []
+        this.indicatorPositions = []
     }
 }
