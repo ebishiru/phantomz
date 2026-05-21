@@ -21,7 +21,7 @@ export default class Boss19MechC extends BossMechanic {
     knockbackDistance = 300
 
     telegraphs: CircleTelegraph[] = []
-    indicators: WallIndicators[] = []
+    indicators: WallIndicator[] = []
     indicatorPositions: {x: number, y: number}[] = []
 
     onCastStart() {
@@ -164,7 +164,7 @@ export default class Boss19MechC extends BossMechanic {
             this.player.x,
             this.player.y
         )
-        
+
         const distFromBoss = Phaser.Math.Distance.Between(
             this.player.x,
             this.player.y,
