@@ -56,6 +56,7 @@ import Boss18MechB from "../mechanics/Boss18MechB";
 import Boss18MechC from "../mechanics/Boss18MechC";
 import Boss19MechA from "../mechanics/Boss19MechA";
 import Boss19MechB from "../mechanics/Boss19MechB";
+import Boss19MechC from "../mechanics/Boss19MechC";
 import Boss from "../entities/Boss";
 
 export const Bosses = [
@@ -216,31 +217,31 @@ export const Bosses = [
     //         Boss13MechC,
     //     ]
     // },
-    {
-        name: "Drake",
-        level: "snow",
-        spriteKey: "boss14",
-        speed: 75,
-        hurtRadius: 75,
-        mechanics: [
-            // Boss14MechA,
-            // Boss14MechB,
-            // Boss14MechC,
-            Boss14MechD,
-        ]
-    },
     // {
-    //     name: "Fallen Knight",
+    //     name: "Drake",
     //     level: "snow",
-    //     spriteKey: "boss15",
-    //     speed: 80,
+    //     spriteKey: "boss14",
+    //     speed: 75,
     //     hurtRadius: 75,
     //     mechanics: [
-    //         Boss15MechA,
-    //         Boss15MechB,
-    //         Boss15MechC,
+    //         // Boss14MechA,
+    //         // Boss14MechB,
+    //         // Boss14MechC,
+    //         Boss14MechD,
     //     ]
     // },
+    {
+        name: "Fallen Knight",
+        level: "snow",
+        spriteKey: "boss15",
+        speed: 80,
+        hurtRadius: 75,
+        mechanics: [
+            Boss15MechA,
+            Boss15MechB,
+            Boss15MechC,
+        ]
+    },
     // {
     //     name: "Lycanthrope",
     //     level: "snow",
@@ -277,15 +278,16 @@ export const Bosses = [
     //         Boss18MechC
     //     ]
     // },
-    {
-        name: "Frost Wyvern",
-        level: "snow",
-        spriteKey: "boss19",
-        speed: 75,
-        hurtRadius: 75,
-        mechanics: [
-            Boss19MechA,
-            Boss19MechB,
-        ]
-    },
+    // {
+    //     name: "Frost Wyvern",
+    //     level: "snow",
+    //     spriteKey: "boss19",
+    //     speed: 75,
+    //     hurtRadius: 75,
+    //     mechanics: [
+    //         Boss19MechA,
+    //         Boss19MechB,
+    //         Boss19MechC,
+    //     ]
+    // },
 ]

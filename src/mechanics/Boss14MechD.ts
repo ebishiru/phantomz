@@ -67,9 +67,9 @@ export default class Boss14MechD extends BossMechanic {
                     this.execute()
                     
                     this.scene.time.delayedCall(200, () => {
+                        if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
                         this.indicatorPositions.forEach( pos => {
-
                             const telegraph = new CircleTelegraph(
                                 this.scene,
                                 pos.x,
@@ -93,6 +93,8 @@ export default class Boss14MechD extends BossMechanic {
         //Remove indicators
         this.indicators.forEach( i => i.destroy())
         this.indicators = []
+
+        if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
         //Push player back
         const angleFromBoss = Phaser.Math.Angle.Between(
@@ -126,6 +128,8 @@ export default class Boss14MechD extends BossMechanic {
     }
 
     hitCheck() {
+        if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
         //Check hit
         let hit = false
 
