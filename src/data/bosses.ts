@@ -57,6 +57,7 @@ import Boss18MechC from "../mechanics/Boss18MechC";
 import Boss19MechA from "../mechanics/Boss19MechA";
 import Boss19MechB from "../mechanics/Boss19MechB";
 import Boss19MechC from "../mechanics/Boss19MechC";
+import Boss20MechA from "../mechanics/Boss20MechA";
 import Boss from "../entities/Boss";
 
 export const Bosses = [
@@ -230,18 +231,18 @@ export const Bosses = [
     //         Boss14MechD,
     //     ]
     // },
-    {
-        name: "Fallen Knight",
-        level: "snow",
-        spriteKey: "boss15",
-        speed: 80,
-        hurtRadius: 75,
-        mechanics: [
-            Boss15MechA,
-            Boss15MechB,
-            Boss15MechC,
-        ]
-    },
+    // {
+    //     name: "Fallen Knight",
+    //     level: "snow",
+    //     spriteKey: "boss15",
+    //     speed: 80,
+    //     hurtRadius: 75,
+    //     mechanics: [
+    //         Boss15MechA,
+    //         Boss15MechB,
+    //         Boss15MechC,
+    //     ]
+    // },
     // {
     //     name: "Lycanthrope",
     //     level: "snow",
@@ -290,4 +291,14 @@ export const Bosses = [
     //         Boss19MechC,
     //     ]
     // },
+    {
+        name: "Undying Knight",
+        level: "snow",
+        spriteKey: "boss20",
+        speed: 85,
+        hurtRadius: 70,
+        mechanics: [
+            Boss20MechA,
+        ]
+    },
 ]
