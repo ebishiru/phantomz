@@ -7,7 +7,7 @@ export default class Boss10MechB extends BossMechanic {
 
     config = { 
         id: "two-half-circle-boss",
-        name: "",
+        name: "Cleave and Back",
         castTime: 2000,
         castDuration: 2800,
         cooldown: 2800,
@@ -18,16 +18,11 @@ export default class Boss10MechB extends BossMechanic {
     }
 
     coneAngle = Math.PI * 3 / 2
-    followCleave: string = "Dexter"
     firstAngle: number = 0
     secondAngle: number = 0
 
     onCastStart() {
         if (!this.boss || this.boss.health <= 0|| !this.active) return
-
-        const followCleaves = ["Dexter", "Sinister"]
-        this.followCleave = Phaser.Utils.Array.GetRandom(followCleaves)
-        this.config.name = `${this.followCleave} Judgment`
 
         this.firstAngle = Phaser.Math.Angle.Between(
             this.boss.x,
@@ -35,6 +30,8 @@ export default class Boss10MechB extends BossMechanic {
             this.player.x,
             this.player.y,
         )
+
+        this.secondAngle = this.firstAngle + Math.PI
 
         //draw indicator
         this.indicator = new DirectionIndicator(
@@ -67,15 +64,6 @@ export default class Boss10MechB extends BossMechanic {
             this.telegraph?.destroy()
             this.telegraph = undefined
         })
-
-        switch( this.followCleave ) {
-            case "Dexter":
-                this.secondAngle = this.firstAngle + Math.PI / 2
-                break
-            case "Sinister":
-                this.secondAngle = this.firstAngle - Math.PI / 2
-                break
-        }
 
         //Draw second telegraph
         this.scene.time.delayedCall((this.config.castDuration - 300), () => {

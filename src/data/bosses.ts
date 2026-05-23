@@ -59,7 +59,7 @@ import Boss19MechB from "../mechanics/Boss19MechB";
 import Boss19MechC from "../mechanics/Boss19MechC";
 import Boss20MechA from "../mechanics/Boss20MechA";
 import Boss20MechB from "../mechanics/Boss20MechB";
-import Boss from "../entities/Boss";
+import Boss20MechC from "../mechanics/Boss20MechC";
 
 export const Bosses = [
     {
@@ -183,115 +183,115 @@ export const Bosses = [
             Boss10MechC
         ]
     },
-    // {
-    //     name: "Dire Wolf",
-    //     level: "snow",
-    //     spriteKey: "boss11",
-    //     speed: 75,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss11MechA,
-    //         Boss11MechB,
-    //         Boss11MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Rot Belcher",
-    //     level: "snow",
-    //     spriteKey: "boss12",
-    //     speed: 60,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss12MechA,
-    //         Boss12MechB,
-    //         Boss12MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Hag",
-    //     level: "snow",
-    //     spriteKey: "boss13",
-    //     speed: 65,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss13MechA,
-    //         Boss13MechB,
-    //         Boss13MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Drake",
-    //     level: "snow",
-    //     spriteKey: "boss14",
-    //     speed: 75,
-    //     hurtRadius: 75,
-    //     mechanics: [
-    //         // Boss14MechA,
-    //         // Boss14MechB,
-    //         // Boss14MechC,
-    //         Boss14MechD,
-    //     ]
-    // },
-    // {
-    //     name: "Fallen Knight",
-    //     level: "snow",
-    //     spriteKey: "boss15",
-    //     speed: 80,
-    //     hurtRadius: 75,
-    //     mechanics: [
-    //         Boss15MechA,
-    //         Boss15MechB,
-    //         Boss15MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Lycanthrope",
-    //     level: "snow",
-    //     spriteKey: "boss16",
-    //     speed: 80,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss16MechA,
-    //         Boss16MechB,
-    //         Boss16MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Rot Bloater",
-    //     level: "snow",
-    //     spriteKey: "boss17",
-    //     speed: 65,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss17MechA,
-    //         Boss17MechB,
-    //         Boss17MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Hex Matriarch",
-    //     level: "snow",
-    //     spriteKey: "boss18",
-    //     speed: 70,
-    //     hurtRadius: 55,
-    //     mechanics: [
-    //         Boss18MechA,
-    //         Boss18MechB,
-    //         Boss18MechC
-    //     ]
-    // },
-    // {
-    //     name: "Frost Wyvern",
-    //     level: "snow",
-    //     spriteKey: "boss19",
-    //     speed: 75,
-    //     hurtRadius: 75,
-    //     mechanics: [
-    //         Boss19MechA,
-    //         Boss19MechB,
-    //         Boss19MechC,
-    //     ]
-    // },
+    {
+        name: "Dire Wolf",
+        level: "snow",
+        spriteKey: "boss11",
+        speed: 75,
+        hurtRadius: 60,
+        mechanics: [
+            Boss11MechA,
+            Boss11MechB,
+            Boss11MechC,
+        ]
+    },
+    {
+        name: "Rot Belcher",
+        level: "snow",
+        spriteKey: "boss12",
+        speed: 60,
+        hurtRadius: 70,
+        mechanics: [
+            Boss12MechA,
+            Boss12MechB,
+            Boss12MechC,
+        ]
+    },
+    {
+        name: "Hag",
+        level: "snow",
+        spriteKey: "boss13",
+        speed: 65,
+        hurtRadius: 60,
+        mechanics: [
+            Boss13MechA,
+            Boss13MechB,
+            Boss13MechC,
+        ]
+    },
+    {
+        name: "Drake",
+        level: "snow",
+        spriteKey: "boss14",
+        speed: 75,
+        hurtRadius: 75,
+        mechanics: [
+            Boss14MechA,
+            Boss14MechB,
+            Boss14MechC,
+            Boss14MechD,
+        ]
+    },
+    {
+        name: "Fallen Knight",
+        level: "snow",
+        spriteKey: "boss15",
+        speed: 80,
+        hurtRadius: 75,
+        mechanics: [
+            Boss15MechA,
+            Boss15MechB,
+            Boss15MechC,
+        ]
+    },
+    {
+        name: "Lycanthrope",
+        level: "snow",
+        spriteKey: "boss16",
+        speed: 80,
+        hurtRadius: 60,
+        mechanics: [
+            Boss16MechA,
+            Boss16MechB,
+            Boss16MechC,
+        ]
+    },
+    {
+        name: "Rot Bloater",
+        level: "snow",
+        spriteKey: "boss17",
+        speed: 65,
+        hurtRadius: 70,
+        mechanics: [
+            Boss17MechA,
+            Boss17MechB,
+            Boss17MechC,
+        ]
+    },
+    {
+        name: "Hex Matriarch",
+        level: "snow",
+        spriteKey: "boss18",
+        speed: 70,
+        hurtRadius: 55,
+        mechanics: [
+            Boss18MechA,
+            Boss18MechB,
+            Boss18MechC
+        ]
+    },
+    {
+        name: "Frost Wyvern",
+        level: "snow",
+        spriteKey: "boss19",
+        speed: 75,
+        hurtRadius: 75,
+        mechanics: [
+            Boss19MechA,
+            Boss19MechB,
+            Boss19MechC,
+        ]
+    },
     {
         name: "Undying Knight",
         level: "snow",
@@ -301,6 +301,7 @@ export const Bosses = [
         mechanics: [
             Boss20MechA,
             Boss20MechB,
+            Boss20MechC,
         ]
     },
 ]
