@@ -59,6 +59,11 @@ export const passives = [
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.executionerLevel += 1
+        },
+        unlock: {
+            type: "caveTotalScore",
+            value: 6000,
+            text: "Score 6000 pts in cave.",
         }
     },
     {
@@ -79,6 +84,11 @@ export const passives = [
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.echoChance += 0.05
+        },
+        unlock: {
+            type: "snowTotalScore",
+            value: 6000,
+            text: "Score 6000 pts in snow.",
         }
     }
 ]

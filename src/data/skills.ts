@@ -69,20 +69,35 @@ export const skills = [
         name: "Restoration",
         iconKey: "restoration-icon",
         desc: "Fix your wounds and restore health",
-        upgrades: upgrades.restoration
+        upgrades: upgrades.restoration,
+        unlock: {
+            type: "caveTotalScore",
+            value: 3000,
+            text: "Score 3000 pts in cave.",
+        }
     },
     {
         key: "ward",
         name: "Ward",
         iconKey: "ward-icon",
         desc: "Create a temporary shield that blocks all damage",
-        upgrades: upgrades.ward
+        upgrades: upgrades.ward,
+        unlock: {
+            type: "snowTotalScore",
+            value: 3000,
+            text: "Score 3000 pts in snow.",
+        }
     },
     {
         key: "javelin",
         name: "Javelin",
         iconKey: "javelin-icon",
         desc: "Throw a javelin that can be picked up again",
-        upgrades: upgrades.javelin
+        upgrades: upgrades.javelin,
+        unlock: {
+            type: "bossKills",
+            value: { boss10: 5 },
+            text: "Defeat Phantom Lord 5 times.",
+        }
     }
 ]
