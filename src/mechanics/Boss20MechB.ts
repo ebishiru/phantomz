@@ -93,7 +93,7 @@ export default class Boss20MechB extends BossMechanic {
                 ease: "Sine.easeInOut",
                 onComplete: () => {
                     //Check hit
-                    this.lineDamageCheck(startX, startY, dashX, dashY, angle)
+                    this.lineDamageCheck(startX, startY, dashX, dashY)
 
                     //Remove line telegraph
                     this.lineTelegraph?.destroy()
@@ -123,7 +123,7 @@ export default class Boss20MechB extends BossMechanic {
         })
     }
 
-    lineDamageCheck(startX: number, startY: number, endX: number, endY: number, angle: number) {
+    lineDamageCheck(startX: number, startY: number, endX: number, endY: number) {
         if (!this.boss || this.boss.health <= 0|| !this.active) return
 
         const px = this.player.x
