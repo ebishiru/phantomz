@@ -4,11 +4,14 @@ import SaveManager from "../systems/SaveManager";
 
 export default class GameOverScene extends Phaser.Scene {
     saveManager!: SaveManager;
+    currentLevel: string = "cave"
+
     constructor() {
         super("game-over")
     }
 
     create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string }) {
+        this.currentLevel = data.level || "cave"
         // Create SaveManager in create to ensure fresh data
         this.saveManager = new SaveManager();
         
@@ -146,11 +149,16 @@ export default class GameOverScene extends Phaser.Scene {
 
     restartGame() {
         this.scene.stop("game-over")
-        this.scene.get("game").scene.restart()
+        this.scene.stop("level-up")
+        this.scene.stop("game")
+        this.scene.start("game", {
+            level: this.currentLevel
+        })
     }
 
     goToTitle() {
         this.scene.stop("game-over")
+        this.scene.stop("level-up")
         this.scene.stop("game")
         this.scene.start("mainmenu")
     }
