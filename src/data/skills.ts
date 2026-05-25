@@ -97,7 +97,7 @@ export const skills = [
         unlock: {
             type: "bossKills",
             value: { boss10: 5 },
-            text: "Defeat Phantom Lord 5 times.",
+            text: "Defeat Pure Knight 5 times.",
         }
     }
 ]

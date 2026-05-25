@@ -49,6 +49,11 @@ export const passives = [
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.cooldownMultiplier *= 0.9
+        },
+        unlock: {
+            type: "bossKills",
+            value: { boss20: 5 },
+            text: "Defeat Undying Knight 5 times.",
         }
     },
     {

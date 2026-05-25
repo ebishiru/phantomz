@@ -20,12 +20,25 @@ export default class UnlockablesScene extends Phaser.Scene {
     saveManager!: SaveManager
     selectedUnlockable: string = "slash"
     unlockableOutline!: Phaser.GameObjects.Rectangle
+    visibleIcons: Phaser.GameObjects.Image[] = []
+    selectedInfoName!: Phaser.GameObjects.Text
+    selectedInfoDesc!: Phaser.GameObjects.Text
+    upArrowBg!: Phaser.GameObjects.Rectangle
+    downArrowBg!: Phaser.GameObjects.Rectangle
+    rowOffset: number = 0
+    iconsPerRow: number = 5
+    maxVisibleRows: number = 3
 
     constructor() {
         super("unlocks");
     }
 
     create() {
+        // Reset state when the scene is entered again
+        this.visibleIcons = []
+        this.rowOffset = 0
+        this.selectedUnlockable = "slash"
+
         // Reload SaveManager from localStorage every time we enter this scene
         this.saveManager = new SaveManager()
 
@@ -33,7 +46,7 @@ export default class UnlockablesScene extends Phaser.Scene {
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
         const width = this.scale.width;
-        const centerX = width/2;
+        const centerX = width / 2;
 
         this.add.text(centerX, 50, "Unlockables", {
             fontSize: "32px",
@@ -41,51 +54,227 @@ export default class UnlockablesScene extends Phaser.Scene {
             color: "#ffcc00",
         }).setOrigin(0.5)
 
-        //Display all unlockables in a grid
         const startX = 150
         const startY = 120
         const spacingX = 150
         const spacingY = 120
-        const iconsPerRow = 5
+        const visibleCount = this.iconsPerRow * this.maxVisibleRows
 
-        this.unlockables.forEach((unlockable, index) => {
-            const x = startX + (index % iconsPerRow) * spacingX
-            const y = startY + Math.floor(index / iconsPerRow) * spacingY
+        // Create icon placeholders for visible unlockables only
+        for (let slot = 0; slot < visibleCount; slot++) {
+            const col = slot % this.iconsPerRow
+            const row = Math.floor(slot / this.iconsPerRow)
+            const x = startX + col * spacingX
+            const y = startY + row * spacingY
 
-            // Add unlockable icon
-            const unlockIcon = this.add.image(x, y, unlockable.iconKey)
+            const unlockIcon = this.add.image(x, y, "")
                 .setOrigin(0.5)
                 .setScale(3)
                 .setInteractive({ useHandCursor: true })
                 .on("pointerdown", () => {
-                    this.selectedUnlockable = unlockable.key;
-                    this.updateUnlockableOutline(unlockIcon);
-                });
-        });
+                    const unlockable = unlockIcon.getData("unlockable") as typeof this.unlockables[number]
+                    if (!unlockable) {
+                        return
+                    }
+                    this.selectedUnlockable = unlockable.key
+                    this.updateUnlockableOutline(unlockIcon)
+                    this.updateSelectedInfo()
+                })
+                .setVisible(false)
 
-        //Unlockable chosen outline
+            this.visibleIcons.push(unlockIcon)
+        }
+
+        this.renderUnlockablePage()
+
+        // Unlockable chosen outline
+        const initialIcon = this.visibleIcons.find(icon => icon.visible) ?? this.visibleIcons[0]
         this.unlockableOutline = this.add.rectangle(
-            startX,
-            startY,
+            initialIcon.x,
+            initialIcon.y,
             100,
             100,
         )
         .setStrokeStyle(4, 0xffcc00)
         .setDepth(20)
 
-        //Back button
-        const backButtonBg = this.add.rectangle(centerX, 475, 220, 60, 0x222222)
-        .setStrokeStyle(3, 0xffcc00)
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true})
+        // Scroll arrows on the right side
+        const arrowX = width - 80
+        const arrowButtonWidth = 70
+        const arrowButtonHeight = 70
+        const upArrowY = startY + 40
+        const downArrowY = startY + (this.maxVisibleRows - 1) * spacingY + 40
 
-        backButtonBg.on("pointerdown", () => this.scene.start("mainmenu"))
+        this.upArrowBg = this.add.rectangle(arrowX, upArrowY, arrowButtonWidth, arrowButtonHeight, 0x222222)
+            .setStrokeStyle(3, 0xffcc00)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on("pointerdown", () => this.scrollUnlockables(-1))
 
-        this.add.text(centerX, 475, "HOME", {
+        this.add.text(arrowX, upArrowY, "⇧", {
+            fontSize: "36px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffffff",
+        }).setOrigin(0.5)
+
+        this.downArrowBg = this.add.rectangle(arrowX, downArrowY, arrowButtonWidth, arrowButtonHeight, 0x222222)
+            .setStrokeStyle(3, 0xffcc00)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on("pointerdown", () => this.scrollUnlockables(1))
+
+        this.add.text(arrowX, downArrowY, "⇩", {
+            fontSize: "36px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffffff",
+        }).setOrigin(0.5)
+
+        // Selected unlockable info box to the left of Home
+        const infoBoxWidth = 380
+        const infoBoxHeight = 100
+        const infoBoxX = centerX - 150
+        const infoBoxY = 475
+
+        this.add.rectangle(infoBoxX, infoBoxY, infoBoxWidth, infoBoxHeight, 0x222222)
+            .setStrokeStyle(3, 0xffcc00)
+            .setOrigin(0.5)
+
+        this.selectedInfoName = this.add.text(infoBoxX, infoBoxY - 35, "", {
+            fontSize: "24px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffffff",
+            wordWrap: { width: infoBoxWidth - 24 },
+        }).setOrigin(0.5, 0)
+
+        this.selectedInfoDesc = this.add.text(infoBoxX, infoBoxY - 10, "", {
+            fontSize: "18px",
+            fontFamily: `Georgia, serif`,
+            color: "#cccccc",
+            align: "center",
+            wordWrap: { width: infoBoxWidth - 24 },
+        }).setOrigin(0.5, 0)
+
+        this.updateSelectedInfo()
+
+        this.add.rectangle(centerX + 190, 475, 220, 60, 0x222222)
+            .setStrokeStyle(3, 0xffcc00)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on("pointerdown", () => this.scene.start("mainmenu"))
+
+        this.add.text(centerX + 190, 475, "HOME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
         }).setOrigin(0.5)
+
+        this.updateScrollArrows(this.upArrowBg, this.downArrowBg)
+    }
+
+    renderUnlockablePage() {
+        const startIndex = this.rowOffset * this.iconsPerRow
+        let firstVisibleIcon: Phaser.GameObjects.Image | undefined = undefined
+
+        for (let slotIndex = 0; slotIndex < this.visibleIcons.length; slotIndex++) {
+            const icon = this.visibleIcons[slotIndex]
+            const unlockable = this.unlockables[startIndex + slotIndex]
+            if (unlockable) {
+                const unlocked = this.isUnlockableUnlocked(unlockable)
+                icon.setTexture(unlockable.iconKey)
+                    .setData("unlockable", unlockable)
+                    .setVisible(true)
+                    .setAlpha(unlocked ? 1 : 0.5)
+
+                if (unlocked) {
+                    icon.clearTint()
+                } else {
+                    icon.setTint(0x999999)
+                }
+
+                if (!firstVisibleIcon) {
+                    firstVisibleIcon = icon
+                }
+            } else {
+                icon.setVisible(false)
+                icon.setData("unlockable", undefined)
+            }
+        }
+
+        const selectedIcon = this.visibleIcons.find(icon => {
+            const unlockable = icon.getData("unlockable") as typeof this.unlockables[number]
+            return unlockable && unlockable.key === this.selectedUnlockable
+        })
+
+        if (!selectedIcon && firstVisibleIcon) {
+            const unlockable = firstVisibleIcon.getData("unlockable") as typeof this.unlockables[number]
+            if (unlockable) {
+                this.selectedUnlockable = unlockable.key
+            }
+        }
+
+        if (selectedIcon && this.unlockableOutline) {
+            this.updateUnlockableOutline(selectedIcon)
+        } else if (firstVisibleIcon && this.unlockableOutline) {
+            this.unlockableOutline.setPosition(firstVisibleIcon.x, firstVisibleIcon.y)
+        }
+    }
+
+    scrollUnlockables(direction: number) {
+        const maxRowOffset = Math.max(0, Math.ceil(this.unlockables.length / this.iconsPerRow) - this.maxVisibleRows)
+        this.rowOffset = Phaser.Math.Clamp(this.rowOffset + direction, 0, maxRowOffset)
+        this.renderUnlockablePage()
+        this.updateSelectedInfo()
+        this.updateScrollArrows(this.upArrowBg, this.downArrowBg)
+    }
+
+    updateSelectedInfo() {
+        const selected = this.unlockables.find(item => item.key === this.selectedUnlockable)
+            ?? this.unlockables.find(item => item.key === "slash")
+            ?? this.unlockables[0]
+
+        const unlocked = this.isUnlockableUnlocked(selected)
+        this.selectedInfoName.setText(selected.name)
+        this.selectedInfoDesc.setText(unlocked ? selected.desc : selected.unlock?.text ?? selected.desc)
+    }
+
+    isUnlockableUnlocked(unlockable: typeof this.unlockables[number]) {
+        if (!unlockable.unlock) {
+            return true
+        }
+
+        if (this.saveManager.isSkillUnlocked(unlockable.key)) {
+            return true
+        }
+
+        const unlock = unlockable.unlock
+        if (unlock.type === "caveTotalScore") {
+            return this.saveManager.getTotalScore() >= Number(unlock.value)
+        }
+
+        if (unlock.type === "snowTotalScore") {
+            return this.saveManager.getTotalScore("snow") >= Number(unlock.value)
+        }
+
+        if (unlock.type === "bossKills") {
+            const req = unlock.value
+            if (typeof req === "object") {
+                for (const bossKey in req) {
+                    if (this.saveManager.getBossKills(bossKey) < Number((req as any)[bossKey])) {
+                        return false
+                    }
+                }
+                return true
+            }
+            return false
+        }
+
+        return false
+    }
+
+    updateScrollArrows(upArrowBg: Phaser.GameObjects.Rectangle, downArrowBg: Phaser.GameObjects.Rectangle) {
+        const maxRowOffset = Math.max(0, Math.ceil(this.unlockables.length / this.iconsPerRow) - this.maxVisibleRows)
+        upArrowBg.setAlpha(this.rowOffset <= 0 ? 0.4 : 1)
+        downArrowBg.setAlpha(this.rowOffset >= maxRowOffset ? 0.4 : 1)
     }
 
     updateUnlockableOutline(unlockable: Phaser.GameObjects.Image) {

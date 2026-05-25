@@ -7,12 +7,12 @@ export default class Boss8MechC extends BossMechanic {
     config = {
         id: "teleport-triple-rectangle-player",
         name: "Triple Dimensional Rend",
-        castTime: 1000,
-        castDuration: 3000,
+        castTime: 1500,
+        castDuration: 1500,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 100,
+        range: 600,
         width: 130,
     }
 
@@ -20,17 +20,14 @@ export default class Boss8MechC extends BossMechanic {
 
     onCastStart() {
         //Teleport to player
-        this.boss.body?.stop()
-
         this.scene.tweens.add({
             targets: this.boss,
             x: this.player.x,
             y: this.player.y,
             duration: 300,
             ease: "Sine.easeInOut",
-            onStart: () => this.boss.body?.stop(),
             onComplete: () => {
-                //Draw 3 rectangles around player
+                //Draw 3 rectangles around boss
                 const angle1 = Phaser.Math.DegToRad(0)
                 const angle2 = Phaser.Math.DegToRad(120)
                 const angle3 = Phaser.Math.DegToRad(240)
@@ -42,7 +39,7 @@ export default class Boss8MechC extends BossMechanic {
                     this.config.width,
                     this.config.range
                 )
-                telegraph1.graphics.setPosition(this.player.x, this.player.y)
+                telegraph1.graphics.setPosition(this.boss.x, this.boss.y)
                 telegraph1.graphics.setRotation(angle1)
 
                 const telegraph2 = new RectangleTelegraph(
@@ -52,7 +49,7 @@ export default class Boss8MechC extends BossMechanic {
                     this.config.width,
                     this.config.range
                 )
-                telegraph2.graphics.setPosition(this.player.x, this.player.y)
+                telegraph2.graphics.setPosition(this.boss.x, this.boss.y)
                 telegraph2.graphics.setRotation(angle2)
 
                 const telegraph3 = new RectangleTelegraph(
@@ -62,7 +59,7 @@ export default class Boss8MechC extends BossMechanic {
                     this.config.width,
                     this.config.range
                 )
-                telegraph3.graphics.setPosition(this.player.x, this.player.y)
+                telegraph3.graphics.setPosition(this.boss.x, this.boss.y)
                 telegraph3.graphics.setRotation(angle3)
 
                 this.telegraphs = [telegraph1, telegraph2, telegraph3]

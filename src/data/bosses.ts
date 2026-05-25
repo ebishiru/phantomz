@@ -66,7 +66,7 @@ export const Bosses = [
         name: "Wyrm",
         level: "cave",
         spriteKey: "boss1",
-        speed: 25,
+        speed: 40,
         hurtRadius: 80,
         mechanics: [
             Boss1MechA,
