@@ -99,5 +99,12 @@ export const skills = [
             value: { boss10: 5 },
             text: "Defeat Pure Knight 5 times.",
         }
+    },
+    {
+        key: "gust",
+        name: "Gust",
+        iconKey: "gust-icon",
+        desc: "Unleash a gust of wind that knocks you back",
+        upgrades: upgrades.gust,
     }
 ]

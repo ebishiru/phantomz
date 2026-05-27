@@ -13,6 +13,7 @@ import VoltSkill from "../skills/VoltSkill";
 import RestorationSkill from "../skills/RestorationSkill";
 import WardSkill from "../skills/WardSkill";
 import JavelinSkill from "../skills/JavelinSkill";
+import GustSkill from "../skills/GustSkill";
 
 export function createSkill(
     key: string,
@@ -32,6 +33,7 @@ export function createSkill(
         case "restoration": return new RestorationSkill(scene, player)
         case "ward": return new WardSkill(scene, player)
         case "javelin": return new JavelinSkill(scene, player)
+        case "gust": return new GustSkill(scene, player)
         default: return null
     }
 }
