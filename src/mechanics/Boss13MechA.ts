@@ -7,12 +7,12 @@ export default class Boss13MechA extends BossMechanic {
     config = {
         id: "delay-circle-player",
         name: "Doom Circle",
-        castTime: 1000,
-        castDuration: 1000,
+        castTime: 1200,
+        castDuration: 1200,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
-        range: 90,
+        range: 105,
         width: 0,
     }
 
