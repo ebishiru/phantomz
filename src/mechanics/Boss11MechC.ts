@@ -40,7 +40,7 @@ export default class Boss11MechC extends BossMechanic {
         }
 
         //Boss heals
-        this.boss.heal(this.config.damage/2)
+        this.boss.heal(this.config.damage/4)
 
         this.telegraph?.destroy()
         this.telegraph = undefined

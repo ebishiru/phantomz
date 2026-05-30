@@ -30,7 +30,7 @@ export default class Boss9MechA extends BossMechanic {
         const perpendicular = this.getPerpendicularDirections(firstDirection)
         const secondDirection = Phaser.Utils.Array.GetRandom(perpendicular)
 
-        this.config.name = `${firstDirection}ern Infestation with Reinforcements`
+        this.config.name = `${firstDirection}ern Reinforcements`
 
         const firstRect = this.getRectangleFromDirection(firstDirection)
         const secondRect = this.getRectangleFromDirection(secondDirection)

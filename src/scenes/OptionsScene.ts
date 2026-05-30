@@ -67,6 +67,22 @@ export default class OptionsScene extends Phaser.Scene {
         .setInteractive({ useHandCursor: true });
 
         if (this.fromGame) {
+            // Quit Button - top-left outside the options box
+            const quitButtonBg = this.add.rectangle(100, 70, 160, 50, 0x222222)
+                .setStrokeStyle(3, 0xffcc00)
+                .setOrigin(0.5)
+                .setInteractive({ useHandCursor: true})
+
+            quitButtonBg.on("pointerup", () => this.quit())
+
+            this.add.text(100, 70, "QUIT", {
+                fontSize: "20px",
+                fontFamily: "Georgia, serif",
+                color: "#ff0000",
+            })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
+
             this.displaySkillSummary();
         }
 
@@ -116,26 +132,39 @@ export default class OptionsScene extends Phaser.Scene {
     displaySkillSummary() {
 
         const gameScene = this.scene.get("game") as GameScene
+        const { width, height } = this.scale;
 
-        let y = 320
-        const startX = 300
+        const panelWidth = width * 0.75;
+        const startY = height/2 - 25; // Start position between volume bar and back button
+        const centerX = width / 2;
+        let currentY = startY;
 
         gameScene.skillSystem.skills.forEach((skill:any)=>{
 
             if(!skill.enabled) return
 
-            this.add.image(startX - 80, y, skill.iconKey)
-            .setScale(2)
+            // Image positioned on the left
+            const imageX = centerX - 120;
+            this.add.image(imageX, currentY, skill.iconKey)
+                .setScale(2);
 
-            const text = `${skill.name}  Dmg:${skill.getDamage().toFixed(0)}  CD:${(skill.getCooldown()/1000).toFixed(2)}`
+            // Skill name in yellow
+            this.add.text(centerX - 60, currentY, skill.name, {
+                fontSize: "16px",
+                color: "#ffcc00",
+                fontFamily: "Georgia"
+            }).setOrigin(0, 0.5);
 
-            this.add.text(400,y,text,{
-                fontSize:"14px",
-                color:"#ffffff",
-                fontFamily:"Georgia"
-            }).setOrigin(0.5)
+            // Stats in white
+            const stats = `  Dmg:${skill.getDamage().toFixed(0)}  CD:${(skill.getCooldown()/1000).toFixed(2)}`;
+            
+            this.add.text(centerX + 30, currentY, stats, {
+                fontSize: "16px",
+                color: "#ffffff",
+                fontFamily: "Georgia"
+            }).setOrigin(0, 0.5);
 
-            y += 26
+            currentY += 35;
         })
     }
 
@@ -146,5 +175,19 @@ export default class OptionsScene extends Phaser.Scene {
             this.scene.resume("game");
         }
         this.scene.stop();
+    }
+
+    quit() {
+        // Hide mobile controls
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "none";
+
+        // Stop all game-related scenes
+        this.scene.stop("options");
+        this.scene.stop("level-up");
+        this.scene.stop("game");
+
+        // Start main menu
+        this.scene.start("mainmenu");
     }
 }

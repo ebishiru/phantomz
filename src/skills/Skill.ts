@@ -13,6 +13,7 @@ export default class Skill {
     scene: Phaser.Scene;
     iconKey!: string;
     player: any;
+    level: number = 1;
 
     constructor(
         scene: Phaser.Scene,

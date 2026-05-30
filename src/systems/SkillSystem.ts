@@ -18,6 +18,13 @@ export default class SkillSystem {
     }
 
     unlockSkill(key: string) {
+        // Check if skill already exists and increment level
+        const existingSkill = this.skills.find(s => s.id === key);
+        if (existingSkill) {
+            existingSkill.level++;
+            return;
+        }
+
         const skill = createSkill(key, this.scene, this.player);
         if (!skill) return;
 

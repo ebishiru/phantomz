@@ -15,6 +15,7 @@ export default class SkillCooldown {
 
     loadingBorder: Phaser.GameObjects.Image
     readyBorder: Phaser.GameObjects.Image
+    levelText: Phaser.GameObjects.Text
 
     constructor(
         scene: Phaser.Scene,
@@ -50,14 +51,31 @@ export default class SkillCooldown {
 
         this.fg = scene.add.graphics()
 
+        this.levelText = scene.add.text(
+            x + size / 4,
+            y - size / 4,
+            `${skill.level}`,
+            {
+                fontSize: "24px",
+                fontStyle: "bold",
+                color: "#ffd700",
+                stroke: "#000000",
+                strokeThickness: 3,
+            }
+        ).setOrigin(0.5)
+
         this.bg.setDepth(1)
         this.loadingBorder.setDepth(2)
         this.fg.setDepth(3)
         this.readyBorder.setDepth(4)
+        this.levelText.setDepth(5)
     }
 
     update() {
         if (!this.scene.scene.isActive()) return
+
+        // Update level text
+        this.levelText.setText(`${this.skill.level}`)
 
         // Use the new cooldown manager
         const remaining = CooldownManager.getRemaining(this.skill.id)
@@ -88,5 +106,6 @@ export default class SkillCooldown {
         this.fg.destroy()
         this.loadingBorder.destroy()
         this.readyBorder.destroy()
+        this.levelText.destroy()
     }
 }
