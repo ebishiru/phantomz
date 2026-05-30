@@ -96,8 +96,8 @@ export const skills = [
         upgrades: upgrades.javelin,
         unlock: {
             type: "bossKills",
-            value: { boss10: 5 },
-            text: "Defeat Pure Knight 5 times.",
+            value: { boss10: 3 },
+            text: "Defeat Pure Knight 3 times. (cave)",
         }
     },
     {

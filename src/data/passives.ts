@@ -52,8 +52,8 @@ export const passives = [
         },
         unlock: {
             type: "bossKills",
-            value: { boss20: 5 },
-            text: "Defeat Undying Knight 5 times.",
+            value: { boss20: 3 },
+            text: "Defeat Undying Knight 3 times. (snow)",
         }
     },
     {
