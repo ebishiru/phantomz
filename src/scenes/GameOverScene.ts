@@ -21,6 +21,10 @@ export default class GameOverScene extends Phaser.Scene {
         //Play Game Over music
         playMusic(this, "gameOverMusic")
 
+        // Ensure mobile controls DOM is hidden immediately on game over
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "none";
+
         // Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 

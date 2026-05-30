@@ -72,8 +72,8 @@ export const skills = [
         upgrades: upgrades.restoration,
         unlock: {
             type: "caveTotalScore",
-            value: 3000,
-            text: "Score 3000 pts in cave.",
+            value: 2000,
+            text: "Score 2000 pts in cave.",
         }
     },
     {
@@ -84,8 +84,8 @@ export const skills = [
         upgrades: upgrades.ward,
         unlock: {
             type: "snowTotalScore",
-            value: 3000,
-            text: "Score 3000 pts in snow.",
+            value: 2000,
+            text: "Score 2000 pts in snow.",
         }
     },
     {
@@ -106,5 +106,10 @@ export const skills = [
         iconKey: "gust-icon",
         desc: "Unleash a gust of wind that knocks you back",
         upgrades: upgrades.gust,
-    }
+        unlock: {
+            type: "caveTotalScore",
+            value: 4000,
+            text: "Score 4000 pts in cave.",
+        }
+    },
 ]

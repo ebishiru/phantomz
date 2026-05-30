@@ -20,7 +20,7 @@ export default class GameScene extends Phaser.Scene {
     skillSystem!: SkillSystem
     expSystem!: ExpSystem
     uiSystem!: UISystem
-    mobileControls!: MobileControls
+    mobileControls?: MobileControls
     
     skillKeys!: Phaser.Input.Keyboard.Key[]
     level: string = "cave"
