@@ -134,7 +134,6 @@ export default class OptionsScene extends Phaser.Scene {
         const gameScene = this.scene.get("game") as GameScene
         const { width, height } = this.scale;
 
-        const panelWidth = width * 0.75;
         const startY = height/2 - 25; // Start position between volume bar and back button
         const centerX = width / 2;
         let currentY = startY;
