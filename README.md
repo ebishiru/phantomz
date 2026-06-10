@@ -84,6 +84,12 @@ To ADD:
 - Laser: Bounce off wall to deal damage.
 [Total: 12000pts]
 
+- Spinner Cannon: Randomly blast in a direction.
 
+- Water Clone: Leave an exploding clone behind and teleport away.
+
+- Rapier: Two cleaves and a thrust
+
+- Boomerange: Attack in a figure 8.
 ```
 
