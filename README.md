@@ -63,20 +63,20 @@ To ADD:
 - Blood: AOE around player, Use HP to deal dmg
 [Total: 15000pts]
 
-- Yo-yo: Starts at 1 dmg, increases with each hit.
+- Yo-yo: Line attack that attacks the front and back.
 [Total: 9000pts]
 
 - Javelin: Ranged, throw javelin set distance. Must be picked up to reset cd. 
-[Highscore: 2500pts]
+[Highscore: 2500pts] *DONE
 
 - Restoration: Instantly heal player, long cd
-[Highscore: 500pts]
+[Highscore: 500pts] *DONE
 
 - Ward: Invulnerability for 1s.
-[Highscore: 1500pts]
+[Highscore: 1500pts] *DONE
 
 - Gust: Cone attack with knockback
-[Total: 3000pts]
+[Total: 3000pts] *DONE
 
 - Ironburst: shoot 3 pellets in direction
 [Total: 6000pts]
