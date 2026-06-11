@@ -142,5 +142,16 @@ export const upgrades = {
             desc: "Cooldown reduced by 300ms",
             apply: (skill: Skill) => skill.buffCooldown(300)
         }
+    ],
+
+    zephyr: [
+        {
+            desc: "Damage +2",
+            apply: (skill: Skill) => skill.buffDamage(2)
+        },
+        {
+            desc: "Cooldown reduced by 200ms",
+            apply: (skill: Skill) => skill.buffCooldown(200)
+        }
     ]
 }

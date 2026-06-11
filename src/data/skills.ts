@@ -112,4 +112,11 @@ export const skills = [
             text: "Score 4000 pts in cave.",
         }
     },
+    {
+        key: "zephyr",
+        name: "Zephyr",
+        iconKey: "zephyr-icon",
+        desc: "Perform a maneuvre with your rapier",
+        upgrades: upgrades.zephyr,
+    },
 ]
