@@ -20,8 +20,8 @@ export default class ZephyrSkill extends Skill {
         this.updateFacing()
     
         //Slash1
-        const cone1StartAngle = this.facingAngle
-        const cone1EndAngle = this.facingAngle - Math.PI / 2
+        const cone1StartAngle = this.facingAngle + Math.PI / 4
+        const cone1EndAngle = this.facingAngle - Math.PI / 4
 
         const zephyrVFX1 = this.scene.add.sprite(this.player.x, this.player.y, "zephyr-vfx")
         zephyrVFX1.setOrigin(0, 0.5)
@@ -57,7 +57,7 @@ export default class ZephyrSkill extends Skill {
             if (distance > this.getRange() + boss.hurtRadius) return
 
             const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
-            if (diff > 0 || Math.abs(diff) > Math.PI / 2) return
+            if (Math.abs(diff) > Math.PI / 4) return
 
             boss.takeDamage(this.getDamage())
         }
@@ -66,8 +66,8 @@ export default class ZephyrSkill extends Skill {
 
         //Slash2
         this.scene.time.delayedCall(500, () => {
-            const cone2StartAngle = this.facingAngle
-            const cone2EndAngle = this.facingAngle + Math.PI / 2
+            const cone2StartAngle = this.facingAngle - Math.PI / 4
+            const cone2EndAngle = this.facingAngle + Math.PI / 4
 
             const zephyrVFX2 = this.scene.add.sprite(this.player.x, this.player.y, "zephyr-vfx")
             zephyrVFX2.setOrigin(0, 0.5)
@@ -102,7 +102,7 @@ export default class ZephyrSkill extends Skill {
                 if (distance > this.getRange() + boss.hurtRadius) return
 
                 const diff = Phaser.Math.Angle.Wrap(Math.atan2(dy, dx) - this.facingAngle)
-                if (diff < 0 || Math.abs(diff) > Math.PI / 2) return
+                if (Math.abs(diff) > Math.PI / 4) return
 
                 boss.takeDamage(this.getDamage())
             }
@@ -121,7 +121,7 @@ export default class ZephyrSkill extends Skill {
             this.scene.tweens.add({
                 targets: zephyrVFX3,
                 alpha: 0,
-                duration: 100,
+                duration: 150,
                 ease: "Sine-easeOut",
                 onComplete: () => zephyrVFX3.destroy()
             })
