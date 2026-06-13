@@ -6,7 +6,7 @@ export default class GameSetupScene extends Phaser.Scene {
     skills = [
         { key: "slash", icon: "slash-icon"},
         { key: "thrust", icon: "thrust-icon"},
-        { key: "zephyr", icon: "zephyr-icon"}
+        { key: "mirage", icon: "mirage-icon"}
     ]
 
     selectedCharacter: string = "player1"

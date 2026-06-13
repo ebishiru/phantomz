@@ -119,4 +119,11 @@ export const skills = [
         desc: "Perform a maneuvre with your rapier",
         upgrades: upgrades.zephyr,
     },
+    {
+        key: "mirage",
+        name: "Mirage",
+        iconKey: "mirage-icon",
+        desc: "Leave a water clone behind and teleport away",
+        upgrades: upgrades.mirage,
+    }
 ]

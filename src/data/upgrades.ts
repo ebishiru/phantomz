@@ -153,5 +153,16 @@ export const upgrades = {
             desc: "Cooldown reduced by 200ms",
             apply: (skill: Skill) => skill.buffCooldown(200)
         }
-    ]
+    ],
+
+    mirage: [
+        {
+            desc: "Damage +7",
+            apply: (skill: Skill) => skill.buffDamage(7)
+        },
+        {
+            desc: "Cooldown reduced by 500ms",
+            apply: (skill: Skill) => skill.buffCooldown(500)
+        }
+    ],
 }

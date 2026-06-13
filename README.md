@@ -86,7 +86,7 @@ To ADD:
 
 - Quasar: Randomly blast in a direction.
 
-- Mirage: Leave an exploding clone behind and teleport away.
+- Mirage: Leave a water clone and teleport away.
 
 - Zephyr: Two cleaves and a thrust
 
