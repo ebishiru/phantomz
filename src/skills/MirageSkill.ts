@@ -30,7 +30,7 @@ export default class MirageSkill extends Skill {
         const mirageVFX = this.scene.add.sprite(originX, originY, "mirage-vfx")
         mirageVFX.setOrigin(0.5, 0.5)
         mirageVFX.setAlpha(0.75)
-        mirageVFX.setScale(5)
+        mirageVFX.setScale(2)
         mirageVFX.setDepth(10)
 
         this.scene.time.delayedCall(500, () => {
