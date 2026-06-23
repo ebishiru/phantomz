@@ -83,9 +83,9 @@ export const skills = [
         desc: "Create a temporary shield that blocks all damage",
         upgrades: upgrades.ward,
         unlock: {
-            type: "snowTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in snow.",
+            type: "bossKills",
+            value: { boss5: 3},
+            text: "Defeat Black Knight 3 times. (cave)",
         }
     },
     {
@@ -118,6 +118,11 @@ export const skills = [
         iconKey: "zephyr-icon",
         desc: "Perform a maneuvre with your rapier",
         upgrades: upgrades.zephyr,
+        unlock: {
+            type: "caveTotalScore",
+            value: 8000,
+            text: "Score 8000 pts in cave.",
+        }
     },
     {
         key: "mirage",
@@ -125,6 +130,11 @@ export const skills = [
         iconKey: "mirage-icon",
         desc: "Leave a water clone behind and teleport away",
         upgrades: upgrades.mirage,
+        unlock: {
+            type: "snowTotalScore",
+            value: 2000,
+            text: "Score 2000 pts in snow.",
+        }
     },
     {
         key: "quasar",
@@ -132,5 +142,10 @@ export const skills = [
         iconKey: "quasar-icon",
         desc: "Fire a beam in a given direction",
         upgrades: upgrades.quasar,
+        unlock: {
+            type: "snowTotalScore",
+            value: 8000,
+            text: "Score 8000 pts in snow.",
+        }
     },
 ]

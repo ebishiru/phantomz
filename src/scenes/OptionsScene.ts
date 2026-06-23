@@ -63,8 +63,7 @@ export default class OptionsScene extends Phaser.Scene {
             fontFamily: "Georgia, serif",
             color: "#ffffff",
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true });
+        .setOrigin(0.5);
 
         if (this.fromGame) {
             // Quit Button - top-left outside the options box
@@ -73,15 +72,14 @@ export default class OptionsScene extends Phaser.Scene {
                 .setOrigin(0.5)
                 .setInteractive({ useHandCursor: true})
 
-            quitButtonBg.on("pointerup", () => this.quit())
+            quitButtonBg.on("pointerdown", () => this.quit())
 
             this.add.text(100, 70, "QUIT", {
                 fontSize: "20px",
                 fontFamily: "Georgia, serif",
                 color: "#ff0000",
             })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true });
+            .setOrigin(0.5);
 
             this.displaySkillSummary();
         }
