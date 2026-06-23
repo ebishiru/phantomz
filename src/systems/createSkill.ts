@@ -16,6 +16,7 @@ import JavelinSkill from "../skills/JavelinSkill";
 import GustSkill from "../skills/GustSkill";
 import ZephyrSkill from "../skills/ZephyrSkill";
 import MirageSkill from "../skills/MirageSkill";
+import QuasarSkill from "../skills/QuasarSkill";
 
 export function createSkill(
     key: string,
@@ -38,6 +39,7 @@ export function createSkill(
         case "gust": return new GustSkill(scene, player)
         case "zephyr": return new ZephyrSkill(scene, player)
         case "mirage": return new MirageSkill(scene, player)
+        case "quasar": return new QuasarSkill(scene, player)
         default: return null
     }
 }

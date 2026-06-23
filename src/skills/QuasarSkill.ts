@@ -59,7 +59,70 @@ export default class QuasarSkill extends Skill {
             this.scene.events.off("update", follow)
             container.destroy()
 
-            
+            const bounds = this.scene.physics.world.bounds
+            const angle = Phaser.Math.DegToRad(direction4)
+            const dx = Math.cos(angle)
+            const dy = Math.sin(angle)
+            const width = this.getRange()
+
+            let startX = this.player.x + dx * 15
+            let startY = this.player.y + dy * 15
+            let endX = startX
+            let endY = startY
+
+            if (direction4 === 0) {
+                endX = bounds.right
+                endY = this.player.y
+            } else if (direction4 === 180) {
+                endX = bounds.left
+                endY = this.player.y
+            } else if (direction4 === 90) {
+                endX = this.player.x
+                endY = bounds.bottom
+            } else if (direction4 === 270) {
+                endX = this.player.x
+                endY = bounds.top
+            }
+
+            const lineLength = Phaser.Math.Distance.Between(startX, startY, endX, endY)
+
+            const quasar3VFX = this.scene.add.sprite(startX, startY, "quasar3-vfx")
+            quasar3VFX.setOrigin(0, 0.5)
+            quasar3VFX.setRotation(angle)
+            quasar3VFX.setDepth(10)
+            quasar3VFX.setAlpha(0.85)
+            quasar3VFX.setDisplaySize(Math.max(lineLength, 1), width)
+
+            const quasar2VFX = this.scene.add.sprite(
+                this.player.x + dx * 50,
+                this.player.y + dy * 50,
+                "quasar2-vfx"
+            )
+            quasar2VFX.setOrigin(0.5, 0.5)
+            quasar2VFX.setRotation(angle)
+            quasar2VFX.setDepth(10.1)
+            quasar2VFX.setAlpha(0.9)
+
+            this.scene.tweens.add({
+                targets: [quasar3VFX, quasar2VFX],
+                alpha: 0,
+                duration: 400,
+                ease: "Cubic.easeOut",
+                onComplete: () => {
+                    quasar3VFX.destroy()
+                    quasar2VFX.destroy()
+                }
+            })
+
+            const boss = (this.scene as any).bossManager?.boss
+            if (!boss || !boss.active) return
+
+            const attackLine = new Phaser.Geom.Line(startX, startY, endX, endY)
+            const bossCircle = new Phaser.Geom.Circle(boss.x, boss.y, boss.hurtRadius)
+
+            if (Phaser.Geom.Intersects.LineToCircle(attackLine, bossCircle)) {
+                boss.takeDamage(this.getDamage())
+            }
         })
     }
 }

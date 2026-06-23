@@ -73,6 +73,7 @@ export default class PreloadScene extends Phaser.Scene {
             "gust",
             "zephyr",
             "mirage",
+            "quasar"
         ]
 
         skillKeys.forEach(key => {
@@ -86,6 +87,8 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
         this.load.image("zephyr2-vfx", "assets/zephyr2-vfx.png")        //THRUST VFX
         this.load.image("mirage2-vfx", "assets/mirage2-vfx.png")        //DMG VFX
+        this.load.image("quasar2-vfx", "assets/quasar2-vfx.png")        //DMG VFX
+        this.load.image("quasar3-vfx", "assets/quasar3-vfx.png")        //DMG 2 VFX
     }
 
     loadPassives() {

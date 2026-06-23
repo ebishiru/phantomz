@@ -165,4 +165,15 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffCooldown(500)
         }
     ],
+
+    quasar: [
+        {
+            desc: "Damage +7",
+            apply: (skill: Skill) => skill.buffDamage(7)
+        },
+        {
+            desc: "Cooldown reduced by 500ms",
+            apply: (skill: Skill) => skill.buffCooldown(500)
+        }
+    ],
 }

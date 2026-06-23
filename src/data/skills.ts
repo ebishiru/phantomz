@@ -125,5 +125,12 @@ export const skills = [
         iconKey: "mirage-icon",
         desc: "Leave a water clone behind and teleport away",
         upgrades: upgrades.mirage,
-    }
+    },
+    {
+        key: "quasar",
+        name: "Quasar",
+        iconKey: "quasar-icon",
+        desc: "Fire a beam in a given direction",
+        upgrades: upgrades.quasar,
+    },
 ]
