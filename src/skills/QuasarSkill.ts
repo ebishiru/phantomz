@@ -5,14 +5,14 @@ export default class QuasarSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "quasar", "Quasar", 40, 6000, 30)
+        super(scene, player, "quasar", "Quasar", 45, 6000, 30)
         this.iconKey = "quasar-icon"
         this.player = player
     }
 
     activate() {
         //Timing of VFX and hit check
-        const timings = [ 150, 300, 450, 1450 ]
+        const timings = [ 150, 300, 450, 1950 ]
 
         //Choose a random direction
         const directions = [ 0, 90, 180, 270 ]
@@ -65,8 +65,8 @@ export default class QuasarSkill extends Skill {
             const dy = Math.sin(angle)
             const width = this.getRange()
 
-            let startX = this.player.x + dx * 15
-            let startY = this.player.y + dy * 15
+            let startX = this.player.x + dx * 30
+            let startY = this.player.y + dy * 30
             let endX = startX
             let endY = startY
 
@@ -101,6 +101,7 @@ export default class QuasarSkill extends Skill {
             quasar2VFX.setOrigin(0.5, 0.5)
             quasar2VFX.setRotation(angle)
             quasar2VFX.setDepth(10.1)
+            quasar2VFX.setScale(3)
             quasar2VFX.setAlpha(0.9)
 
             this.scene.tweens.add({
