@@ -84,8 +84,8 @@ export const skills = [
         upgrades: upgrades.ward,
         unlock: {
             type: "bossKills",
-            value: { boss5: 3},
-            text: "Defeat Black Knight 3 times. (cave)",
+            value: { boss5: 1},
+            text: "Defeat Black Knight. (cave)",
         }
     },
     {
@@ -96,8 +96,8 @@ export const skills = [
         upgrades: upgrades.javelin,
         unlock: {
             type: "bossKills",
-            value: { boss10: 3 },
-            text: "Defeat Pure Knight 3 times. (cave)",
+            value: { boss10: 1 },
+            text: "Defeat Pure Knight. (cave)",
         }
     },
     {

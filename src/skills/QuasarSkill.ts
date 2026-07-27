@@ -5,7 +5,7 @@ export default class QuasarSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "quasar", "Quasar", 45, 6000, 30)
+        super(scene, player, "quasar", "Quasar", 38, 6500, 30)
         this.iconKey = "quasar-icon"
         this.player = player
     }
