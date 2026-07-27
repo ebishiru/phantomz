@@ -25,23 +25,24 @@ export default class PulseSkill extends Skill {
             container.destroy()
             this.scene.events.off('update', follow)
         })
-        
-        //VFX
-        const pulseVFX = this.scene.add.sprite(container.x, container.y, "pulse-vfx")
-        pulseVFX.setOrigin(0.5, 0.5)
-        pulseVFX.setAlpha(1)
-        pulseVFX.setScale(0)
-        pulseVFX.setDepth(10)
-        container.add(pulseVFX)
 
-        this.scene.tweens.add({
-            targets: pulseVFX,
-            scale: this.getRange() / 8,
-            alpha: 0.5,
-            duration: 400,
-            ease: "Sine.easeOut",
-            onComplete: () => pulseVFX.destroy()
-        })
+        const spawnPulseVFX = () => {
+            const pulseVFX = this.scene.add.sprite(0, 0, "pulse-vfx")
+            pulseVFX.setOrigin(0.5, 0.5)
+            pulseVFX.setAlpha(1)
+            pulseVFX.setScale(0)
+            pulseVFX.setDepth(10)
+            container.add(pulseVFX)
+
+            this.scene.tweens.add({
+                targets: pulseVFX,
+                scale: this.getRange() / 8,
+                alpha: 0.5,
+                duration: 400,
+                ease: "Sine.easeOut",
+                onComplete: () => pulseVFX.destroy()
+            })
+        }
 
         //Check hit
         const hitBoss = () => {
@@ -67,10 +68,17 @@ export default class PulseSkill extends Skill {
 
         }
 
-        //hit once immediately, then every 0.5s
-        hitBoss()
+        // hit once immediately, then every 0.5s
+        const pulseLoop = () => {
+            hitBoss()
+            spawnPulseVFX()
+        }
+
+        pulseLoop()
         this.scene.time.addEvent({
-            delay: 500, repeat: 4, callback: hitBoss
+            delay: 500,
+            repeat: 4,
+            callback: pulseLoop
         })
     }
 }
