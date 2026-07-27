@@ -25,4 +25,7 @@ export const passiveUpgrades = {
     echo: {
         desc: "Increase echo change by another 5%."
     },
+    gourmet: {
+        desc: "Increase HP restoration by 5."
+    }
 }

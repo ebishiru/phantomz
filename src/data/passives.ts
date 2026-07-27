@@ -13,7 +13,7 @@ export const passives = [
     },
     {
         key: "strength",
-        name: "Strength",
+        name: "Power",
         iconKey: "strength-icon",
         desc: "Deal an extra +2 damage to all skills.",
         maxLevel: 5,
@@ -83,7 +83,7 @@ export const passives = [
     },
     {
         key: "echo",
-        name: "Echo",
+        name: "Lucky",
         iconKey: "echo-icon",
         desc: "Skills have a 5% chance of triggering twice.",
         maxLevel: 5,
@@ -94,6 +94,16 @@ export const passives = [
             type: "snowTotalScore",
             value: 6000,
             text: "Score 6000 pts in snow.",
+        }
+    },
+    {
+        key: "gourmet",
+        name: "Gourmet",
+        iconKey: "gourmet-icon",
+        desc: "Spawns a bread every minute that heals 20 HP.",
+        maxLevel: 5,
+        apply: (player: any) => {
+            player.statModifiers.gourmetLevel += 1
         }
     }
 ]

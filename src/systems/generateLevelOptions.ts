@@ -84,6 +84,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
                 iconKey: skillData.iconKey,
                 type: "skillUpgrade",
                 apply: () => {
+                    existingSkill.level += 1
                     upgrade.apply(existingSkill)
                 }
             })

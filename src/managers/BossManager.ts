@@ -29,6 +29,10 @@ export default class BossManager {
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
 
+    // Gourmet Bread Passive
+    gourmetBreads: Phaser.Physics.Arcade.Image[] = [];
+    gourmetPickupRadius = 24;
+
     // Boss Progression
     currentMaxBossIndex = 0
     lastBossIndex: number | null = null
@@ -49,6 +53,7 @@ export default class BossManager {
         this.startBuffTimer();
         this.createTimerText();
         this.createBossKillText();
+        this.scene.events.on("update", this.updateGourmetBread, this);
     }
 
     resetBuffPool() {
@@ -74,6 +79,10 @@ export default class BossManager {
 
                 // Introduce harder bosses every minute
                 this.currentMaxBossIndex = Math.min(Bosses.length - 1, Math.floor(this.globalTimerSeconds / 60))
+
+                if (this.globalTimerSeconds > 0 && this.globalTimerSeconds % 60 === 0) {
+                    this.spawnGourmetBread()
+                }
             }
         });
 
@@ -86,6 +95,45 @@ export default class BossManager {
                     this.player.health += 1
                 }
             }
+        })
+    }
+
+    spawnGourmetBread() {
+        const gourmetLevel = this.player?.statModifiers?.gourmetLevel ?? 0
+        if (gourmetLevel < 1) return
+
+        const bounds = this.scene.physics.world.bounds
+        const spawnX = Phaser.Math.Between(bounds.left + 40, bounds.right - 40)
+        const spawnY = Phaser.Math.Between(bounds.top + 40, bounds.bottom - 40)
+
+        const bread = this.scene.physics.add.image(spawnX, spawnY, "gourmet-vfx")
+        bread.setScale(2)
+        bread.setDepth(8)
+        bread.setData("healAmount", 20 + (gourmetLevel - 1) * 10)
+        bread.setData("gourmetLevel", gourmetLevel)
+
+        this.gourmetBreads.push(bread)
+    }
+
+    updateGourmetBread() {
+        this.gourmetBreads = this.gourmetBreads.filter(bread => {
+            if (!bread.active) return false
+
+            const distance = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                bread.x,
+                bread.y
+            )
+
+            if (distance < this.gourmetPickupRadius) {
+                const healAmount = bread.getData("healAmount") as number
+                this.player.heal(healAmount)
+                bread.destroy()
+                return false
+            }
+
+            return true
         })
     }
 

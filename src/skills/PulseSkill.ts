@@ -14,16 +14,6 @@ export default class PulseSkill extends Skill {
         //Create container at player's location
         const container = this.scene.add.container(this.player.x, this.player.y)
 
-        //Graphics inside location
-        // const g = this.scene.add.graphics()
-        // g.lineStyle(2, 0x00ff00, 1)
-        // g.strokeCircle(0, 0, this.range)
-        // g.fillStyle(0x00ff00, 0.25)
-        // g.fillCircle(0, 0, this.range)
-        // g.alpha = 0
-
-        // container.add(g)
-
         //Make container follow player
         const follow = () => {
             container.x = this.player.x
@@ -36,6 +26,23 @@ export default class PulseSkill extends Skill {
             this.scene.events.off('update', follow)
         })
         
+        //VFX
+        const pulseVFX = this.scene.add.sprite(container.x, container.y, "pulse-vfx")
+        pulseVFX.setOrigin(0.5, 0.5)
+        pulseVFX.setAlpha(1)
+        pulseVFX.setScale(0)
+        pulseVFX.setDepth(10)
+        container.add(pulseVFX)
+
+        this.scene.tweens.add({
+            targets: pulseVFX,
+            scale: this.getRange() / 8,
+            alpha: 0.5,
+            duration: 400,
+            ease: "Sine.easeOut",
+            onComplete: () => pulseVFX.destroy()
+        })
+
         //Check hit
         const hitBoss = () => {
             const boss = (this.scene as any).bossManager?.boss
@@ -58,31 +65,6 @@ export default class PulseSkill extends Skill {
                 boss.takeDamage(this.getDamage())
             }
 
-            // this.scene.tweens.add({
-            //     targets: g,
-            //     alpha: { from: 0, to: 1},
-            //     duration: 100,
-            //     yoyo: true,
-            //     ease: 'Sine.easeInOut'
-            // })
-
-
-            //VFX
-            const pulseVFX = this.scene.add.sprite(0, 0, "pulse-vfx")
-            pulseVFX.setOrigin(0.5, 0.5)
-            pulseVFX.setAlpha(1)
-            pulseVFX.setScale(0)
-            pulseVFX.setDepth(10)
-            container.add(pulseVFX)
-
-            this.scene.tweens.add({
-                targets: pulseVFX,
-                scale: this.getRange() / 8,
-                alpha: 0.5,
-                duration: 400,
-                ease: "Sine.easeOut",
-                onComplete: () => pulseVFX.destroy()
-            })
         }
 
         //hit once immediately, then every 0.5s

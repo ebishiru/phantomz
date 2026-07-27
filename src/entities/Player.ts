@@ -21,6 +21,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         damageReductionFlat: 0,
         executionerLevel: 0,
         echoChance: 0, 
+        gourmetLevel: 0
     }
 
     skills: any[] = []

@@ -100,12 +100,15 @@ export default class PreloadScene extends Phaser.Scene {
             "haste",
             "executioner",
             "fortify",
-            "echo"
+            "echo",
+            "gourmet"
         ]
 
         passiveKeys.forEach(key => {
             this.load.image(`${key}-icon`, `assets/${key}-icon.png`)
         })
+
+        this.load.image("gourmet-vfx", "assets/gourmet-vfx.png")
     }
 
     loadUI() {
