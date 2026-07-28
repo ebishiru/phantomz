@@ -14,6 +14,8 @@ export default class Skill {
     iconKey!: string;
     player: any;
     level: number = 1;
+    private echoDamageMultiplier = 1;
+    private echoResetTimer?: Phaser.Time.TimerEvent;
 
     constructor(
         scene: Phaser.Scene,
@@ -44,13 +46,24 @@ export default class Skill {
         // Start cooldown
         CooldownManager.startCooldown(this.id, this.getCooldown());
 
+        const echoTriggered = Math.random() < this.player.statModifiers.echoChance;
+
+        if (this.echoResetTimer) {
+            this.echoResetTimer.remove(false);
+            this.echoResetTimer = undefined;
+        }
+
+        this.echoDamageMultiplier = echoTriggered ? 2 : 1;
+
         // Skill logic here
         this.activate();
 
-        // Echo chance (optional)
-        if (Math.random() < this.player.statModifiers.echoChance) {
-            this.activate();
+        if (echoTriggered) {
             this.triggerEchoVFX();
+            this.echoResetTimer = this.scene.time.delayedCall(Math.max(1000, this.getCooldown() * 0.5), () => {
+                this.echoDamageMultiplier = 1;
+                this.echoResetTimer = undefined;
+            });
         }
 
         return true;
@@ -86,7 +99,7 @@ export default class Skill {
             if (boss.hp / boss.maxHP <= threshold) final *= 1.25;
         }
 
-        return final;
+        return final * this.echoDamageMultiplier;
     }
 
     getCooldown() {

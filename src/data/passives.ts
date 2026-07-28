@@ -85,7 +85,7 @@ export const passives = [
         key: "echo",
         name: "Lucky",
         iconKey: "echo-icon",
-        desc: "Skills have a 5% chance of triggering twice.",
+        desc: "Skills have a 5% chance to deal double damage.",
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.echoChance += 0.05
