@@ -15,18 +15,22 @@ export default class SaveManager {
         this.data = this.load()
     }
 
+    private getDefaultData() {
+        return {
+            caveHighscore: 0,
+            caveTotalScore: 0,
+            snowHighscore: 0,
+            snowTotalScore: 0,
+            bossKills: {},
+            unlockedSkills: []
+        }
+    }
+
     load() {
         const raw = localStorage.getItem(SAVE_KEY)
 
         if (!raw) {
-            return {
-                caveHighscore: 0,
-                caveTotalScore: 0,
-                snowHighscore: 0,
-                snowTotalScore: 0,
-                bossKills: {},
-                unlockedSkills: []
-            }
+            return this.getDefaultData()
         }
 
         return JSON.parse(raw)
@@ -102,6 +106,6 @@ export default class SaveManager {
     //DATA RESET:
     reset() {
         localStorage.removeItem(SAVE_KEY)
-        this.data = this.load()
+        this.data = this.getDefaultData()
     }
 }

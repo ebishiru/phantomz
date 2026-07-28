@@ -132,8 +132,8 @@ export const skills = [
         upgrades: upgrades.mirage,
         unlock: {
             type: "snowTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in snow.",
+            value: 6000,
+            text: "Score 6000 pts in snow.",
         }
     },
     {

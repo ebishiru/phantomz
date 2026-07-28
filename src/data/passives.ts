@@ -49,11 +49,6 @@ export const passives = [
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.cooldownMultiplier *= 0.9
-        },
-        unlock: {
-            type: "bossKills",
-            value: { boss20: 3 },
-            text: "Defeat Undying Knight 3 times. (snow)",
         }
     },
     {
@@ -75,10 +70,15 @@ export const passives = [
         key: "fortify",
         name: "Fortify",
         iconKey: "fortify-icon",
-        desc: "Reduce all damage taken by 1.",
+        desc: "Reduce all damage taken by 2.",
         maxLevel: 5,
         apply: (player: any) => {
-            player.statModifiers.damageReductionFlat += 1
+            player.statModifiers.damageReductionFlat += 2
+        },
+        unlock: {
+            type: "snowTotalScore",
+            value: 2000,
+            text: "Score 2000 pts in snow.",
         }
     },
     {
@@ -91,9 +91,9 @@ export const passives = [
             player.statModifiers.echoChance += 0.05
         },
         unlock: {
-            type: "snowTotalScore",
-            value: 6000,
-            text: "Score 6000 pts in snow.",
+            type: "bossKills",
+            value: { boss20: 1 },
+            text: "Defeat Undying Knight. (snow)",
         }
     },
     {
@@ -104,6 +104,11 @@ export const passives = [
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.gourmetLevel += 1
+        },
+        unlock: {
+            type: "bossKills",
+            value: { boss15: 1 },
+            text: "Defeat Fallen Knight. (snow)",
         }
     }
 ]

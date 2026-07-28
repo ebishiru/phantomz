@@ -20,7 +20,7 @@ export const passiveUpgrades = {
         desc: "Increase window of damage buff by 10% HP."
     },
     fortify: {
-        desc: "Reduce damage taken by 1 more."
+        desc: "Reduce damage taken by 2 more."
     },
     echo: {
         desc: "Increase echo chance by another 5%."
