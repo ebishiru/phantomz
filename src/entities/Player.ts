@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import GameScene from "../scenes/GameScene"
+import { showFloatingDamage } from "../systems/DamageTextSystem"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -61,6 +62,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.health -= amount
         this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth)
 
+        showFloatingDamage(this.scene, this.x, this.y - 20, amount, "#b56d7f")
+
         this.setTint(0xff0000)
 
         this.scene.time.delayedCall(300, () => {
@@ -77,6 +80,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.health += amount
         this.health = Math.min(this.health, this.maxHealth)
+
+        showFloatingDamage(this.scene, this.x, this.y - 20, amount, "#70b56d")
 
         this.setTint(0x00ff00)
 

@@ -9,7 +9,7 @@ export default class Boss5MechA extends BossMechanic {
         name: "Meteor",
         castTime: 2600,
         castDuration: 2600,
-        cooldown: 4000,
+        cooldown: 3000,
         showCastBar: false,
         damage: 20,
         range: 100,
@@ -17,7 +17,7 @@ export default class Boss5MechA extends BossMechanic {
     }
 
     onCastStart() {
-        const timings = [800, 1500, 2200, 2900]
+        const timings = [800, 1400, 2000, 2600]
         const telegraphDuration = 1000
 
         timings.forEach((time, index) => {

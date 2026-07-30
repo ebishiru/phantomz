@@ -3,6 +3,8 @@ import BossMechanic from "./BossMechanic";
 import CircleTelegraph from "../entities/CircleTelegraph";
 
 export default class Boss5MechC extends BossMechanic {
+    private telegraphSpawnTimer?: Phaser.Time.TimerEvent
+    private leapTimer?: Phaser.Time.TimerEvent
 
     config = {
         id: "teleport-circle-player",
@@ -17,12 +19,19 @@ export default class Boss5MechC extends BossMechanic {
     }
 
     onCastStart() {
+        if (!this.boss || this.boss.health <= 0 || !this.active) return
+
         const startX = this.boss.x
         const startY = this.boss.y
         const leapX = this.player.x
         const leapY = this.player.y
 
-        this.scene.time.delayedCall((this.config.castTime - 300), () => {
+        this.telegraphSpawnTimer = this.scene.time.delayedCall((this.config.castTime - 300), () => {
+            if (!this.active || !this.boss || this.boss.health <= 0) {
+                this.cleanupTelegraph()
+                return
+            }
+
             this.telegraph = new CircleTelegraph(
                 this.scene,
                 leapX,
@@ -31,8 +40,11 @@ export default class Boss5MechC extends BossMechanic {
             )
         })
 
-        this.scene.time.delayedCall(this.config.castTime, () => {
-            if (!this.boss || this.boss.health <= 0 || !this.active) return
+        this.leapTimer = this.scene.time.delayedCall(this.config.castTime, () => {
+            if (!this.boss || this.boss.health <= 0 || !this.active) {
+                this.cleanupTelegraph()
+                return
+            }
             
             this.scene.tweens.add({
                 targets: this.boss,
@@ -41,6 +53,11 @@ export default class Boss5MechC extends BossMechanic {
                 duration: 300,
                 ease: "Power2",
                 onComplete: () => {
+                    if (!this.boss || this.boss.health <= 0 || !this.active) {
+                        this.cleanupTelegraph()
+                        return
+                    }
+
                     //Check hit
                     const dist = Phaser.Math.Distance.Between(
                         this.boss.x,
@@ -53,8 +70,7 @@ export default class Boss5MechC extends BossMechanic {
                         this.player.takeDamage(this.config.damage)
                     }
 
-                    this.telegraph?.destroy()
-                    this.telegraph = undefined
+                    this.cleanupTelegraph()
 
                     this.scene.tweens.add({
                         targets: this.boss,
@@ -68,11 +84,19 @@ export default class Boss5MechC extends BossMechanic {
         })
     }
 
+    private cleanupTelegraph() {
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+    }
+
     execute() {}
 
     destroy() {
-        this.telegraph?.destroy()
-        this.telegraph = undefined
+        this.telegraphSpawnTimer?.remove(false)
+        this.telegraphSpawnTimer = undefined
+        this.leapTimer?.remove(false)
+        this.leapTimer = undefined
+        this.cleanupTelegraph()
         this.active = false
     }
 }

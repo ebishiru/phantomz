@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import { showFloatingDamage } from "../systems/DamageTextSystem"
 
 export default class Boss extends Phaser.Physics.Arcade.Sprite {
     maxHealth = 150
@@ -74,6 +75,8 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     takeDamage(amount: number) {
         this.health = Math.max(this.health - amount, 0)
 
+        showFloatingDamage(this.scene, this.x, this.y - 20, Math.abs(amount), "#f0b38d")
+
         if (amount >= 0) {
             this.setTint(0xff0000)
         } else {
@@ -87,6 +90,8 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
 
     heal(amount: number) {
         this.health = Math.min(this.health + amount, this.maxHealth)
+
+        showFloatingDamage(this.scene, this.x, this.y - 20, amount, "#70b56d")
 
         this.setTint(0x00ff00)
 
