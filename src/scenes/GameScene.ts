@@ -24,15 +24,20 @@ export default class GameScene extends Phaser.Scene {
     
     skillKeys!: Phaser.Input.Keyboard.Key[]
     level: string = "cave"
+    selectedCharacter: string = "player1"
+    selectedSkillKey: string = "slash"
 
     constructor() {
         super("game")
     }
 
     create(data: { characterKey?: string, startingSkill?: string, level?: string }) {
-        const character = data?.characterKey || "player1";
-        const startingSkill = data?.startingSkill || "slash";
+        this.selectedCharacter = data?.characterKey || "player1";
+        this.selectedSkillKey = data?.startingSkill || "slash";
         this.level = data?.level || "cave";
+
+        const character = this.selectedCharacter;
+        const startingSkill = this.selectedSkillKey;
 
         const width = this.scale.width;
         const height = this.scale.height;

@@ -137,7 +137,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             score,
             bossesKilled: bossManager.bossesKilled,
             bossKills: bossManager.bossKillsThisRun,
-            level
+            level,
+            characterKey: gameScene.selectedCharacter,
+            startingSkill: gameScene.selectedSkillKey,
         })
     }
 }
