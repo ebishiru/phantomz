@@ -50,11 +50,38 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(`${this.texture.key}-idle`, true)
     }
 
+    private getReflectedDamage(amount: number) {
+        const mods = this.statModifiers
+        let reflectedAmount = (amount * 2 + mods.flatDamage) * mods.damageMultiplier
+
+        const boss = (this.scene as any).bossManager?.boss
+        if (boss && mods.executionerLevel > 0) {
+            const threshold = 0.25 + (mods.executionerLevel - 1) * 0.10
+            if (boss.health / boss.maxHealth <= threshold) {
+                reflectedAmount *= 1.25
+            }
+        }
+
+        if (Math.random() < mods.echoChance) {
+            reflectedAmount *= 2
+        }
+
+        return Math.max(1, Math.round(reflectedAmount))
+    }
+
     takeDamage(amount: number) {
 
         //Ward Skill
-        if (this.isInvulnerable) return
-        
+        if (this.isInvulnerable) {
+            const boss = (this.scene as any).bossManager?.boss;
+
+            //Reflect damage back to boss
+            if (boss) {
+                boss.takeDamage(this.getReflectedDamage(amount))
+            }
+            return
+        }
+
         //Passive
         amount -= this.statModifiers.damageReductionFlat
         amount = Math.max(1, amount)

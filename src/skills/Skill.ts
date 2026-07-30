@@ -94,9 +94,9 @@ export default class Skill {
         let final = (this.damage + mods.flatDamage) * mods.damageMultiplier;
 
         const boss = (this.scene as any).bossManager?.boss;
-        if (boss && this.player.executionerLevel > 0) {
-            const threshold = 0.25 + (this.player.executionerLevel - 1) * 0.10;
-            if (boss.hp / boss.maxHP <= threshold) final *= 1.25;
+        if (boss && this.player.statModifiers?.executionerLevel > 0) {
+            const threshold = 0.25 + (this.player.statModifiers.executionerLevel - 1) * 0.10;
+            if (boss.health / boss.maxHealth <= threshold) final *= 1.25;
         }
 
         return final * this.echoDamageMultiplier;

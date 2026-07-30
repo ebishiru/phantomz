@@ -80,7 +80,7 @@ export const skills = [
         key: "ward",
         name: "Ward",
         iconKey: "ward-icon",
-        desc: "Create a temporary shield that blocks all damage.",
+        desc: "Create a temporary shield that reflects damage.",
         upgrades: upgrades.ward,
         unlock: {
             type: "bossKills",
