@@ -9,8 +9,8 @@ export default class Boss21MechA extends BossMechanic {
         id: "cone-boss-dash",
         name: "Roaring Assault",
         castTime: 1000,
-        castDuration: 2300,
-        cooldown: 2500,
+        castDuration: 2000,
+        cooldown: 2000,
         showCastBar: false,
         damage: 20,
         range: 300,
@@ -84,7 +84,7 @@ export default class Boss21MechA extends BossMechanic {
         const endX = this.player.x
         const endY = this.player.y
 
-        this.scene.time.delayedCall((1000), () => {
+        this.scene.time.delayedCall((700), () => {
             //Move Boss
             this.scene.tweens.add({
                 targets: this.boss,
