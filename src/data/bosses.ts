@@ -60,8 +60,11 @@ import Boss19MechC from "../mechanics/Boss19MechC";
 import Boss20MechA from "../mechanics/Boss20MechA";
 import Boss20MechB from "../mechanics/Boss20MechB";
 import Boss20MechC from "../mechanics/Boss20MechC";
+import Boss21MechA from "../mechanics/Boss21MechA";
 
 export const Bosses = [
+
+    //CAVE BOSSES
     {
         name: "Wyrm",
         level: "cave",
@@ -183,6 +186,8 @@ export const Bosses = [
             Boss10MechC
         ]
     },
+
+    //SNOW BOSSES
     {
         name: "Dire Wolf",
         level: "snow",
@@ -304,6 +309,8 @@ export const Bosses = [
             Boss20MechC,
         ]
     },
+
+    //TOWER BOSSES
     {
         name: "Coeurl",
         level: "tower",
@@ -311,8 +318,7 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 50,
         mechanics: [
-            Boss1MechA,
-            Boss1MechC,
+            Boss21MechA,
         ]
     },
     {
