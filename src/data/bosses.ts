@@ -304,4 +304,59 @@ export const Bosses = [
             Boss20MechC,
         ]
     },
+    {
+        name: "Coeurl",
+        level: "tower",
+        spriteKey: "boss21",
+        speed: 100,
+        hurtRadius: 50,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechC,
+        ]
+    },
+    {
+        name: "Headless Guard",
+        level: "tower",
+        spriteKey: "boss22",
+        speed: 85,
+        hurtRadius: 60,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechC,
+        ]
+    },
+    {
+        name: "Warmech MK I",
+        level: "tower",
+        spriteKey: "boss23",
+        speed: 120,
+        hurtRadius: 70,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechC,
+        ]
+    },
+    {
+        name: "Reaper",
+        level: "tower",
+        spriteKey: "boss24",
+        speed: 105,
+        hurtRadius: 50,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechC,
+        ]
+    },
+    {
+        name: "Demon Knight",
+        level: "tower",
+        spriteKey: "boss25",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechC,
+        ]
+    },
 ]

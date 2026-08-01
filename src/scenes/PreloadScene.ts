@@ -20,6 +20,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.audio("titleMusic", "assets/title-music.mp3")
         this.load.audio("caveMusic", "assets/cave-music.mp3")
         this.load.audio("snowMusic", "assets/snow-music.mp3")
+        this.load.audio("towerMusic", "assets/tower-music.mp3")
         this.load.audio("gameOverMusic", "assets/game-over-music.mp3")
         this.load.image("audio-icon", "assets/audio-icon.png")
         this.load.image("mute-icon", "assets/mute-icon.png")
@@ -42,7 +43,7 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     loadBosses() {
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= 30; i++) {
             this.load.spritesheet(`boss${i}`, `assets/boss${i}.png`, {
                 frameWidth: 16,
                 frameHeight: 16
@@ -101,14 +102,14 @@ export default class PreloadScene extends Phaser.Scene {
             "executioner",
             "fortify",
             "echo",
-            "gourmet"
+            "gourmet",
         ]
 
         passiveKeys.forEach(key => {
             this.load.image(`${key}-icon`, `assets/${key}-icon.png`)
         })
 
-        this.load.image("gourmet-vfx", "assets/gourmet-vfx.png")
+        this.load.image("gourmet-vfx", "assets/gourmet-vfx.png")        //BREAD VFX
     }
 
     loadUI() {
@@ -121,6 +122,7 @@ export default class PreloadScene extends Phaser.Scene {
     loadEnvironment() {
         this.load.image("cave", "assets/cave.png")
         this.load.image("snow", "assets/snow.png")
+        this.load.image("tower", "assets/tower.png")
     }
 
     create() {

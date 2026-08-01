@@ -29,9 +29,11 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
             if (saveManager.isSkillUnlocked(skillData.key)) {
                 unlockMet = true
             } else if (unlock.type === "caveTotalScore") {
-                unlockMet = saveManager.getTotalScore() >= Number(unlock.value)
+                unlockMet = saveManager.getTotalScore("cave") >= Number(unlock.value)
             } else if (unlock.type === "snowTotalScore") {
                 unlockMet = saveManager.getTotalScore("snow") >= Number(unlock.value)
+            } else if (unlock.type === "towerTotalScore") {
+                unlockMet = saveManager.getTotalScore("tower") >= Number(unlock.value)
             } else if (unlock.type === "bossKills") {
                 // unlock.value may be an object mapping boss keys to required counts
                 const req = unlock.value
@@ -101,9 +103,11 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
 
         if (unlock) {
             if (unlock.type === "caveTotalScore") {
-                unlockMet = saveManager.getTotalScore() >= Number(unlock.value)
+                unlockMet = saveManager.getTotalScore("cave") >= Number(unlock.value)
             } else if (unlock.type === "snowTotalScore") {
                 unlockMet = saveManager.getTotalScore("snow") >= Number(unlock.value)
+            } else if (unlock.type === "towerTotalScore") {
+                unlockMet = saveManager.getTotalScore("tower") >= Number(unlock.value)
             } else if (unlock.type === "bossKills") {
                 const req = unlock.value
                 if (typeof req === "object") {

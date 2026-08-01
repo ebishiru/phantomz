@@ -3,7 +3,7 @@ import SaveManager from "../systems/SaveManager"
 
 export default class LevelSelect extends Phaser.Scene {
 
-    levels = ["cave", "snow"]
+    levels = ["cave", "snow", "tower"]
 
     selectedLevel: string = "cave"
     saveManager!: SaveManager
@@ -30,7 +30,7 @@ export default class LevelSelect extends Phaser.Scene {
         }).setOrigin(0.5)
 
         //Level selection
-        const startLevelX = 325
+        const startLevelX = 175
         const levelSpacing = 300
         const levelY = 250
 
@@ -48,6 +48,10 @@ export default class LevelSelect extends Phaser.Scene {
             if (key === "snow") {
                 texture.setTint(0x8a9aa8);
                 texture.setAlpha(0.7);
+            }
+            if (key === "tower") {
+                texture.setTint(0x87ceeb);
+                texture.setAlpha(0.8);
             }
 
             mapTextures.push(texture)

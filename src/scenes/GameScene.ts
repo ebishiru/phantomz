@@ -62,11 +62,16 @@ export default class GameScene extends Phaser.Scene {
             floor.setTint(0x8a9aa8);
             floor.setAlpha(0.7);
         }
+        if (this.level === "tower") {
+            floor.setTint(0x87ceeb);
+            floor.setAlpha(0.8);
+        }
 
         // Play music
         const musicMap: Record<string, string> = {
             "cave": "caveMusic",
-            "snow": "snowMusic"
+            "snow": "snowMusic",
+            "tower": "towerMusic",
         };
 
         const musicKey = musicMap[this.level] || "caveMusic";

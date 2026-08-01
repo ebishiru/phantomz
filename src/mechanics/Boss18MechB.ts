@@ -28,7 +28,7 @@ export default class Boss18MechB extends BossMechanic {
 
         const directions = ["Right", "Left"]
         this.direction = Phaser.Utils.Array.GetRandom(directions)
-        this.config.name = `Hex Cleave : ${this.direction}?`
+        this.config.name = `Hex Cleave : ${this.direction}`
 
         this.isDirectionReal = Phaser.Math.Between(0,1) === 0 ? true : false
 
