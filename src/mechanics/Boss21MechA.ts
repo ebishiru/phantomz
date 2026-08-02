@@ -7,14 +7,14 @@ export default class Boss21MechA extends BossMechanic {
 
     config = {
         id: "cone-boss-dash",
-        name: "Roaring Assault",
-        castTime: 1000,
-        castDuration: 2000,
-        cooldown: 2000,
+        name: "Inferno Assault",
+        castTime: 1200,
+        castDuration: 2200,
+        cooldown: 2500,
         showCastBar: false,
         damage: 20,
         range: 300,
-        width: 100,
+        width: 75,
     }
 
     coneAngle = Math.PI / 2

@@ -62,6 +62,7 @@ import Boss20MechB from "../mechanics/Boss20MechB";
 import Boss20MechC from "../mechanics/Boss20MechC";
 import Boss21MechA from "../mechanics/Boss21MechA";
 import Boss21MechB from "../mechanics/Boss21MechB";
+import Boss21MechC from "../mechanics/Boss21MechC";
 
 export const Bosses = [
 
@@ -321,6 +322,7 @@ export const Bosses = [
         mechanics: [
             Boss21MechA,
             Boss21MechB,
+            Boss21MechC,
         ]
     },
     {

@@ -7,18 +7,25 @@ export default class Boss21MechB extends BossMechanic {
 
     config = {
         id: "line-dash-boss-circle",
-        name: "Blast and Stomp",
+        name: "Pyrebound",
         castTime: 1000,
         castDuration: 2000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
-        range: 150,
-        width: 200,
+        range: 100,
+        width: 100,
     }
 
     onCastStart() {
         const angle = Phaser.Math.Angle.Between(
+            this.boss.x,
+            this.boss.y,
+            this.player.x,
+            this.player.y
+        )
+
+        const dist = Phaser.Math.Distance.Between(
             this.boss.x,
             this.boss.y,
             this.player.x,
@@ -31,7 +38,7 @@ export default class Boss21MechB extends BossMechanic {
             this.boss.x,
             this.boss.y,
             angle,
-            this.config.range,
+            dist,
             this.config.width
         )
     }
