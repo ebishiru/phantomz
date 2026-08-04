@@ -73,6 +73,7 @@ export default class Boss24MechA extends BossMechanic {
 
             if (donutDist >= (this.innerRadius - this.player.hurtboxRadius)) {
                 this.player.takeDamage(this.config.damage)
+                this.boss.heal(this.config.damage/4)
             }
 
             this.telegraph?.destroy()
@@ -137,7 +138,8 @@ export default class Boss24MechA extends BossMechanic {
                 const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY);
         
                 if (distanceToLine <= pr + this.config.width / 2) {
-                    this.player.takeDamage(this.config.damage);
+                    this.player.takeDamage(this.config.damage)
+                    this.boss.heal(this.config.damage/4)
                 }
 
                 this.telegraph?.destroy()
