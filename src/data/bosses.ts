@@ -72,6 +72,7 @@ import Boss23MechC from "../mechanics/Boss23MechC";
 import Boss24MechA from "../mechanics/Boss24MechA";
 import Boss24MechB from "../mechanics/Boss24MechB";
 import Boss24MechC from "../mechanics/Boss24MechC";
+import Boss25MechA from "../mechanics/Boss25MechA";
 
 export const Bosses = [
 
@@ -358,18 +359,18 @@ export const Bosses = [
     //         Boss23MechC,
     //     ]
     // },
-    {
-        name: "Reaper",
-        level: "tower",
-        spriteKey: "boss24",
-        speed: 105,
-        hurtRadius: 50,
-        mechanics: [
-            Boss24MechA,
-            Boss24MechB,
-            Boss24MechC
-        ]
-    },
+    // {
+    //     name: "Reaper",
+    //     level: "tower",
+    //     spriteKey: "boss24",
+    //     speed: 105,
+    //     hurtRadius: 50,
+    //     mechanics: [
+    //         Boss24MechA,
+    //         Boss24MechB,
+    //         Boss24MechC
+    //     ]
+    // },
     {
         name: "Demon Knight",
         level: "tower",
@@ -377,8 +378,7 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 70,
         mechanics: [
-            Boss1MechA,
-            Boss1MechC,
+            Boss25MechA,
         ]
     },
 ]
