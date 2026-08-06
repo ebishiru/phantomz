@@ -78,6 +78,7 @@ import Boss25MechC from "../mechanics/Boss25MechC";
 import Boss26MechA from "../mechanics/Boss26MechA";
 import Boss26MechB from "../mechanics/Boss26MechB";
 import Boss26MechC from "../mechanics/Boss26MechC";
+import Boss27MechA from "../mechanics/Boss27MechA";
 
 export const Bosses = [
 
@@ -388,16 +389,28 @@ export const Bosses = [
     //         Boss25MechC,
     //     ]
     // },
-        {
-        name: "Manticore",
+    // {
+    //     name: "Manticore",
+    //     level: "tower",
+    //     spriteKey: "boss26",
+    //     speed: 120,
+    //     hurtRadius: 50,
+    //     mechanics: [
+    //         Boss26MechA,
+    //         Boss26MechB,
+    //         Boss26MechC,
+    //     ]
+    // },
+    {
+        name: "Dullahan",
         level: "tower",
-        spriteKey: "boss26",
-        speed: 120,
-        hurtRadius: 50,
+        spriteKey: "boss27",
+        speed: 90,
+        hurtRadius: 60,
         mechanics: [
-            Boss26MechA,
-            Boss26MechB,
-            Boss26MechC,
+            Boss27MechA,
+            // Boss27MechB,
+            // Boss27MechC,
         ]
     },
 ]
