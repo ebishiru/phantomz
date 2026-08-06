@@ -11,7 +11,7 @@ export default class Boss12MechA extends BossMechanic {
         castDuration: 2000,
         cooldown: 2000,
         showCastBar: true,
-        damage: 20,
+        damage: 10,
         range: 200,
         width: 0,
     }
@@ -37,12 +37,12 @@ export default class Boss12MechA extends BossMechanic {
             this.coneAngle
         )
 
-        //Hit check every 1/3 second
+        //Hit check every 0.5 second
         this.scene.time.delayedCall(1000, () => {
             this.damageTimer?.destroy()
 
             this.damageTimer = this.scene.time.addEvent({
-                delay: 300,
+                delay: 500,
                 loop: true,
                 callback: () => this.hitCheck()
             })

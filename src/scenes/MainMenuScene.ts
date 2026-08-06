@@ -80,10 +80,10 @@ export default class MainMenuScene extends Phaser.Scene {
         const refreshButtonX = 90
         const refreshButtonY = 50
         const refreshButton = this.add.rectangle(refreshButtonX, refreshButtonY, refreshButtonWidth, refreshButtonHeight, 0x222222)
-            .setStrokeStyle(3, 0x00ccff)
+            .setStrokeStyle(3, 0x65aed6)
             .setInteractive({ useHandCursor: true })
 
-        this.add.text(refreshButtonX, refreshButtonY - 20, "REROLLS", {
+        this.add.text(refreshButtonX, refreshButtonY - 20, "GET REROLLS", {
             fontSize: "18px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff"
@@ -98,7 +98,7 @@ export default class MainMenuScene extends Phaser.Scene {
         const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + 21, "", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
-            color: "#86e3ff"
+            color: "#65aed6"
         }).setOrigin(0.5)
 
         const updateRefreshUI = () => {

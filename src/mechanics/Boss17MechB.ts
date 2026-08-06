@@ -11,7 +11,7 @@ export default class Boss17MechB extends BossMechanic {
         castDuration: 800,
         cooldown: 2000,
         showCastBar: true,
-        damage: 20,
+        damage: 10,
         range: 60,
         width: 0,
     }
@@ -34,7 +34,7 @@ export default class Boss17MechB extends BossMechanic {
         this.telegraphs.push(telegraph)
 
         const damageTimer = this.scene.time.addEvent({
-            delay: 1000,
+            delay: 500,
             loop: true,
             callback: () => this.hitCheck(telegraph)
         })
