@@ -3,13 +3,13 @@ import BossMechanic from "./BossMechanic";
 import CircleTelegraph from "../entities/CircleTelegraph";
 import DonutTelegraph from "../entities/DonutTelegraph";
 
-export default class Boss21MechC extends BossMechanic {
+export default class Boss26MechC extends BossMechanic {
 
     config = {
-        id: "donut-or-circle-around",
-        name: "Wildfire",
-        castTime: 1500,
-        castDuration: 1500,
+        id: "donut-or-circle-around-faster",
+        name: "Rapidfire",
+        castTime: 1200,
+        castDuration: 1200,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
@@ -47,7 +47,7 @@ export default class Boss21MechC extends BossMechanic {
         //Randomize either circle or donut telegraphs
         const random2 = Math.random()
         this.telegraphType = random2 < 0.5 ? "Cluster" : "Rings"
-        this.config.name = `Wildfire ${this.telegraphType}`
+        this.config.name = `Rapidfire ${this.telegraphType}`
 
         //Draw telegraphs
         if (this.telegraphType === "Cluster") {
