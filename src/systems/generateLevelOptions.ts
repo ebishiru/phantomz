@@ -161,7 +161,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
     //Add skip for option 4
     finalOptions.push({
         title: "Skip",
-        desc: "Gain no upgrades this level",
+        desc: "Gain no upgrades this level.",
         iconKey: "skip-icon",
         type: "none",
         apply: () => {}

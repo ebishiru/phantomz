@@ -5,7 +5,7 @@ export default class ArrowSkill extends Skill {
     player: any
     
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "arrow", "Arrow", 25, 4000, 0)
+        super(scene, player, "arrow", "Arrow", 25, 4500, 0)
         this.iconKey = "arrow-icon"
         this.player = player
     }

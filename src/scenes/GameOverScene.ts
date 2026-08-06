@@ -12,7 +12,7 @@ export default class GameOverScene extends Phaser.Scene {
         super("game-over")
     }
 
-    create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string, characterKey?: string, startingSkill?: string }) {
+    create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string, characterKey?: string, startingSkill?: string, reason?: string }) {
         this.currentLevel = data.level || "cave"
         this.selectedCharacter = data.characterKey || "player1"
         this.selectedSkillKey = data.startingSkill || "slash"
@@ -32,7 +32,7 @@ export default class GameOverScene extends Phaser.Scene {
         // Dim Background
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 
-        this.createGameOverText(centerX, centerY - 150);
+        this.createGameOverText(centerX, centerY - 150, data?.reason);
         this.createScore(centerX, centerY - 80, data.score);
         this.createHiScore(centerX, centerY - 40, data.score, data.level);
         this.createBossKillInfo(centerX, centerY, data.bossesKilled, data.bossKills);
@@ -47,8 +47,9 @@ export default class GameOverScene extends Phaser.Scene {
         }
     }
 
-    createGameOverText(x: number, y: number) {
-            this.add.text(x, y, "SOUL LOST", {
+    createGameOverText(x: number, y: number, reason?: string) {
+        const text = reason === "time" ? "TIME OVER" : "SOUL LOST"
+        this.add.text(x, y, text, {
             fontSize: "48px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ff0000",

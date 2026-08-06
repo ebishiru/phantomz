@@ -28,6 +28,7 @@ export default class BossManager {
     // Global timer UI
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
+    timeOverTriggered: boolean = false;
 
     // Gourmet Bread Passive
     gourmetBreads: Phaser.Physics.Arcade.Image[] = [];
@@ -72,6 +73,8 @@ export default class BossManager {
             delay: 1000,
             loop: true,
             callback: () => {
+                if (this.timeOverTriggered) return;
+
                 this.globalTimerSeconds++;
                 const min = Math.floor(this.globalTimerSeconds / 60).toString().padStart(2, "0");
                 const sec = (this.globalTimerSeconds % 60).toString().padStart(2, "0");
@@ -82,6 +85,21 @@ export default class BossManager {
 
                 if (this.globalTimerSeconds > 0 && this.globalTimerSeconds % 60 === 0) {
                     this.spawnGourmetBread()
+                }
+
+                // Trigger Game Over at 20 minutes (1200 seconds)
+                if (this.globalTimerSeconds >= 1200 && !this.timeOverTriggered) {
+                    this.timeOverTriggered = true
+                    const score = this.globalTimerSeconds + this.bossesKilled * 60
+                    // Pause the main game and launch the Game Over scene with a 'time' reason
+                    this.scene.scene.pause("game")
+                    this.scene.scene.launch("game-over", {
+                        score,
+                        bossesKilled: this.bossesKilled,
+                        bossKills: this.bossKillsThisRun,
+                        level: this.currentLevel,
+                        reason: "time",
+                    })
                 }
             }
         });

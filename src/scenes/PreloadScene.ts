@@ -88,6 +88,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
         this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
         this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
+        this.load.image("reroll-icon", "assets/reroll-icon.png")        //REROLL ICON
         this.load.image("zephyr2-vfx", "assets/zephyr2-vfx.png")        //THRUST VFX
         this.load.image("mirage2-vfx", "assets/mirage2-vfx.png")        //DMG VFX
         this.load.image("quasar2-vfx", "assets/quasar2-vfx.png")        //DMG VFX

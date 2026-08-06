@@ -9,6 +9,10 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     create() {
+        if (this.registry.get("rerollCharges") === undefined) {
+            this.registry.set("rerollCharges", 3)
+        }
+
         //Title Music
         playMusic(this, "titleMusic")
         
@@ -22,8 +26,8 @@ export default class MainMenuScene extends Phaser.Scene {
         const { width, height } = this.scale;
 
         //Title Text
-        this.add.text(width/3, 175, `The Last  \n   Phantom Z`, {
-            fontSize: "52px",
+        this.add.text(width/3, 180, `The Last  \n   Phantom Z`, {
+            fontSize: "60px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: "#ffcc00",
         }).setOrigin(0.5)
@@ -69,6 +73,44 @@ export default class MainMenuScene extends Phaser.Scene {
             bg.on("pointerdown", () => {
                 this.scene.start(option.scene)
             })
+        })
+
+        const refreshButtonWidth = 150
+        const refreshButtonHeight = 80
+        const refreshButtonX = 90
+        const refreshButtonY = 50
+        const refreshButton = this.add.rectangle(refreshButtonX, refreshButtonY, refreshButtonWidth, refreshButtonHeight, 0x222222)
+            .setStrokeStyle(3, 0x00ccff)
+            .setInteractive({ useHandCursor: true })
+
+        this.add.text(refreshButtonX, refreshButtonY - 20, "REROLLS", {
+            fontSize: "18px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffffff"
+        }).setOrigin(0.5)
+
+        this.add.text(refreshButtonX, refreshButtonY + 3, "Watch Ads", {
+            fontSize: "16px",
+            fontFamily: `Georgia, serif`,
+            color: "#ffffff"
+        }).setOrigin(0.5)
+
+        const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + 21, "", {
+            fontSize: "16px",
+            fontFamily: `Georgia, serif`,
+            color: "#86e3ff"
+        }).setOrigin(0.5)
+
+        const updateRefreshUI = () => {
+            const charges = this.registry.get("rerollCharges") ?? 3
+            refreshChargesText.setText(`Charges: ${charges}/3`)
+        }
+
+        updateRefreshUI()
+
+        refreshButton.on("pointerdown", () => {
+            this.registry.set("rerollCharges", 3)
+            updateRefreshUI()
         })
     }
 }
