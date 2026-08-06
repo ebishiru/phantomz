@@ -15,6 +15,7 @@ export default class RectangleTelegraph {
         this.height = height
 
         this.graphics = scene.add.graphics()
+        this.graphics.setDepth(-10)
         this.draw()
     }
 

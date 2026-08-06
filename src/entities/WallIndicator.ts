@@ -24,6 +24,7 @@ export default class WallIndicator {
         this.color = color
 
         this.graphics = scene.add.graphics()
+        this.graphics.setDepth(1000)
         this.draw()
     }
 

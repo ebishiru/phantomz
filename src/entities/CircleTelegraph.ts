@@ -13,6 +13,7 @@ export default class CircleTelegraph {
         this.radius = radius
 
         this.graphics = scene.add.graphics()
+        this.graphics.setDepth(-10)
         this.draw()
     }
 

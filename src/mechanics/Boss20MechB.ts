@@ -10,8 +10,8 @@ export default class Boss20MechB extends BossMechanic {
         id: "line-dash-left-or-right-cone",
         name: "",
         castTime: 1200,
-        castDuration: 1800,
-        cooldown: 2000,
+        castDuration: 2100,
+        cooldown: 2200,
         showCastBar: true,
         damage: 20,
         range: 350,
@@ -109,7 +109,7 @@ export default class Boss20MechB extends BossMechanic {
                         this.coneAngle
                     )
 
-                    this.scene.time.delayedCall(300, () => {
+                    this.scene.time.delayedCall(600, () => {
                         //Check hit
                         this.coneDamageCheck(angle + this.coneDirectionMod)
                         

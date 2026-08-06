@@ -74,6 +74,7 @@ import Boss24MechB from "../mechanics/Boss24MechB";
 import Boss24MechC from "../mechanics/Boss24MechC";
 import Boss25MechA from "../mechanics/Boss25MechA";
 import Boss25MechB from "../mechanics/Boss25MechB";
+import Boss25MechC from "../mechanics/Boss25MechC";
 
 export const Bosses = [
 
@@ -324,54 +325,54 @@ export const Bosses = [
     },
 
     //TOWER BOSSES
-    // {
-    //     name: "Coeurl",
-    //     level: "tower",
-    //     spriteKey: "boss21",
-    //     speed: 100,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss21MechA,
-    //         Boss21MechB,
-    //         Boss21MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Headless Guard",
-    //     level: "tower",
-    //     spriteKey: "boss22",
-    //     speed: 85,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss22MechA,
-    //         Boss22MechB,
-    //         Boss22MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Warmech MK I",
-    //     level: "tower",
-    //     spriteKey: "boss23",
-    //     speed: 120,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss23MechA,
-    //         Boss23MechB,
-    //         Boss23MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Reaper",
-    //     level: "tower",
-    //     spriteKey: "boss24",
-    //     speed: 105,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss24MechA,
-    //         Boss24MechB,
-    //         Boss24MechC
-    //     ]
-    // },
+    {
+        name: "Coeurl",
+        level: "tower",
+        spriteKey: "boss21",
+        speed: 100,
+        hurtRadius: 50,
+        mechanics: [
+            Boss21MechA,
+            Boss21MechB,
+            Boss21MechC,
+        ]
+    },
+    {
+        name: "Headless Guard",
+        level: "tower",
+        spriteKey: "boss22",
+        speed: 85,
+        hurtRadius: 60,
+        mechanics: [
+            Boss22MechA,
+            Boss22MechB,
+            Boss22MechC,
+        ]
+    },
+    {
+        name: "Warmech MK I",
+        level: "tower",
+        spriteKey: "boss23",
+        speed: 120,
+        hurtRadius: 70,
+        mechanics: [
+            Boss23MechA,
+            Boss23MechB,
+            Boss23MechC,
+        ]
+    },
+    {
+        name: "Reaper",
+        level: "tower",
+        spriteKey: "boss24",
+        speed: 105,
+        hurtRadius: 50,
+        mechanics: [
+            Boss24MechA,
+            Boss24MechB,
+            Boss24MechC
+        ]
+    },
     {
         name: "Demon Knight",
         level: "tower",
@@ -381,6 +382,7 @@ export const Bosses = [
         mechanics: [
             Boss25MechA,
             Boss25MechB,
+            Boss25MechC,
         ]
     },
 ]

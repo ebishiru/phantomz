@@ -54,6 +54,7 @@ export default class GameScene extends Phaser.Scene {
 
         // Ground Texture
         const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, this.level).setOrigin(0);
+        floor.setDepth(-11)
         if (this.level === "cave") {
             floor.setTint(0xb0a080);
             floor.setAlpha(0.9);

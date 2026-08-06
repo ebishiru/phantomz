@@ -20,6 +20,7 @@ export default class DonutTelegraph {
         this.outerRadius = outerRadius
 
         this.graphics = scene.add.graphics()
+        this.graphics.setDepth(-10)
         this.draw()
     }
 
