@@ -83,6 +83,7 @@ import Boss27MechB from "../mechanics/Boss27MechB";
 import Boss27MechC from "../mechanics/Boss27MechC";
 import Boss28MechA from "../mechanics/Boss28MechA";
 import Boss28MechB from "../mechanics/Boss28MechB";
+import Boss28MechC from "../mechanics/Boss28MechC";
 
 export const Bosses = [
 
@@ -424,9 +425,9 @@ export const Bosses = [
         speed: 120,
         hurtRadius: 55,
         mechanics: [
-            // Boss28MechA,
+            Boss28MechA,
             Boss28MechB,
-            // Boss28MechC,
+            Boss28MechC,
         ]
     },
 ]
