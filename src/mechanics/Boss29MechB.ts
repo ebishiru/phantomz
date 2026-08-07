@@ -17,7 +17,7 @@ export default class Boss29MechB extends BossMechanic {
         width: 0,
     }
 
-    coneAngle: number = Math.PI / 4
+    coneAngle: number = Math.PI / 6
 
     onCastStart() {
         //Randomize sides
