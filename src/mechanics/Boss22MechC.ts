@@ -7,8 +7,8 @@ export default class Boss22MechC extends BossMechanic {
     config = {
         id: "rectangle-columns-rows",
         name: "Guillotine Grid",
-        castTime: 1800,
-        castDuration: 1800,
+        castTime: 1500,
+        castDuration: 1500,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,
