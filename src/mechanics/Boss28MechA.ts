@@ -2,65 +2,78 @@ import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import LineTelegraph from "../entities/LineTelegraph";
 
-export default class Boss23MechA extends BossMechanic {
+export default class Boss28MechA extends BossMechanic {
 
     config = {
-        id: "line-expand-two-parallel",
-        name: "Twin Blasters",
-        castTime: 900,
-        castDuration: 1800,
+        id: "teleport-line-expand-two-parallel",
+        name: "Twin Beams",
+        castTime: 1100,
+        castDuration: 2000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
         range: 0,
-        width: 100,
+        width: 120,
     }
 
-    telegraphDistance = 0
-    telegraphAngle = 0
+    telegraphDistance: number = 0
+    telegraphAngle: number = 0
     telegraphs: LineTelegraph[] = []
 
-    startX = 0
-    startY = 0
-    endX = 0
-    endY = 0
+    startX: number = 0
+    startY: number = 0
+    endX: number = 0
+    endY: number = 0
 
     onCastStart() {
-        const dist = Phaser.Math.Distance.Between(
-            this.boss.x,
-            this.boss.y,
-            this.player.x,
-            this.player.y
-        )
+        //Boss Jumps to random spot
+        const bounds = this.scene.physics.world.bounds
 
-        this.telegraphDistance = dist * 3
-        if (this.telegraphDistance < 200) {
-            this.telegraphDistance = 200
-        }
+        this.scene.tweens.add({
+            targets: this.boss,
+            x: Phaser.Math.FloatBetween(bounds.x + 10, bounds.x + bounds.width - 10),
+            y: Phaser.Math.FloatBetween(bounds.y + 10, bounds.y + bounds.height - 10),
+            duration: 200,
+            ease: "expo",
+            onComplete: () => {
+
+                const dist = Phaser.Math.Distance.Between(
+                    this.boss.x,
+                    this.boss.y,
+                    this.player.x,
+                    this.player.y
+                )
         
-        this.telegraphAngle = Phaser.Math.Angle.Between(
-            this.boss.x,
-            this.boss.y,
-            this.player.x,
-            this.player.y
-        )
-
-        this.startX = this.boss.x
-        this.startY = this.boss.y
-        this.endX = this.startX + Math.cos(this.telegraphAngle) * this.telegraphDistance
-        this.endY = this.startY + Math.sin(this.telegraphAngle) * this.telegraphDistance
-
-        //Draw single line telegraph
-        this.telegraph = new LineTelegraph(
-            this.scene,
-            this.boss.x,
-            this.boss.y,
-            this.telegraphAngle,
-            this.telegraphDistance,
-            this.config.width
-        )
+                this.telegraphDistance = dist * 3
+                if (this.telegraphDistance < 200) {
+                    this.telegraphDistance = 200
+                }
+                
+                this.telegraphAngle = Phaser.Math.Angle.Between(
+                    this.boss.x,
+                    this.boss.y,
+                    this.player.x,
+                    this.player.y
+                )
+        
+                this.startX = this.boss.x
+                this.startY = this.boss.y
+                this.endX = this.startX + Math.cos(this.telegraphAngle) * this.telegraphDistance
+                this.endY = this.startY + Math.sin(this.telegraphAngle) * this.telegraphDistance
+        
+                //Draw single line telegraph
+                this.telegraph = new LineTelegraph(
+                    this.scene,
+                    this.boss.x,
+                    this.boss.y,
+                    this.telegraphAngle,
+                    this.telegraphDistance,
+                    this.config.width
+                )
+            }
+        })
     }
-
+    
     execute() {
         this.telegraph?.destroy()
         this.telegraph = undefined
