@@ -7,8 +7,8 @@ export default class Boss24MechB extends BossMechanic {
     config = {
         id: "half-room-wide-vertical",
         name: "Life or Death",
-        castTime: 1300,
-        castDuration: 1300,
+        castTime: 1400,
+        castDuration: 1400,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,

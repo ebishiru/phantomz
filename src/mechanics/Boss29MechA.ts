@@ -3,72 +3,67 @@ import BossMechanic from "./BossMechanic";
 import DonutTelegraph from "../entities/DonutTelegraph";
 import LineTelegraph from "../entities/LineTelegraph";
 
-export default class Boss24MechA extends BossMechanic {
+export default class Boss29MechA extends BossMechanic {
 
     config = {
-        id: "donut-room-boss-line-diagonal",
-        name: "Hunting Grounds",
-        castTime: 1500,
-        castDuration: 2500,
+        id: "donut-room-boss-line-random",
+        name: "Execution Grounds",
+        castTime: 1400,
+        castDuration: 2200,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
         range: 600,
-        width: 120,
+        width: 150,
     }
 
-    innerRadius = 60
-    outerRadius = 600
-
-    coordinates: {x: number, y:number}[] = []
+    innerRadius: number = 50
+    outerRadius: number = 600
 
     onCastStart() {
-        //Randomize pair of corner points
         const bounds = this.scene.physics.world.bounds
-        const randomize = Math.random()
-        this.coordinates = []
+        const coordinates = [
+            { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 1/4 },
+            { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 1/4 },
+            { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 3/4 },
+            { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 3/4 }
+        ]
 
-        if (randomize < 0.5) {
-            const coordinateTopLeft = { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 1/4 }
-            const coordinateBottomRight = { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 3/4}
-            this.coordinates.push(coordinateTopLeft)
-            this.coordinates.push(coordinateBottomRight)
-        } else {
-            const coordinateTopRight = { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 1/4}
-            const coordinateBottomLeft = { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 3/4}
-            this.coordinates.push(coordinateTopRight)
-            this.coordinates.push(coordinateBottomLeft)
-        }
+        const chosenIndex = Phaser.Math.Between(0, coordinates.length - 1)
+        const donutCoordinate = coordinates[chosenIndex]
+        coordinates.splice(chosenIndex, 1)
+        const jumpCoordinate = Phaser.Utils.Array.GetRandom(coordinates)
 
-        //Draw donut room wide telegraph at one of the chosen coordinates
-        const chosenIndex = Phaser.Math.Between(0, 1)
+        const donutX = donutCoordinate.x
+        const donutY = donutCoordinate.y
+
+        //Draw donut room wide telegraph at chosen coordinate
         this.telegraph = new DonutTelegraph(
             this.scene,
-            this.coordinates[chosenIndex].x,
-            this.coordinates[chosenIndex].y,
+            donutX,
+            donutY,
             this.innerRadius,
             this.outerRadius
         )
 
-        //Teleport boss at other coordinate
-        const remainingIndex = (chosenIndex + 1) % 2
+        //Teleport boss at random other coordinate
         this.scene.tweens.add({
             targets: this.boss,
-            x: this.coordinates[remainingIndex].x,
-            y: this.coordinates[remainingIndex].y,
+            x: jumpCoordinate.x,
+            y: jumpCoordinate.y,
             duration: 200,
             ease: "Power2"
         })
 
         this.scene.time.delayedCall(this.config.castTime, () => {
             if (!this.boss || this.boss.health <= 0 || !this.active) return
-
+            
             //Check donut hit
             const donutDist = Phaser.Math.Distance.Between(
                 this.player.x,
                 this.player.y,
-                this.coordinates[chosenIndex].x,
-                this.coordinates[chosenIndex].y,
+                donutX,
+                donutY,
             )
 
             if (donutDist >= (this.innerRadius - this.player.hurtboxRadius)) {
@@ -82,15 +77,15 @@ export default class Boss24MechA extends BossMechanic {
             const angleToCoordinate = Phaser.Math.Angle.Between(
                 this.boss.x,
                 this.boss.y,
-                this.coordinates[chosenIndex].x,
-                this.coordinates[chosenIndex].y,
+                donutX,
+                donutY
             )
 
             const distToCoordinate = Phaser.Math.Distance.Between(
                 this.boss.x,
                 this.boss.y,
-                this.coordinates[chosenIndex].x,
-                this.coordinates[chosenIndex].y,
+                donutX,
+                donutY,
             )
 
             //Draw line telegraph
@@ -104,25 +99,25 @@ export default class Boss24MechA extends BossMechanic {
             )
 
             //Move boss to donut coordinate
-            this.scene.time.delayedCall(800, () => {
+            this.scene.time.delayedCall(600, () => {
                 if (!this.boss || this.boss.health <= 0 || !this.active) return
 
                 this.scene.tweens.add({
                     targets: this.boss,
-                    x: this.coordinates[chosenIndex].x,
-                    y: this.coordinates[chosenIndex].y,
+                    x: donutX,
+                    y: donutY,
                     duration: 200,
                     ease: "Power2"
                 })
             })
 
             //Check hit
-            this.scene.time.delayedCall(1000, () => {
+            this.scene.time.delayedCall(800, () => {
                 if (!this.boss || this.boss.health <= 0 || !this.active) return
 
                 const angle = this.telegraph.angle
-                const startX = this.coordinates[remainingIndex].x
-                const startY = this.coordinates[remainingIndex].y
+                const startX = donutX
+                const startY = donutY
                 const endX = startX + Math.cos(angle) * this.telegraph.length
                 const endY = startY + Math.sin(angle) * this.telegraph.length
 
@@ -151,6 +146,5 @@ export default class Boss24MechA extends BossMechanic {
     destroy() {
         this.telegraph?.destroy()
         this.telegraph = undefined
-        this.coordinates = []
     }
 }
