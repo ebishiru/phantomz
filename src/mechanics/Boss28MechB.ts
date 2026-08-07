@@ -2,12 +2,12 @@ import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import ConeTelegraph from "../entities/ConeTelegraph";
 
-export default class Boss23MechB extends BossMechanic {
+export default class Boss28MechB extends BossMechanic {
 
     config = {
         id: "teleport-spin-cone-quadrant",
-        name: "360 Clockwork Sweep",
-        castTime: 1300,
+        name: "540 Extermination",
+        castTime: 1100,
         castDuration: 2900,
         cooldown: 3000,
         showCastBar: true,
@@ -21,10 +21,16 @@ export default class Boss23MechB extends BossMechanic {
     currentAngle: number = 0
 
     rotationStep = Math.PI / 2
-    totalExplosions = 4
-    rotationInterval = 400
+    totalExplosions = 6
+    rotationInterval = 300
+    rotationDirection: string = "Clockwork"
 
     onCastStart() {
+        //Randomize clockwise or counterclockwise
+        const directions = ["Clockwork", "Reverse"]
+        this.rotationDirection = Phaser.Utils.Array.GetRandom(directions)
+        this.config.name = `540 ${this.rotationDirection} Extermination`
+
         //Teleport to middle
         const bounds = this.scene.physics.world.bounds
 
@@ -65,7 +71,11 @@ export default class Boss23MechB extends BossMechanic {
             explosions++
             if (explosions >= this.totalExplosions) return
 
-            this.currentAngle = Phaser.Math.Angle.Wrap(this.currentAngle + this.rotationStep)
+            if (this.rotationDirection === "Clockwork") {
+                this.currentAngle = Phaser.Math.Angle.Wrap(this.currentAngle + this.rotationStep)
+            } else if (this.rotationDirection === "Reverse") {
+                this.currentAngle = Phaser.Math.Angle.Wrap(this.currentAngle - this.rotationStep)
+            }
 
             //Draw next telegraph
             this.telegraph = new ConeTelegraph(
