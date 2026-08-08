@@ -89,6 +89,7 @@ import Boss29MechB from "../mechanics/Boss29MechB";
 import Boss29MechC from "../mechanics/Boss29MechC";
 import Boss30MechA from "../mechanics/Boss30MechA";
 import Boss30MechB from "../mechanics/Boss30MechB";
+import Boss30MechC from "../mechanics/Boss30MechC";
 
 export const Bosses = [
 
@@ -339,114 +340,114 @@ export const Bosses = [
     },
 
     //TOWER BOSSES
-    // {
-    //     name: "Coeurl",
-    //     level: "tower",
-    //     spriteKey: "boss21",
-    //     speed: 100,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss21MechA,
-    //         Boss21MechB,
-    //         Boss21MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Headless Guard",
-    //     level: "tower",
-    //     spriteKey: "boss22",
-    //     speed: 85,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss22MechA,
-    //         Boss22MechB,
-    //         Boss22MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Warmech MK I",
-    //     level: "tower",
-    //     spriteKey: "boss23",
-    //     speed: 120,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss23MechA,
-    //         Boss23MechB,
-    //         Boss23MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Reaper",
-    //     level: "tower",
-    //     spriteKey: "boss24",
-    //     speed: 105,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss24MechA,
-    //         Boss24MechB,
-    //         Boss24MechC
-    //     ]
-    // },
-    // {
-    //     name: "Demon Knight",
-    //     level: "tower",
-    //     spriteKey: "boss25",
-    //     speed: 100,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss25MechA,
-    //         Boss25MechB,
-    //         Boss25MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Manticore",
-    //     level: "tower",
-    //     spriteKey: "boss26",
-    //     speed: 120,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss26MechA,
-    //         Boss26MechB,
-    //         Boss26MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Dullahan",
-    //     level: "tower",
-    //     spriteKey: "boss27",
-    //     speed: 90,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss27MechA,
-    //         Boss27MechB,
-    //         Boss27MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Warmech MK III",
-    //     level: "tower",
-    //     spriteKey: "boss28",
-    //     speed: 120,
-    //     hurtRadius: 55,
-    //     mechanics: [
-    //         Boss28MechA,
-    //         Boss28MechB,
-    //         Boss28MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Thanatos",
-    //     level: "tower",
-    //     spriteKey: "boss29",
-    //     speed: 115,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss29MechA,
-    //         Boss29MechB,
-    //         Boss29MechC
-    //     ]
-    // },
+    {
+        name: "Coeurl",
+        level: "tower",
+        spriteKey: "boss21",
+        speed: 100,
+        hurtRadius: 50,
+        mechanics: [
+            Boss21MechA,
+            Boss21MechB,
+            Boss21MechC,
+        ]
+    },
+    {
+        name: "Headless Guard",
+        level: "tower",
+        spriteKey: "boss22",
+        speed: 85,
+        hurtRadius: 60,
+        mechanics: [
+            Boss22MechA,
+            Boss22MechB,
+            Boss22MechC,
+        ]
+    },
+    {
+        name: "Warmech MK I",
+        level: "tower",
+        spriteKey: "boss23",
+        speed: 120,
+        hurtRadius: 70,
+        mechanics: [
+            Boss23MechA,
+            Boss23MechB,
+            Boss23MechC,
+        ]
+    },
+    {
+        name: "Reaper",
+        level: "tower",
+        spriteKey: "boss24",
+        speed: 105,
+        hurtRadius: 50,
+        mechanics: [
+            Boss24MechA,
+            Boss24MechB,
+            Boss24MechC
+        ]
+    },
+    {
+        name: "Demon Knight",
+        level: "tower",
+        spriteKey: "boss25",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            Boss25MechA,
+            Boss25MechB,
+            Boss25MechC,
+        ]
+    },
+    {
+        name: "Manticore",
+        level: "tower",
+        spriteKey: "boss26",
+        speed: 120,
+        hurtRadius: 50,
+        mechanics: [
+            Boss26MechA,
+            Boss26MechB,
+            Boss26MechC,
+        ]
+    },
+    {
+        name: "Dullahan",
+        level: "tower",
+        spriteKey: "boss27",
+        speed: 90,
+        hurtRadius: 60,
+        mechanics: [
+            Boss27MechA,
+            Boss27MechB,
+            Boss27MechC,
+        ]
+    },
+    {
+        name: "Warmech MK III",
+        level: "tower",
+        spriteKey: "boss28",
+        speed: 120,
+        hurtRadius: 55,
+        mechanics: [
+            Boss28MechA,
+            Boss28MechB,
+            Boss28MechC,
+        ]
+    },
+    {
+        name: "Thanatos",
+        level: "tower",
+        spriteKey: "boss29",
+        speed: 115,
+        hurtRadius: 50,
+        mechanics: [
+            Boss29MechA,
+            Boss29MechB,
+            Boss29MechC
+        ]
+    },
     {
         name: "Arisen Knight",
         level: "tower",
@@ -454,9 +455,9 @@ export const Bosses = [
         speed: 100,
         hurtRadius: 60,
         mechanics: [
-            // Boss30MechA,
+            Boss30MechA,
             Boss30MechB,
-            // Boss30MechC,
+            Boss30MechC,
         ]
     },
 ]

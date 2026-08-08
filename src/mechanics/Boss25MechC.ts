@@ -8,8 +8,8 @@ export default class Boss25MechC extends BossMechanic {
     config = {
         id: "diagonal-room-wide",
         name: "Dexter Chasm",
-        castTime: 1500,
-        castDuration: 1500,
+        castTime: 2000,
+        castDuration: 2000,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,

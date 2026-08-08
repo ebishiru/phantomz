@@ -8,7 +8,7 @@ export default class Boss30MechB extends BossMechanic {
 
     config = {
         id: "circles-last-donut-indicators-only",
-        name: "Final Rites",
+        name: "Last Grace",
         castTime: 800,
         castDuration: 2900,
         cooldown: 3000,
