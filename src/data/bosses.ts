@@ -87,6 +87,7 @@ import Boss28MechC from "../mechanics/Boss28MechC";
 import Boss29MechA from "../mechanics/Boss29MechA";
 import Boss29MechB from "../mechanics/Boss29MechB";
 import Boss29MechC from "../mechanics/Boss29MechC";
+import Boss30MechA from "../mechanics/Boss30MechA";
 
 export const Bosses = [
 
@@ -433,16 +434,28 @@ export const Bosses = [
     //         Boss28MechC,
     //     ]
     // },
+    // {
+    //     name: "Thanatos",
+    //     level: "tower",
+    //     spriteKey: "boss29",
+    //     speed: 115,
+    //     hurtRadius: 50,
+    //     mechanics: [
+    //         Boss29MechA,
+    //         Boss29MechB,
+    //         Boss29MechC
+    //     ]
+    // },
     {
-        name: "Thanatos",
+        name: "Arisen Knight",
         level: "tower",
-        spriteKey: "boss29",
-        speed: 115,
-        hurtRadius: 50,
+        spriteKey: "boss30",
+        speed: 100,
+        hurtRadius: 60,
         mechanics: [
-            Boss29MechA,
-            Boss29MechB,
-            Boss29MechC
+            Boss30MechA,
+            // Boss30MechB,
+            // Boss30MechC,
         ]
     },
 ]
