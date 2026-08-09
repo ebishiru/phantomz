@@ -12,11 +12,11 @@ export default class Boss12MechA extends BossMechanic {
         cooldown: 2000,
         showCastBar: true,
         damage: 10,
-        range: 200,
+        range: 300,
         width: 0,
     }
 
-    coneAngle = Math.PI / 2
+    coneAngle = Math.PI * 3/4
     damageTimer: Phaser.Time.TimerEvent | undefined
 
     onCastStart() {

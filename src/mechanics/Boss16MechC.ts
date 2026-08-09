@@ -21,7 +21,7 @@ export default class Boss16MechC extends BossMechanic {
     circleTelegraph: CircleTelegraph | null = null
 
     donutInnerRadius: number = 120
-    donutOuterRadius: number = 240
+    donutOuterRadius: number = 360
 
     circleRadiusAngle: number = 0
     circleX: number = 0

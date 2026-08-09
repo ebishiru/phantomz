@@ -162,4 +162,13 @@ export default class Boss10MechC extends BossMechanic {
             })
         })
     }
+
+    destroy() {
+        this.telegraphA?.destroy()
+        this.telegraphA = undefined
+        this.telegraphB?.destroy()
+        this.telegraphB = undefined
+        this.telegraphC?.destroy()
+        this.telegraphC = undefined
+    }
 }

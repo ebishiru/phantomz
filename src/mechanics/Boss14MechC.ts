@@ -41,6 +41,17 @@ export default class Boss14MechC extends BossMechanic {
             this.config.width,
         )
         this.telegraphs.push(vertical, horizontal)
+
+        //Boss jumps to center
+        this.scene.time.delayedCall(this.config.castTime - 200, () => {
+            this.scene.tweens.add({
+                targets: this.boss,
+                x: centerX,
+                y: centerY,
+                duration: 200,
+                ease: "Power2"
+            })
+        })
     }
 
     execute() {

@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import CircleTelegraph from "../entities/CircleTelegraph";
-import WallIndicator from "../entities/WallIndicator";
+import DirectionIndicator from "../entities/DirectionIndicator";
 
 export default class Boss14MechD extends BossMechanic {
 
@@ -13,7 +13,7 @@ export default class Boss14MechD extends BossMechanic {
         cooldown: 3000,
         showCastBar: true,
         damage: 20,
-        range: 90,
+        range: 100,
         width: 0,
     }
 
@@ -21,79 +21,79 @@ export default class Boss14MechD extends BossMechanic {
     knockbackDistance = 200
 
     telegraphs: CircleTelegraph[] = []
-    indicators: WallIndicator[] = []
-    indicatorPositions: {x: number, y: number}[] = []
+    indicators: DirectionIndicator[] = []
+    telegraphPositions: {x: number, y: number}[] = []
 
     onCastStart() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
         
-        this.indicatorPositions = []
+        this.telegraphPositions = []
 
         const screen = this.scene.scale
         const centerX = screen.width / 2
         const centerY = screen.height / 2
 
-        //Create 3 randomized damage indicators
-        const sliceSize = (Math.PI * 2) / 3
-
-        for ( let i = 0; i < 3; i++) {
-            //Random angle within slice
-            const angle = (i * sliceSize) + Phaser.Math.FloatBetween(0, sliceSize)
-
-            const x = centerX + Math.cos(angle) * this.distanceFromCenter
-            const y = centerY + Math.sin(angle) * this.distanceFromCenter
-            this.indicatorPositions.push({x, y})
-
-            const indicator = new WallIndicator(
-                this.scene,
-                x,
-                y,
-                Math.PI / 2,
-                10,
-            )
-            this.indicators.push(indicator)
-        }
-
         //Move boss to center
-        this.scene.time.delayedCall(700, () => {
+        this.scene.tweens.add({
+            targets: this.boss,
+            x: centerX,
+            y: centerY,
+            duration: 300,
+            ease: "Power2",
+            onComplete: () => {
 
-            this.scene.tweens.add({
-                targets: this.boss,
-                x: centerX,
-                y: centerY,
-                duration: 300,
-                ease: "Power2",
-                onComplete: () => {
-                    this.execute()
-                    
-                    this.scene.time.delayedCall(200, () => {
-                        if (!this.boss || this.boss.health <= 0 ||!this.active) return
+                //Create 3 randomized damage circles
+                const sliceSize = (Math.PI * 2) / 3
 
-                        this.indicatorPositions.forEach( pos => {
-                            const telegraph = new CircleTelegraph(
-                                this.scene,
-                                pos.x,
-                                pos.y,
-                                this.config.range,
-                            )
-                            
-                            this.telegraphs.push(telegraph)
-                        })
-                    })
+                for ( let i = 0; i < 3; i++) {
+                    //Random angle within slice
+                    const angle = (i * sliceSize) + Phaser.Math.FloatBetween(0, sliceSize)
 
-                    this.scene.time.delayedCall(500, () => {
-                        this.hitCheck()
-                    })
+                    const x = centerX + Math.cos(angle) * this.distanceFromCenter
+                    const y = centerY + Math.sin(angle) * this.distanceFromCenter
+                    this.telegraphPositions.push({x, y})
+
+                    const telegraph = new CircleTelegraph(
+                        this.scene,
+                        x,
+                        y,
+                        this.config.range
+                    )
+                    this.telegraphs.push(telegraph)
                 }
-            })
+
+                //Create indicators around boss
+                let indicatorAngle = 0
+                for ( let j = 0; j < 8; j++) {
+                    const indicator = new DirectionIndicator(
+                        this.scene,
+                        this.boss,
+                        indicatorAngle,
+                        15
+                    )
+                    this.indicators.push(indicator)
+                    indicatorAngle += Math.PI/4
+                }
+                
+                
+                this.scene.time.delayedCall(700, () => {
+                    if (!this.boss || this.boss.health <= 0 ||!this.active) return
+                    //remove indicators
+                    this.indicators.forEach(i => i.destroy())
+                    this.indicators = []
+                    this.performKnockback()
+
+                })
+
+                this.scene.time.delayedCall(1200, () => {
+                    this.hitCheck()
+                })
+            }
         })
+
     }
 
-    execute() {
-        //Remove indicators
-        this.indicators.forEach( i => i.destroy())
-        this.indicators = []
-
+    performKnockback() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
         //Push player back
@@ -161,6 +161,6 @@ export default class Boss14MechD extends BossMechanic {
         this.telegraphs = []
         this.indicators.forEach( i => i.destroy())
         this.indicators = []
-        this.indicatorPositions = []
+        this.telegraphPositions = []
     }
 }

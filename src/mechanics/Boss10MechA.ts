@@ -9,12 +9,14 @@ export default class Boss10MechA extends BossMechanic {
         name: "Grand Meteor",
         castTime: 2600,
         castDuration: 2600,
-        cooldown: 4000,
+        cooldown: 3000,
         showCastBar: false,
         damage: 20,
         range: 100,
         width: 0,
     }
+
+    telegraphs: CircleTelegraph[] = []
 
     onCastStart() {
         const timings = [800, 1150, 1500, 1850, 2200, 2550, 2900]
@@ -46,6 +48,8 @@ export default class Boss10MechA extends BossMechanic {
                     this.config.range
                 )
 
+                this.telegraphs.push(telegraph)
+
                 this.scene.time.delayedCall(telegraphDuration, () => {
                     if (!this.boss || this.boss.health <= 0 || !this.active) {
                         telegraph.destroy()
@@ -63,13 +67,14 @@ export default class Boss10MechA extends BossMechanic {
                         this.player.takeDamage(this.config.damage)
                     }
 
-                    telegraph.destroy()
+                    telegraph?.destroy()
                 })
             })
         })
     }
 
     destroy() {
-        this.active = false
+        this.telegraphs.forEach(t => t.destroy())
+        this.telegraphs = []
     }
 }

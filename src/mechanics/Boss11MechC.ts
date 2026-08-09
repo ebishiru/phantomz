@@ -7,8 +7,8 @@ export default class Boss11MechC extends BossMechanic {
     config = {
         id: "circle-drain-boss",
         name: "Howl of Renewal",
-        castTime: 800,
-        castDuration: 800,
+        castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
