@@ -50,8 +50,8 @@ export default class Boss24MechC extends BossMechanic {
             this.indicators.forEach(i => i.destroy())
             this.indicators = []
 
-            //Choose 5 / 7 lanes only
-            const chosenCoordinates = laneCenters.sort(() => Math.random() - 0.5 ).slice(0, 5)
+            //Choose 6 / 7 lanes only
+            const chosenCoordinates = laneCenters.sort(() => Math.random() - 0.5 ).slice(0, 6)
 
             //Spawn minions on left side
             chosenCoordinates.forEach(coordinate => {

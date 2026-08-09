@@ -62,8 +62,8 @@ export default class Boss29MechC extends BossMechanic {
             this.indicators.forEach(i => i.destroy())
             this.indicators = []
 
-            //Choose 5/7 lanes for left
-            const chosenLeftCoordinates = Phaser.Utils.Array.Shuffle([...laneCenters]).slice(0, 5)
+            //Choose 6/7 lanes for left
+            const chosenLeftCoordinates = Phaser.Utils.Array.Shuffle([...laneCenters]).slice(0, 6)
 
             //Spawn minions on left side
             chosenLeftCoordinates.forEach(coordinate => {
@@ -86,8 +86,8 @@ export default class Boss29MechC extends BossMechanic {
                 this.leftMinions.push(minion)
             })
 
-            //Choose 5/7 lanes for right
-            const chosenRightCoordinates = Phaser.Utils.Array.Shuffle([...laneCenters]).slice(0, 5)
+            //Choose 6/7 lanes for right
+            const chosenRightCoordinates = Phaser.Utils.Array.Shuffle([...laneCenters]).slice(0, 6)
 
             //Spawn minions on right side
             chosenRightCoordinates.forEach(coordinate => {

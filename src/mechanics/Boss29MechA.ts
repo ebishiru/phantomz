@@ -8,8 +8,8 @@ export default class Boss29MechA extends BossMechanic {
     config = {
         id: "donut-room-boss-line-random",
         name: "Execution Grounds",
-        castTime: 1400,
-        castDuration: 2200,
+        castTime: 1300,
+        castDuration: 2100,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
