@@ -5,7 +5,7 @@ export default class GameSetupScene extends Phaser.Scene {
     characters = ["player1", "player2", "player3"]
     skills = [
         { key: "slash", icon: "slash-icon"},
-        { key: "javelin", icon: "javelin-icon"},
+        { key: "restoration", icon: "restoration-icon"},
         { key: "fireball", icon: "fireball-icon"}
     ]
 
