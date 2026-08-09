@@ -76,7 +76,8 @@ export default class PreloadScene extends Phaser.Scene {
             "gust",
             "zephyr",
             "mirage",
-            "quasar"
+            "quasar",
+            "yoyo",
         ]
 
         skillKeys.forEach(key => {

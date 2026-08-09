@@ -40,7 +40,7 @@ export default class JavelinSkill extends Skill {
 
         javelinSprite.setOrigin(0.5)
         javelinSprite.setAlpha(1)
-        javelinSprite.setScale(this.getRange() / 8)
+        javelinSprite.setScale(this.getRange() / 12)
         javelinSprite.setDepth(10)
         javelinSprite.setCollideWorldBounds(true)
         javelinSprite.setBounce(0.3)

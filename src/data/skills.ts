@@ -148,4 +148,11 @@ export const skills = [
         //     text: "Score 8000 pts in snow.",
         // }
     },
+    {
+        key: "yoyo",
+        name: "Yo-yo",
+        iconKey: "yoyo-icon",
+        desc: "Swing forward then backwards",
+        upgrades: upgrades.yoyo,
+    }
 ]

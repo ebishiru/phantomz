@@ -176,4 +176,15 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffCooldown(500)
         }
     ],
+
+    yoyo: [
+        {
+            desc: "Damage + 3",
+            apply: (skill: Skill) => skill.buffDamage(3)
+        },
+        {
+            desc: "Cooldown reduced by 300ms",
+            apply: (skill: Skill) => skill.buffCooldown(300)
+        }
+    ]
 }
