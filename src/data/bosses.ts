@@ -94,115 +94,115 @@ import Boss30MechC from "../mechanics/Boss30MechC";
 export const Bosses = [
 
     //CAVE BOSSES
-    // {
-    //     name: "Wyrm",
-    //     level: "cave",
-    //     spriteKey: "boss1",
-    //     speed: 60,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss1MechA,
-    //         Boss1MechB,
-    //         Boss1MechC,
-    //         Boss1MechD,
-    //     ]
-    // },
-    // {
-    //     name: "Shrieker",
-    //     level: "cave",
-    //     spriteKey: "boss2",
-    //     speed: 100,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss2MechA,
-    //         Boss2MechB,
-    //         Boss2MechD,
-    //         Boss2MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Titanus",
-    //     level: "cave",
-    //     spriteKey: "boss3",
-    //     speed: 70,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss3MechA,
-    //         Boss3MechB,
-    //         Boss3MechC
-    //     ]
-    // },
-    // {
-    //     name: "Buzzerax",
-    //     level: "cave",
-    //     spriteKey: "boss4",
-    //     speed: 100,
-    //     hurtRadius: 65,
-    //     mechanics: [
-    //         Boss4MechA,
-    //         Boss4MechB
-    //     ]
-    // },
-    // {
-    //     name: "Dark Knight",
-    //     level: "cave",
-    //     spriteKey: "boss5",
-    //     speed: 90,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss5MechA,
-    //         Boss5MechB,
-    //         Boss5MechC
-    //     ]
-    // },
-    // {
-    //     name: "Naga",
-    //     level: "cave",
-    //     spriteKey: "boss6",
-    //     speed: 70,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss6MechA,
-    //         Boss6MechB,
-    //         Boss6MechC
-    //     ]
-    // },
-    // {
-    //     name: "Vrykolakas",
-    //     level: "cave",
-    //     spriteKey: "boss7",
-    //     speed: 120,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss7MechA,
-    //         Boss7MechB,
-    //         Boss7MechC
-    //     ]
-    // },
-    // {
-    //     name: "Titanus Prime",
-    //     level: "cave",
-    //     spriteKey: "boss8",
-    //     speed: 80,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss8MechA,
-    //         Boss8MechB,
-    //         Boss8MechC
-    //     ]
-    // },
-    // {
-    //     name: "Hive Lord",
-    //     level: "cave",
-    //     spriteKey: "boss9",
-    //     speed: 110,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss9MechA,
-    //         Boss9MechB,
-    //         Boss9MechC
-    //     ]
-    // },
+    {
+        name: "Wyrm",
+        level: "cave",
+        spriteKey: "boss1",
+        speed: 60,
+        hurtRadius: 70,
+        mechanics: [
+            Boss1MechA,
+            Boss1MechB,
+            Boss1MechC,
+            Boss1MechD,
+        ]
+    },
+    {
+        name: "Shrieker",
+        level: "cave",
+        spriteKey: "boss2",
+        speed: 100,
+        hurtRadius: 60,
+        mechanics: [
+            Boss2MechA,
+            Boss2MechB,
+            Boss2MechD,
+            Boss2MechC,
+        ]
+    },
+    {
+        name: "Titanus",
+        level: "cave",
+        spriteKey: "boss3",
+        speed: 70,
+        hurtRadius: 70,
+        mechanics: [
+            Boss3MechA,
+            Boss3MechB,
+            Boss3MechC
+        ]
+    },
+    {
+        name: "Buzzerax",
+        level: "cave",
+        spriteKey: "boss4",
+        speed: 100,
+        hurtRadius: 65,
+        mechanics: [
+            Boss4MechA,
+            Boss4MechB
+        ]
+    },
+    {
+        name: "Dark Knight",
+        level: "cave",
+        spriteKey: "boss5",
+        speed: 90,
+        hurtRadius: 70,
+        mechanics: [
+            Boss5MechA,
+            Boss5MechB,
+            Boss5MechC
+        ]
+    },
+    {
+        name: "Naga",
+        level: "cave",
+        spriteKey: "boss6",
+        speed: 70,
+        hurtRadius: 70,
+        mechanics: [
+            Boss6MechA,
+            Boss6MechB,
+            Boss6MechC
+        ]
+    },
+    {
+        name: "Vrykolakas",
+        level: "cave",
+        spriteKey: "boss7",
+        speed: 120,
+        hurtRadius: 60,
+        mechanics: [
+            Boss7MechA,
+            Boss7MechB,
+            Boss7MechC
+        ]
+    },
+    {
+        name: "Titanus Prime",
+        level: "cave",
+        spriteKey: "boss8",
+        speed: 80,
+        hurtRadius: 70,
+        mechanics: [
+            Boss8MechA,
+            Boss8MechB,
+            Boss8MechC
+        ]
+    },
+    {
+        name: "Hive Lord",
+        level: "cave",
+        spriteKey: "boss9",
+        speed: 110,
+        hurtRadius: 60,
+        mechanics: [
+            Boss9MechA,
+            Boss9MechB,
+            Boss9MechC
+        ]
+    },
     {
         name: "Pure Knight",
         level: "cave",
@@ -217,103 +217,103 @@ export const Bosses = [
     },
 
     //SNOW BOSSES
-    // {
-    //     name: "Dire Wolf",
-    //     level: "snow",
-    //     spriteKey: "boss11",
-    //     speed: 110,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss11MechA,
-    //         Boss11MechB,
-    //         Boss11MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Rot Belcher",
-    //     level: "snow",
-    //     spriteKey: "boss12",
-    //     speed: 70,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss12MechA,
-    //         Boss12MechB,
-    //         Boss12MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Hag",
-    //     level: "snow",
-    //     spriteKey: "boss13",
-    //     speed: 70,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss13MechA,
-    //         Boss13MechB,
-    //         Boss13MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Drake",
-    //     level: "snow",
-    //     spriteKey: "boss14",
-    //     speed: 100,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss14MechA,
-    //         Boss14MechB,
-    //         Boss14MechC,
-    //         Boss14MechD,
-    //     ]
-    // },
-    // {
-    //     name: "Fallen Knight",
-    //     level: "snow",
-    //     spriteKey: "boss15",
-    //     speed: 100,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss15MechA,
-    //         Boss15MechB,
-    //         Boss15MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Lycanthrope",
-    //     level: "snow",
-    //     spriteKey: "boss16",
-    //     speed: 115,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss16MechA,
-    //         Boss16MechB,
-    //         Boss16MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Rot Bloater",
-    //     level: "snow",
-    //     spriteKey: "boss17",
-    //     speed: 80,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss17MechA,
-    //         Boss17MechB,
-    //         Boss17MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Hex Matriarch",
-    //     level: "snow",
-    //     spriteKey: "boss18",
-    //     speed: 70,
-    //     hurtRadius: 55,
-    //     mechanics: [
-    //         Boss18MechA,
-    //         Boss18MechB,
-    //         Boss18MechC
-    //     ]
-    // },
+    {
+        name: "Dire Wolf",
+        level: "snow",
+        spriteKey: "boss11",
+        speed: 110,
+        hurtRadius: 50,
+        mechanics: [
+            Boss11MechA,
+            Boss11MechB,
+            Boss11MechC,
+        ]
+    },
+    {
+        name: "Rot Belcher",
+        level: "snow",
+        spriteKey: "boss12",
+        speed: 70,
+        hurtRadius: 70,
+        mechanics: [
+            Boss12MechA,
+            Boss12MechB,
+            Boss12MechC,
+        ]
+    },
+    {
+        name: "Hag",
+        level: "snow",
+        spriteKey: "boss13",
+        speed: 70,
+        hurtRadius: 60,
+        mechanics: [
+            Boss13MechA,
+            Boss13MechB,
+            Boss13MechC,
+        ]
+    },
+    {
+        name: "Drake",
+        level: "snow",
+        spriteKey: "boss14",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            Boss14MechA,
+            Boss14MechB,
+            Boss14MechC,
+            Boss14MechD,
+        ]
+    },
+    {
+        name: "Fallen Knight",
+        level: "snow",
+        spriteKey: "boss15",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            Boss15MechA,
+            Boss15MechB,
+            Boss15MechC,
+        ]
+    },
+    {
+        name: "Lycanthrope",
+        level: "snow",
+        spriteKey: "boss16",
+        speed: 115,
+        hurtRadius: 50,
+        mechanics: [
+            Boss16MechA,
+            Boss16MechB,
+            Boss16MechC,
+        ]
+    },
+    {
+        name: "Rot Bloater",
+        level: "snow",
+        spriteKey: "boss17",
+        speed: 80,
+        hurtRadius: 70,
+        mechanics: [
+            Boss17MechA,
+            Boss17MechB,
+            Boss17MechC,
+        ]
+    },
+    {
+        name: "Hex Matriarch",
+        level: "snow",
+        spriteKey: "boss18",
+        speed: 70,
+        hurtRadius: 55,
+        mechanics: [
+            Boss18MechA,
+            Boss18MechB,
+            Boss18MechC
+        ]
+    },
     {
         name: "Frost Wyvern",
         level: "snow",
@@ -340,42 +340,42 @@ export const Bosses = [
     },
 
     //TOWER BOSSES
-    // {
-    //     name: "Coeurl",
-    //     level: "tower",
-    //     spriteKey: "boss21",
-    //     speed: 100,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss21MechA,
-    //         Boss21MechB,
-    //         Boss21MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Headless Guard",
-    //     level: "tower",
-    //     spriteKey: "boss22",
-    //     speed: 85,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss22MechA,
-    //         Boss22MechB,
-    //         Boss22MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Warmech MK I",
-    //     level: "tower",
-    //     spriteKey: "boss23",
-    //     speed: 120,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss23MechA,
-    //         Boss23MechB,
-    //         Boss23MechC,
-    //     ]
-    // },
+    {
+        name: "Coeurl",
+        level: "tower",
+        spriteKey: "boss21",
+        speed: 100,
+        hurtRadius: 50,
+        mechanics: [
+            Boss21MechA,
+            Boss21MechB,
+            Boss21MechC,
+        ]
+    },
+    {
+        name: "Headless Guard",
+        level: "tower",
+        spriteKey: "boss22",
+        speed: 85,
+        hurtRadius: 60,
+        mechanics: [
+            Boss22MechA,
+            Boss22MechB,
+            Boss22MechC,
+        ]
+    },
+    {
+        name: "Warmech MK I",
+        level: "tower",
+        spriteKey: "boss23",
+        speed: 120,
+        hurtRadius: 70,
+        mechanics: [
+            Boss23MechA,
+            Boss23MechB,
+            Boss23MechC,
+        ]
+    },
     {
         name: "Reaper",
         level: "tower",
@@ -388,54 +388,54 @@ export const Bosses = [
             Boss24MechC
         ]
     },
-    // {
-    //     name: "Demon Knight",
-    //     level: "tower",
-    //     spriteKey: "boss25",
-    //     speed: 100,
-    //     hurtRadius: 70,
-    //     mechanics: [
-    //         Boss25MechA,
-    //         Boss25MechB,
-    //         Boss25MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Manticore",
-    //     level: "tower",
-    //     spriteKey: "boss26",
-    //     speed: 120,
-    //     hurtRadius: 50,
-    //     mechanics: [
-    //         Boss26MechA,
-    //         Boss26MechB,
-    //         Boss26MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Dullahan",
-    //     level: "tower",
-    //     spriteKey: "boss27",
-    //     speed: 90,
-    //     hurtRadius: 60,
-    //     mechanics: [
-    //         Boss27MechA,
-    //         Boss27MechB,
-    //         Boss27MechC,
-    //     ]
-    // },
-    // {
-    //     name: "Warmech MK III",
-    //     level: "tower",
-    //     spriteKey: "boss28",
-    //     speed: 120,
-    //     hurtRadius: 55,
-    //     mechanics: [
-    //         Boss28MechA,
-    //         Boss28MechB,
-    //         Boss28MechC,
-    //     ]
-    // },
+    {
+        name: "Demon Knight",
+        level: "tower",
+        spriteKey: "boss25",
+        speed: 100,
+        hurtRadius: 70,
+        mechanics: [
+            Boss25MechA,
+            Boss25MechB,
+            Boss25MechC,
+        ]
+    },
+    {
+        name: "Manticore",
+        level: "tower",
+        spriteKey: "boss26",
+        speed: 120,
+        hurtRadius: 50,
+        mechanics: [
+            Boss26MechA,
+            Boss26MechB,
+            Boss26MechC,
+        ]
+    },
+    {
+        name: "Dullahan",
+        level: "tower",
+        spriteKey: "boss27",
+        speed: 90,
+        hurtRadius: 60,
+        mechanics: [
+            Boss27MechA,
+            Boss27MechB,
+            Boss27MechC,
+        ]
+    },
+    {
+        name: "Warmech MK III",
+        level: "tower",
+        spriteKey: "boss28",
+        speed: 120,
+        hurtRadius: 55,
+        mechanics: [
+            Boss28MechA,
+            Boss28MechB,
+            Boss28MechC,
+        ]
+    },
     {
         name: "Thanatos",
         level: "tower",

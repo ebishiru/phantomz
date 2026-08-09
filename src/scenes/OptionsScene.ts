@@ -137,9 +137,6 @@ export default class OptionsScene extends Phaser.Scene {
         let currentY = startY;
 
         gameScene.skillSystem.skills.forEach((skill:any)=>{
-
-            if(!skill.enabled) return
-
             // Image positioned on the left
             const imageX = centerX - 120;
             this.add.image(imageX, currentY, skill.iconKey)

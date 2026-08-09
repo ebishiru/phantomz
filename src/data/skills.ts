@@ -70,11 +70,11 @@ export const skills = [
         iconKey: "restoration-icon",
         desc: "Fix your wounds and restore your health.",
         upgrades: upgrades.restoration,
-        unlock: {
-            type: "caveTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in cave.",
-        }
+        // unlock: {
+        //     type: "caveTotalScore",
+        //     value: 2000,
+        //     text: "Score 2000 pts in cave.",
+        // }
     },
     {
         key: "ward",
@@ -82,11 +82,11 @@ export const skills = [
         iconKey: "ward-icon",
         desc: "Create a temporary shield that reflects damage.",
         upgrades: upgrades.ward,
-        unlock: {
-            type: "bossKills",
-            value: { boss5: 1},
-            text: "Defeat Black Knight. (cave)",
-        }
+        // unlock: {
+        //     type: "bossKills",
+        //     value: { boss5: 1},
+        //     text: "Defeat Black Knight. (cave)",
+        // }
     },
     {
         key: "javelin",
@@ -94,11 +94,11 @@ export const skills = [
         iconKey: "javelin-icon",
         desc: "Throw a javelin that can be picked up again.",
         upgrades: upgrades.javelin,
-        unlock: {
-            type: "bossKills",
-            value: { boss10: 1 },
-            text: "Defeat Pure Knight. (cave)",
-        }
+        // unlock: {
+        //     type: "bossKills",
+        //     value: { boss10: 1 },
+        //     text: "Defeat Pure Knight. (cave)",
+        // }
     },
     {
         key: "gust",
@@ -106,11 +106,11 @@ export const skills = [
         iconKey: "gust-icon",
         desc: "Unleash a gust of wind that knocks you back.",
         upgrades: upgrades.gust,
-        unlock: {
-            type: "caveTotalScore",
-            value: 4000,
-            text: "Score 4000 pts in cave.",
-        }
+        // unlock: {
+        //     type: "caveTotalScore",
+        //     value: 4000,
+        //     text: "Score 4000 pts in cave.",
+        // }
     },
     {
         key: "zephyr",
@@ -118,11 +118,11 @@ export const skills = [
         iconKey: "zephyr-icon",
         desc: "Perform a maneuvre with your rapier",
         upgrades: upgrades.zephyr,
-        unlock: {
-            type: "caveTotalScore",
-            value: 8000,
-            text: "Score 8000 pts in cave.",
-        }
+        // unlock: {
+        //     type: "caveTotalScore",
+        //     value: 8000,
+        //     text: "Score 8000 pts in cave.",
+        // }
     },
     {
         key: "mirage",
@@ -130,11 +130,11 @@ export const skills = [
         iconKey: "mirage-icon",
         desc: "Leave a water clone behind and teleport away",
         upgrades: upgrades.mirage,
-        unlock: {
-            type: "snowTotalScore",
-            value: 6000,
-            text: "Score 6000 pts in snow.",
-        }
+        // unlock: {
+        //     type: "snowTotalScore",
+        //     value: 6000,
+        //     text: "Score 6000 pts in snow.",
+        // }
     },
     {
         key: "quasar",
@@ -142,10 +142,10 @@ export const skills = [
         iconKey: "quasar-icon",
         desc: "Fire a beam in a given direction",
         upgrades: upgrades.quasar,
-        unlock: {
-            type: "snowTotalScore",
-            value: 8000,
-            text: "Score 8000 pts in snow.",
-        }
+        // unlock: {
+        //     type: "snowTotalScore",
+        //     value: 8000,
+        //     text: "Score 8000 pts in snow.",
+        // }
     },
 ]
