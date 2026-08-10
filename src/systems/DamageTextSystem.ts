@@ -11,7 +11,7 @@ export function showFloatingDamage(
 
     let valueText = `${value}`
 
-    if (value > 49) {
+    if (value > 39) {
         valueText = `${value}!!`
     }
 

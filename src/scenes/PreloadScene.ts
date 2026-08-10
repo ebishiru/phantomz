@@ -79,6 +79,7 @@ export default class PreloadScene extends Phaser.Scene {
             "quasar",
             "yoyo",
             "blitzkrieg",
+            "kraken",
         ]
 
         skillKeys.forEach(key => {
@@ -87,15 +88,16 @@ export default class PreloadScene extends Phaser.Scene {
         })
 
         //Extra skill assets
-        this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")    //CAST ICON
-        this.load.image("volt2-vfx", "assets/volt2-vfx.png")            //CAST ICON
-        this.load.image("skip-icon", "assets/skip-icon.png")            //SKIP ICON
-        this.load.image("reroll-icon", "assets/reroll-icon.png")        //REROLL ICON
-        this.load.image("zephyr2-vfx", "assets/zephyr2-vfx.png")        //THRUST VFX
-        this.load.image("mirage2-vfx", "assets/mirage2-vfx.png")        //DMG VFX
-        this.load.image("quasar2-vfx", "assets/quasar2-vfx.png")        //DMG VFX
-        this.load.image("quasar3-vfx", "assets/quasar3-vfx.png")        //DMG 2 VFX
-        this.load.image("blitzkrieg2-vfx", "assets/blitzkrieg2-vfx.png")//AOE VFX
+        this.load.image("fireball2-vfx", "assets/fireball2-vfx.png")        //CAST ICON
+        this.load.image("volt2-vfx", "assets/volt2-vfx.png")                //CAST ICON
+        this.load.image("skip-icon", "assets/skip-icon.png")                //SKIP ICON
+        this.load.image("reroll-icon", "assets/reroll-icon.png")            //REROLL ICON
+        this.load.image("zephyr2-vfx", "assets/zephyr2-vfx.png")            //THRUST VFX
+        this.load.image("mirage2-vfx", "assets/mirage2-vfx.png")            //AOE VFX
+        this.load.image("quasar2-vfx", "assets/quasar2-vfx.png")            //BEAM VFX
+        this.load.image("quasar3-vfx", "assets/quasar3-vfx.png")            //BEAM RING VFX
+        this.load.image("blitzkrieg2-vfx", "assets/blitzkrieg2-vfx.png")    //AOE VFX
+        this.load.image("kraken2-vfx", "assets/kraken2-vfx.png")            //AOE VFX
     }
 
     loadPassives() {

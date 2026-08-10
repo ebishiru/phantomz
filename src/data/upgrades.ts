@@ -198,4 +198,15 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffCooldown(700)
         }
     ],
+
+    kraken: [
+        {
+            desc: "Damage + 9",
+            apply: (skill: Skill) => skill.buffDamage(9)
+        },
+        {
+            desc: "Cooldown reduced by 1200ms",
+            apply: (skill: Skill) => skill.buffCooldown(1200)
+        }
+    ],
 }
