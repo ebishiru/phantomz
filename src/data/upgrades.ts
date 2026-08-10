@@ -7,8 +7,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 600ms",
+            apply: (skill: Skill) => skill.buffCooldown(600)
         },
     ],
 
@@ -18,8 +18,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(4)
         },
         {
-            desc: "Cooldown reduced by 400ms",
-            apply: (skill: Skill) => skill.buffCooldown(400)
+            desc: "Cooldown reduced by 700ms",
+            apply: (skill: Skill) => skill.buffCooldown(700)
         }
     ],
 
@@ -29,8 +29,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(2)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 900ms",
+            apply: (skill: Skill) => skill.buffCooldown(900)
         },
     ],
 
@@ -40,19 +40,19 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(6)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 500ms",
+            apply: (skill: Skill) => skill.buffCooldown(500)
         }
     ],
 
     caltrops: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +3",
+            apply: (skill: Skill) => skill.buffDamage(3)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 700ms",
+            apply: (skill: Skill) => skill.buffCooldown(700)
         },
     ],
 
@@ -62,8 +62,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(8)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 1000ms",
+            apply: (skill: Skill) => skill.buffCooldown(1000)
         },
     ],
 
@@ -73,8 +73,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 900ms",
+            apply: (skill: Skill) => skill.buffCooldown(900)
         },
         {
             desc: "Heal +2",
@@ -88,8 +88,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
-            desc: "Cooldown reduced by 400ms",
-            apply: (skill: Skill) => skill.buffCooldown(400)
+            desc: "Cooldown reduced by 700ms",
+            apply: (skill: Skill) => skill.buffCooldown(700)
         }
     ],
 
@@ -99,8 +99,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
-            desc: "Cooldown reduced by 400ms",
-            apply: (skill: Skill) => skill.buffCooldown(400)
+            desc: "Cooldown reduced by 900ms",
+            apply: (skill: Skill) => skill.buffCooldown(900)
         }
     ],
 
@@ -110,8 +110,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffHeal(3)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 700ms",
+            apply: (skill: Skill) => skill.buffCooldown(700)
         }
     ],
 
@@ -121,26 +121,26 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffShieldDuration(250)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 1500ms",
+            apply: (skill: Skill) => skill.buffCooldown(1500)
         }
     ],
 
     javelin: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +3",
+            apply: (skill: Skill) => skill.buffDamage(3)
         }
     ],
 
     gust: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +4",
+            apply: (skill: Skill) => skill.buffDamage(4)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 500ms",
+            apply: (skill: Skill) => skill.buffCooldown(500)
         }
     ],
 
@@ -150,8 +150,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(2)
         },
         {
-            desc: "Cooldown reduced by 200ms",
-            apply: (skill: Skill) => skill.buffCooldown(200)
+            desc: "Cooldown reduced by 500ms",
+            apply: (skill: Skill) => skill.buffCooldown(500)
         }
     ],
 
@@ -161,8 +161,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(7)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 900ms",
+            apply: (skill: Skill) => skill.buffCooldown(900)
         }
     ],
 
@@ -172,8 +172,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(7)
         },
         {
-            desc: "Cooldown reduced by 500ms",
-            apply: (skill: Skill) => skill.buffCooldown(500)
+            desc: "Cooldown reduced by 1000ms",
+            apply: (skill: Skill) => skill.buffCooldown(1000)
         }
     ],
 
@@ -183,8 +183,19 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(3)
         },
         {
-            desc: "Cooldown reduced by 300ms",
-            apply: (skill: Skill) => skill.buffCooldown(300)
+            desc: "Cooldown reduced by 600ms",
+            apply: (skill: Skill) => skill.buffCooldown(600)
         }
-    ]
+    ],
+
+    blitzkrieg: [
+        {
+            desc: "Damage + 3",
+            apply: (skill: Skill) => skill.buffDamage(3)
+        },
+        {
+            desc: "Cooldown reduced by 700ms",
+            apply: (skill: Skill) => skill.buffCooldown(700)
+        }
+    ],
 }

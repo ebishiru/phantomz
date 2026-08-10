@@ -6,7 +6,7 @@ export default class SlashSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "slash", "Slash", 25, 3000, 50)
+        super(scene, player, "slash", "Slash", 25, 4250, 50)
         this.iconKey = "slash-icon"
         this.player = player
     }

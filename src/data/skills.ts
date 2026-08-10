@@ -154,5 +154,12 @@ export const skills = [
         iconKey: "yoyo-icon",
         desc: "Swing forward then backwards",
         upgrades: upgrades.yoyo,
+    },
+    {
+        key: "blitzkrieg",
+        name: "Blitzkrieg",
+        iconKey: "blitzkrieg-icon",
+        desc: "Stampede through then stomp the ground",
+        upgrades: upgrades.blitzkrieg
     }
 ]

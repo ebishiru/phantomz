@@ -56,7 +56,7 @@ export default class Boss2MechD extends BossMechanic {
                     t.y,
                 )
 
-                if (!hit && dist <= this.config.range) {
+                if (!hit && dist <= this.config.range + this.player.hurtboxRadius) {
                     hit = true
                 }
             }
