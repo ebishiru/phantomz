@@ -110,5 +110,15 @@ export const passives = [
         //     value: { boss15: 1 },
         //     text: "Defeat Fallen Knight. (snow)",
         // }
+    },
+    {
+        key: "desperation",
+        name: "Desperation",
+        iconKey: "desperation-icon",
+        desc: "Gain 50% damage and 20% speed at critical HP.",
+        maxLevel: 5,
+        apply: (player: any) => {
+            player.statModifiers.desperationLevel += 1
+        },
     }
 ]

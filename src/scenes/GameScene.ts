@@ -136,6 +136,9 @@ export default class GameScene extends Phaser.Scene {
         keyboardDir.add(mobileDir);
         this.player.move(keyboardDir);
 
+        // Desperation VFX
+        this.player.updateDesperationVFX();
+
         // Systems update
         this.uiSystem.update();
         this.expSystem.update(this.player, time);

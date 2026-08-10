@@ -93,6 +93,10 @@ export default class Skill {
         const mods = this.player.statModifiers;
         let final = (this.damage + mods.flatDamage) * mods.damageMultiplier;
 
+        if (this.player.isDesperationActive && this.player.isDesperationActive()) {
+            final *= 1.5;
+        }
+
         const boss = (this.scene as any).bossManager?.boss;
         if (boss && this.player.statModifiers?.executionerLevel > 0) {
             const threshold = 0.25 + (this.player.statModifiers.executionerLevel - 1) * 0.10;

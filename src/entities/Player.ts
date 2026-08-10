@@ -22,11 +22,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         damageReductionFlat: 0,
         executionerLevel: 0,
         echoChance: 0, 
-        gourmetLevel: 0
+        gourmetLevel: 0,
+        desperationLevel: 0,
     }
 
     skills: any[] = []
     passives: { key: string, level: number }[] = []
+
+    desperationVFX?: Phaser.GameObjects.Sprite
+    desperationTween?: Phaser.Tweens.Tween
 
     facing!: Phaser.Math.Vector2
 
@@ -48,6 +52,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         //Idle animation
         this.anims.play(`${this.texture.key}-idle`, true)
+
+        // Desperation follow VFX
+        this.desperationVFX = this.scene.add.sprite(this.x, this.y, "desperation-vfx")
+            .setOrigin(0.5, 0.5)
+            .setScale(2)
+            .setDepth(this.y - 1)
+            .setVisible(false)
+            .setAlpha(1)
+
+        this.desperationTween = this.scene.tweens.add({
+            targets: this.desperationVFX,
+            alpha: 0.5,
+            duration: 500,
+            yoyo: true,
+            repeat: -1,
+            ease: "Sine.easeInOut",
+        })
+        this.desperationTween.pause()
     }
 
     private getReflectedDamage(amount: number) {
@@ -102,6 +124,41 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
+    getDesperationThreshold() {
+        const level = this.statModifiers.desperationLevel || 0
+        return 0.15 + level * 0.05
+    }
+
+    isDesperationActive() {
+        if (this.statModifiers.desperationLevel <= 0) return false
+        return this.health / this.maxHealth <= this.getDesperationThreshold()
+    }
+
+    updateDesperationVFX() {
+        const active = this.isDesperationActive()
+
+        if (!this.desperationVFX) return
+
+        if (active) {
+            this.desperationVFX
+                .setVisible(true)
+                .setPosition(this.x, this.y)
+                .setDepth(this.y - 1)
+
+            this.desperationTween?.resume()
+        } else {
+            this.desperationTween?.pause()
+            this.desperationVFX
+                .setVisible(false)
+                .setAlpha(1)
+        }
+    }
+
+    getCurrentSpeed() {
+        const multiplier = this.statModifiers.speedMultiplier || 1
+        return this.speed * multiplier * (this.isDesperationActive() ? 1.2 : 1)
+    }
+
     heal(amount: number) {
         if (this.health >= this.maxHealth) return
 
@@ -118,7 +175,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     move(dir: Phaser.Math.Vector2) {
-        this.setVelocity(dir.x * this.speed, dir.y * this.speed)
+        this.setVelocity(dir.x * this.getCurrentSpeed(), dir.y * this.getCurrentSpeed())
 
         if(dir.lengthSq() > 0) {
             this.facing.copy(dir).normalize()
