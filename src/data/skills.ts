@@ -169,4 +169,11 @@ export const skills = [
         desc: "Call forth unpredictably a Kraken strike",
         upgrades: upgrades.kraken
     },
+    {
+        key: "nexus",
+        name: "Nexus",
+        iconKey: "nexus-icon",
+        desc: "Channel a crystal to hit your enemy",
+        upgrades: upgrades.nexus
+    },
 ]

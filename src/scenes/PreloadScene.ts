@@ -80,6 +80,7 @@ export default class PreloadScene extends Phaser.Scene {
             "yoyo",
             "blitzkrieg",
             "kraken",
+            "nexus",
         ]
 
         skillKeys.forEach(key => {
@@ -98,6 +99,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("quasar3-vfx", "assets/quasar3-vfx.png")            //BEAM RING VFX
         this.load.image("blitzkrieg2-vfx", "assets/blitzkrieg2-vfx.png")    //AOE VFX
         this.load.image("kraken2-vfx", "assets/kraken2-vfx.png")            //AOE VFX
+        this.load.image("nexus2-vfx", "assets/nexus2-vfx.png")              //BEAM VFX
     }
 
     loadPassives() {

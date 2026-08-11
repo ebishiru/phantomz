@@ -20,6 +20,7 @@ import QuasarSkill from "../skills/QuasarSkill";
 import YoyoSkill from "../skills/YoyoSkill";
 import BlitzkriegSkill from "../skills/BlitzkriegSkill";
 import KrakenSkill from "../skills/KrakenSkill";
+import NexusSkill from "../skills/NexusSkill";
 
 export function createSkill(
     key: string,
@@ -46,6 +47,7 @@ export function createSkill(
         case "yoyo": return new YoyoSkill(scene, player)
         case "blitzkrieg": return new BlitzkriegSkill(scene, player)
         case "kraken": return new KrakenSkill(scene, player)
+        case "nexus": return new NexusSkill(scene, player)
         default: return null
     }
 }
