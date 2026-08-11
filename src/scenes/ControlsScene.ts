@@ -22,8 +22,8 @@ export default class ControlScene extends Phaser.Scene {
 
         //Controls Text
         this.add.text(centerX, 100,
-            "Movement: Arrow Keys / WASD / Joystick\n" +
-            "Skills: 1234 or UIOP or Buttons\n",
+            "Movement: Arrow Keys / Joystick\n" +
+            "Skills: Keys 1-4 / Face Buttons\n",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",
@@ -40,11 +40,11 @@ export default class ControlScene extends Phaser.Scene {
 
         //How to play text
         this.add.text(centerX, 250,
-            "Avoid red telegraphs. \n" +
-            "Use skills to damage bosses. \n" +
-            "Each skill has its own cooldown. \n" +
-            "New bosses are added every minute. \n" +
-            "Score is based on kills and survival time. \n",
+            "Use skills to damage bosses. Each skill has its own cooldown. \n" +
+            "Avoid red telegraphs with the help of the mechanics' names. \n" +
+            "Acquire new skills or passives whenever you level up. \n" +
+            "New bosses are added every minute, with 10 unique bosses each stage. \n" +
+            "Score is based on kills and survival time. Have fun!!\n",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",
