@@ -6,7 +6,7 @@ export default class ZephyrSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "zephyr", "Zephyr", 8, 3000, 50)
+        super(scene, player, "zephyr", "Zephyr", 8, 3500, 50)
         this.iconKey = "zephyr-icon"
         this.player = player
     }
