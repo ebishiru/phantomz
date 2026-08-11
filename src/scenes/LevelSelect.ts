@@ -35,6 +35,7 @@ export default class LevelSelect extends Phaser.Scene {
         const levelY = 250
 
         const mapTextures: Phaser.GameObjects.Image[] = []
+        const levelLocked: Record<string, boolean> = {}
 
         this.levels.forEach((key, index) => {
             const texture = this.add.sprite(startLevelX + index * levelSpacing, levelY, key, 0)
@@ -54,12 +55,50 @@ export default class LevelSelect extends Phaser.Scene {
                 texture.setAlpha(0.8);
             }
 
+            // Determine lock state for snow/tower
+            let isLocked = false
+            if (key === "snow") {
+                isLocked = this.saveManager.getHiScore("cave") < 1500
+            } else if (key === "tower") {
+                isLocked = this.saveManager.getHiScore("snow") < 1500
+            }
+
+            levelLocked[key] = isLocked
+
             mapTextures.push(texture)
 
-            texture.on("pointerdown", () => {
-                this.selectedLevel = key
-                this.moveLevelOutline(texture)
-            })
+            if (isLocked) {
+                texture.setAlpha(0.35)
+                const lockText = this.add.text(texture.x, texture.y - 10, "LOCKED", {
+                    fontSize: "18px",
+                    fontFamily: "Georgia, serif",
+                    color: "#ff0000"
+                })
+                .setOrigin(0.5)
+                .setDepth(40)
+                .setAlpha(1)
+                .setBlendMode(Phaser.BlendModes.NORMAL)
+
+                texture.on("pointerdown", () => {
+                    // show short feedback when clicking locked level
+                    const warn = this.add.text(this.scale.width/2, 420, `Reach 1500 Hi-Score on the previous level to unlock.`, {
+                        fontSize: "16px",
+                        fontFamily: "Georgia, serif",
+                        color: "#ff0000",
+                    })
+                    .setOrigin(0.5)
+                    .setDepth(60)
+                    .setAlpha(1)
+                    .setBlendMode(Phaser.BlendModes.NORMAL)
+
+                    this.time.delayedCall(1400, () => warn.destroy())
+                })
+            } else {
+                texture.on("pointerdown", () => {
+                    this.selectedLevel = key
+                    this.moveLevelOutline(texture)
+                })
+            }
 
             // Add score display under each map texture
             const highScore = this.saveManager.getHiScore(key)
@@ -106,6 +145,22 @@ export default class LevelSelect extends Phaser.Scene {
         }).setOrigin(0.5)
 
         nextBg.on("pointerdown", () => {
+            if (levelLocked[this.selectedLevel]) {
+                const warn = this.add.text(this.scale.width/2, 420, `Level locked. Reach 1500 hi-score on the previous level.`, {
+                    fontSize: "16px",
+                    fontFamily: "Georgia, serif",
+                    color: "#ff6666",
+                    backgroundColor: "#000000"
+                })
+                .setOrigin(0.5)
+                .setDepth(60)
+                .setAlpha(1)
+                .setBlendMode(Phaser.BlendModes.NORMAL)
+
+                this.time.delayedCall(1400, () => warn.destroy())
+                return
+            }
+
             this.scene.start("gamesetup", {
                 level: this.selectedLevel
             })

@@ -60,11 +60,11 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.executionerLevel += 1
         },
-        // unlock: {
-        //     type: "caveTotalScore",
-        //     value: 6000,
-        //     text: "Score 6000 pts in cave.",
-        // }
+        unlock: {
+            type: "caveTotalScore",
+            value: 6000,
+            text: "Score 6000 pts in cave.",
+        }
     },
     {
         key: "fortify",
@@ -75,11 +75,11 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.damageReductionFlat += 2
         },
-        // unlock: {
-        //     type: "snowTotalScore",
-        //     value: 2000,
-        //     text: "Score 2000 pts in snow.",
-        // }
+        unlock: {
+            type: "snowTotalScore",
+            value: 2000,
+            text: "Score 2000 pts in snow.",
+        }
     },
     {
         key: "echo",
@@ -90,11 +90,11 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.echoChance += 0.05
         },
-        // unlock: {
-        //     type: "bossKills",
-        //     value: { boss20: 1 },
-        //     text: "Defeat Undying Knight. (snow)",
-        // }
+        unlock: {
+            type: "bossKills",
+            value: { boss20: 1 },
+            text: "Defeat Undying Knight. (snow)",
+        }
     },
     {
         key: "gourmet",
@@ -105,11 +105,11 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.gourmetLevel += 1
         },
-        // unlock: {
-        //     type: "bossKills",
-        //     value: { boss15: 1 },
-        //     text: "Defeat Fallen Knight. (snow)",
-        // }
+        unlock: {
+            type: "bossKills",
+            value: { boss15: 1 },
+            text: "Defeat Fallen Knight. (snow)",
+        }
     },
     {
         key: "desperation",
@@ -120,10 +120,10 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.desperationLevel += 1
         },
-        // unlock: {
-        //     type: "towerTotalScore",
-        //     value: 4000,
-        //     text: "Score 4000 pts in tower.",
-        // }
+        unlock: {
+            type: "towerTotalScore",
+            value: 4000,
+            text: "Score 4000 pts in tower.",
+        }
     }
 ]

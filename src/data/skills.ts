@@ -79,8 +79,8 @@ export const skills = [
         upgrades: upgrades.ward,
         unlock: {
             type: "caveTotalScore",
-            value: 1, //1 for testing
-            text: "Score 1 pt in cave.",
+            value: 2000,
+            text: "Score 2000 pts in cave.",
         }
     },
     {
@@ -91,7 +91,7 @@ export const skills = [
         upgrades: upgrades.javelin,
         unlock: {
             type: "bossKills",
-            value: { boss10: 0 }, //0 for testing
+            value: { boss10: 1 },
             text: "Defeat Pure Knight. (cave)",
         }
     },
@@ -101,11 +101,11 @@ export const skills = [
         iconKey: "gust-icon",
         desc: "Unleash a gust of wind that knocks you back.",
         upgrades: upgrades.gust,
-        // unlock: {
-        //     type: "caveTotalScore",
-        //     value: 4000,
-        //     text: "Score 4000 pts in cave.",
-        // }
+        unlock: {
+            type: "caveTotalScore",
+            value: 4000,
+            text: "Score 4000 pts in cave.",
+        }
     },
     {
         key: "zephyr",
@@ -113,11 +113,11 @@ export const skills = [
         iconKey: "zephyr-icon",
         desc: "Perform a maneuvre with your rapier",
         upgrades: upgrades.zephyr,
-        // unlock: {
-        //     type: "bossKills",
-        //     value: { boss5: 1},
-        //     text: "Defeat Black Knight. (cave)",
-        // }
+        unlock: {
+            type: "bossKills",
+            value: { boss5: 1},
+            text: "Defeat Black Knight. (cave)",
+        }
     },
     {
         key: "mirage",
@@ -125,11 +125,11 @@ export const skills = [
         iconKey: "mirage-icon",
         desc: "Leave a water clone behind and teleport away",
         upgrades: upgrades.mirage,
-        // unlock: {
-        //     type: "caveTotalScore",
-        //     value: 8000,
-        //     text: "Score 8000 pts in cave.",
-        // }
+        unlock: {
+            type: "caveTotalScore",
+            value: 8000,
+            text: "Score 8000 pts in cave.",
+        }
     },
     {
         key: "quasar",
@@ -137,11 +137,11 @@ export const skills = [
         iconKey: "quasar-icon",
         desc: "Fire a beam in a given direction",
         upgrades: upgrades.quasar,
-        // unlock: {
-        //     type: "snowTotalScore",
-        //     value: 8000,
-        //     text: "Score 8000 pts in snow.",
-        // }
+        unlock: {
+            type: "snowTotalScore",
+            value: 8000,
+            text: "Score 8000 pts in snow.",
+        }
     },
     {
         key: "yoyo",
@@ -149,11 +149,11 @@ export const skills = [
         iconKey: "yoyo-icon",
         desc: "Swing forward and backwards",
         upgrades: upgrades.yoyo,
-        // unlock: {
-        //     type: "snowTotalScore",
-        //     value: 6000,
-        //     text: "Score 6000 pts in snow.",
-        // }
+        unlock: {
+            type: "snowTotalScore",
+            value: 6000,
+            text: "Score 6000 pts in snow.",
+        }
     },
     {
         key: "blitzkrieg",
@@ -161,11 +161,11 @@ export const skills = [
         iconKey: "blitzkrieg-icon",
         desc: "Stampede through then stomp the ground",
         upgrades: upgrades.blitzkrieg,
-        // unlock: {
-        //     type: "towerTotalScore",
-        //     value: 2000,
-        //     text: "Score 2000 pts in tower.",
-        // }
+        unlock: {
+            type: "towerTotalScore",
+            value: 2000,
+            text: "Score 2000 pts in tower.",
+        }
     },
     {
         key: "kraken",
@@ -173,11 +173,11 @@ export const skills = [
         iconKey: "kraken-icon",
         desc: "Call forth unpredictably a Kraken strike",
         upgrades: upgrades.kraken,
-        // unlock: {
-        //     type: "bossKills",
-        //     value: { boss25: 1 },
-        //     text: "Defeat Demon Knight. (tower)",
-        // }
+        unlock: {
+            type: "bossKills",
+            value: { boss25: 1 },
+            text: "Defeat Demon Knight. (tower)",
+        }
     },
     {
         key: "nexus",
@@ -185,10 +185,10 @@ export const skills = [
         iconKey: "nexus-icon",
         desc: "Channel a crystal to hit your enemy",
         upgrades: upgrades.nexus,
-        // unlock: {
-        //     type: "towerTotalScore",
-        //     value: 6000,
-        //     text: "Score 6000 pts in tower.",
-        // }
+        unlock: {
+            type: "towerTotalScore",
+            value: 6000,
+            text: "Score 6000 pts in tower.",
+        }
     },
 ]
