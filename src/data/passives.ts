@@ -120,5 +120,10 @@ export const passives = [
         apply: (player: any) => {
             player.statModifiers.desperationLevel += 1
         },
+        // unlock: {
+        //     type: "towerTotalScore",
+        //     value: 4000,
+        //     text: "Score 4000 pts in tower.",
+        // }
     }
 ]

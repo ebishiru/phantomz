@@ -21,7 +21,7 @@ export function generateLevelOptions(skillSystem: SkillSystem) {
 
         //Unlock options
         // only offer a new skill if unlock conditions (if any) are met
-        const unlock = skillData.unlock
+        const unlock = skillData.unlock 
         let unlockMet = true
 
         if (unlock) {
