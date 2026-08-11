@@ -25,7 +25,7 @@ export const passives = [
         key: "swiftness",
         name: "Swiftness",
         iconKey: "swiftness-icon",
-        desc: "Move quicker 15% faster.",
+        desc: "Move 15% faster.",
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.speedMultiplier += 0.15

@@ -123,7 +123,7 @@ export const skills = [
         key: "mirage",
         name: "Mirage",
         iconKey: "mirage-icon",
-        desc: "Leave a water clone behind and teleport away",
+        desc: "Leave a water clone behind and teleport away.",
         upgrades: upgrades.mirage,
         unlock: {
             type: "caveTotalScore",
@@ -135,7 +135,7 @@ export const skills = [
         key: "quasar",
         name: "Quasar",
         iconKey: "quasar-icon",
-        desc: "Fire a beam in a given direction",
+        desc: "Fire a beam in a given direction.",
         upgrades: upgrades.quasar,
         unlock: {
             type: "snowTotalScore",
@@ -147,7 +147,7 @@ export const skills = [
         key: "yoyo",
         name: "Yo-yo",
         iconKey: "yoyo-icon",
-        desc: "Swing forward and backwards",
+        desc: "Swing forward and backwards.",
         upgrades: upgrades.yoyo,
         unlock: {
             type: "snowTotalScore",
@@ -159,7 +159,7 @@ export const skills = [
         key: "blitzkrieg",
         name: "Blitzkrieg",
         iconKey: "blitzkrieg-icon",
-        desc: "Stampede through then stomp the ground",
+        desc: "Stampede through then stomp the ground.",
         upgrades: upgrades.blitzkrieg,
         unlock: {
             type: "towerTotalScore",
@@ -171,7 +171,7 @@ export const skills = [
         key: "kraken",
         name: "Kraken",
         iconKey: "kraken-icon",
-        desc: "Call forth unpredictably a Kraken strike",
+        desc: "Call forth unpredictably a Kraken strike.",
         upgrades: upgrades.kraken,
         unlock: {
             type: "bossKills",
@@ -183,7 +183,7 @@ export const skills = [
         key: "nexus",
         name: "Nexus",
         iconKey: "nexus-icon",
-        desc: "Channel a crystal to hit your enemy",
+        desc: "Channel a crystal to hit your enemy.",
         upgrades: upgrades.nexus,
         unlock: {
             type: "towerTotalScore",
