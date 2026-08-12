@@ -28,7 +28,7 @@ export default class MainMenuScene extends Phaser.Scene {
         //Title Text
         this.add.text(width/3, 180, `The Last  \n   Phantom Z`, {
             fontSize: "60px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: "#ffcc00",
         }).setOrigin(0.5)
 

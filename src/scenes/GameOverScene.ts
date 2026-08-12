@@ -7,6 +7,9 @@ export default class GameOverScene extends Phaser.Scene {
     currentLevel: string = "cave"
     selectedCharacter: string = "player1"
     selectedSkillKey: string = "slash"
+    pendingSaveData: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string } | null = null
+    reviveButtonBG?: Phaser.GameObjects.Rectangle
+    reviveUsed: boolean = false
 
     constructor() {
         super("game-over")
@@ -37,21 +40,27 @@ export default class GameOverScene extends Phaser.Scene {
         this.createHiScore(centerX, centerY - 40, data.score, data.level);
         this.createBossKillInfo(centerX, centerY, data.bossesKilled, data.bossKills);
         this.createButtons(centerX, centerY + 170);
+        this.createRefreshButton();
+        this.createReviveButton();
         this.createKeyboardShortcuts();
 
-        //Update Save Data
-        this.saveManager.updateScore(data.score, data.level)
-        for (const bossKey in data.bossKills) {
-            const count = data.bossKills[bossKey]
-            this.saveManager.addBossKill(bossKey, count)
+        // Store pending save data but DO NOT commit yet so revive won't double-add scores
+        this.pendingSaveData = {
+            score: data.score,
+            bossesKilled: data.bossesKilled,
+            bossKills: data.bossKills,
+            level: data.level,
         }
+
+        // Track revive usage for this run (persisted in registry)
+        this.reviveUsed = !!this.registry.get("reviveUsed")
     }
 
     createGameOverText(x: number, y: number, reason?: string) {
         const text = reason === "time" ? "TIME OVER" : "SOUL LOST"
         this.add.text(x, y, text, {
             fontSize: "48px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: "#ff0000",
         }).setOrigin(0.5)
     }
@@ -127,8 +136,8 @@ export default class GameOverScene extends Phaser.Scene {
         const buttonWidth = 220;
         const buttonHeight = 60;
 
-        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Retry [R]", () => this.restartGame())
-        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Home [ESC]", () => this.goToTitle())
+        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Retry", () => this.restartGame())
+        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Main Menu", () => this.goToTitle())
     }
 
     createButton(x: number, y: number, width: number, height: number, text: string, callback: () => void) {
@@ -148,6 +157,140 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
+    createRefreshButton() {
+        const refreshButtonWidth = 220;
+        const refreshButtonHeight = 60;
+        const refreshButtonX = this.scale.width / 6
+        const refreshButtonY = this.scale.height / 2 + 100
+
+        const refreshButtonBG = this.add.rectangle(refreshButtonX, refreshButtonY, refreshButtonWidth, refreshButtonHeight, 0x222222)
+            .setStrokeStyle(3, 0x65aed6)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true});
+        
+
+        this.add.text(refreshButtonX, refreshButtonY - refreshButtonHeight/4 + 5, `Refresh Rerolls`, {
+            fontSize: "20px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff",
+        }).setOrigin(0.5)
+
+        const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + refreshButtonHeight/4 - 5, "", {
+            fontSize: "18px",
+            fontFamily: "Georgia, serif",
+            color: "#65aed6",
+        }).setOrigin(0.5)
+
+        const updateRefreshUI = () => {
+            const charges = this.registry.get("rerollCharges") ?? 3
+            refreshChargesText.setText(`Charges: ${charges}/3`)
+        }
+
+        updateRefreshUI()
+
+        refreshButtonBG.on("pointerdown", () => {
+            this.registry.set("rerollCharges", 3)
+            updateRefreshUI()
+        })
+    }
+
+    createReviveButton() {
+        const reviveButtonWidth = 220;
+        const reviveButtonHeight = 60;
+        const reviveButtonX = this.scale.width * 5/6;
+        const reviveButtonY = this.scale.height / 2 + 100;
+        this.reviveButtonBG = this.add.rectangle(reviveButtonX, reviveButtonY, reviveButtonWidth, reviveButtonHeight, 0x222222)
+            .setStrokeStyle(3, 0x65aed6)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true});
+
+        this.add.text(reviveButtonX, reviveButtonY - reviveButtonHeight/4 + 5, "Revive", {
+            fontSize: "20px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff",
+        }).setOrigin(0.5)
+
+        const subText = this.add.text(reviveButtonX, reviveButtonY + reviveButtonHeight/4 - 5, "Watch Ad", {
+            fontSize: "18px",
+            fontFamily: "Georgia, serif",
+            color: "#65aed6",
+        }).setOrigin(0.5)
+
+        // If revive already used this run, disable the button
+        if (this.reviveUsed) {
+            this.reviveButtonBG.disableInteractive()
+            this.reviveButtonBG.setStrokeStyle(3, 0x555555)
+            subText.setText("Unavailable")
+            subText.setColor("#777777")
+            return
+        }
+
+        this.reviveButtonBG.on("pointerdown", () => {
+            // Guard
+            if (this.reviveUsed) return
+            this.handleReviveCountdown()
+        })
+    }
+
+    handleReviveCountdown() {
+        // Mark as used for this run
+        this.reviveUsed = true
+        this.registry.set("reviveUsed", true)
+
+        // Disable revive button UI
+        if (this.reviveButtonBG) {
+            this.reviveButtonBG.disableInteractive()
+            this.reviveButtonBG.setStrokeStyle(3, 0x555555)
+        }
+
+        const centerX = this.scale.width / 2
+        const centerY = this.scale.height / 2
+
+        // Resume the game scene (it was paused on death)
+        const gameScene = this.scene.get("game") as any
+        if (!gameScene) return
+
+        // Set player HP to 25 and make invulnerable + white for countdown
+        const player = gameScene.player as any
+        if (player) {
+            player.health = 25
+            player.setTintFill ? player.setTintFill(0xffffff) : player.setTint(0xffffff)
+            player.isInvulnerable = true
+        }
+
+        this.scene.resume("game")
+        playMusic(this, `${this.currentLevel}music`)
+
+        // Create countdown text overlay
+        const countdownText = this.add.text(centerX, centerY, "3", {
+            fontSize: "120px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff",
+            stroke: "#000000",
+            strokeThickness: 6,
+        }).setOrigin(0.5).setDepth(1000)
+
+        // Sequence 3 -> 2 -> 1
+        this.time.delayedCall(1000, () => {
+            countdownText.setText("2")
+        })
+
+        this.time.delayedCall(2000, () => {
+            countdownText.setText("1")
+        })
+
+        this.time.delayedCall(3000, () => {
+            countdownText.destroy()
+            // Restore player visuals and vulnerability
+            if (player) {
+                player.clearTint()
+                player.isInvulnerable = false
+            }
+            // Close game-over scene
+            this.scene.stop("game-over")
+        })
+    }
+
     createKeyboardShortcuts() {
         const rKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         rKey?.on("down", () => this.restartGame())
@@ -157,6 +300,7 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     restartGame() {
+        this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
@@ -168,9 +312,24 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     goToTitle() {
+        this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
         this.scene.start("mainmenu")
+    }
+
+    commitSave() {
+        if (!this.pendingSaveData) return
+
+        const { score, bossKills, level } = this.pendingSaveData
+        this.saveManager.updateScore(score, level)
+        for (const bossKey in bossKills) {
+            const count = bossKills[bossKey]
+            this.saveManager.addBossKill(bossKey, count)
+        }
+
+        // Clear pending after committing
+        this.pendingSaveData = null
     }
 }
