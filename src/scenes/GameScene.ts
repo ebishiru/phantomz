@@ -78,6 +78,15 @@ export default class GameScene extends Phaser.Scene {
         const musicKey = musicMap[this.level] || "caveMusic";
         playMusic(this, musicKey);
 
+        // Mute when minimized
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                this.sound.pauseAll();
+            } else {
+                this.sound.resumeAll();
+            }
+        });
+
         // Options Button
         setupEscapeMenu(this);
         OptionsButton(this);
