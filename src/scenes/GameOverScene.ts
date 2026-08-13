@@ -10,6 +10,7 @@ export default class GameOverScene extends Phaser.Scene {
     pendingSaveData: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string } | null = null
     reviveButtonBG?: Phaser.GameObjects.Rectangle
     reviveUsed: boolean = false
+    gameOverObjects: Phaser.GameObjects.GameObject[] = []
 
     constructor() {
         super("game-over")
@@ -33,7 +34,11 @@ export default class GameOverScene extends Phaser.Scene {
         if (controlsEl) controlsEl.style.display = "none";
 
         // Dim Background
-        this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
+        const dimBackground = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
+        this.gameOverObjects.push(dimBackground)
+
+        // Track revive usage for this run (persisted in registry)
+        this.reviveUsed = !!this.registry.get("reviveUsed")
 
         this.createGameOverText(centerX, centerY - 150, data?.reason);
         this.createScore(centerX, centerY - 80, data.score);
@@ -51,27 +56,26 @@ export default class GameOverScene extends Phaser.Scene {
             bossKills: data.bossKills,
             level: data.level,
         }
-
-        // Track revive usage for this run (persisted in registry)
-        this.reviveUsed = !!this.registry.get("reviveUsed")
     }
 
     createGameOverText(x: number, y: number, reason?: string) {
         const text = reason === "time" ? "TIME OVER" : "SOUL LOST"
-        this.add.text(x, y, text, {
+        const gameOverText = this.add.text(x, y, text, {
             fontSize: "48px",
             fontFamily: `Georgia, serif`,
             color: "#ff0000",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(gameOverText)
     }
 
     createScore(x: number, y: number, score: number) {
-        this.add.text(x, y, `Final Score: ${score}`, {
+        const scoreText = this.add.text(x, y, `Final Score: ${score}`, {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffffff",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(scoreText)
     }
 
     createHiScore(x: number, y:number, score: number, level?: string) {
@@ -81,20 +85,22 @@ export default class GameOverScene extends Phaser.Scene {
             highscoreText = `Hi-Score: ${score} NEW BEST!!`
         }
 
-        this.add.text(x, y, highscoreText, {
+        const hiScoreText = this.add.text(x, y, highscoreText, {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             backgroundColor: "#222222",
             color: "#ffcc00",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(hiScoreText)
     }
 
     createBossKillInfo(x: number, y: number, bossesKilled: number,bossKills: { [key: string]: number }) {
-        this.add.text(x, y, `Bosses Defeated: ${bossesKilled}`, {
+        const bossCountText = this.add.text(x, y, `Bosses Defeated: ${bossesKilled}`, {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(bossCountText)
 
         let startY = y + 40
 
@@ -118,16 +124,18 @@ export default class GameOverScene extends Phaser.Scene {
             const iconX = startX + col * spacingX
             const iconY = startY + row * spacingY
 
-            this.add.image(iconX, iconY, bossKey)
+            const bossIcon = this.add.image(iconX, iconY, bossKey)
             .setFrame(0)
             .setScale(2)
             .setOrigin(0.5)
+            this.gameOverObjects.push(bossIcon)
 
-            this.add.text(iconX, iconY + 20, `x${count}`, {
+            const bossCountLabel = this.add.text(iconX, iconY + 20, `x${count}`, {
                 fontSize: "16px",
-                fontFamily: `Georgia, serif`,
+                fontFamily: "Georgia, serif",
                 color: "#ffffff"
-            }).setOrigin(0.5) 
+            }).setOrigin(0.5)
+            this.gameOverObjects.push(bossCountLabel)
         })
     }
 
@@ -146,11 +154,12 @@ export default class GameOverScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true});
 
-        this.add.text(x, y, text, {
+        const buttonText = this.add.text(x, y, text, {
             fontSize: "24px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(buttonBG, buttonText)
 
         buttonBG.on("pointerdown", () => {
             callback();
@@ -167,19 +176,22 @@ export default class GameOverScene extends Phaser.Scene {
             .setStrokeStyle(3, 0x65aed6)
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true});
+        this.gameOverObjects.push(refreshButtonBG)
         
 
-        this.add.text(refreshButtonX, refreshButtonY - refreshButtonHeight/4 + 5, `Refresh Rerolls`, {
+        const refreshLabel = this.add.text(refreshButtonX, refreshButtonY - refreshButtonHeight/4 + 5, `Refresh Rerolls`, {
             fontSize: "20px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(refreshLabel)
 
         const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + refreshButtonHeight/4 - 5, "", {
             fontSize: "18px",
             fontFamily: "Georgia, serif",
             color: "#65aed6",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(refreshChargesText)
 
         const updateRefreshUI = () => {
             const charges = this.registry.get("rerollCharges") ?? 3
@@ -204,20 +216,26 @@ export default class GameOverScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true});
 
-        this.add.text(reviveButtonX, reviveButtonY - reviveButtonHeight/4 + 5, "Revive", {
+        this.gameOverObjects.push(this.reviveButtonBG)
+
+        const reviveLabel = this.add.text(reviveButtonX, reviveButtonY - reviveButtonHeight/4 + 5, "Revive", {
             fontSize: "20px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(reviveLabel)
 
         const subText = this.add.text(reviveButtonX, reviveButtonY + reviveButtonHeight/4 - 5, "Watch Ad", {
             fontSize: "18px",
             fontFamily: "Georgia, serif",
             color: "#65aed6",
         }).setOrigin(0.5)
+        this.gameOverObjects.push(subText)
 
-        // If revive already used this run, disable the button
-        if (this.reviveUsed) {
+        // If revive already used this run or time is over 10mins, disable the button
+        const halfTimeOver = this.registry.get("halfTime");
+
+        if (this.reviveUsed || halfTimeOver) {
             this.reviveButtonBG.disableInteractive()
             this.reviveButtonBG.setStrokeStyle(3, 0x555555)
             subText.setText("Unavailable")
@@ -232,6 +250,14 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
+    hideGameOverUI() {
+        this.gameOverObjects.forEach((obj) => {
+            if ("setVisible" in obj) {
+                (obj as any).setVisible(false)
+            }
+        })
+    }
+
     handleReviveCountdown() {
         // Mark as used for this run
         this.reviveUsed = true
@@ -242,6 +268,9 @@ export default class GameOverScene extends Phaser.Scene {
             this.reviveButtonBG.disableInteractive()
             this.reviveButtonBG.setStrokeStyle(3, 0x555555)
         }
+
+        // Hide the entire Game Over UI while the revive countdown plays
+        this.hideGameOverUI()
 
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
@@ -259,7 +288,7 @@ export default class GameOverScene extends Phaser.Scene {
         }
 
         this.scene.resume("game")
-        playMusic(this, `${this.currentLevel}music`)
+        playMusic(this, `${this.currentLevel}Music`)
 
         // Create countdown text overlay
         const countdownText = this.add.text(centerX, centerY, "3", {
@@ -304,6 +333,11 @@ export default class GameOverScene extends Phaser.Scene {
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
+
+        this.reviveUsed = false
+        this.registry.set("reviveUsed", false)
+        this.registry.set("halfTime", false);
+
         this.scene.start("game", {
             characterKey: this.selectedCharacter,
             startingSkill: this.selectedSkillKey,
@@ -316,6 +350,8 @@ export default class GameOverScene extends Phaser.Scene {
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
+        this.registry.set("reviveUsed", false)
+        this.registry.set("halfTime", false);
         this.scene.start("mainmenu")
     }
 

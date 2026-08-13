@@ -161,6 +161,10 @@ export default class LevelSelect extends Phaser.Scene {
                 return
             }
 
+            //Reset revive and half time state
+            this.registry.set("reviveUsed", false);
+            this.registry.set("halfTime", false);
+
             this.scene.start("gamesetup", {
                 level: this.selectedLevel
             })

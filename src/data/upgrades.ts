@@ -18,8 +18,8 @@ export const upgrades = {
             apply: (skill: Skill) => skill.buffDamage(4)
         },
         {
-            desc: "Cooldown reduced by 700ms",
-            apply: (skill: Skill) => skill.buffCooldown(700)
+            desc: "Cooldown reduced by 750ms",
+            apply: (skill: Skill) => skill.buffCooldown(750)
         }
     ],
 

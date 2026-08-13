@@ -28,6 +28,7 @@ export default class BossManager {
     // Global timer UI
     globalTimerSeconds = 0;
     globalTimerText!: Phaser.GameObjects.Text;
+    halfTimeTriggered: boolean = false;
     timeOverTriggered: boolean = false;
 
     // Gourmet Bread Passive
@@ -85,6 +86,12 @@ export default class BossManager {
 
                 if (this.globalTimerSeconds > 0 && this.globalTimerSeconds % 60 === 0) {
                     this.spawnGourmetBread()
+                }
+
+                // Update Revive disable past 10 minutes
+                if (this.globalTimerSeconds >= 600 && !this.halfTimeTriggered) {
+                    this.halfTimeTriggered = true
+                    this.scene.registry.set("halfTime", true)
                 }
 
                 // Trigger Game Over at 20 minutes (1200 seconds)
