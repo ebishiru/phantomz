@@ -69,7 +69,7 @@ export default class LevelSelect extends Phaser.Scene {
 
             if (isLocked) {
                 texture.setAlpha(0.35)
-                const lockText = this.add.text(texture.x, texture.y - 10, "LOCKED", {
+                this.add.text(texture.x, texture.y - 10, "LOCKED", {
                     fontSize: "18px",
                     fontFamily: "Georgia, serif",
                     color: "#ff0000"
