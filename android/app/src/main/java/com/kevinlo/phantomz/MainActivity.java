@@ -38,7 +38,7 @@ public class MainActivity extends BridgeActivity {
                         window,
                         window.getDecorView()
                 );
-        
+
         // Hide status bar and navigation bar
         controller.hide(WindowInsetsCompat.Type.systemBars());
 

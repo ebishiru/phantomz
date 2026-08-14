@@ -110,4 +110,17 @@ export default class MobileControls {
     getMovementVector() {
         return { ...this.vector };
     }
+
+    destroy() {
+        const controls = document.getElementById("mobile-controls");
+        if (controls) {
+            controls.style.display = "none";
+        }
+
+        this.joystickBase.replaceWith(this.joystickBase.cloneNode(true));
+
+        this.skillButtons.forEach(btn => {
+            btn.replaceWith(btn.cloneNode(true));
+        });
     }
+}
