@@ -12,6 +12,8 @@ import ExpSystem from "../systems/ExpSystem"
 import UISystem from "../systems/UISystem"
 import MobileControls from "../systems/MobileControls"
 
+import { App } from '@capacitor/app';
+
 export default class GameScene extends Phaser.Scene {
     player!: Player
     bossManager!: BossManager
@@ -78,9 +80,9 @@ export default class GameScene extends Phaser.Scene {
         const musicKey = musicMap[this.level] || "caveMusic";
         playMusic(this, musicKey);
 
-        // Mute when minimized
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
+        // Music minimize on app change state
+        App.addListener('appStateChange', ({ isActive }) => {
+            if (!isActive) {
                 this.sound.pauseAll();
             } else {
                 this.sound.resumeAll();

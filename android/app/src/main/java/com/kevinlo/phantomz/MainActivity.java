@@ -5,6 +5,7 @@ import android.view.Window;
 
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.getcapacitor.BridgeActivity;
 
@@ -16,17 +17,33 @@ public class MainActivity extends BridgeActivity {
 
         Window window = getWindow();
 
-        // Allow the game to draw behind the system bars
+        // Allow the WebView/Phaser game to occupy the entire screen
         WindowCompat.setDecorFitsSystemWindows(window, false);
 
-        // Hide status bar + navigation bar
         hideSystemBars();
     }
 
     private void hideSystemBars() {
-        WindowCompat.getInsetsController(
-                getWindow(),
-                getWindow().getDecorView()
-        ).hide(WindowInsetsCompat.Type.systemBars());
+        Window window = getWindow();
+
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(window, window.getDecorView());
+
+        if (controller != null) {
+            controller.hide(WindowInsetsCompat.Type.systemBars());
+
+            controller.setSystemBarsBehavior(
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            );
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            hideSystemBars();
+        }
     }
 }
