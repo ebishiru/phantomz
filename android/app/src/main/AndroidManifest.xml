@@ -10,13 +10,14 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

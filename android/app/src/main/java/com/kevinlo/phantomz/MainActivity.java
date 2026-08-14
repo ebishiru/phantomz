@@ -1,5 +1,6 @@
 package com.kevinlo.phantomz;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -17,33 +18,31 @@ public class MainActivity extends BridgeActivity {
 
         Window window = getWindow();
 
-        // Allow the WebView/Phaser game to occupy the entire screen
+        // Allow the game/WebView to draw behind system bars
         WindowCompat.setDecorFitsSystemWindows(window, false);
 
-        hideSystemBars();
+        // Transparent system bars
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(Color.TRANSPARENT);
+
+        // Dark icons = false, so icons stay visible on the game
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(
+                        window,
+                        window.getDecorView()
+                );
+
+        controller.setAppearanceLightStatusBars(false);
+        controller.setAppearanceLightNavigationBars(false);
     }
 
     private void hideSystemBars() {
-        Window window = getWindow();
-
         WindowInsetsControllerCompat controller =
-                WindowCompat.getInsetsController(window, window.getDecorView());
+                WindowCompat.getInsetsController(
+                        getWindow(),
+                        getWindow().getDecorView()
+                );
 
-        if (controller != null) {
-            controller.hide(WindowInsetsCompat.Type.systemBars());
-
-            controller.setSystemBarsBehavior(
-                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            );
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        if (hasFocus) {
-            hideSystemBars();
-        }
+        controller.hide(WindowInsetsCompat.Type.systemBars());
     }
 }
