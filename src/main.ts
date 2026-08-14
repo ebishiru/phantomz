@@ -12,6 +12,13 @@ import LevelSelect from "./scenes/LevelSelect"
 import MainMenuScene from "./scenes/MainMenuScene"
 import GameSetupScene from "./scenes/GameSetupScene"
 
+import { App } from "@capacitor/app"
+import {
+    setupGamePause,
+    pauseGame,
+    resumeGame
+} from "./systems/GamePauseSystem";
+
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 960,        // internal game width
@@ -27,4 +34,13 @@ const config: Phaser.Types.Core.GameConfig = {
   scene: [PreloadScene, TitleScene, OptionsScene, LevelSelect,MainMenuScene, GameSetupScene, ControlScene, UnlockablesScene, CreditsScene, GameScene, LevellingScene, GameOverScene],
 }
 
-new Phaser.Game(config)
+const game = new Phaser.Game(config)
+// Pausing game when tabbed out or out of focus
+setupGamePause(game);
+App.addListener("appStateChange", ({ isActive }) => {
+    if (isActive) {
+        resumeGame(game);
+    } else {
+        pauseGame(game);
+    }
+});
