@@ -52,7 +52,10 @@ export default class GameScene extends Phaser.Scene {
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
         // World Bounds
-        this.physics.world.setBounds(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight);
+        const worldX = centerX - worldWidth/2
+        const worldY = centerY - worldHeight/2
+
+        this.physics.world.setBounds(worldX, worldY, worldWidth, worldHeight)
 
         // Ground Texture
         const floor = this.add.tileSprite(centerX - worldWidth/2, centerY - worldHeight/2, worldWidth, worldHeight, this.level).setOrigin(0);
@@ -146,6 +149,9 @@ export default class GameScene extends Phaser.Scene {
         const mobileDir = this.mobileControls?.getMovementVector() || new Phaser.Math.Vector2(0, 0);
         keyboardDir.add(mobileDir);
         this.player.move(keyboardDir);
+
+        //Facing indicator
+        this.player.facingIndicator.update();
 
         // Desperation VFX
         this.player.updateDesperationVFX();

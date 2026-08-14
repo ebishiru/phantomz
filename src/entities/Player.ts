@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 import GameScene from "../scenes/GameScene"
 import { showFloatingDamage } from "../systems/DamageTextSystem"
-import DirectionIndicator from "./DirectionIndicator"
+import FacingIndicator from "./FacingIndicator"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300
@@ -10,7 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     exp = 0
     level = 1
     expToNextLevel = 10
-    hurtboxRadius = 4
+    hurtboxRadius = 3
     isInvulnerable = false
 
     //Passive effects:
@@ -34,6 +34,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     desperationTween?: Phaser.Tweens.Tween
 
     facing!: Phaser.Math.Vector2
+    facingIndicator!: FacingIndicator
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
         super(scene, x, y, texture)
@@ -50,6 +51,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         
         //Default Facing down
         this.facing = new Phaser.Math.Vector2(0, 1)
+
+        //Facing indicator
+        this.facingIndicator = new FacingIndicator(scene, this)
 
         //Idle animation
         this.anims.play(`${this.texture.key}-idle`, true)
