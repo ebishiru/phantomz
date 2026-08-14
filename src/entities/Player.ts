@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 import GameScene from "../scenes/GameScene"
 import { showFloatingDamage } from "../systems/DamageTextSystem"
+import DirectionIndicator from "./DirectionIndicator"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     speed = 300

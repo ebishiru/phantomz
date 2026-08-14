@@ -24,10 +24,10 @@ export default class UISystem {
         this.player = player
         this.skillSystem = skillSystem
 
-        this.healthBar = new HealthBar(scene, 155, 40, 300, 15, player, 0x006400)
+        this.healthBar = new HealthBar(scene, 155, 45, 300, 15, player, 0x006400)
         this.expBar = new ExpBar(scene, 0, 535, 960, 5, player)
 
-        this.playerName = scene.add.text(80, 47, `Phantom:`, {
+        this.playerName = scene.add.text(80, 52, `Phantom:`, {
             fontSize: "16px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",

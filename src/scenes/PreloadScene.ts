@@ -17,6 +17,11 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     preloadMusic() {
+        const savedVolume = localStorage.getItem("volumeSetting");
+        if (savedVolume !== null) {
+            this.sound.setVolume(Number(savedVolume));
+        }
+
         this.load.audio("titleMusic", "assets/title-music.mp3")
         this.load.audio("caveMusic", "assets/cave-music.mp3")
         this.load.audio("snowMusic", "assets/snow-music.mp3")

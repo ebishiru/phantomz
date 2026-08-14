@@ -15,9 +15,22 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        hideSystemBars();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            hideSystemBars();
+        }
+    }
+
+    private void hideSystemBars() {
         Window window = getWindow();
 
-        // Allow WebView/Phaser to draw edge-to-edge
+        // Allow app content to draw behind system bars
         WindowCompat.setDecorFitsSystemWindows(window, false);
 
         WindowInsetsControllerCompat controller =
@@ -25,11 +38,11 @@ public class MainActivity extends BridgeActivity {
                         window,
                         window.getDecorView()
                 );
-
-        // Hide status bar + navigation bar
+        
+        // Hide status bar and navigation bar
         controller.hide(WindowInsetsCompat.Type.systemBars());
 
-        // Keep system bars hidden when possible
+        // Allow bars to temporarily appear with edge swipe
         controller.setSystemBarsBehavior(
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         );

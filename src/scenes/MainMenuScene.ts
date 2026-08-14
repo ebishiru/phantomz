@@ -26,7 +26,7 @@ export default class MainMenuScene extends Phaser.Scene {
         const { width, height } = this.scale;
 
         //Title Text
-        this.add.text(width/3, 180, `The Last  \n   Phantom Z`, {
+        this.add.text(width/3 - 10, 150, `The Last  \n   Phantom Z`, {
             fontSize: "60px",
             fontFamily: `Georgia, serif`,
             color: "#ffcc00",
@@ -40,7 +40,7 @@ export default class MainMenuScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.add.sprite(width/3, 360, "main-menu-art")
+        this.add.sprite(width/3 - 10, 325, "main-menu-art")
         .setScale(5)
         .setOrigin(0.5)
         .play("menu-idle")
@@ -75,10 +75,10 @@ export default class MainMenuScene extends Phaser.Scene {
             })
         })
 
-        const refreshButtonWidth = 150
+        const refreshButtonWidth = 260
         const refreshButtonHeight = 80
-        const refreshButtonX = 90
-        const refreshButtonY = 50
+        const refreshButtonX = 150
+        const refreshButtonY = 480
         const refreshButton = this.add.rectangle(refreshButtonX, refreshButtonY, refreshButtonWidth, refreshButtonHeight, 0x222222)
             .setStrokeStyle(3, 0x65aed6)
             .setInteractive({ useHandCursor: true })

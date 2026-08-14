@@ -9,6 +9,10 @@ export default class OptionsScene extends Phaser.Scene {
         super("options")
     }
 
+    private volumeSetting = 1;
+    private previousVolume = 1;
+    private isMuted = false;
+
     init(data: { fromGame? : boolean}) {
         this.fromGame = !!data.fromGame
     }
@@ -20,11 +24,9 @@ export default class OptionsScene extends Phaser.Scene {
         this.scene.bringToTop();
 
         // Dim background
-        const overlay = this.add.rectangle(0, 0, width, height, 0x000000, 0.45)
+        this.add.rectangle(0, 0, width, height, 0x000000, 0.45)
             .setOrigin(0)
             .setInteractive({ useHandCursor: false });
-
-        overlay.on("pointerdown", () => this.close());
 
         const panelWidth = width * 0.75;
         const panelHeight = height * 0.75;
@@ -46,7 +48,8 @@ export default class OptionsScene extends Phaser.Scene {
 
         // Volume controls
         const volumeIcon = this.add.image(width/2 - 175, height/2 - 70, "audio-icon")
-            .setScale(2);
+            .setScale(2)
+            .setInteractive({ useHandCursor: true});
 
         this.createVolumeSlider(width/2, height/2 - 70, volumeIcon);
 
@@ -87,44 +90,154 @@ export default class OptionsScene extends Phaser.Scene {
         this.input.keyboard?.once("keydown-ESC", () => this.close());
     }
 
-    createVolumeSlider(x: number, y: number, icon: Phaser.GameObjects.Image) {
-        const sliderWidth = 250
+    createVolumeSlider( x: number, y: number, icon: Phaser.GameObjects.Image) {
+        const sliderWidth = 250;
 
-        const bar = this.add.rectangle(x, y, sliderWidth, 8, 0x555555)
-        bar.setInteractive({ useHandCursor: true })
+        // Load saved volume
+        const savedVolume = localStorage.getItem("volumeSetting");
+        if (savedVolume !== null) {
+            this.volumeSetting = Phaser.Math.Clamp(
+                Number(savedVolume),
+                0,
+                1
+            );
+        }
+        this.previousVolume =
+            this.volumeSetting > 0 ? this.volumeSetting : 1;
+        this.isMuted = this.volumeSetting <= 0;
+        // Apply saved volume
+        this.sound.setVolume(this.volumeSetting);
+        // Update icon
+        icon.setTexture(
+            this.isMuted ? "mute-icon" : "audio-icon"
+        );
 
-        const knob = this.add.circle(x + sliderWidth/2, y, 10, 0xffcc00)
-            .setInteractive({ draggable: true, useHandCursor: true})
-        
-            const updateVolume = (pointerX: number) => {
+        const bar = this.add.rectangle(
+            x,
+            y,
+            sliderWidth,
+            8,
+            0x555555
+        );
 
-                const left = x - sliderWidth / 2
-                const right = x + sliderWidth / 2
+        bar.setInteractive({ useHandCursor: true });
 
-                const clamped = Phaser.Math.Clamp(pointerX, left, right)
+        const left = x - sliderWidth / 2;
+        const right = x + sliderWidth / 2;
 
-                knob.x = clamped
+        // Put knob at saved volume
+        const knobX =
+            left + this.volumeSetting * sliderWidth;
 
-                const volume = (clamped-left)/sliderWidth
+        const knob = this.add.circle(
+            knobX,
+            y,
+            10,
+            0xffcc00
+        );
 
-                this.sound.setVolume(volume)
+        knob.setInteractive({
+            draggable: true,
+            useHandCursor: true
+        });
 
-                // change icon
-                if (volume <= 0.01) {
-                    icon.setTexture("mute-icon")
-                } else {
-                    icon.setTexture("audio-icon")
-                }
+        const updateVolume = (pointerX: number) => {
+            const clamped = Phaser.Math.Clamp(
+                pointerX,
+                left,
+                right
+            );
+
+            knob.x = clamped;
+
+            const volume =
+                (clamped - left) / sliderWidth;
+
+            this.volumeSetting = volume;
+
+            // If player moves slider, unmute
+            if (volume > 0.01) {
+                this.isMuted = false;
+                this.previousVolume = volume;
+
+                icon.setTexture("audio-icon");
+            } else {
+                this.isMuted = true;
+
+                icon.setTexture("mute-icon");
             }
 
-        knob.on("drag", (_pointer: Phaser.Input.Pointer, dragX:number) => {
-            updateVolume(dragX)
-        })
+            this.sound.setVolume(volume);
 
-        bar.on("pointerdown",(pointer:Phaser.Input.Pointer)=>{
-            pointer.event.stopPropagation()
-            updateVolume(pointer.x)
-        })
+            // Save
+            localStorage.setItem(
+                "volumeSetting",
+                volume.toString()
+            );
+        };
+
+        knob.on(
+            "drag",
+            (_pointer: Phaser.Input.Pointer, dragX: number) => {
+                updateVolume(dragX);
+            }
+        );
+
+        bar.on(
+            "pointerdown",
+            (pointer: Phaser.Input.Pointer) => {
+                pointer.event.stopPropagation();
+
+                updateVolume(pointer.x);
+            }
+        );
+
+        // Mute/unmute
+        icon.on("pointerdown", () => {
+            if (!this.isMuted) {
+                // Remember current volume
+                this.previousVolume = this.volumeSetting;
+
+                // Mute
+                this.volumeSetting = 0;
+                this.isMuted = true;
+
+                this.sound.setVolume(0);
+
+                knob.x = left;
+
+                icon.setTexture("mute-icon");
+
+                localStorage.setItem(
+                    "volumeSetting",
+                    "0"
+                );
+
+            } else {
+                // Restore previous volume
+                this.volumeSetting =
+                    this.previousVolume > 0
+                        ? this.previousVolume
+                        : 1;
+
+                this.isMuted = false;
+
+                this.sound.setVolume(
+                    this.volumeSetting
+                );
+
+                knob.x =
+                    left +
+                    this.volumeSetting * sliderWidth;
+
+                icon.setTexture("audio-icon");
+
+                localStorage.setItem(
+                    "volumeSetting",
+                    this.volumeSetting.toString()
+                );
+            }
+        });
     }
 
     displaySkillSummary() {

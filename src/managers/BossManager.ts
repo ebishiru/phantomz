@@ -338,7 +338,7 @@ export default class BossManager {
         // Boss Health & Health bar
         this.boss.maxHealth = this.nextBossMaxHealth
         this.boss.health = this.nextBossMaxHealth
-        this.bossHealthBar = new HealthBar(this.scene, 155, 10, 300, 15, this.boss, 0xff0000)
+        this.bossHealthBar = new HealthBar(this.scene, 155, 20, 300, 15, this.boss, 0xff0000)
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({

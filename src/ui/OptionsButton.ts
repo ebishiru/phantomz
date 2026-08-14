@@ -3,8 +3,8 @@ import Phaser from "phaser";
 export function OptionsButton (scene: Phaser.Scene) {
 
     const button = scene.add.image(
-        930,
-        30,
+        920,
+        40,
         "settings-icon"
     )
     .setOrigin(0.5)
