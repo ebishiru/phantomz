@@ -6,7 +6,7 @@ export default class ZephyrSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "zephyr", "Zephyr", 8, 3500, 50)
+        super(scene, player, "zephyr", "Zephyr", 8, 3500, 60)
         this.iconKey = "zephyr-icon"
         this.player = player
     }
@@ -25,7 +25,7 @@ export default class ZephyrSkill extends Skill {
 
         const zephyrVFX1 = this.scene.add.sprite(this.player.x, this.player.y, "zephyr-vfx")
         zephyrVFX1.setOrigin(0, 0.5)
-        zephyrVFX1.setScale(this.getRange() / 16)
+        zephyrVFX1.setScale(this.getRange() / 16, this.getRange() / 32)
         zephyrVFX1.setDepth(10)
         zephyrVFX1.setRotation(cone1StartAngle)
 
@@ -71,7 +71,7 @@ export default class ZephyrSkill extends Skill {
 
             const zephyrVFX2 = this.scene.add.sprite(this.player.x, this.player.y, "zephyr-vfx")
             zephyrVFX2.setOrigin(0, 0.5)
-            zephyrVFX2.setScale(this.getRange() / 16)
+            zephyrVFX2.setScale(this.getRange() / 16, this.getRange() / 32)
             zephyrVFX2.setDepth(10)
             zephyrVFX2.setRotation(cone2StartAngle)
 
@@ -131,7 +131,7 @@ export default class ZephyrSkill extends Skill {
                 const boss = (this.scene as any).bossManager?.boss
                 if (!boss || !boss.active) return
 
-                const lineLength = 100
+                const lineLength = this.range * 2
                 const dx = boss.x - this.player.x
                 const dy = boss.y - this.player.y
                 const facingDir = new Phaser.Math.Vector2(Math.cos(this.facingAngle), Math.sin(this.facingAngle))

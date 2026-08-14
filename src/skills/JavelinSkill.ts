@@ -12,7 +12,7 @@ export default class JavelinSkill extends Skill {
     }> = [];
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "javelin", "Javelin", 10, 10000, 25)
+        super(scene, player, "javelin", "Javelin", 13, 10000, 25)
         this.iconKey = "javelin-icon"
         this.player = player
     }

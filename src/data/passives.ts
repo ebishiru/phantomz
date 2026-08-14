@@ -62,8 +62,8 @@ export const passives = [
         },
         unlock: {
             type: "caveTotalScore",
-            value: 6000,
-            text: "Score 6000 pts in cave.",
+            value: 5000,
+            text: "Score 5000 pts in cave.",
         }
     },
     {
@@ -77,8 +77,8 @@ export const passives = [
         },
         unlock: {
             type: "snowTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in snow.",
+            value: 3000,
+            text: "Score 3000 pts in snow.",
         }
     },
     {
@@ -106,9 +106,9 @@ export const passives = [
             player.statModifiers.gourmetLevel += 1
         },
         unlock: {
-            type: "bossKills",
-            value: { boss15: 1 },
-            text: "Defeat Fallen Knight. (snow)",
+            type: "towerTotalScore",
+            value: 3000,
+            text: "Score 3000 pts in tower.",
         }
     },
     {
@@ -121,9 +121,9 @@ export const passives = [
             player.statModifiers.desperationLevel += 1
         },
         unlock: {
-            type: "towerTotalScore",
-            value: 4000,
-            text: "Score 4000 pts in tower.",
+            type: "bossKills",
+            value: { boss30: 1 },
+            text: "Defeat Arisen Knight. (tower)",
         }
     }
 ]

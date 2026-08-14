@@ -79,8 +79,8 @@ export const skills = [
         upgrades: upgrades.ward,
         unlock: {
             type: "caveTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in cave.",
+            value: 1000,
+            text: "Score 1000 pts in cave.",
         }
     },
     {
@@ -103,8 +103,8 @@ export const skills = [
         upgrades: upgrades.gust,
         unlock: {
             type: "caveTotalScore",
-            value: 4000,
-            text: "Score 4000 pts in cave.",
+            value: 3000,
+            text: "Score 3000 pts in cave.",
         }
     },
     {
@@ -126,9 +126,9 @@ export const skills = [
         desc: "Leave a water clone behind and teleport away.",
         upgrades: upgrades.mirage,
         unlock: {
-            type: "caveTotalScore",
-            value: 8000,
-            text: "Score 8000 pts in cave.",
+            type: "bossKills",
+            value: { boss15: 1 },
+            text: "Defeat Fallen Knight. (snow)",
         }
     },
     {
@@ -139,8 +139,8 @@ export const skills = [
         upgrades: upgrades.quasar,
         unlock: {
             type: "snowTotalScore",
-            value: 8000,
-            text: "Score 8000 pts in snow.",
+            value: 1000,
+            text: "Score 1000 pts in snow.",
         }
     },
     {
@@ -151,8 +151,8 @@ export const skills = [
         upgrades: upgrades.yoyo,
         unlock: {
             type: "snowTotalScore",
-            value: 6000,
-            text: "Score 6000 pts in snow.",
+            value: 5000,
+            text: "Score 5000 pts in snow.",
         }
     },
     {
@@ -163,8 +163,8 @@ export const skills = [
         upgrades: upgrades.blitzkrieg,
         unlock: {
             type: "towerTotalScore",
-            value: 2000,
-            text: "Score 2000 pts in tower.",
+            value: 1000,
+            text: "Score 1000 pts in tower.",
         }
     },
     {
@@ -187,8 +187,8 @@ export const skills = [
         upgrades: upgrades.nexus,
         unlock: {
             type: "towerTotalScore",
-            value: 6000,
-            text: "Score 6000 pts in tower.",
+            value: 5000,
+            text: "Score 5000 pts in tower.",
         }
     },
 ]
