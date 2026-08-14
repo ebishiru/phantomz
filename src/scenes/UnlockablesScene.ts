@@ -255,6 +255,10 @@ export default class UnlockablesScene extends Phaser.Scene {
             return this.saveManager.getTotalScore("snow") >= Number(unlock.value)
         }
 
+        if (unlock.type === "towerTotalScore") {
+            return this.saveManager.getTotalScore("tower") >= Number(unlock.value)
+        }
+
         if (unlock.type === "bossKills") {
             const req = unlock.value
             if (typeof req === "object") {

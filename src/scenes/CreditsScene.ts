@@ -88,9 +88,15 @@ export default class CreditsScene extends Phaser.Scene {
     }
 
     devSaveData() {
-        this.saveManager.updateScore(9999, "cave")
-        this.saveManager.updateScore(9999, "snow")
-        this.saveManager.updateScore(9999, "tower")
+        const levels = ["cave", "snow", "tower"]
+        levels.forEach(level => {
+            this.saveManager.updateScore(9999, level)
+        })
+
+        for (let i = 1; i <= 30; i++) {
+            this.saveManager.addBossKill(`boss${i}`, 3)
+        }
+        
         this.scene.start("mainmenu");
     }
 }
