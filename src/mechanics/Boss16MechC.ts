@@ -115,6 +115,10 @@ export default class Boss16MechC extends BossMechanic {
                             hit = true
                         }
                         
+                        if (hit) {
+                            this.player.takeDamage(this.config.damage)
+                        }
+                        
                         this.donutTelegraphs.forEach(t => t.destroy())
                         this.donutTelegraphs = []
 
