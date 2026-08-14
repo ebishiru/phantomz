@@ -6,9 +6,9 @@ export default class Boss28MechB extends BossMechanic {
 
     config = {
         id: "teleport-spin-cone-quadrant",
-        name: "540 Extermination",
+        name: "720 Extermination",
         castTime: 1100,
-        castDuration: 2900,
+        castDuration: 2700,
         cooldown: 3000,
         showCastBar: true,
         damage: 20,
@@ -21,15 +21,15 @@ export default class Boss28MechB extends BossMechanic {
     currentAngle: number = 0
 
     rotationStep = Math.PI / 2
-    totalExplosions = 6
-    rotationInterval = 300
+    totalExplosions = 8
+    rotationInterval = 200
     rotationDirection: string = "Clockwork"
 
     onCastStart() {
         //Randomize clockwise or counterclockwise
         const directions = ["Clockwork", "Reverse"]
         this.rotationDirection = Phaser.Utils.Array.GetRandom(directions)
-        this.config.name = `540 ${this.rotationDirection} Extermination`
+        this.config.name = `720 ${this.rotationDirection} Extermination`
 
         //Teleport to middle
         const bounds = this.scene.physics.world.bounds

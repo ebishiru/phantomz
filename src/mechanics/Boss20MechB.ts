@@ -10,7 +10,7 @@ export default class Boss20MechB extends BossMechanic {
         id: "line-dash-left-or-right-cone",
         name: "",
         castTime: 1200,
-        castDuration: 2200,
+        castDuration: 2000,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
@@ -99,17 +99,20 @@ export default class Boss20MechB extends BossMechanic {
                     this.lineTelegraph?.destroy()
                     this.lineTelegraph = undefined
 
-                    //Draw cone telegraph
-                    this.coneTelegraph = new ConeTelegraph(
-                        this.scene,
-                        this.boss.x,
-                        this.boss.y,
-                        angle + this.coneDirectionMod,
-                        this.config.range,
-                        this.coneAngle
-                    )
+                    this.scene.time.delayedCall(600, () => {
+                        //Draw cone telegraph
+                        this.coneTelegraph = new ConeTelegraph(
+                            this.scene,
+                            this.boss.x,
+                            this.boss.y,
+                            angle + this.coneDirectionMod,
+                            this.config.range,
+                            this.coneAngle
+                        )
+                    })
+                    
 
-                    this.scene.time.delayedCall(1000, () => {
+                    this.scene.time.delayedCall(800, () => {
                         //Check hit
                         this.coneDamageCheck(angle + this.coneDirectionMod)
                         

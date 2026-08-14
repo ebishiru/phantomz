@@ -8,12 +8,12 @@ export default class Boss18MechB extends BossMechanic {
     config = {
         id: "fake-out-right-left-cleave",
         name: "Hex Cleave 2",
-        castTime: 2300,
-        castDuration: 2300,
+        castTime: 2000,
+        castDuration: 200,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
-        range: 400,
+        range: 500,
         width: 0,
     }
 
@@ -77,7 +77,7 @@ export default class Boss18MechB extends BossMechanic {
             const fakeoutVFX = this.scene.add.sprite(0, -40, "boss18-fakeout")
 
             fakeoutVFX.setOrigin(0.5, 0.5)
-            fakeoutVFX.setScale(1.5)
+            fakeoutVFX.setScale(2)
             fakeoutVFX.setDepth(20)
             container.add(fakeoutVFX)
 
@@ -85,7 +85,7 @@ export default class Boss18MechB extends BossMechanic {
         }
 
         //Draw telegraph right before hit
-        this.scene.time.delayedCall((this.config.castTime - 300), () => {
+        this.scene.time.delayedCall((this.config.castTime - 200), () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new ConeTelegraph(
                 this.scene,

@@ -7,8 +7,8 @@ export default class Boss11MechA extends BossMechanic {
     config = {
         id: "dash-line-boss-player",
         name: "Dire Dash",
-        castTime: 1000,
-        castDuration: 1000,
+        castTime: 900,
+        castDuration: 900,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

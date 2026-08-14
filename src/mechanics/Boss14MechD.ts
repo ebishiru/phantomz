@@ -8,9 +8,9 @@ export default class Boss14MechD extends BossMechanic {
     config = {
         id: "knockback-circles",
         name: "Wingburst",
-        castTime: 1000,
-        castDuration: 1500,
-        cooldown: 3000,
+        castTime: 1300,
+        castDuration: 1700,
+        cooldown: 2000,
         showCastBar: true,
         damage: 20,
         range: 100,
@@ -76,7 +76,7 @@ export default class Boss14MechD extends BossMechanic {
                 }
                 
                 
-                this.scene.time.delayedCall(700, () => {
+                this.scene.time.delayedCall(1000, () => {
                     if (!this.boss || this.boss.health <= 0 ||!this.active) return
                     //remove indicators
                     this.indicators.forEach(i => i.destroy())
@@ -85,7 +85,7 @@ export default class Boss14MechD extends BossMechanic {
 
                 })
 
-                this.scene.time.delayedCall(1200, () => {
+                this.scene.time.delayedCall(1400, () => {
                     this.hitCheck()
                 })
             }
@@ -142,7 +142,7 @@ export default class Boss14MechD extends BossMechanic {
                     t.y,
                 )
 
-                if (dist <= this.config.range) {
+                if (dist <= this.config.range + this.player.hurtboxRadius) {
                     hit = true
                 }
             }

@@ -6,98 +6,185 @@ import CircleTelegraph from "../entities/CircleTelegraph";
 export default class Boss16MechC extends BossMechanic {
 
     config = {
-        id: "moon-shape-safe",
-        name: "Lunar Relief",
+        id: "teleport-circle-donut-alternate",
+        name: "Apex Rejuvenation",
         castTime: 1000,
-        castDuration: 1000,
-        cooldown: 2000,
+        castDuration: 2600,
+        cooldown: 2600,
         showCastBar: false,
         damage: 20,
-        range: 175,
-        width: 0,
+        range: 100,
+        width: 80,
     }
 
-    donutTelegraph: DonutTelegraph | null = null
-    circleTelegraph: CircleTelegraph | null = null
-
-    donutInnerRadius: number = 120
-    donutOuterRadius: number = 360
-
-    circleRadiusAngle: number = 0
-    circleX: number = 0
-    circleY: number = 0
+    donutTelegraphs: DonutTelegraph[] = []
 
     onCastStart() {
-        //Draw donut telegraph
-        this.donutTelegraph = new DonutTelegraph(
-            this.scene,
-            this.boss.x,
-            this.boss.y,
-            this.donutInnerRadius,
-            this.donutOuterRadius,
-        )
+        //Boss jumps to center
+        const bounds = this.scene.physics.world.bounds
 
-        //Randomize circle telegraph position along inner donut
-        this.circleRadiusAngle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+        this.scene.tweens.add({
+            targets: this.boss,
+            x: bounds.x + bounds.width/2,
+            y: bounds.y + bounds.height/2,
+            duration: 200,
+            ease: "Power2",
+            onComplete: () => {
+                //Draw Circle telegraph
+                this.telegraph = new CircleTelegraph(
+                    this.scene,
+                    this.boss.x,
+                    this.boss.y,
+                    this.config.range
+                )
 
-        this.circleX = this.boss.x + Math.cos(this.circleRadiusAngle) * this.donutInnerRadius
-        this.circleY = this.boss.y + Math.sin(this.circleRadiusAngle) * this.donutInnerRadius
+                //Draw middle Donut telegraph
+                const midDonut = new DonutTelegraph(
+                    this.scene,
+                    this.boss.x,
+                    this.boss.y,
+                    this.config.range + this.config.width,
+                    this.config.range + this.config.width * 2
+                )
+                this.donutTelegraphs.push(midDonut)
 
-        //Draw circle telegraph
-        this.circleTelegraph = new CircleTelegraph(
-            this.scene,
-            this.circleX,
-            this.circleY,
-            this.config.range,
-        )
+                this.scene.time.delayedCall(800, () => {
+                    if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
+                    this.boss.heal(this.config.damage/4)
+
+                    let hit = false
+
+                    const dist = Phaser.Math.Distance.Between(
+                        this.boss.x,
+                        this.boss.y,
+                        this.player.x,
+                        this.player.y,
+                    )
+                    
+                    //Check hit for circle and mid donut
+                    if (this.circleHitCheck(dist, this.telegraph.radius)) {
+                        hit = true
+                    }
+                    else if (this.donutTelegraphs.some(t => this.donutHitCheck(dist, t.innerRadius, t.outerRadius))) {
+                        hit = true
+                    }
+
+                    if (hit) {
+                        this.player.takeDamage(this.config.damage)
+                    }
+
+                    this.telegraph?.destroy()
+                    this.telegraph = undefined
+                    this.donutTelegraphs.forEach(t => t.destroy())
+                    this.donutTelegraphs = []
+
+                    //Draw inner & outer donut telegraphs
+                    const innerDonut = new DonutTelegraph(
+                        this.scene,
+                        this.boss.x,
+                        this.boss.y,
+                        this.config.range,
+                        this.config.range + this.config.width
+                    )
+                    this.donutTelegraphs.push(innerDonut)
+
+                    const outerDonut = new DonutTelegraph(
+                        this.scene,
+                        this.boss.x,
+                        this.boss.y,
+                        this.config.range + this.config.width * 2,
+                        this.config.range + this.config.width * 3,
+                    )
+                    this.donutTelegraphs.push(outerDonut)
+
+                    this.scene.time.delayedCall(800, () => {
+                        if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
+                        let hit = false
+
+                        const dist = Phaser.Math.Distance.Between(
+                            this.boss.x,
+                            this.boss.y,
+                            this.player.x,
+                            this.player.y,
+                        )
+
+                        //Check hit for donuts
+                        if (this.donutTelegraphs.some(t => this.donutHitCheck(dist, t.innerRadius, t.outerRadius))) {
+                            hit = true
+                        }
+                        
+                        this.donutTelegraphs.forEach(t => t.destroy())
+                        this.donutTelegraphs = []
+
+                        //Draw initial circle and mid donut telegraphs again
+                        this.telegraph = new CircleTelegraph(
+                            this.scene,
+                            this.boss.x,
+                            this.boss.y,
+                            this.config.range
+                        )
+
+                        const midDonut = new DonutTelegraph(
+                            this.scene,
+                            this.boss.x,
+                            this.boss.y,
+                            this.config.range + this.config.width,
+                            this.config.range + this.config.width * 2
+                        )
+                        this.donutTelegraphs.push(midDonut)
+
+                        this.scene.time.delayedCall(800, () => {
+                            if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
+                            //Final hit check again
+                            let hit = false
+
+                            const dist = Phaser.Math.Distance.Between(
+                                this.boss.x,
+                                this.boss.y,
+                                this.player.x,
+                                this.player.y,
+                            )
+
+                            if (this.circleHitCheck(dist, this.telegraph.radius)) {
+                                hit = true
+                            }
+                            else if (this.donutTelegraphs.some(t => this.donutHitCheck(dist, t.innerRadius, t.outerRadius))) {
+                                hit = true
+                            }
+
+                            if (hit) {
+                                this.player.takeDamage(this.config.damage)
+                            }
+
+                            this.telegraph?.destroy()
+                            this.telegraph = undefined
+                            this.donutTelegraphs.forEach(t => t.destroy())
+                            this.donutTelegraphs = []
+                        })
+                    })
+                })
+            }
+        })
     }
 
-    execute() {
-        //Check hit
-        let hit = false
+    circleHitCheck(dist: number, radius: number) {
+        return (dist <= (radius + this.player.hurtboxRadius))
+    }
 
-        const dist = Phaser.Math.Distance.Between(
-            this.player.x,
-            this.player.y,
-            this.boss.x,
-            this.boss.y,
+    donutHitCheck(dist: number, innerRadius: number, outerRadius: number) {
+        return (dist >= innerRadius - this.player.hurtboxRadius &&
+            dist <= outerRadius + this.player.hurtboxRadius
         )
-
-        if (dist >= this.donutInnerRadius && dist <= this.donutOuterRadius) {
-            hit = true
-        }
-
-        const circleDist = Phaser.Math.Distance.Between(
-            this.player.x,
-            this.player.y,
-            this.circleX,
-            this.circleY,
-        )
-
-        if ( circleDist <= this.config.range + this.player.hurtboxRadius) {
-            hit = true
-        }
-
-        if (hit) {
-            this.player.takeDamage(this.config.damage)
-        }
-
-        //Boss heals
-        this.boss.heal(this.config.damage / 4)
-
-        this.donutTelegraph?.destroy()
-        this.donutTelegraph = null
-
-        this.circleTelegraph?.destroy()
-        this.circleTelegraph = null
     }
 
     destroy() {
-        this.donutTelegraph?.destroy()
-        this.donutTelegraph = null
-
-        this.circleTelegraph?.destroy()
-        this.circleTelegraph = null
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+        this.donutTelegraphs.forEach(t => t.destroy())
+        this.donutTelegraphs = []
     }
 
 }

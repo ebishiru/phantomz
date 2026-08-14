@@ -8,7 +8,7 @@ export default class Boss23MechB extends BossMechanic {
         id: "teleport-spin-cone-quadrant",
         name: "360 Clockwork Sweep",
         castTime: 1300,
-        castDuration: 2900,
+        castDuration: 2300,
         cooldown: 3000,
         showCastBar: true,
         damage: 20,
@@ -22,7 +22,7 @@ export default class Boss23MechB extends BossMechanic {
 
     rotationStep = Math.PI / 2
     totalExplosions = 4
-    rotationInterval = 400
+    rotationInterval = 250
 
     onCastStart() {
         //Teleport to middle

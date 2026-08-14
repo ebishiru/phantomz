@@ -14,7 +14,7 @@ export default class Boss29MechA extends BossMechanic {
         showCastBar: true,
         damage: 20,
         range: 600,
-        width: 150,
+        width: 160,
     }
 
     innerRadius: number = 50

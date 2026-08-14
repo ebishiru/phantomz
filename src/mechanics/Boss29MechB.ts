@@ -8,8 +8,8 @@ export default class Boss29MechB extends BossMechanic {
     config = {
         id: "half-room-wide-vertical-teleport-cone",
         name: "Life and Death",
-        castTime: 1200,
-        castDuration: 2000,
+        castTime: 1100,
+        castDuration: 1900,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,

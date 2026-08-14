@@ -64,10 +64,33 @@ export default class CreditsScene extends Phaser.Scene {
             fontFamily: `Georgia, serif`,
             color: "#ff0000",
         }).setOrigin(0.5)
+
+        //Dev Save Button
+        const devButtonBg = this.add.rectangle(100, 140, 160, 55, 0x222222)
+        .setStrokeStyle(3, 0xffcc00)
+        .setOrigin(0.5)
+        .setInteractive({useHandCursor: true})
+
+        devButtonBg.on("pointerdown", () => {
+            this.devSaveData();
+        })
+
+        this.add.text(100, 140, "DEV SAVE", {
+            fontSize: "20px",
+            fontFamily: `Georgia, serif`,
+            color: "#ff0000",
+        }).setOrigin(0.5)
     }
 
     resetSaveData() {
             this.saveManager.reset()
             this.scene.start("mainmenu");
+    }
+
+    devSaveData() {
+        this.saveManager.updateScore(9999, "cave")
+        this.saveManager.updateScore(9999, "snow")
+        this.saveManager.updateScore(9999, "tower")
+        this.scene.start("mainmenu");
     }
 }

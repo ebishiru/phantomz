@@ -19,6 +19,7 @@ export default class Boss23MechC extends BossMechanic {
 
     telegraphs: LineTelegraph[] = []
     lineTelegraphAngles: number[] = [0, Math.PI / 2, Math.PI, -Math.PI / 2]
+    angleMod: number = 0
 
     onCastStart() {
         //Draw circle telegraph on player
@@ -59,13 +60,15 @@ export default class Boss23MechC extends BossMechanic {
                     this.telegraph = undefined
 
                     //Fire cardinal line telegraphs
+                    this.angleMod = Phaser.Math.FloatBetween(0, Math.PI / 2)
+
                     this.lineTelegraphAngles.forEach(lineAngle => {
                         const telegraph = new LineTelegraph(
                             this.scene,
                             endX,
                             endY,
-                            lineAngle,
-                            this.config.width * 3,
+                            lineAngle + this.angleMod,
+                            this.config.width * 5,
                             this.config.width
                         )
 

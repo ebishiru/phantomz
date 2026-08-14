@@ -18,7 +18,7 @@ export default class Boss27MechB extends BossMechanic {
         width: 0,
     }
 
-    coneAngle: number = Math.PI / 2
+    coneAngle: number = Math.PI * 5 / 6
     coneDirection: number = 0
 
     onCastStart() {

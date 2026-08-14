@@ -6,8 +6,8 @@ export default class Boss19MechB extends BossMechanic {
     config = {
         id: "expand-cross-rectangle-player",
         name: "Absolute Rimecross",
-        castTime: 800,
-        castDuration: 800,
+        castTime: 900,
+        castDuration: 900,
         cooldown: 2000,
         showCastBar: true,
         damage: 20,

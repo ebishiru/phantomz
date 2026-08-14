@@ -7,8 +7,8 @@ export default class Boss22MechB extends BossMechanic {
     config = {
         id: "boss-teleport-circle",
         name: "Bladestorm",
-        castTime: 1500,
-        castDuration: 1500,
+        castTime: 1300,
+        castDuration: 1300,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,

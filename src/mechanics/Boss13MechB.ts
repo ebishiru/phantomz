@@ -8,8 +8,8 @@ export default class Boss13MechB extends BossMechanic {
     config = {
         id: "right-left-boss-cleave",
         name: "Hex Cleave",
-        castTime: 2000,
-        castDuration: 2000,
+        castTime: 1800,
+        castDuration: 1800,
         cooldown: 2500,
         showCastBar: true,
         damage: 20,
@@ -51,7 +51,7 @@ export default class Boss13MechB extends BossMechanic {
         )
 
         //Draw telegraph right before hit
-        this.scene.time.delayedCall((this.config.castTime - 800), () => {
+        this.scene.time.delayedCall((this.config.castTime - 600), () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new ConeTelegraph(
                 this.scene,

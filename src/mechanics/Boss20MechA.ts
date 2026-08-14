@@ -14,7 +14,7 @@ export default class Boss15MechA extends BossMechanic {
         showCastBar: true,
         damage: 20,
         range: 90,
-        width: 400,
+        width: 500,
     }
 
     circleTelegraph?: CircleTelegraph

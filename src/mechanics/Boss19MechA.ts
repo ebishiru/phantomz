@@ -8,12 +8,12 @@ export default class Boss19MechA extends BossMechanic {
     config = {
         id: "double-cone-boss",
         name: "Swipe-Sweep",
-        castTime: 1200,
+        castTime: 1100,
         castDuration: 2200,
         cooldown: 2400,
         showCastBar: false,
         damage: 20,
-        range: 300,
+        range: 500,
         width: 0,
     }
 
@@ -95,7 +95,7 @@ export default class Boss19MechA extends BossMechanic {
         })
 
         //Check second attack hit
-        this.scene.time.delayedCall((this.config.castTime + 1000), () => {
+        this.scene.time.delayedCall((this.config.castTime + 1100), () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.checkHit(this.secondAttackAngle)
             this.telegraph?.destroy()

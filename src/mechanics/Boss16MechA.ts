@@ -1,15 +1,14 @@
 import Phaser from "phaser";
 import BossMechanic from "./BossMechanic";
 import LineTelegraph from "../entities/LineTelegraph";
-import CircleTelegraph from "../entities/CircleTelegraph";
 
 export default class Boss16MechA extends BossMechanic {
 
     config = {
-        id: "jump-player-dash-boss",
+        id: "jump-dash-jump-dash",
         name: "Savage Dash",
-        castTime: 800,
-        castDuration: 800,
+        castTime: 900,
+        castDuration: 1900,
         cooldown: 2000,
         showCastBar: false,
         damage: 20,
@@ -17,109 +16,122 @@ export default class Boss16MechA extends BossMechanic {
         width: 120,
     }
 
-    startX: number = 0
-    startY: number = 0
-    endX: number = 0
-    endY: number = 0
-
-    circleTelegraph: CircleTelegraph | null = null
-    lineTelegraph: LineTelegraph | null = null
+    positions: {x: number, y: number}[] = []
 
     onCastStart() {
-        this.startX = this.player.x
-        this.startY = this.player.y
-        this.endX = this.boss.x
-        this.endY = this.boss.y
+        const bounds = this.scene.physics.world.bounds
+        this.positions = [
+            { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 1/4 },
+            { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 1/4 },
+            { x: bounds.x + bounds.width * 1/4, y: bounds.y + bounds.height * 3/4 },
+            { x: bounds.x + bounds.width * 3/4, y: bounds.y + bounds.height * 3/4 }
+        ]
+        //Randomize jump points
+        const firstJump = this.positions[Phaser.Math.Between(0, 3)]
+        const secondJump = this.positions[Phaser.Math.Between(0, 3)]
 
-        //Draw circle telegraph
-        this.circleTelegraph = new CircleTelegraph(
-            this.scene,
-            this.startX,
-            this.startY,
-            this.config.range,
-        )
-    }
-
-    execute() {
-        const angle = Phaser.Math.Angle.Between(
-            this.startX,
-            this.startY,
-            this.endX,
-            this.endY,
-        )
-
-        const distance = Phaser.Math.Distance.Between(
-            this.startX,
-            this.startY,
-            this.endX,
-            this.endY,
-        )
-
-        //Jump Boss to player
-        this.scene.tweens.add({
+        //Boss jumps to point 1
+        this.scene.add.tween({
             targets: this.boss,
-            x: this.startX,
-            y: this.startY,
+            x: firstJump.x,
+            y: firstJump.y,
             duration: 200,
+            ease: "Sine.easeInOut",
             onComplete: () => {
-                //Remove circle telegraph
-                if (this.circleTelegraph) {
-                    this.circleTelegraph.destroy()
-                    this.circleTelegraph = null
-                }
-
-                //Damage Check for Circle Telegraph
-                const hit = Phaser.Math.Distance.Between(
+                const angle = Phaser.Math.Angle.Between(
+                    this.boss.x,
+                    this.boss.y,
                     this.player.x,
                     this.player.y,
-                    this.startX,
-                    this.startY
-                ) <= (this.config.range + this.player.hurtboxRadius)
-
-                if (hit) {
-                    this.player.takeDamage(this.config.damage)
-                    this.boss.heal(this.config.damage/ 4)
-                }
-
-                //Draw line telegraph
-                this.lineTelegraph = new LineTelegraph(
-                    this.scene,
-                    this.startX,
-                    this.startY,
-                    angle,
-                    distance,
-                    this.config.width,
+                )
+                const distance = Phaser.Math.Distance.Between(
+                    this.boss.x,
+                    this.boss.y,
+                    this.player.x,
+                    this.player.y,
                 )
 
-                this.scene.time.delayedCall(200, () => {
-                    this.scene.tweens.add({
+                //Draw line telegraph to player
+                this.telegraph = new LineTelegraph(
+                    this.scene,
+                    this.boss.x,
+                    this.boss.y,
+                    angle,
+                    distance + 100,
+                    this.config.width
+                )
+
+                //Boss jumps across line
+                this.scene.time.delayedCall(500, () => {
+                    this.scene.add.tween({
                         targets: this.boss,
-                        x: this.endX,
-                        y: this.endY,
+                        x: this.telegraph.x + Math.cos(angle) * (distance + 100),
+                        y: this.telegraph.y + Math.sin(angle) * (distance + 100),
                         duration: 200,
+                        ease: "Power2",
                         onComplete: () => {
-                            //Remove line telegraph
-                            if (this.lineTelegraph) {
-                                this.lineTelegraph.destroy()
-                                this.lineTelegraph = null
+                            //Hit check
+                            if (this.hitCheck(this.telegraph.x, this.telegraph.y, angle, distance + 100)) {
+                                this.player.takeDamage(this.config.damage)
                             }
 
-                            //Damage Check for Line Telegraph
-                            const px = this.player.x
-                            const py = this.player.y
-                            const pr = this.player.hurtboxRadius
+                            this.telegraph?.destroy()
+                            this.telegraph = undefined
 
-                            const lineLen = Phaser.Math.Distance.Between(this.startX, this.startY, this.endX, this.endY);
-                            const t = Phaser.Math.Clamp(((px - this.startX) * (this.endX - this.startX) + (py - this.startY) * (this.endY - this.startY)) / (lineLen * lineLen), 0, 1);
-                            const closestX = this.startX + t * (this.endX - this.startX);
-                            const closestY = this.startY + t * (this.endY - this.startY);
+                            this.scene.time.delayedCall(100, () => {
+                                //Boss jumps to second point
+                                this.scene.add.tween({
+                                    targets: this.boss,
+                                    x: secondJump.x,
+                                    y: secondJump.y,
+                                    duration: 200,
+                                    ease: "Sine.easeInOut",
+                                    onComplete: () => {
+                                        const angle = Phaser.Math.Angle.Between(
+                                            this.boss.x,
+                                            this.boss.y,
+                                            this.player.x,
+                                            this.player.y,
+                                        )
+                                        const distance = Phaser.Math.Distance.Between(
+                                            this.boss.x,
+                                            this.boss.y,
+                                            this.player.x,
+                                            this.player.y,
+                                        )
 
-                            const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY);
+                                        //Draw second line telegraph to player
+                                        this.telegraph = new LineTelegraph(
+                                            this.scene,
+                                            this.boss.x,
+                                            this.boss.y,
+                                            angle,
+                                            distance + 100,
+                                            this.config.width
+                                        )
 
-                            if (distanceToLine <= pr + this.config.width / 2) {
-                                this.player.takeDamage(this.config.damage);
-                                this.boss.heal(this.config.damage / 4);
-                            }
+                                        //Boss jumps across line
+                                        this.scene.time.delayedCall(500, () => {
+                                            this.scene.add.tween({
+                                                targets: this.boss,
+                                                x: this.telegraph.x + Math.cos(angle) * (distance + 100),
+                                                y: this.telegraph.y + Math.sin(angle) * (distance + 100),
+                                                duration: 200,
+                                                ease: "Power2",
+                                                onComplete: () => {
+                                                    //Hit check
+                                                    if (this.hitCheck(this.telegraph.x, this.telegraph.y, angle, distance + 100)) {
+                                                        this.player.takeDamage(this.config.damage)
+                                                    }
+
+                                                    this.telegraph?.destroy()
+                                                    this.telegraph = undefined
+                                                }
+                                            })
+                                        })
+                                    }
+                                })
+                            })
                         }
                     })
                 })
@@ -127,15 +139,26 @@ export default class Boss16MechA extends BossMechanic {
         })
     }
 
-    destroy() {
-        if (this.circleTelegraph) {
-            this.circleTelegraph.destroy()
-            this.circleTelegraph = null
-        }
-        if (this.lineTelegraph) {
-            this.lineTelegraph.destroy()
-            this.lineTelegraph = null
-        }
+    hitCheck(startX: number, startY: number, angle: number, dist: number) {
+        const endX = startX + Math.cos(angle) * dist
+        const endY = startY + Math.sin(angle) * dist
+
+        const px = this.player.x
+        const py = this.player.y
+        const pr = this.player.hurtboxRadius
+
+        const lineLen = Phaser.Math.Distance.Between(startX, startY, endX, endY);
+        const t = Phaser.Math.Clamp(((px - startX) * (endX - startX) + (py - startY) * (endY - startY)) / (lineLen * lineLen), 0, 1);
+        const closestX = startX + t * (endX - startX);
+        const closestY = startY + t * (endY - startY);
+
+        const distanceToLine = Phaser.Math.Distance.Between(px, py, closestX, closestY);
+
+        return (distanceToLine <= pr + this.config.width / 2)
     }
 
+    destroy() {
+        this.telegraph?.destroy()
+        this.telegraph = undefined
+    }
 }

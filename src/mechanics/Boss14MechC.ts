@@ -57,14 +57,16 @@ export default class Boss14MechC extends BossMechanic {
     execute() {
         if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
+        const r = this.player.hurtboxRadius
+
         let hit = false
         for (const telegraph of this.telegraphs) {
             // Check if player is within the rectangular telegraph area
             if (
-                this.player.x >= telegraph.x &&
-                this.player.x <= telegraph.x + telegraph.width &&
-                this.player.y >= telegraph.y &&
-                this.player.y <= telegraph.y + telegraph.height
+                this.player.x + r >= telegraph.x &&
+                this.player.x - r <= telegraph.x + telegraph.width &&
+                this.player.y + r >= telegraph.y &&
+                this.player.y - r <= telegraph.y + telegraph.height
             ) {
                 hit = true
                 break

@@ -91,7 +91,7 @@ export default class Boss18MechC extends BossMechanic {
                     const fakeoutVFX = this.scene.add.sprite(0, -40, "boss18-fakeout")
 
                     fakeoutVFX.setOrigin(0.5, 0.5)
-                    fakeoutVFX.setScale(1.5)
+                    fakeoutVFX.setScale(2)
                     fakeoutVFX.setDepth(20)
                     container.add(fakeoutVFX)
 
