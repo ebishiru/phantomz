@@ -287,7 +287,6 @@ export default class GameOverScene extends Phaser.Scene {
             player.isInvulnerable = true
         }
 
-        this.scene.resume("game")
         playMusic(this, `${this.currentLevel}Music`)
 
         // Create countdown text overlay
@@ -310,13 +309,17 @@ export default class GameOverScene extends Phaser.Scene {
 
         this.time.delayedCall(3000, () => {
             countdownText.destroy()
-            // Restore player visuals and vulnerability
+            // Resume game time
+            this.scene.resume("game")
+            // Close game-over scene
+            this.scene.stop("game-over")
+        })
+
+        this.time.delayedCall(6000, () => {
             if (player) {
                 player.clearTint()
                 player.isInvulnerable = false
             }
-            // Close game-over scene
-            this.scene.stop("game-over")
         })
     }
 
