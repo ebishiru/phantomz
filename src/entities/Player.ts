@@ -194,7 +194,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     gainExp(amount: number) {
         this.exp += amount
 
-        if(this.exp >= this.expToNextLevel) {
+        while(this.exp >= this.expToNextLevel) {
             const gameScene = this.scene.scene.get("game") as GameScene;
             this.levelUp()
             
@@ -202,13 +202,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
             this.scene.scene.pause("game")
             this.scene.scene.launch("level-up", { player: this, skillSystem: gameScene.skillSystem})
+
+            break
         }
     }
 
     levelUp() {
         this.exp -= this.expToNextLevel
         this.level++
-        this.expToNextLevel += 8 + this.level * 4
+        this.expToNextLevel = Math.round(10 + 4.8 * (this.level - 1))
+        //Old Formula:
+        //this.expToNextLevel += 8 + this.level * 4 
     }
     
     die() {

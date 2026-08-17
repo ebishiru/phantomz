@@ -111,7 +111,7 @@ export const skills = [
         key: "zephyr",
         name: "Zephyr",
         iconKey: "zephyr-icon",
-        desc: "Perform a maneuvre with your rapier",
+        desc: "Perform a 3-hit combo with your rapier",
         upgrades: upgrades.zephyr,
         unlock: {
             type: "bossKills",
