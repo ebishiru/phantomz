@@ -20,6 +20,13 @@ export default class OptionsScene extends Phaser.Scene {
     create() {
         this.input.setDefaultCursor("default");
 
+        const gameScene = this.scene.get("game") as GameScene;
+        gameScene.skillSystem.pauseAll();
+
+        //Hide mobile controls if present
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "none";
+
         const { width, height } = this.scale;
         this.scene.bringToTop();
 
@@ -279,16 +286,13 @@ export default class OptionsScene extends Phaser.Scene {
         if (this.fromGame) {
             const game = this.scene.get("game") as any;
             game.skillSystem.resumeAll();
+            this.showMobileControls();
             this.scene.resume("game");
         }
         this.scene.stop();
     }
 
     quit() {
-        // Hide mobile controls
-        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
-        if (controlsEl) controlsEl.style.display = "none";
-
         // Stop all game-related scenes
         this.scene.stop("options");
         this.scene.stop("level-up");
@@ -296,5 +300,14 @@ export default class OptionsScene extends Phaser.Scene {
 
         // Start main menu
         this.scene.start("mainmenu");
+    }
+
+    showMobileControls() {
+    const mobileControlsEnabled = this.registry.get("mobileControlsEnabled") ?? false;
+
+    if (!mobileControlsEnabled) return;
+
+    const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+    if (controlsEl) controlsEl.style.display = "block";
     }
 }

@@ -34,6 +34,10 @@ export default class LevellingScene extends Phaser.Scene {
         const gameScene = this.scene.get("game") as GameScene;
         gameScene.skillSystem.pauseAll();
 
+        //Hide mobile controls if present
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "none";
+
         this.createOverlay();
         this.createMenuBox();
         this.createOptions();
@@ -289,6 +293,10 @@ export default class LevellingScene extends Phaser.Scene {
                 gameScene.uiSystem.createSkillUI();
                 gameScene.uiSystem.createPassiveUI();
 
+                // Refresh mobile skill buttons
+                gameScene.mobileControls?.updateButtonLabels();
+                this.showMobileControls();
+
                 this.scene.stop();
                 this.scene.resume("game");
             }
@@ -307,5 +315,14 @@ export default class LevellingScene extends Phaser.Scene {
         key3?.on("down", () => this.chooseOption(2))
         key4?.on("down", () => this.chooseOption(3))
         key5?.on("down", () => this.chooseOption(4))
+    }
+
+    showMobileControls() {
+        const mobileControlsEnabled = this.registry.get("mobileControlsEnabled") ?? false;
+
+        if (!mobileControlsEnabled) return;
+
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "block";
     }
 }

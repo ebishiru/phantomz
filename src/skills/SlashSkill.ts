@@ -19,30 +19,6 @@ export default class SlashSkill extends Skill {
     activate() {
         this.updateFacing()
 
-        // const startAngle = this.facingAngle - Math.PI / 2
-        // const endAngle   = this.facingAngle + Math.PI / 2
-
-        //Create graphics
-        // const g = this.scene.add.graphics()
-
-        // g.fillStyle(0x00ff00, 0.25)
-        // g.beginPath()
-        // g.moveTo(this.player.x, this.player.y)
-        // g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
-        // g.closePath()
-        // g.fillPath()
-
-
-        // g.lineStyle(2, 0x00ff00, 1)
-        // g.beginPath()
-        // g.moveTo(this.player.x, this.player.y)
-        // g.arc(this.player.x, this.player.y, this.range, startAngle, endAngle)
-        // g.closePath()
-        // g.strokePath()
-
-        // this.scene.time.delayedCall(150, () => g.destroy())
-
-
         //VFX
         const startVFXAngle = this.facingAngle - Math.PI / 2
         const endVFXAngle = startVFXAngle + Math.PI

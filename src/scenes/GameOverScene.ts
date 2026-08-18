@@ -246,6 +246,9 @@ export default class GameOverScene extends Phaser.Scene {
         this.reviveButtonBG.on("pointerdown", () => {
             // Guard
             if (this.reviveUsed) return
+
+            // Reenable mobile controls if applicable
+            this.showMobileControls()
             this.handleReviveCountdown()
         })
     }
@@ -321,6 +324,15 @@ export default class GameOverScene extends Phaser.Scene {
                 player.isInvulnerable = false
             }
         })
+    }
+
+    showMobileControls() {
+        const mobileControlsEnabled = this.registry.get("mobileControlsEnabled") ?? false;
+
+        if (!mobileControlsEnabled) return;
+
+        const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
+        if (controlsEl) controlsEl.style.display = "block";
     }
 
     createKeyboardShortcuts() {

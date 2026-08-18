@@ -127,9 +127,13 @@ export default class GameScene extends Phaser.Scene {
         if (this.sys.game.device.input.touch) {
             this.mobileControls = new MobileControls(this.player, this.skillSystem);
 
+            this.registry.set("mobileControlsEnabled", true);
+
             this.events.once("shutdown", () => {
                 this.mobileControls?.destroy();
             });
+        } else {
+            this.registry.set("mobileControlsEnabled", false);
         }
 
         // Skill Keybinds

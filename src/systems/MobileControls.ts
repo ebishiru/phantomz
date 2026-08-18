@@ -25,6 +25,7 @@ export default class MobileControls {
 
         this.initJoystick();
         this.initButtons();
+        this.updateButtonLabels();
     }
 
     initJoystick() {
@@ -105,6 +106,28 @@ export default class MobileControls {
             btn.addEventListener("touchend", resetButton);
             btn.addEventListener("touchcancel", resetButton);
         });
+    }
+
+    updateButtonLabels() {
+        this.skillButtons.forEach((btn, index) => {
+            //Remove old skills
+            const oldIcon = btn.querySelector(".skill-icon")
+            if (oldIcon) {
+                oldIcon.remove();
+            }
+
+            //Update to current skill
+            const skill = this.skillSystem.skills[index]
+
+            if (!skill) return
+
+            const img = document.createElement("img");
+
+            img.className = "skill-icon";
+            img.src = `./assets/${skill.iconKey}.png`
+
+            btn.appendChild(img);
+        })
     }
 
     getMovementVector() {
