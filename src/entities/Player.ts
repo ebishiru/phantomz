@@ -11,6 +11,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     level = 1
     expToNextLevel = 10
     hurtboxRadius = 3
+    isWarded = false
     isInvulnerable = false
 
     //Passive effects:
@@ -83,7 +84,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         const boss = (this.scene as any).bossManager?.boss
         if (boss && mods.executionerLevel > 0) {
-            const threshold = 0.25 + (mods.executionerLevel - 1) * 0.10
+            const threshold = 0.25 + (mods.executionerLevel - 1) * 0.05
             if (boss.health / boss.maxHealth <= threshold) {
                 reflectedAmount *= 1.25
             }
@@ -99,7 +100,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     takeDamage(amount: number) {
 
         //Ward Skill
-        if (this.isInvulnerable) {
+        if (this.isWarded) {
             const boss = (this.scene as any).bossManager?.boss;
 
             //Reflect damage back to boss
@@ -108,6 +109,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }
             return
         }
+
+        //Invulnerability
+        if (this.isInvulnerable) return;
 
         //Passive
         amount -= this.statModifiers.damageReductionFlat

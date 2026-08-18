@@ -18,12 +18,15 @@ export default class BossManager {
     mechanicNameText?: Phaser.GameObjects.Text
     expSystem: ExpSystem
 
-    // Buff system
-    activeBuffs: string[] = [];
-    baseBuffPool: string[] = ["HP", "HP", "HP", "CD", "CD", "CD"];
-    buffPool: string[] = []
+    // Boss scaling system
     baseBossHealth = 150
+    bossHealthIncrease = 25
+    baseBossMechDelay = 4500
+    bossMechDelayDecrease = 125
+    minBossMechDelay = 3000
+
     nextBossMaxHealth = this.baseBossHealth
+    currentBossMechDelay = this.baseBossMechDelay
 
     // Global timer UI
     globalTimerSeconds = 0;
@@ -51,15 +54,9 @@ export default class BossManager {
         this.expSystem = expSystem;
         this.currentLevel = level;
 
-        this.resetBuffPool();
-        this.startBuffTimer();
         this.createTimerText();
         this.createBossKillText();
         this.scene.events.on("update", this.updateGourmetBread, this);
-    }
-
-    resetBuffPool() {
-        this.buffPool = [...this.baseBuffPool]
     }
 
     createTimerText() {
@@ -77,9 +74,16 @@ export default class BossManager {
                 if (this.timeOverTriggered) return;
 
                 this.globalTimerSeconds++;
+
+                // Update Text
                 const min = Math.floor(this.globalTimerSeconds / 60).toString().padStart(2, "0");
                 const sec = (this.globalTimerSeconds % 60).toString().padStart(2, "0");
                 this.globalTimerText.setText(`Time: ${min}:${sec}`);
+
+                // Update boss scaling
+                if (this.globalTimerSeconds % 30 === 0 ) {
+                    this.updateBossScaling();
+                }
 
                 // Introduce harder bosses every minute
                 this.currentMaxBossIndex = Math.min(Bosses.length - 1, Math.floor(this.globalTimerSeconds / 60))
@@ -201,37 +205,20 @@ export default class BossManager {
         });
     }
 
-    startBuffTimer() {
-        this.scene.time.addEvent({
-            delay: 30000,
-            loop: true,
-            callback: () => {
-                if (this.buffPool.length === 0) {
-                    this.resetBuffPool()
-                }
-                const buff = Phaser.Utils.Array.RemoveRandomElement(this.buffPool) as unknown as string;
-                this.activeBuffs.push(buff);
-                this.applyBuffToBoss();
-            }
-        });
-    }
+    updateBossScaling() {
+        const scalingAmount = Math.floor(this.globalTimerSeconds / 30)
 
-    applyBuffToBoss() {
-        if (!this.boss) return
+        //HP
+        this.nextBossMaxHealth = this.baseBossHealth + scalingAmount * this.bossHealthIncrease
 
-        const hpCount = this.activeBuffs.filter(b => b === "HP").length
-        const cdCount = this.activeBuffs.filter(b => b === "CD").length
-
-        // Giving Boss more HP
-        this.nextBossMaxHealth = this.baseBossHealth + hpCount * 25
-
-        // Giving Boss attacks lower delay
-        const newDelay = Math.max(3000, 4500 - 150 * cdCount)
+        //CDR
+        this.currentBossMechDelay = Math.max(this.minBossMechDelay, this.baseBossMechDelay - scalingAmount * this.bossMechDelayDecrease)
 
         if (this.bossMechanicTimer) {
             this.bossMechanicTimer.remove(false)
+
             this.bossMechanicTimer = this.scene.time.addEvent({
-                delay: newDelay,
+                delay: this.currentBossMechDelay,
                 loop: true,
                 callback: () => this.triggerMechanics(),
             })
@@ -332,9 +319,6 @@ export default class BossManager {
         // Initialize Mechanics
         this.bossMechanics = bossConfig.mechanics.map(MechClass => new MechClass(this.scene, this.boss, this.player))
 
-        // Apply boss buffs
-        this.applyBuffToBoss()
-
         // Boss Health & Health bar
         this.boss.maxHealth = this.nextBossMaxHealth
         this.boss.health = this.nextBossMaxHealth
@@ -342,7 +326,7 @@ export default class BossManager {
 
         // Boss attack timer
         this.bossMechanicTimer = this.scene.time.addEvent({
-            delay: 4500,
+            delay: this.currentBossMechDelay,
             loop: true,
             callback: () => this.triggerMechanics()
         })

@@ -17,7 +17,7 @@ export const passiveUpgrades = {
         desc: "Further reduce all cooldowns by 10%."
     },
     executioner: {
-        desc: "Increase window of damage buff by 10% HP."
+        desc: "Increase window of damage buff by 5% HP."
     },
     fortify: {
         desc: "Reduce damage taken by 2 more."

@@ -99,7 +99,7 @@ export default class Skill {
 
         const boss = (this.scene as any).bossManager?.boss;
         if (boss && this.player.statModifiers?.executionerLevel > 0) {
-            const threshold = 0.25 + (this.player.statModifiers.executionerLevel - 1) * 0.10;
+            const threshold = 0.25 + (this.player.statModifiers.executionerLevel - 1) * 0.05;
             if (boss.health / boss.maxHealth <= threshold) final *= 1.25;
         }
 

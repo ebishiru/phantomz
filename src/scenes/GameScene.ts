@@ -201,4 +201,20 @@ export default class GameScene extends Phaser.Scene {
             this.bossManager.boss.setDepth(this.bossManager.boss.y);
         }
     }
+
+    reviveInvulnerability() {
+        const player = this.player
+
+        if (!player) return
+
+        player.health = 25
+        player.isInvulnerable = true
+        player.setTintFill(0xffffff)
+
+        //Remove invulnerability after 3 seconds
+        this.time.delayedCall(3000, () => {
+            player.isInvulnerable = false
+            player.clearTint()
+        })
+    }
 }

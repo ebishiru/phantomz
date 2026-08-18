@@ -12,9 +12,9 @@ export default class WardSkill extends Skill {
     }
 
     activate() {
-        if (this.player.isInvulnerable) return
+        if (this.player.isWarded) return
 
-        this.player.isInvulnerable = true
+        this.player.isWarded = true
 
         //Add VFX overlay on player
         const overlay = this.scene.add.image(this.player.x, this.player.y, "ward-vfx");
@@ -27,7 +27,7 @@ export default class WardSkill extends Skill {
         this.scene.events.on("update", follow)
 
         this.scene.time.delayedCall(this.shieldDuration, () => {
-            this.player.isInvulnerable = false
+            this.player.isWarded = false
 
             overlay.destroy()
 
