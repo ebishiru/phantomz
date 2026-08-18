@@ -2,13 +2,13 @@
 
 export const passiveUpgrades = {
     vitality: {
-        desc: "Further increase Max HP by 30."
+        desc: "Further increase max HP by 30."
     },
     strength: {
         desc: "All skill damages increases by +2."
     },
     swiftness: {
-        desc: "Increase Move Speed by another 15%."
+        desc: "Increase move speed by another 15%."
     },
     amplifier:{
         desc: "Increase aoe range by another 15%."
@@ -26,7 +26,7 @@ export const passiveUpgrades = {
         desc: "Increase echo chance by another 5%."
     },
     gourmet: {
-        desc: "Increase HP restoration by 5."
+        desc: "Increase bread's HP restoration by 5."
     },
     desperation: {
         desc: "Desperation hits at 5% HP earlier."

@@ -106,8 +106,8 @@ export const upgrades = {
 
     restoration: [
         {
-            desc: "Heal + 3",
-            apply: (skill: Skill) => skill.buffHeal(3)
+            desc: "Heal + 2",
+            apply: (skill: Skill) => skill.buffHeal(2)
         },
         {
             desc: "Cooldown reduced by 700ms",

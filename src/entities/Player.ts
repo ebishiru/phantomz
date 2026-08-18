@@ -103,10 +103,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.isWarded) {
             const boss = (this.scene as any).bossManager?.boss;
 
-            //Reflect damage back to boss
+            //Reflect damage back to boss and heal player
             if (boss) {
                 boss.takeDamage(this.getReflectedDamage(amount))
             }
+            this.heal(5);
             return
         }
 

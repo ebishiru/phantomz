@@ -5,77 +5,77 @@ export const skills = [
         key: "slash",
         name: "Slash",
         iconKey: "slash-icon",
-        desc: "Attack in a frontal arc.",
+        desc: "Cleave foes before you in a sweeping arc.",
         upgrades: upgrades.slash
     },
     {
         key: "arrow",
         name: "Arrow",
         iconKey: "arrow-icon",
-        desc: "Fire a guaranteed missile.",
+        desc: "Loose a sure-shot arrow that never misses.",
         upgrades: upgrades.arrow
     },
     {
         key: "pulse",
         name: "Pulse",
         iconKey: "pulse-icon",
-        desc: "Unleash an energy pulse repeatedly.",
+        desc: "Unleash a pulse of arcane force again and again.",
         upgrades: upgrades.pulse
     },
     {
         key: "thrust",
         name: "Thrust",
         iconKey: "thrust-icon",
-        desc: "Propel and strike forward.",
+        desc: "Lunge forth and pierce all who stand before you.",
         upgrades: upgrades.thrust
     },
     {
         key: "caltrops",
         name: "Caltrops",
         iconKey: "caltrops-icon",
-        desc: "Drop spikes behind that hits periodically.",
+        desc: "Scatter spikes that strikes foes thrice.",
         upgrades: upgrades.caltrops
     },
     {
         key: "fireball",
         name: "Fireball",
         iconKey: "fireball-icon",
-        desc: "Cast down an explosion of flame.",
+        desc: "Call forth a blazing orb that turns your foes to ash.",
         upgrades: upgrades.fireball
     },
     {
         key: "devour",
         name: "Devour",
         iconKey: "devour-icon",
-        desc: "Chew on the flesh of your enemy.",
+        desc: "Feast upon your foe and gain their health.",
         upgrades: upgrades.devour
     },
     {
         key: "hook",
         name: "Hook",
         iconKey: "hook-icon",
-        desc: "Reel yourself to the boss' location.",
+        desc: "Lash forth your hook and pull yourself toward your prey.",
         upgrades: upgrades.hook
     },
     {
         key: "volt",
         name: "Volt",
         iconKey: "volt-icon",
-        desc: "Supercharge yourself and strike with lightning.",
+        desc: "Surge with thunderous might and strike with lightning.",
         upgrades: upgrades.volt
     },
     {
         key: "restoration",
         name: "Restoration",
         iconKey: "restoration-icon",
-        desc: "Fix your wounds and restore your health.",
+        desc: "Mend your wounds and reclaim your lost vitality.",
         upgrades: upgrades.restoration,
     },
     {
         key: "ward",
         name: "Ward",
         iconKey: "ward-icon",
-        desc: "Create a temporary shield that reflects damage.",
+        desc: "Summon a temporary shield that reflects and heals on hit.",
         upgrades: upgrades.ward,
         unlock: {
             type: "caveTotalScore",
@@ -87,7 +87,7 @@ export const skills = [
         key: "javelin",
         name: "Javelin",
         iconKey: "javelin-icon",
-        desc: "Throw a javelin that can be picked up again.",
+        desc: "Hurl a mighty javelin, and reclaim it from the battlefield.",
         upgrades: upgrades.javelin,
         unlock: {
             type: "bossKills",
@@ -99,7 +99,7 @@ export const skills = [
         key: "gust",
         name: "Gust",
         iconKey: "gust-icon",
-        desc: "Unleash a gust of wind that knocks you back.",
+        desc: "Unleash a violent gust of wind that hurls you backwards.",
         upgrades: upgrades.gust,
         unlock: {
             type: "caveTotalScore",
@@ -111,7 +111,7 @@ export const skills = [
         key: "zephyr",
         name: "Zephyr",
         iconKey: "zephyr-icon",
-        desc: "Perform a 3-hit combo with your rapier",
+        desc: "Dance in the wind with a flurry of three rapier strikes",
         upgrades: upgrades.zephyr,
         unlock: {
             type: "bossKills",
@@ -123,7 +123,7 @@ export const skills = [
         key: "mirage",
         name: "Mirage",
         iconKey: "mirage-icon",
-        desc: "Leave a water clone behind and teleport away.",
+        desc: "Leave behind a watery phantom and vanish from sight.",
         upgrades: upgrades.mirage,
         unlock: {
             type: "bossKills",
@@ -135,7 +135,7 @@ export const skills = [
         key: "quasar",
         name: "Quasar",
         iconKey: "quasar-icon",
-        desc: "Fire a beam in a given direction.",
+        desc: "Unleash a searing beam of celestial power.",
         upgrades: upgrades.quasar,
         unlock: {
             type: "snowTotalScore",
@@ -147,7 +147,7 @@ export const skills = [
         key: "yoyo",
         name: "Yo-yo",
         iconKey: "yoyo-icon",
-        desc: "Swing forward and backwards.",
+        desc: "Swing forward and back with a relentless orb of steel.",
         upgrades: upgrades.yoyo,
         unlock: {
             type: "snowTotalScore",
@@ -159,7 +159,7 @@ export const skills = [
         key: "blitzkrieg",
         name: "Blitzkrieg",
         iconKey: "blitzkrieg-icon",
-        desc: "Stampede through then stomp the ground.",
+        desc: "Charge like a war beast, then shake the earth beneath your feet.",
         upgrades: upgrades.blitzkrieg,
         unlock: {
             type: "towerTotalScore",
@@ -171,7 +171,7 @@ export const skills = [
         key: "kraken",
         name: "Kraken",
         iconKey: "kraken-icon",
-        desc: "Call forth unpredictably a Kraken strike.",
+        desc: "Call upon the depths and summon the Kraken's wrath.",
         upgrades: upgrades.kraken,
         unlock: {
             type: "bossKills",
@@ -183,7 +183,7 @@ export const skills = [
         key: "nexus",
         name: "Nexus",
         iconKey: "nexus-icon",
-        desc: "Channel a crystal to hit your enemy.",
+        desc: "Channel a mystic crystal and unleash its power upon your foe.",
         upgrades: upgrades.nexus,
         unlock: {
             type: "towerTotalScore",
