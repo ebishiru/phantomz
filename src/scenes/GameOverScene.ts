@@ -373,7 +373,7 @@ export default class GameOverScene extends Phaser.Scene {
         const leaderboardManager = LeaderboardManager.getInstance();
         leaderboardManager.submitScore(
             level as "cave" | "snow" | "tower",
-            "Player",
+            "PHANTOM",
             score
         )
 
