@@ -87,4 +87,40 @@ export default class LeaderboardManager {
         this.leaderboards[level] = [];
         this.save();
     }
+
+    initializeSampleData(): void {
+
+        const isEmpty = 
+        this.leaderboards.cave.length === 0 &&
+        this.leaderboards.snow.length === 0 &&
+        this.leaderboards.tower.length === 0;
+        
+        if (!isEmpty) return
+
+        this.leaderboards.cave = [
+        { name: "Champion", score: 2500 },
+        { name: "Elite", score: 2000 },
+        { name: "Warrior", score: 1500 },
+        { name: "Squire", score: 1000 },
+        { name: "Recruit", score: 500 },
+        ];
+
+        this.leaderboards.snow = [
+            { name: "Archmage", score: 2500 },
+            { name: "Sorceror", score: 2000 },
+            { name: "Mystic", score: 1500 },
+            { name: "Apprentice", score: 1000 },
+            { name: "Novice", score: 500 },
+        ];
+
+        this.leaderboards.tower = [
+            { name: "Assassin", score: 2500 },
+            { name: "Shadow", score: 2000 },
+            { name: "Stalker", score: 1500 },
+            { name: "Rogue", score: 1000 },
+            { name: "Pickpocket", score: 500 },
+        ];
+
+        this.save();
+    }
 }
