@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
 import SaveManager from "../systems/SaveManager";
+import LeaderboardManager from "../systems/LeaderboardManager";
 
 export default class GameOverScene extends Phaser.Scene {
     saveManager!: SaveManager;
@@ -360,11 +361,21 @@ export default class GameOverScene extends Phaser.Scene {
         if (!this.pendingSaveData) return
 
         const { score, bossKills, level } = this.pendingSaveData
+
+        //Save to local
         this.saveManager.updateScore(score, level)
         for (const bossKey in bossKills) {
             const count = bossKills[bossKey]
             this.saveManager.addBossKill(bossKey, count)
         }
+
+        //Upload to Leaderboard
+        const leaderboardManager = LeaderboardManager.getInstance();
+        leaderboardManager.submitScore(
+            level as "cave" | "snow" | "tower",
+            "Player",
+            score
+        )
 
         // Clear pending after committing
         this.pendingSaveData = null

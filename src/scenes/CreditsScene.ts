@@ -16,7 +16,7 @@ export default class CreditsScene extends Phaser.Scene {
 
         this.add.text(centerX, 50, "Credits", {
             fontSize: "32px",
-            fontFamily: `"Old English Text MT", Georgia, serif`,
+            fontFamily: `Georgia, serif`,
             color: "#ffcc00",
         }).setOrigin(0.5)
 

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
 import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
+import { LeaderboardButton } from "../ui/LeaderboardButton";
 
 export default class MainMenuScene extends Phaser.Scene {
     constructor() {
@@ -22,7 +23,10 @@ export default class MainMenuScene extends Phaser.Scene {
         //Options Button
         setupEscapeMenu(this)
         OptionsButton(this)
-
+        
+        //Leaderboard Button
+        LeaderboardButton(this)
+        
         const { width, height } = this.scale;
 
         //Title Text

@@ -134,6 +134,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("loading-border", "./assets/loading-border.png")
         this.load.image("ready-border", "./assets/ready-border.png")
         this.load.image("settings-icon", "./assets/settings-icon.png")
+        this.load.image("trophy-icon", "./assets/trophy-icon.png")
     }
 
     loadEnvironment() {

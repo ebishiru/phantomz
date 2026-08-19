@@ -20,8 +20,10 @@ export default class OptionsScene extends Phaser.Scene {
     create() {
         this.input.setDefaultCursor("default");
 
-        const gameScene = this.scene.get("game") as GameScene;
-        gameScene.skillSystem.pauseAll();
+        if (this.fromGame) {
+            const gameScene = this.scene.get("game") as GameScene;
+            gameScene.skillSystem.pauseAll();
+        }
 
         //Hide mobile controls if present
         const controlsEl = document.getElementById("mobile-controls") as HTMLDivElement | null;
