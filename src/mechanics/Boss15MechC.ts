@@ -49,6 +49,12 @@ export default class Boss15MechC extends BossMechanic {
                 new WallIndicator(this.scene, pos2.x, pos2.y, Math.PI / 2, 10)
             )
         })
+
+        this.scene.time.delayedCall(this.config.castTime, () => {
+            //Remove indicators
+            this.indicators.forEach( i => i.destroy())
+            this.indicators = []
+        })
     }
 
     execute() {

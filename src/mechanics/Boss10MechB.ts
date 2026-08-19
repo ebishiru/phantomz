@@ -10,7 +10,7 @@ export default class Boss10MechB extends BossMechanic {
         name: "Cleave and Back",
         castTime: 2000,
         castDuration: 2800,
-        cooldown: 2800,
+        cooldown: 2900,
         showCastBar: true,
         damage: 20,
         range: 500,

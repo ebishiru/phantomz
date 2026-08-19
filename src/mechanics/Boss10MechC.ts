@@ -11,7 +11,7 @@ export default class Boss10MechC extends BossMechanic {
         name: "Judgment of the Rift",
         castTime: 1500,
         castDuration: 2800,
-        cooldown: 2800,
+        cooldown: 2900,
         showCastBar: true,
         damage: 20,
         range: 120,

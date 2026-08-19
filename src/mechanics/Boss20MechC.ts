@@ -55,6 +55,12 @@ export default class Boss20MechC extends BossMechanic {
                 new WallIndicator(this.scene, pos3.x, pos3.y, Math.PI / 2, 10)
             )
         })
+
+        this.scene.time.delayedCall(this.config.castTime, () => {
+            //Remove indicators
+            this.indicators.forEach( i => i.destroy())
+            this.indicators = []
+        })
     }
 
     execute() {
@@ -62,7 +68,7 @@ export default class Boss20MechC extends BossMechanic {
 
         const [pos1, pos2, pos3] = this.selectedPositions
 
-        //Remove indicators
+        //Remove indicators (backup)
         this.indicators.forEach( i => i.destroy())
         this.indicators = []
 

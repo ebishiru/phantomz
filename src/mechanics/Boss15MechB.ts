@@ -10,7 +10,7 @@ export default class Boss15MechB extends BossMechanic {
         name: "",
         castTime: 2000,
         castDuration: 2000,
-        cooldown: 2000,
+        cooldown: 2500,
         showCastBar: true,
         damage: 20,
         range: 350,
