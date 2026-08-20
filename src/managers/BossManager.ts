@@ -98,8 +98,8 @@ export default class BossManager {
                     this.scene.registry.set("halfTime", true)
                 }
 
-                // Trigger Game Over at 20 minutes (1200 seconds)
-                if (this.globalTimerSeconds >= 1200 && !this.timeOverTriggered) {
+                // Trigger Game Over at 15 minutes (900 seconds)
+                if (this.globalTimerSeconds >= 900 && !this.timeOverTriggered) {
                     this.timeOverTriggered = true
                     const score = this.globalTimerSeconds + this.bossesKilled * 60
                     // Pause the main game and launch the Game Over scene with a 'time' reason
