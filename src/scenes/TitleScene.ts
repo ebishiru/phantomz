@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
 
 export default class TitleScene extends Phaser.Scene {
     enterKey!: Phaser.Input.Keyboard.Key
@@ -7,8 +8,12 @@ export default class TitleScene extends Phaser.Scene {
         super("title")
     }
 
-    create() {
+    async create() {
         const { width, height } = this.scale;
+
+        //Google Login
+        const googleLeaderboard = GoogleLeaderboardManager.getInstance();
+        await googleLeaderboard.signIn();
 
         //Menu Text
         const startText = this.add.text(width/2, height/2, "CLICK TO START", {

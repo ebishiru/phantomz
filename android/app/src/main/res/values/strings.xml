@@ -4,4 +4,5 @@
     <string name="title_activity_main">PhantomZ</string>
     <string name="package_name">com.kevinlo.phantomz</string>
     <string name="custom_url_scheme">com.kevinlo.phantomz</string>
+    <string name="game_services_project_id">594977283541</string>
 </resources>

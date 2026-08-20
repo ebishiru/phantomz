@@ -1,28 +1,28 @@
 import Phaser from "phaser";
-import LeaderboardManager from "../systems/LeaderboardManager";
-import type { LeaderboardLevel } from "../systems/LeaderboardManager";
+import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
+import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
 
 export default class LeaderboardScene extends Phaser.Scene {
-    private leaderboardManager!: LeaderboardManager
-    private leaderboardContainer!: Phaser.GameObjects.Container
+    private googleLeaderboard = GoogleLeaderboardManager.getInstance();
 
     levels: LeaderboardLevel[] = ["cave", "snow", "tower"]
     chosenLevelTab: LeaderboardLevel = "cave"
     levelOutline!: Phaser.GameObjects.Rectangle
     buttons: Phaser.GameObjects.Text[] = []
+
+    private playerScoreText!: Phaser.GameObjects.Text
     
     constructor() {
         super("leaderboard")
     }
 
     create() {
-        this.leaderboardManager = LeaderboardManager.getInstance();
-
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
-        const width = this.scale.width
-        const backButtonX = width*7/8
+        const { width, height } = this.scale;
+        const centerX = width/2
+        const centerY = height/2
 
         this.add.text(width/2, 50, "Hall of Fame", {
             fontSize: "32px",
@@ -33,18 +33,33 @@ export default class LeaderboardScene extends Phaser.Scene {
         //Level select tabs
         this.createTabs();
 
-        //Leaderboard
-        this.showLeaderboard(this.chosenLevelTab);
+        //Player Score
+        this.playerScoreText = this.add.text(
+            centerX,
+            centerY,
+            "Personal High Score: ???",
+            {
+                fontSize: "20px",
+                fontFamily: "Georgia, serif",
+                color: "#ffcc00"
+            }
+        ).setOrigin(0.5);
+
+        // Google leaderboard button
+        this.createGoogleLeaderboardButton(centerX, height * 0.65);
+
+        //Load Initial Score
+        this.showLeaderboard("cave");
 
         //Back button
-        const backButtonBg = this.add.rectangle(backButtonX, 475, 200, 60, 0x222222)
+        const backButtonBg = this.add.rectangle(centerX, 475, 200, 60, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
         backButtonBg.on("pointerdown", () => this.scene.start("mainmenu"))
 
-        this.add.text(backButtonX, 475, "HOME", {
+        this.add.text(centerX, 475, "HOME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
@@ -54,11 +69,17 @@ export default class LeaderboardScene extends Phaser.Scene {
     createTabs() {
         const { width, height } = this.scale
 
+        const spacing = 180;
+        const centerX = width / 2;
+        const centerY = height * 0.3;
+
         this.levels.forEach((key, index) => {
+            const x = centerX + (index - 1) * spacing;
+
             const button = this.add.text(
-                width* 8/9,
-                height/4 + (75*index),
-                `${key}`.toUpperCase(),
+                x,
+                centerY,
+                key.toUpperCase(),
                 {
                     fontSize: "20px",
                     fontFamily: "Georgia, serif",
@@ -87,72 +108,36 @@ export default class LeaderboardScene extends Phaser.Scene {
         .setDepth(20)
     }
 
-    private showLeaderboard(level: LeaderboardLevel): void {
+    private async showLeaderboard(level: LeaderboardLevel): Promise<void> {
+        const score = await this.googleLeaderboard.getUserScore(level);
 
-        //Remove previous leaderboard
-        if (this.leaderboardContainer) {
-            this.leaderboardContainer.destroy()
+        if (score === null) {
+            this.playerScoreText.setText("Personal High Score: ???");
+            return;
         }
 
-        const { width, height } = this.scale
-        const containerX = width/2 - 60
-        const containerY = height/2 + 20
-        const containerWidth = 600
-        const containerHeight = 400
-
-        this.leaderboardContainer = this.add.container(containerX, containerY);
-
-        const entries = this.leaderboardManager.getLeaderboard(level);
-
-        //Background
-        const leaderboardBG = this.add.rectangle(
-            0,
-            0,
-            containerWidth,
-            containerHeight,
-            0x111111,
-            0.9
+        this.playerScoreText.setText(
+            `Personal High Score: ${score.toLocaleString()}`
         )
+    }
 
-        this.leaderboardContainer.add(leaderboardBG)
+    createGoogleLeaderboardButton(x: number, y: number) {
+        const buttonBG = this.add.rectangle(x, y, 280, 60, 0x222222)
+            .setStrokeStyle(3, 0x65aed6)
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true});
 
-        const topY = -200
-        const startY = topY + 40
+        this.add.text(x, y, "VIEW LEADERBOARD",
+            {
+                fontSize: "20px",
+                fontFamily: "Georgia, serif",
+                color: "#ffffff"
+            }
+        ).setOrigin(0.5)
 
-        //Score
-        if (entries.length === 0) {
-
-            const emptyText = this.add.text(
-                0,
-                0,
-                "No heroes have claimed this record yet.",
-                {
-                    fontSize: "20px",
-                    fontFamily: "Georgia, serif",
-                    color: "#ffffff"
-                }
-            ).setOrigin(0.5);
-
-            this.leaderboardContainer.add(emptyText)
-        }
-
-        entries.forEach((entry, index) => {
-            const rank = index + 1
-
-            const text = this.add.text(
-                0,
-                startY + index * 35,
-                `${rank}.     ${entry.name}     ${entry.score}`,
-                {
-                    fontSize: "20px",
-                    fontFamily: "Georgia, serif",
-                    color: "#ffffff"
-                }
-            ).setOrigin(0.5)
-
-            this.leaderboardContainer.add(text)
+        buttonBG.on("pointerup", async () => {
+            await this.googleLeaderboard.showLeaderboard(this.chosenLevelTab);
         })
-
     }
 
     moveTabOutline(button: Phaser.GameObjects.Text): void {

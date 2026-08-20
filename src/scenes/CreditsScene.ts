@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import SaveManager from "../systems/SaveManager";
-import LeaderboardManager from "../systems/LeaderboardManager";
 
 export default class CreditsScene extends Phaser.Scene {
     saveManager!: SaveManager;
@@ -85,11 +84,6 @@ export default class CreditsScene extends Phaser.Scene {
 
     resetSaveData() {
         this.saveManager.reset()
-        const leaderboardManager = LeaderboardManager.getInstance();
-        leaderboardManager.clearLeaderboard("cave");
-        leaderboardManager.clearLeaderboard("snow");
-        leaderboardManager.clearLeaderboard("tower");
-
         this.scene.start("mainmenu");
     }
 

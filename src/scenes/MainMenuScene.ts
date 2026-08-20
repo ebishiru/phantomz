@@ -3,7 +3,6 @@ import { playMusic } from "../systems/MusicSystem";
 import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
 import { LeaderboardButton } from "../ui/LeaderboardButton";
-import LeaderboardManager from "../systems/LeaderboardManager";
 
 export default class MainMenuScene extends Phaser.Scene {
     constructor() {
@@ -27,10 +26,6 @@ export default class MainMenuScene extends Phaser.Scene {
         
         //Leaderboard Button
         LeaderboardButton(this)
-
-        //Initialize sample data
-        const leaderboardManager = LeaderboardManager.getInstance();
-        leaderboardManager.initializeSampleData();
         
         const { width, height } = this.scale;
 

@@ -1,11 +1,13 @@
 import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
 import SaveManager from "../systems/SaveManager";
-import LeaderboardManager from "../systems/LeaderboardManager";
+import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
+import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
 
 export default class GameOverScene extends Phaser.Scene {
     saveManager!: SaveManager;
-    currentLevel: string = "cave"
+    private googleLeaderboard = GoogleLeaderboardManager.getInstance();
+    currentLevel: LeaderboardLevel = "cave"
     selectedCharacter: string = "player1"
     selectedSkillKey: string = "slash"
     pendingSaveData: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string } | null = null
@@ -18,7 +20,7 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     create(data: { score: number, bossesKilled: number, bossKills: { [key: string]: number }, level?: string, characterKey?: string, startingSkill?: string, reason?: string }) {
-        this.currentLevel = data.level || "cave"
+        this.currentLevel = (data.level as LeaderboardLevel) || "cave"
         this.selectedCharacter = data.characterKey || "player1"
         this.selectedSkillKey = data.startingSkill || "slash"
         // Create SaveManager in create to ensure fresh data
@@ -330,8 +332,8 @@ export default class GameOverScene extends Phaser.Scene {
         escKey?.on("down", () => this.goToTitle())
     }
 
-    restartGame() {
-        this.commitSave()
+    async restartGame() {
+        await this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
@@ -347,8 +349,8 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
-    goToTitle() {
-        this.commitSave()
+    async goToTitle() {
+        await this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
@@ -357,7 +359,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.scene.start("mainmenu")
     }
 
-    commitSave() {
+    async commitSave() {
         if (!this.pendingSaveData) return
 
         const { score, bossKills, level } = this.pendingSaveData
@@ -369,13 +371,8 @@ export default class GameOverScene extends Phaser.Scene {
             this.saveManager.addBossKill(bossKey, count)
         }
 
-        //Upload to Leaderboard
-        const leaderboardManager = LeaderboardManager.getInstance();
-        leaderboardManager.submitScore(
-            level as "cave" | "snow" | "tower",
-            "PHANTOM",
-            score
-        )
+        //Upload to Google Leaderboard
+        await this.googleLeaderboard.submitScore(this.currentLevel, score);
 
         // Clear pending after committing
         this.pendingSaveData = null
