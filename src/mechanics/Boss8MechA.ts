@@ -8,9 +8,9 @@ export default class Boss8MechA extends BossMechanic {
     config = {
         id: "suck-expand-donut-boss",
         name: "Forced Cataclysm Blossom",
-        castTime: 1000,
-        castDuration: 2000,
-        cooldown: 2000,
+        castTime: 1200,
+        castDuration: 2200,
+        cooldown: 2500,
         showCastBar: true,
         damage: 20,
         range: 100,
@@ -29,7 +29,7 @@ export default class Boss8MechA extends BossMechanic {
             targets: this.player,
             x: this.boss.x,
             y: this.boss.y,
-            duration: 300,
+            duration: 200,
             ease: "Sine.easeInOut"
         })
 

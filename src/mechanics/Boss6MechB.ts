@@ -41,20 +41,25 @@ export default class Boss6MechB extends BossMechanic {
         )
         this.telegraphs.push(telegraph)
 
-        const damageTimer = this.scene.time.addEvent({
-            delay: 500,
-            loop: true,
-            callback: () => this.hitCheck(telegraph, startX, startY, angle)
-        })
-        this.damageTimers.push(damageTimer)
+        this.scene.time.delayedCall(this.config.castTime, () => {
+            if (!this.boss || this.boss.health <= 0 || !this.active) return
+            
+            const damageTimer = this.scene.time.addEvent({
+                delay: 500,
+                loop: true,
+                callback: () => this.hitCheck(telegraph, startX, startY, angle)
+            })
+            this.damageTimers.push(damageTimer)
 
-        const lifetimeTimer = this.scene.time.delayedCall(15000, () => {
-            telegraph.destroy()
-            this.telegraphs = this.telegraphs.filter(t => t !== telegraph)
-            this.damageTimers = this.damageTimers.filter(dt => dt !== damageTimer)
-            this.lifetimeTimers = this.lifetimeTimers.filter(lt => lt !== lifetimeTimer)
-            damageTimer.remove()
+            const lifetimeTimer = this.scene.time.delayedCall(15000, () => {
+                telegraph.destroy()
+                this.telegraphs = this.telegraphs.filter(t => t !== telegraph)
+                this.damageTimers = this.damageTimers.filter(dt => dt !== damageTimer)
+                this.lifetimeTimers = this.lifetimeTimers.filter(lt => lt !== lifetimeTimer)
+                damageTimer.remove()
+            })
         })
+        
     }
 
     hitCheck(telegraph: LineTelegraph, startX: number, startY: number, angle: number) {

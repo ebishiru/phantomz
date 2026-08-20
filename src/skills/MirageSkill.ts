@@ -5,7 +5,7 @@ export default class MirageSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "mirage", "Mirage", 35, 6000, 50)
+        super(scene, player, "mirage", "Mirage", 36, 6000, 50)
         this.iconKey = "mirage-icon"
         this.player = player
     }

@@ -7,9 +7,9 @@ export default class Boss16MechA extends BossMechanic {
     config = {
         id: "jump-dash-jump-dash",
         name: "Savage Dash",
-        castTime: 900,
-        castDuration: 1900,
-        cooldown: 2000,
+        castTime: 1000,
+        castDuration: 2100,
+        cooldown: 2200,
         showCastBar: false,
         damage: 20,
         range: 90,
@@ -35,7 +35,7 @@ export default class Boss16MechA extends BossMechanic {
             targets: this.boss,
             x: firstJump.x,
             y: firstJump.y,
-            duration: 200,
+            duration: 300,
             ease: "Sine.easeInOut",
             onComplete: () => {
                 const angle = Phaser.Math.Angle.Between(
@@ -84,7 +84,7 @@ export default class Boss16MechA extends BossMechanic {
                                     targets: this.boss,
                                     x: secondJump.x,
                                     y: secondJump.y,
-                                    duration: 200,
+                                    duration: 300,
                                     ease: "Sine.easeInOut",
                                     onComplete: () => {
                                         const angle = Phaser.Math.Angle.Between(

@@ -25,8 +25,6 @@ export default class Boss4MechB extends BossMechanic {
 
         const location = Phaser.Utils.Array.GetRandom(corners)
 
-        this.boss.body?.stop()
-
         this.scene.tweens.add({
             targets: this.boss,
             x: location.x,

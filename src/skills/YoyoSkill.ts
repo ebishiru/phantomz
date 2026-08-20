@@ -6,7 +6,7 @@ export default class YoyoSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "yoyo", "Yo-yo", 13, 4000, 150)
+        super(scene, player, "yoyo", "Yo-yo", 14, 4250, 150)
         this.iconKey = "yoyo-icon"
         this.player = player
     }
@@ -33,7 +33,7 @@ export default class YoyoSkill extends Skill {
 
     activate() {
         this.updateFacing()
-        const thickness = 50
+        const thickness = 75
         const maxDistance = this.range
 
         const forwardAngle = this.facingAngle

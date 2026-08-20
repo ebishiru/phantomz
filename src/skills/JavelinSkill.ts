@@ -26,7 +26,7 @@ export default class JavelinSkill extends Skill {
         const originX = this.player.x
         const originY = this.player.y
 
-        const castDistance = 150
+        const castDistance = 125
 
         const endX = originX + (dir.x * castDistance)
         const endY = originY + (dir.y * castDistance)

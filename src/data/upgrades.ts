@@ -14,8 +14,8 @@ export const upgrades = {
 
     arrow: [
         {
-            desc: "Damage +4",
-            apply: (skill: Skill) => skill.buffDamage(4)
+            desc: "Damage +5",
+            apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
             desc: "Cooldown reduced by 750ms",
@@ -36,8 +36,8 @@ export const upgrades = {
 
     thrust: [
         {
-            desc: "Damage +6",
-            apply: (skill: Skill) => skill.buffDamage(6)
+            desc: "Damage +5",
+            apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
             desc: "Cooldown reduced by 500ms",
@@ -58,8 +58,8 @@ export const upgrades = {
 
     fireball: [
         {
-            desc: "Damage +8",
-            apply: (skill: Skill) => skill.buffDamage(8)
+            desc: "Damage +12",
+            apply: (skill: Skill) => skill.buffDamage(12)
         },
         {
             desc: "Cooldown reduced by 1000ms",
@@ -95,8 +95,8 @@ export const upgrades = {
 
     volt: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +8",
+            apply: (skill: Skill) => skill.buffDamage(8)
         },
         {
             desc: "Cooldown reduced by 900ms",
@@ -157,8 +157,8 @@ export const upgrades = {
 
     mirage: [
         {
-            desc: "Damage +7",
-            apply: (skill: Skill) => skill.buffDamage(7)
+            desc: "Damage +9",
+            apply: (skill: Skill) => skill.buffDamage(9)
         },
         {
             desc: "Cooldown reduced by 900ms",
@@ -168,8 +168,8 @@ export const upgrades = {
 
     quasar: [
         {
-            desc: "Damage +7",
-            apply: (skill: Skill) => skill.buffDamage(7)
+            desc: "Damage +10",
+            apply: (skill: Skill) => skill.buffDamage(10)
         },
         {
             desc: "Cooldown reduced by 1000ms",
@@ -201,8 +201,8 @@ export const upgrades = {
 
     kraken: [
         {
-            desc: "Damage + 9",
-            apply: (skill: Skill) => skill.buffDamage(9)
+            desc: "Damage + 15",
+            apply: (skill: Skill) => skill.buffDamage(15)
         },
         {
             desc: "Cooldown reduced by 1200ms",

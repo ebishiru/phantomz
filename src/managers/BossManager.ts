@@ -392,7 +392,7 @@ export default class BossManager {
         }).setOrigin(0.5)
         .setAlpha(0)
 
-        const duration = (mechanic.config.castTime || 0) + 1000
+        const duration = Math.min((mechanic.config.castTime || 0) + 1000, 2500)
 
         this.scene.tweens.add({
             targets: this.mechanicNameText,

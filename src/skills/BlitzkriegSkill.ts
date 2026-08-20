@@ -6,7 +6,7 @@ export default class Blitzkrieg extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player:any) {
-        super(scene, player, "blitzkrieg", "Blitzkrieg", 16, 4500, 30)
+        super(scene, player, "blitzkrieg", "Blitzkrieg", 16, 4500, 50)
         this.iconKey = "blitzkrieg-icon"
         this.player = player
     }
