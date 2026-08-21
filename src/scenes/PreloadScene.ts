@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AdManager from "../systems/AdManager";
 
 export default class PreloadScene extends Phaser.Scene {
     constructor() {
@@ -144,6 +145,9 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     create() {
+        //Setup AdManager
+        AdManager.initialize()
+        
         this.scene.start("title")
     }
 }

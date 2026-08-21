@@ -3,10 +3,12 @@ import { playMusic } from "../systems/MusicSystem";
 import SaveManager from "../systems/SaveManager";
 import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
 import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
+import AdManager from "../systems/AdManager";
 
 export default class GameOverScene extends Phaser.Scene {
     saveManager!: SaveManager;
     private googleLeaderboard = GoogleLeaderboardManager.getInstance();
+    private showingReviveAd = false
     currentLevel: LeaderboardLevel = "cave"
     selectedCharacter: string = "player1"
     selectedSkillKey: string = "slash"
@@ -250,10 +252,67 @@ export default class GameOverScene extends Phaser.Scene {
             // Guard
             if (this.reviveUsed) return
 
-            // Reenable mobile controls if applicable
-            this.showMobileControls()
-            this.handleReviveCountdown()
+            this.watchAdToRevive()
         })
+    }
+
+    async watchAdToRevive() {
+        if (this.showingReviveAd) return
+        if (this.reviveUsed) return
+
+        this.showingReviveAd = true
+
+        //Keep game and audio paused
+        this.sound.pauseAll()
+
+        try {
+            const rewarded = await AdManager.showReviveAd()
+            if (!rewarded) {
+                //Ad failed
+                this.sound.resumeAll()
+                return
+            }
+
+            this.createResumeButton()
+        } finally {
+            this.showingReviveAd = false
+        }
+    }
+
+    createResumeButton() {
+        // Hide the entire Game Over UI while the revive countdown plays
+        this.hideGameOverUI()
+
+        const centerX = this.scale.width / 2
+        const centerY = this.scale.height / 2
+
+        const resumeButton = this.add.rectangle(centerX, centerY, 260, 80, 0x222222)
+            .setStrokeStyle(4, 0x65aed6)
+            .setOrigin(0.5)
+            .setInteractive({ useHandcursor: true})
+            .setDepth(2000)
+
+        const resumeText = this.add.text(centerX, centerY, "Reawaken Phantom", {
+            fontSize: "20px",
+            fontFamily: "Georgia, serif",
+            color: "#ffffff"
+        })
+            .setOrigin(0.5)
+            .setDepth(2001)
+
+        resumeButton.on("pointerdown", () => {
+            resumeButton.disableInteractive()
+            resumeButton.destroy()
+            resumeText.destroy()
+
+            this.startRevive()
+        })
+    }
+
+    startRevive() {
+    // Reenable mobile controls if applicable
+        this.showMobileControls()
+        this.handleReviveCountdown()
     }
 
     hideGameOverUI() {
@@ -275,9 +334,6 @@ export default class GameOverScene extends Phaser.Scene {
             this.reviveButtonBG.setStrokeStyle(3, 0x555555)
         }
 
-        // Hide the entire Game Over UI while the revive countdown plays
-        this.hideGameOverUI()
-
         const centerX = this.scale.width / 2
         const centerY = this.scale.height / 2
 
@@ -288,7 +344,7 @@ export default class GameOverScene extends Phaser.Scene {
         playMusic(this, `${this.currentLevel}Music`)
 
         // Create countdown text overlay
-        const countdownText = this.add.text(centerX, centerY, "3", {
+        const countdownText = this.add.text(centerX, centerY, "5", {
             fontSize: "120px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
@@ -296,16 +352,25 @@ export default class GameOverScene extends Phaser.Scene {
             strokeThickness: 6,
         }).setOrigin(0.5).setDepth(1000)
 
-        // Sequence 3 -> 2 -> 1
+        // Sequence 5,4,3,2,1
         this.time.delayedCall(1000, () => {
-            countdownText.setText("2")
+            countdownText.setText("4")
         })
 
         this.time.delayedCall(2000, () => {
-            countdownText.setText("1")
+            this.sound.resumeAll()
+            countdownText.setText("3")
         })
 
         this.time.delayedCall(3000, () => {
+            countdownText.setText("2")
+        })
+
+        this.time.delayedCall(4000, () => {
+            countdownText.setText("1")
+        })
+
+        this.time.delayedCall(5000, () => {
             countdownText.destroy()
             // Resume game time
             this.scene.resume("game")
