@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
+import tips from "../data/tips";
 import SaveManager from "../systems/SaveManager";
 import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
 import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
@@ -50,7 +51,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.createHiScore(centerX, centerY - 40, data.score, data.level);
         this.createBossKillInfo(centerX, centerY, data.bossesKilled, data.bossKills);
         this.createButtons(centerX, centerY + 170);
-        this.createRefreshButton();
+        this.createTipBox();
         this.createReviveButton();
         this.createKeyboardShortcuts();
 
@@ -171,44 +172,27 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
-    createRefreshButton() {
-        const refreshButtonWidth = 220;
-        const refreshButtonHeight = 60;
-        const refreshButtonX = this.scale.width / 6
-        const refreshButtonY = this.scale.height / 2 + 100
+    createTipBox() {
+        const tipWidth = 220;
+        const tipHeight = 60;
+        const tipX = this.scale.width / 6
+        const tipY = this.scale.height / 2 + 100
 
-        const refreshButtonBG = this.add.rectangle(refreshButtonX, refreshButtonY, refreshButtonWidth, refreshButtonHeight, 0x222222)
+        const tipBG = this.add.rectangle(tipX, tipY, tipWidth, tipHeight, 0x222222)
             .setStrokeStyle(3, 0x65aed6)
             .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true});
-        this.gameOverObjects.push(refreshButtonBG)
+        this.gameOverObjects.push(tipBG)
         
+        const randomTip = Phaser.Utils.Array.GetRandom(tips)
 
-        const refreshLabel = this.add.text(refreshButtonX, refreshButtonY - refreshButtonHeight/4 + 5, `Refresh Rerolls`, {
-            fontSize: "20px",
+        const tipText = this.add.text(tipX, tipY, randomTip, {
+            fontSize: "16px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
+            align: "center",
         }).setOrigin(0.5)
-        this.gameOverObjects.push(refreshLabel)
 
-        const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + refreshButtonHeight/4 - 5, "", {
-            fontSize: "18px",
-            fontFamily: "Georgia, serif",
-            color: "#65aed6",
-        }).setOrigin(0.5)
-        this.gameOverObjects.push(refreshChargesText)
-
-        const updateRefreshUI = () => {
-            const charges = this.registry.get("rerollCharges") ?? 3
-            refreshChargesText.setText(`Charges: ${charges}/3`)
-        }
-
-        updateRefreshUI()
-
-        refreshButtonBG.on("pointerdown", () => {
-            this.registry.set("rerollCharges", 3)
-            updateRefreshUI()
-        })
+        this.gameOverObjects.push(tipText)
     }
 
     createReviveButton() {

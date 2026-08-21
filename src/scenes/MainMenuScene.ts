@@ -3,8 +3,11 @@ import { playMusic } from "../systems/MusicSystem";
 import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
 import { LeaderboardButton } from "../ui/LeaderboardButton";
+import AdManager from "../systems/AdManager";
 
 export default class MainMenuScene extends Phaser.Scene {
+    private showingRerollAd = false
+    refreshChargesText!: Phaser.GameObjects.Text
     constructor() {
         super("mainmenu")
     }
@@ -79,6 +82,7 @@ export default class MainMenuScene extends Phaser.Scene {
             })
         })
 
+        //Reroll Button
         const refreshButtonWidth = 260
         const refreshButtonHeight = 80
         const refreshButtonX = 150
@@ -99,22 +103,45 @@ export default class MainMenuScene extends Phaser.Scene {
             color: "#ffffff"
         }).setOrigin(0.5)
 
-        const refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + 21, "", {
+        this.refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + 21, "", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: "#65aed6"
         }).setOrigin(0.5)
 
-        const updateRefreshUI = () => {
-            const charges = this.registry.get("rerollCharges") ?? 3
-            refreshChargesText.setText(`Charges: ${charges}/3`)
-        }
-
-        updateRefreshUI()
+        this.updateRefreshUI()
 
         refreshButton.on("pointerdown", () => {
-            this.registry.set("rerollCharges", 3)
-            updateRefreshUI()
+            this.watchAdForReroll()
         })
+    }
+
+    updateRefreshUI()  {
+        const charges = this.registry.get("rerollCharges") ?? 3
+        this.refreshChargesText.setText(`Charges: ${charges}/3`)
+    }
+
+    async watchAdForReroll() {
+        if (this.showingRerollAd) return
+        
+        this.showingRerollAd = true
+
+        //Keep audio paused
+        this.sound.pauseAll()
+
+        try {
+            const rewarded = await AdManager.showRerollAd()
+            if (!rewarded) {
+                //Ad failed
+                this.sound.resumeAll()
+                return
+            }
+
+            this.sound.resumeAll()
+            this.registry.set("rerollCharges", 3)
+            this.updateRefreshUI()
+        } finally {
+            this.showingRerollAd = false
+        }
     }
 }

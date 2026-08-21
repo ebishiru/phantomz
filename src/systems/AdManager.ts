@@ -52,6 +52,14 @@ class AdManager {
     }
 
     async showReviveAd(): Promise<boolean> {
+        return this.showRewardAd()
+    }
+
+    async showRerollAd(): Promise<boolean> {
+        return this.showRewardAd()
+    }
+
+    async showRewardAd(): Promise<boolean> {
         //Browser Fallback
         if (!Capacitor.isNativePlatform()) {
             return true
