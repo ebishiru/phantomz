@@ -79,11 +79,11 @@ export default class Boss22MechC extends BossMechanic {
 
         //Remove telegraphs
         this.rowTelegraphs.forEach(telegraph => {
-            telegraph.destroy()
+            telegraph?.destroy()
         })
         this.rowTelegraphs = []
         this.colTelegraphs.forEach(telegraph => {
-            telegraph.destroy()
+            telegraph?.destroy()
         })
         this.colTelegraphs = []
     }

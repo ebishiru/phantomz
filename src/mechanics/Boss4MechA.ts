@@ -87,7 +87,7 @@ export default class Boss4MechA extends BossMechanic {
                 this.player.takeDamage(this.config.damage)
             }
 
-            this.telegraph.destroy()
+            this.telegraph?.destroy()
             this.telegraph = undefined
         })
     }

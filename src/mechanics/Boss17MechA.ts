@@ -52,7 +52,7 @@ export default class Boss17MechA extends BossMechanic {
                 this.scene.time.delayedCall(1300, () => {
                     //First 3 cones hit
                     this.hitCheck()
-                    this.telegraphs.forEach(telegraph => telegraph.destroy())
+                    this.telegraphs.forEach(telegraph => telegraph?.destroy())
                     this.telegraphs = []
 
                     const rotatedOffset = this.coneAngle
@@ -71,7 +71,7 @@ export default class Boss17MechA extends BossMechanic {
                     this.scene.time.delayedCall(800, () => {
                         //Second 3 cones hit
                         this.hitCheck()
-                        this.telegraphs.forEach(telegraph => telegraph.destroy())
+                        this.telegraphs.forEach(telegraph => telegraph?.destroy())
                         this.telegraphs = []
                     })
                 })
@@ -116,7 +116,7 @@ export default class Boss17MechA extends BossMechanic {
     }
 
     destroy() {
-        this.telegraphs?.forEach(telegraph => telegraph.destroy())
+        this.telegraphs?.forEach(telegraph => telegraph?.destroy())
         this.telegraphs = []
     }
 }

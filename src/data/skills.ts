@@ -40,7 +40,7 @@ export const skills = [
         key: "fireball",
         name: "Fireball",
         iconKey: "fireball-icon",
-        desc: "Call forth a blazing orb that turns your foes to ash.",
+        desc: "Hurl a delayed blazing orb a fixed distance in front of you.",
         upgrades: upgrades.fireball
     },
     {

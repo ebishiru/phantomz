@@ -47,7 +47,7 @@ export default class Boss19MechB extends BossMechanic {
         this.scene.time.delayedCall(this.config.castTime - 100, () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
 
-            this.telegraphs.forEach(telegraph => telegraph.destroy())
+            this.telegraphs.forEach(telegraph => telegraph?.destroy())
             this.telegraphs = []
 
             const vertical = new RectangleTelegraph(
@@ -93,14 +93,14 @@ export default class Boss19MechB extends BossMechanic {
         }
 
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
         this.telegraphs = []
     }
 
     destroy() {
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
         this.telegraphs = []
     }

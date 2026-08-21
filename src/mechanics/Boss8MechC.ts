@@ -93,7 +93,7 @@ export default class Boss8MechC extends BossMechanic {
         }
 
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
 
         this.telegraphs = []
@@ -101,7 +101,7 @@ export default class Boss8MechC extends BossMechanic {
 
     destroy() {
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
 
         this.telegraphs = []

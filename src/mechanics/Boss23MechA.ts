@@ -109,6 +109,8 @@ export default class Boss23MechA extends BossMechanic {
         this.telegraphs.push(parallelTelegraph2)
 
         this.scene.time.delayedCall(900, () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
+            
             const playerX = this.player.x
             const playerY = this.player.y
             const playerRadius = this.player.hurtboxRadius
@@ -149,7 +151,7 @@ export default class Boss23MechA extends BossMechanic {
                 this.player.takeDamage(this.config.damage)
             }
 
-            this.telegraphs.forEach(telegraph => telegraph.destroy())
+            this.telegraphs.forEach(telegraph => telegraph?.destroy())
             this.telegraphs = []
         })
     }

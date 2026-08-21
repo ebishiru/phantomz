@@ -83,7 +83,7 @@ export default class Boss29MechB extends BossMechanic {
                         this.player.takeDamage(this.config.damage)
                     }
 
-                    this.telegraph.destroy()
+                    this.telegraph?.destroy()
                     this.telegraph = undefined
 
                     //Draw cone telegraph

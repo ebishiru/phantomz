@@ -21,9 +21,11 @@ export default class MirageSkill extends Skill {
         const randomY = Phaser.Math.Between(bounds.top + 50, bounds.bottom - 50)
 
         this.player.setAlpha(0)
-        this.scene.time.delayedCall(250, () => {
+        this.player.isInvulnerable = true;
+        this.scene.time.delayedCall(300, () => {
             this.player.setPosition(randomX, randomY)
             this.player.setAlpha(1)
+            this.player.isInvulnerable = false
         })
 
         //VFX

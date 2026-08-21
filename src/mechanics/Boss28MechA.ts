@@ -162,7 +162,7 @@ export default class Boss28MechA extends BossMechanic {
                 this.player.takeDamage(this.config.damage)
             }
 
-            this.telegraphs.forEach(telegraph => telegraph.destroy())
+            this.telegraphs.forEach(telegraph => telegraph?.destroy())
             this.telegraphs = []
         })
     }

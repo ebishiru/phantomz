@@ -77,7 +77,7 @@ export default class Boss26MechC extends BossMechanic {
     execute() {
         //Remove telegraps
         this.telegraphs.forEach(telegraph => {
-            telegraph.destroy()
+            telegraph?.destroy()
         })
         this.telegraphs = []
 

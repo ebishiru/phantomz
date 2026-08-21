@@ -79,14 +79,14 @@ export default class Boss14MechC extends BossMechanic {
         }
 
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
         this.telegraphs = []
     }
 
     destroy() {
         for (const telegraph of this.telegraphs) {
-            telegraph.destroy()
+            telegraph?.destroy()
         }
         this.telegraphs = []
     }

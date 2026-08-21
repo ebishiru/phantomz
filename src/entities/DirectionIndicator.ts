@@ -14,7 +14,7 @@ export default class DirectionIndicator {
         scene: Phaser.Scene,
         boss: Boss,
         angle: number,
-        size = 10,
+        size = 15,
         color = 0xff0000,
     ) {
         this.x = boss.x + Math.cos(angle) * boss.hurtRadius

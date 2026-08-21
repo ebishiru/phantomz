@@ -42,7 +42,7 @@ export default class Boss17MechB extends BossMechanic {
 
         const lifetimeTimer = this.scene.time.delayedCall(7300, () => {
 
-            telegraph.destroy()
+            telegraph?.destroy()
             this.telegraphs = this.telegraphs.filter(t => t !== telegraph)
             this.damageTimers = this.damageTimers.filter(dt => dt !== damageTimer)
             damageTimer.remove()
@@ -66,7 +66,7 @@ export default class Boss17MechB extends BossMechanic {
                         this.hitCheck(explodeTelegraph)
                         this.lifetimeTimers = this.lifetimeTimers.filter(lt => lt !== lifetimeTimer)
                         this.explodeTelegraphs = this.explodeTelegraphs.filter(et => et !== explodeTelegraph)
-                        explodeTelegraph.destroy()
+                        explodeTelegraph?.destroy()
                     }
                 })
             })

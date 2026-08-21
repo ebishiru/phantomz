@@ -52,7 +52,7 @@ export default class Boss10MechA extends BossMechanic {
 
                 this.scene.time.delayedCall(telegraphDuration, () => {
                     if (!this.boss || this.boss.health <= 0 || !this.active) {
-                        telegraph.destroy()
+                        telegraph?.destroy()
                         return
                     }
 

@@ -68,7 +68,7 @@ export default class Boss26MechA extends BossMechanic {
             }
         }
 
-        this.telegraph.destroy()
+        this.telegraph?.destroy()
         this.telegraph = undefined
 
         //Draw line telegraph towards player
@@ -107,7 +107,7 @@ export default class Boss26MechA extends BossMechanic {
 
             //Define line lifetime (15s)
             const lifetimeTimer = this.scene.time.delayedCall(15000, () => {
-                lineTelegraph.destroy()
+                lineTelegraph?.destroy()
                 this.lineTelegraphs = this.lineTelegraphs.filter(t => t !== this.telegraph)
                 this.damageTimers = this.damageTimers.filter(dt => dt !== damageTimer)
                 this.lifetimeTimers = this.lifetimeTimers.filter(lt => lt !== lifetimeTimer)

@@ -73,7 +73,7 @@ export default class Boss25MechA extends BossMechanic {
                                 this.player.takeDamage(this.config.damage)
                             }
 
-                            telegraph.destroy()
+                            telegraph?.destroy()
                         }
 
                     })

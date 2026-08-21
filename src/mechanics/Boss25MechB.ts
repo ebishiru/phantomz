@@ -104,7 +104,7 @@ export default class Boss25MechB extends BossMechanic {
                     }
                 }
 
-                telegraph.destroy()
+                telegraph?.destroy()
                 this.telegraphs[index] = undefined
             })
         })

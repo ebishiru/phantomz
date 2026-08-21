@@ -43,6 +43,8 @@ export default class Boss23MechC extends BossMechanic {
                 duration: 300,
                 ease: "Power2",
                 onComplete: () => {
+                    if (!this.boss || this.boss.health <= 0 ||!this.active) return
+                    
                     //Check circle hit
                     const dist = Phaser.Math.Distance.Between(
                         endX,
@@ -76,6 +78,8 @@ export default class Boss23MechC extends BossMechanic {
                     })
 
                     this.scene.time.delayedCall(900, () => {
+                        if (!this.boss || this.boss.health <= 0 ||!this.active) return
+
                         //Check hits of line telegraphs
                         let hit = false
 

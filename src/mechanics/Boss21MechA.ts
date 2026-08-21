@@ -65,7 +65,7 @@ export default class Boss21MechA extends BossMechanic {
             }
         }
 
-        this.telegraph.destroy()
+        this.telegraph?.destroy()
         this.telegraph = undefined
 
         //Draw Line telegraph towards player

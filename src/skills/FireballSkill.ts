@@ -22,26 +22,17 @@ export default class FireballSkill extends Skill {
         const originY = this.player.y
 
         const castDistance = 200
+        const bounds = this.player.scene.physics.world.bounds
+        const radius = this.getRange()
 
-        const endX = originX + (dir.x * castDistance)
-        const endY = originY + (dir.y * castDistance) 
+        const projX = originX + (dir.x * castDistance)
+        const projY = originY + (dir.y * castDistance) 
+
+        //Keep it within bounds
+        const endX = Phaser.Math.Clamp(projX, bounds.left + radius, bounds.right - radius)
+        const endY = Phaser.Math.Clamp(projY, bounds.top + radius, bounds.bottom - radius)
 
         const draw = () => {
-            //Create Graphics  
-            // g.clear()
-            // g.lineStyle(2, 0x00ff00, 1)
-            // g.strokeCircle(endX, endY, this.range)
-            // g.fillStyle(0x00ff00, 0.25)
-            // g.fillCircle(endX, endY, this.range)
-
-            // this.scene.tweens.add({
-            //     targets: g,
-            //     alpha: { from: 0.3, to: 0.6 },
-            //     duration: 200,
-            //     yoyo: true,
-            //     repeat: 1
-            // })
-
             //VFX
             const fireballVFX = this.scene.add.sprite(endX, endY + this.getRange() / 2, "fireball-vfx")
 
@@ -61,23 +52,13 @@ export default class FireballSkill extends Skill {
         }
         
         //Fire Icon on Player 
-        const container = this.scene.add.container(this.player.x, this.player.y)
+        const fireballIndicator = this.scene.add.sprite(endX, endY, "fireball2-vfx")
 
-        const follow = () => {
-            container.x = this.player.x
-            container.y = this.player.y
-        }
+        fireballIndicator.setOrigin(0.5, 0.5)
+        fireballIndicator.setScale(2)
+        fireballIndicator.setDepth(10)
 
-        this.scene.events.on('update', follow)
-
-        const fireball2VFX = this.scene.add.sprite(0, -25, "fireball2-vfx")
-
-        fireball2VFX.setOrigin(0.5, 0.5)
-        fireball2VFX.setScale(1.5)
-        fireball2VFX.setDepth(10)
-        container.add(fireball2VFX)
-
-        this.scene.time.delayedCall(800, () => container.destroy())
+        this.scene.time.delayedCall(800, () => fireballIndicator.destroy())
 
         //Check hit
         const hitBoss = () => {

@@ -35,7 +35,7 @@ export default class Boss5MechB extends BossMechanic {
         )
 
         //Draw telegraph right before hit
-        this.scene.time.delayedCall((this.config.castTime - 300), () => {
+        this.scene.time.delayedCall((this.config.castTime - 600), () => {
             if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new ConeTelegraph(
                 this.scene,

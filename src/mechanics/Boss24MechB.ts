@@ -67,7 +67,7 @@ export default class Boss24MechB extends BossMechanic {
                 this.player.takeDamage(this.config.damage)
             }
 
-            this.telegraph.destroy()
+            this.telegraph?.destroy()
             this.telegraph = undefined
         })
     }

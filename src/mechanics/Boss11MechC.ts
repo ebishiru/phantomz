@@ -56,7 +56,7 @@ export default class Boss11MechC extends BossMechanic {
         )
 
         this.scene.time.delayedCall(800, () => {
-            this.telegraph.destroy()
+            this.telegraph?.destroy()
             this.telegraph = undefined
 
             //Check first donut hit
@@ -85,7 +85,7 @@ export default class Boss11MechC extends BossMechanic {
             )
 
             this.scene.time.delayedCall(800, () => {
-                this.telegraph.destroy()
+                this.telegraph?.destroy()
                 this.telegraph = undefined
 
                 //Check second donut hit

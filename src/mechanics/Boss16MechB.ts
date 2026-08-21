@@ -83,7 +83,7 @@ export default class Boss16MechB extends BossMechanic {
             }
 
             scene.time.delayedCall(300, () => {
-                telegraph.destroy()
+                telegraph?.destroy()
             })
         }
 
