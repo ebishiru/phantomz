@@ -7,7 +7,7 @@ export default class Boss13MechC extends BossMechanic {
 
     config = {
         id: "triple-clone-cone",
-        name: "Tri Mirage Cones",
+        name: "Frontal Sweep",
         castTime: 2000,
         castDuration: 2000,
         cooldown: 2000,

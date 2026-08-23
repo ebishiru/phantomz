@@ -7,8 +7,8 @@ export default class Boss17MechB extends BossMechanic {
     config = {
         id: "circle-stay-delay-explode-player",
         name: "Rot Eruption",
-        castTime: 800,
-        castDuration: 800,
+        castTime: 1000,
+        castDuration: 1000,
         cooldown: 2000,
         showCastBar: true,
         damage: 10,

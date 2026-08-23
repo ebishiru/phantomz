@@ -8,9 +8,9 @@ export default class Boss16MechC extends BossMechanic {
     config = {
         id: "teleport-circle-donut-alternate",
         name: "Apex Rejuvenation",
-        castTime: 1000,
-        castDuration: 2600,
-        cooldown: 2600,
+        castTime: 1300,
+        castDuration: 2900,
+        cooldown: 2900,
         showCastBar: false,
         damage: 20,
         range: 100,

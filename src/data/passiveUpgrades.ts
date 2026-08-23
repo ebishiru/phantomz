@@ -26,7 +26,7 @@ export const passiveUpgrades = {
         desc: "Increase echo chance by another 5%."
     },
     gourmet: {
-        desc: "Increase bread's HP restoration by 5."
+        desc: "Increase bread's HP restoration by 10."
     },
     desperation: {
         desc: "Desperation hits at 5% HP earlier."

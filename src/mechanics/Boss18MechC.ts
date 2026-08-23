@@ -7,7 +7,7 @@ export default class Boss18MechC extends BossMechanic {
 
     config = {
         id: "quad-clone-swipe",
-        name: "Quad Mirage Swipe",
+        name: "Double Frontal Sweep",
         castTime: 2300,
         castDuration: 2300,
         cooldown: 2500,

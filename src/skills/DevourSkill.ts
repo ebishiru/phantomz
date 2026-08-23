@@ -4,10 +4,10 @@ import Skill from "./Skill";
 export default class DevourSkill extends Skill {
     player: any
     facingAngle: number = 0
-    healingValue: number = 2
+    healingValue: number = 5
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "devour", "Devour", 20, 6000, 40)
+        super(scene, player, "devour", "Devour", 20, 6000, 50)
         this.iconKey = "devour-icon"
         this.player = player
     }

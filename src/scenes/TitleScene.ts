@@ -16,7 +16,7 @@ export default class TitleScene extends Phaser.Scene {
         await googleLeaderboard.signIn();
 
         //Menu Text
-        const startText = this.add.text(width/2, height/2, "CLICK TO START", {
+        const startText = this.add.text(width/2, height/2, "TAP TO START", {
             fontSize: "32px",
             fontFamily: `"Old English Text MT", Georgia, serif`,
             color: `#ffffff`,
