@@ -45,8 +45,7 @@ export default class GameOverScene extends Phaser.Scene {
         if (controlsEl) controlsEl.style.display = "none";
 
         // Dim Background
-        const dimBackground = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
-        // this.gameOverObjects.push(dimBackground)
+        this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
 
         // Track revive usage for this run (persisted in registry)
         this.reviveUsed = !!this.registry.get("reviveUsed")

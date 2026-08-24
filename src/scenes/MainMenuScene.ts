@@ -25,7 +25,24 @@ export default class MainMenuScene extends Phaser.Scene {
 
         //Options Button
         setupEscapeMenu(this)
+        this.add.text(920, 68, "Options",
+            {
+                fontSize: "10px",
+                fontFamily: "Georgia, serif",
+                color: "#ffffff",
+            }
+        )
+            .setOrigin(0.5)
+
         OptionsButton(this)
+        this.add.text(920, 150, "Hall of Fame",
+            {
+                fontSize: "10px",
+                fontFamily: "Georgia, serif",
+                color: "#ffffff",
+            }
+        )
+            .setOrigin(0.5)
         
         //Leaderboard Button
         LeaderboardButton(this)
@@ -91,23 +108,27 @@ export default class MainMenuScene extends Phaser.Scene {
             .setStrokeStyle(3, 0x65aed6)
             .setInteractive({ useHandCursor: true })
 
-        this.add.text(refreshButtonX, refreshButtonY - 20, "GET REROLLS", {
+        this.add.text(refreshButtonX, refreshButtonY - 18, "GET REROLLS", {
             fontSize: "18px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff"
-        }).setOrigin(0.5)
+        }).setOrigin(0.7, 0.5)
 
         this.add.text(refreshButtonX, refreshButtonY + 3, "Watch Ads", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff"
-        }).setOrigin(0.5)
+        }).setOrigin(0.7, 0.5)
 
         this.refreshChargesText = this.add.text(refreshButtonX, refreshButtonY + 21, "", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: "#65aed6"
-        }).setOrigin(0.5)
+        }).setOrigin(0.7, 0.5)
+
+        this.add.image(refreshButtonX + 70, refreshButtonY + 3, "reroll-icon")
+        .setOrigin(0.5)
+        .setScale(2.5)
 
         this.updateRefreshUI()
 

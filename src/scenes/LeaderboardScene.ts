@@ -39,7 +39,7 @@ export default class LeaderboardScene extends Phaser.Scene {
             centerY,
             "Personal High Score: ???",
             {
-                fontSize: "20px",
+                fontSize: "24px",
                 fontFamily: "Georgia, serif",
                 color: "#ffcc00"
             }
@@ -81,7 +81,7 @@ export default class LeaderboardScene extends Phaser.Scene {
                 centerY,
                 key.toUpperCase(),
                 {
-                    fontSize: "20px",
+                    fontSize: "18px",
                     fontFamily: "Georgia, serif",
                     color: "#ffffff"
                 }
@@ -127,7 +127,7 @@ export default class LeaderboardScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true});
 
-        this.add.text(x, y, "VIEW LEADERBOARD",
+        this.add.text(x, y, "View Full Leaderboard",
             {
                 fontSize: "20px",
                 fontFamily: "Georgia, serif",
