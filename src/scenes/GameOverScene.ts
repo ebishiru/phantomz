@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import { playMusic } from "../systems/MusicSystem";
 import tips from "../data/tips";
 import SaveManager from "../systems/SaveManager";
+import { skills } from "../data/skills";
+import { passives } from "../data/passives";
 import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
 import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
 import AdManager from "../systems/AdManager";
@@ -17,6 +19,9 @@ export default class GameOverScene extends Phaser.Scene {
     reviveButtonBG?: Phaser.GameObjects.Rectangle
     reviveUsed: boolean = false
     gameOverObjects: Phaser.GameObjects.GameObject[] = []
+
+    private pendingGameOverAction: "retry" | "mainmenu" | null = null
+    private showingUnlockPopup = false
 
     constructor() {
         super("game-over")
@@ -41,7 +46,7 @@ export default class GameOverScene extends Phaser.Scene {
 
         // Dim Background
         const dimBackground = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6).setOrigin(0)
-        this.gameOverObjects.push(dimBackground)
+        // this.gameOverObjects.push(dimBackground)
 
         // Track revive usage for this run (persisted in registry)
         this.reviveUsed = !!this.registry.get("reviveUsed")
@@ -150,8 +155,8 @@ export default class GameOverScene extends Phaser.Scene {
         const buttonWidth = 220;
         const buttonHeight = 60;
 
-        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Retry", () => this.restartGame())
-        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Main Menu", () => this.goToTitle())
+        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Retry", () => this.handleGameOverAction("retry"))
+        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Main Menu", () => this.handleGameOverAction("mainmenu"))
     }
 
     createButton(x: number, y: number, width: number, height: number, text: string, callback: () => void) {
@@ -271,12 +276,12 @@ export default class GameOverScene extends Phaser.Scene {
         const centerY = this.scale.height / 2
 
         const resumeButton = this.add.rectangle(centerX, centerY, 260, 80, 0x222222)
-            .setStrokeStyle(4, 0x65aed6)
+            .setStrokeStyle(3, 0xffffff)
             .setOrigin(0.5)
             .setInteractive({ useHandcursor: true})
             .setDepth(2000)
 
-        const resumeText = this.add.text(centerX, centerY, "Reawaken Phantom", {
+        const resumeText = this.add.text(centerX, centerY, "Tap to Reawaken", {
             fontSize: "20px",
             fontFamily: "Georgia, serif",
             color: "#ffffff"
@@ -285,11 +290,21 @@ export default class GameOverScene extends Phaser.Scene {
             .setDepth(2001)
 
         resumeButton.on("pointerdown", () => {
-            resumeButton.disableInteractive()
-            resumeButton.destroy()
-            resumeText.destroy()
+            //Window flickers
+            this.tweens.add({
+                targets: [resumeButton, resumeText],
+                alpha: 0,
+                duration: 50,
+                yoyo: true,
+                repeat: 2,
+                onComplete: () => {
+                    resumeButton.disableInteractive()
+                    resumeButton.destroy()
+                    resumeText.destroy()
 
-            this.startRevive()
+                    this.startRevive()
+                }
+            })
         })
     }
 
@@ -328,7 +343,7 @@ export default class GameOverScene extends Phaser.Scene {
         playMusic(this, `${this.currentLevel}Music`)
 
         // Create countdown text overlay
-        const countdownText = this.add.text(centerX, centerY, "5", {
+        const countdownText = this.add.text(centerX, centerY, "3", {
             fontSize: "120px",
             fontFamily: "Georgia, serif",
             color: "#ffffff",
@@ -336,25 +351,17 @@ export default class GameOverScene extends Phaser.Scene {
             strokeThickness: 6,
         }).setOrigin(0.5).setDepth(1000)
 
-        // Sequence 5,4,3,2,1
+        // Sequence 3,2,1
         this.time.delayedCall(1000, () => {
-            countdownText.setText("4")
-        })
-
-        this.time.delayedCall(2000, () => {
             this.sound.resumeAll()
-            countdownText.setText("3")
-        })
-
-        this.time.delayedCall(3000, () => {
             countdownText.setText("2")
         })
 
-        this.time.delayedCall(4000, () => {
+        this.time.delayedCall(2000, () => {
             countdownText.setText("1")
         })
 
-        this.time.delayedCall(5000, () => {
+        this.time.delayedCall(3000, () => {
             countdownText.destroy()
             // Resume game time
             this.scene.resume("game")
@@ -375,14 +382,142 @@ export default class GameOverScene extends Phaser.Scene {
 
     createKeyboardShortcuts() {
         const rKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.R)
-        rKey?.on("down", () => this.restartGame())
+        rKey?.on("down", () => this.handleGameOverAction("retry"))
 
         const escKey = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
-        escKey?.on("down", () => this.goToTitle())
+        escKey?.on("down", () => this.handleGameOverAction("mainmenu"))
+    }
+
+    async handleGameOverAction(action: "retry" | "mainmenu") {
+        if (this.showingUnlockPopup) return
+        if (!this.pendingSaveData) return
+
+        this.pendingGameOverAction = action
+
+        const newUnlocks = await this.commitSave()
+
+        if (newUnlocks && newUnlocks.length > 0) {
+            this.showNewUnlockPopup(newUnlocks)
+        } else {
+            this.continueAfterUnlocks()
+        }
+    }
+
+    showNewUnlockPopup(newUnlocks: string[]) {
+        this.showingUnlockPopup = true
+
+        const centerX = this.scale.width / 2
+        const centerY = this.scale.height / 2
+
+        //Hide existing Game Over UI
+        this.hideGameOverUI()
+
+        const popupWidth = 500
+        const popupHeight = 350
+
+        const popupBG = this.add.rectangle(
+            centerX,
+            centerY,
+            popupWidth,
+            popupHeight,
+            0x222222
+        )
+            .setStrokeStyle(3, 0xffffff)
+            .setDepth(3000)
+
+        const title = this.add.text(centerX, centerY - 130, "NEW UNLOCKS!",
+            {
+                fontSize: "24px",
+                fontFamily: "Georgia, serif",
+                color: "#ffcc00"
+            }
+        )
+            .setOrigin(0.5)
+            .setDepth(3001)
+
+        const unlockTexts: Phaser.GameObjects.GameObject[] = []
+
+        const startY = centerY - 70
+        const spacing = 40
+
+        newUnlocks.forEach((key, index) => {
+            const skill = skills.find(skill => skill.key === key)
+            const passive = passives.find(passive => passive.key === key)
+            const unlockable = skill ?? passive
+
+            if (!unlockable) return
+
+            const y = startY + index * spacing
+            const icon = this.add.image(centerX - 100, y, unlockable.iconKey)
+                .setScale(2)
+                .setDepth(3001)
+
+            const name = this.add.text(centerX - 60, y, unlockable.name,
+                {
+                    fontSize: "18px",
+                    fontFamily: "Georgia, serif",
+                    color: "#ffffff"
+                }
+            )
+                .setOrigin(0, 0.5)
+                .setDepth(3001)
+
+            unlockTexts.push(icon, name)
+        })
+
+        const continueButton = this.add.rectangle(
+            centerX,
+            centerY + 120,
+            220,
+            55,
+            0x222222
+        )
+            .setStrokeStyle(3, 0xffcc00)
+            .setInteractive({ useHandCursor: true })
+            .setDepth(3001)
+
+        const continueText = this.add.text(
+            centerX,
+            centerY + 120,
+            "Continue",
+            {
+                fontSize: "20px",
+                fontFamily: "Georgia, serif",
+                color: "#ffffff"
+            }
+        )
+            .setOrigin(0.5)
+            .setDepth(3002)
+
+        continueButton.once("pointerdown", () => {
+            continueButton.disableInteractive()
+
+            popupBG.destroy()
+            title.destroy()
+            continueButton.destroy()
+            continueText.destroy()
+
+            unlockTexts.forEach(obj => obj.destroy())
+
+            this.showingUnlockPopup = false
+
+            this.continueAfterUnlocks()
+        })
+    }
+
+    continueAfterUnlocks() {
+        const action = this.pendingGameOverAction
+
+        this.pendingGameOverAction = null
+
+        if (action === "retry") {
+            this.restartGame()
+        } else if (action === "mainmenu") {
+            this.goToTitle()
+        }
     }
 
     async restartGame() {
-        await this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
@@ -399,7 +534,6 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     async goToTitle() {
-        await this.commitSave()
         this.scene.stop("game-over")
         this.scene.stop("level-up")
         this.scene.stop("game")
@@ -420,10 +554,15 @@ export default class GameOverScene extends Phaser.Scene {
             this.saveManager.addBossKill(bossKey, count)
         }
 
+        //Check for newly unlocked skill/passives
+        const newUnlocks = this.saveManager.revealNewUnlocks()
+
         //Upload to Google Leaderboard
         await this.googleLeaderboard.submitScore(this.currentLevel, score);
 
         // Clear pending after committing
         this.pendingSaveData = null
+
+        return newUnlocks
     }
 }

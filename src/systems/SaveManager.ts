@@ -1,3 +1,5 @@
+import { skills } from "../data/skills"
+import { passives } from "../data/passives"
 
 const SAVE_KEY = "phantomz_save_data"
 
@@ -121,5 +123,62 @@ export default class SaveManager {
     reset() {
         localStorage.removeItem(SAVE_KEY)
         this.data = this.getDefaultData()
+    }
+
+    //REVEAL NEW UNLOCKS:
+    revealNewUnlocks(): string[] {
+        const newlyUnlocked: string[] = []
+        const unlockables = [...skills, ...passives]
+
+        for (const item of unlockables) {
+            //No unlock condition
+            if (!item.unlock) {
+                continue
+            }
+
+            //Already unlocked skill or passive
+            if (this.isSkillUnlocked(item.key)) {
+                continue
+            }
+
+            let unlocked = false
+
+            switch (item.unlock.type) {
+
+                case "caveTotalScore":
+                    unlocked = 
+                        this.getTotalScore("cave") >= (item.unlock.value as number)
+                    break
+
+                case "snowTotalScore":
+                    unlocked =
+                        this.getTotalScore("snow") >= (item.unlock.value as number)
+                    break
+                
+                case "towerTotalScore":
+                    unlocked =
+                        this.getTotalScore("tower") >= (item.unlock.value as number)
+                    break
+
+                case "bossKills":
+                    unlocked = Object.entries(item.unlock.value).every(
+                        ([bossKey, requiredKills]) =>
+                            this.getBossKills(bossKey) >= requiredKills
+                    )
+                    break
+            }
+
+            if (unlocked) {
+                this.data.unlockedSkills.push(item.key)
+                newlyUnlocked.push(item.key)
+            }
+
+        }
+
+        if (newlyUnlocked.length > 0) {
+            this.save()
+        }
+
+        return newlyUnlocked
     }
 }
