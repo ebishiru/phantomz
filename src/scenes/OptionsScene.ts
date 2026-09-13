@@ -88,6 +88,7 @@ export default class OptionsScene extends Phaser.Scene {
 
             this.add.text(100, 70, "QUIT", {
                 fontSize: "20px",
+                fontStyle: "bold",
                 fontFamily: "Georgia, serif",
                 color: "#ff0000",
             })

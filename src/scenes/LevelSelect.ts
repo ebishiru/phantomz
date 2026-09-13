@@ -79,6 +79,28 @@ export default class LevelSelect extends Phaser.Scene {
                 .setAlpha(1)
                 .setBlendMode(Phaser.BlendModes.NORMAL)
 
+                let requiredLevel = ""
+                switch (key) {
+                    case "snow":
+                        requiredLevel = "Cave"
+                        break
+                    case "tower":
+                        requiredLevel = "Snow"
+                        break
+                    default:
+                        requiredLevel = "previous level"
+                }
+
+                this.add.text(texture.x, texture.y + 16, `REQ: 1500pts in ${requiredLevel}`, {
+                    fontSize: "12px",
+                    fontFamily: "Georgia, serif",
+                    color: "#ffcc00"
+                })
+                .setOrigin(0.5)
+                .setDepth(40)
+                .setAlpha(1)
+                .setBlendMode(Phaser.BlendModes.NORMAL)
+
                 texture.on("pointerdown", () => {
                     // show short feedback when clicking locked level
                     const warn = this.add.text(this.scale.width/2, 420, `Reach 1500 Hi-Score on the previous level to unlock.`, {
