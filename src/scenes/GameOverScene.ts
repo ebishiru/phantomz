@@ -155,7 +155,7 @@ export default class GameOverScene extends Phaser.Scene {
         const buttonHeight = 60;
 
         this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Save & Retry", () => this.handleGameOverAction("retry"))
-        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Save & Main Menu", () => this.handleGameOverAction("mainmenu"))
+        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Save & Quit", () => this.handleGameOverAction("mainmenu"))
     }
 
     createButton(x: number, y: number, width: number, height: number, text: string, callback: () => void) {

@@ -43,7 +43,7 @@ class AdManager {
         try {
             await AdMob.prepareRewardVideoAd({
                 adId: this.rewardAdId,
-                isTesting: true,
+                isTesting: false,
             })
             this.rewardAdReady = true
         } catch (error) {
