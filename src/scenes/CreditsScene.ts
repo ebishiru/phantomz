@@ -9,6 +9,9 @@ export default class CreditsScene extends Phaser.Scene {
     }
 
     create() {
+        //Fade in from black
+        this.cameras.main.fadeIn(500, 0, 0, 0);
+        
         this.saveManager = new SaveManager();
 
         const width = this.scale.width;
@@ -62,7 +65,7 @@ export default class CreditsScene extends Phaser.Scene {
             "Bidi", "Callixtus", "Cameron2k131", "Conconuts", "Drez", "Endji",
             "Ephe", "Fiona", "Fornogg", "Fred", "Kelvang", "MichyMiche",
             "Mrs.Test", "Nalya", "NotGary", "RaveonGames", "Rftchy", "Starusman",
-            "Syllipie", "TataRora", "Tickle", "Xeiryn", "Yvonne"
+            "Sylliepie", "TataRora", "Tickle", "Tony_Ritz", "Xeiryn", "Yvonne"
         ]
         const columnCount = 4
         const rowCount = Math.ceil(playtesters.length / columnCount)

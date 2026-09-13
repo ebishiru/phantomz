@@ -3,6 +3,7 @@ import { playMusic } from "../systems/MusicSystem";
 import { setupEscapeMenu } from "../systems/setupEscapeMenu";
 import { OptionsButton } from "../ui/OptionsButton";
 import { LeaderboardButton } from "../ui/LeaderboardButton";
+import { SupportButton } from "../ui/SupportButton";
 import AdManager from "../systems/AdManager";
 
 export default class MainMenuScene extends Phaser.Scene {
@@ -35,6 +36,8 @@ export default class MainMenuScene extends Phaser.Scene {
             .setOrigin(0.5)
 
         OptionsButton(this)
+
+        //Leaderboard Button
         this.add.text(920, 150, "Hall of Fame",
             {
                 fontSize: "10px",
@@ -44,9 +47,20 @@ export default class MainMenuScene extends Phaser.Scene {
         )
             .setOrigin(0.5)
         
-        //Leaderboard Button
         LeaderboardButton(this)
         
+        //Support Button
+        this.add.text(920, 230, "Support Me",
+            {
+                fontSize: "10px",
+                fontFamily: "Georgia, serif",
+                color: "#ffffff",
+            }
+        )
+            .setOrigin(0.5)
+
+        SupportButton(this)
+
         const { width, height } = this.scale;
 
         //Title Text

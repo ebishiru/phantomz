@@ -154,8 +154,8 @@ export default class GameOverScene extends Phaser.Scene {
         const buttonWidth = 220;
         const buttonHeight = 60;
 
-        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Retry", () => this.handleGameOverAction("retry"))
-        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Main Menu", () => this.handleGameOverAction("mainmenu"))
+        this.createButton(centerX - spacing/2, centerY, buttonWidth, buttonHeight, "Save & Retry", () => this.handleGameOverAction("retry"))
+        this.createButton(centerX + spacing/2, centerY, buttonWidth, buttonHeight, "Save & Main Menu", () => this.handleGameOverAction("mainmenu"))
     }
 
     createButton(x: number, y: number, width: number, height: number, text: string, callback: () => void) {
@@ -308,8 +308,6 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     startRevive() {
-    // Reenable mobile controls if applicable
-        this.showMobileControls()
         this.handleReviveCountdown()
     }
 
@@ -364,6 +362,8 @@ export default class GameOverScene extends Phaser.Scene {
             countdownText.destroy()
             // Resume game time
             this.scene.resume("game")
+            // Reenable mobile controls if applicable
+            this.showMobileControls()
             gameScene.reviveInvulnerability()
             // Close game-over scene
             this.scene.stop("game-over")

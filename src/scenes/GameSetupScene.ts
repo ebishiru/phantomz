@@ -69,7 +69,7 @@ export default class GameSetupScene extends Phaser.Scene {
             80,
             80,
         )
-        .setStrokeStyle(4, 0xffffff)
+        .setStrokeStyle(4, 0xffcc00)
         .setDepth(10)
 
         //Starting Skill Selection
@@ -99,7 +99,7 @@ export default class GameSetupScene extends Phaser.Scene {
             80,
             80,
         )
-        .setStrokeStyle(4, 0xffffff)
+        .setStrokeStyle(4, 0xffcc00)
         .setDepth(10)
 
         //Start Game Button

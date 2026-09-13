@@ -7,6 +7,9 @@ export default class ControlScene extends Phaser.Scene {
     }
 
     create() {
+        //Fade in from black
+        this.cameras.main.fadeIn(500, 0, 0, 0);
+        
         const width = this.scale.width;
         const centerX = width/2;
 

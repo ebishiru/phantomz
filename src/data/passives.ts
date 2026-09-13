@@ -115,7 +115,7 @@ export const passives = [
         key: "desperation",
         name: "Desperation",
         iconKey: "desperation-icon",
-        desc: "Gain 50% damage and 20% speed at critical HP.",
+        desc: "Gain 50% damage and 20% speed when under 25% HP.",
         maxLevel: 5,
         apply: (player: any) => {
             player.statModifiers.desperationLevel += 1

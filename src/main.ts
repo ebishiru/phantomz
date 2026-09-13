@@ -3,6 +3,7 @@ import PreloadScene from "./scenes/PreloadScene"
 import TitleScene from "./scenes/TitleScene"
 import OptionsScene from "./scenes/OptionsScene"
 import LeaderboardScene from "./scenes/LeaderboardScene"
+import SupportScene from "./scenes/SupportScene"
 import ControlScene from "./scenes/ControlsScene"
 import UnlockablesScene from "./scenes/UnlockablesScene"
 import CreditsScene from "./scenes/CreditsScene"
@@ -32,7 +33,7 @@ const config: Phaser.Types.Core.GameConfig = {
     physics: { default: "arcade", arcade: { debug: false } },
     input: { activePointers: 3 },
     pixelArt: true,
-    scene: [PreloadScene, TitleScene, OptionsScene, LeaderboardScene, LevelSelect, MainMenuScene, GameSetupScene, ControlScene, UnlockablesScene, CreditsScene, GameScene, LevellingScene, GameOverScene],
+    scene: [PreloadScene, TitleScene, OptionsScene, LeaderboardScene, SupportScene, LevelSelect, MainMenuScene, GameSetupScene, ControlScene, UnlockablesScene, CreditsScene, GameScene, LevellingScene, GameOverScene],
     }
 
 const game = new Phaser.Game(config)
