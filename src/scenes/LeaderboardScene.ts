@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
-import type { LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
+import type { LeaderboardEntry, LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
 
 export default class LeaderboardScene extends Phaser.Scene {
     private googleLeaderboard = GoogleLeaderboardManager.getInstance();
@@ -11,6 +11,8 @@ export default class LeaderboardScene extends Phaser.Scene {
     buttons: Phaser.GameObjects.Text[] = []
 
     private playerScoreText!: Phaser.GameObjects.Text
+    private topScoresHeader!: Phaser.GameObjects.Text
+    private topScoresText!: Phaser.GameObjects.Text
     
     constructor() {
         super("leaderboard")
@@ -22,7 +24,6 @@ export default class LeaderboardScene extends Phaser.Scene {
 
         const { width, height } = this.scale;
         const centerX = width/2
-        const centerY = height/2
 
         this.add.text(width/2, 50, "Hall of Fame", {
             fontSize: "32px",
@@ -36,30 +37,54 @@ export default class LeaderboardScene extends Phaser.Scene {
         //Player Score
         this.playerScoreText = this.add.text(
             centerX,
-            centerY,
+            390,
             "Personal High Score: ???",
             {
-                fontSize: "24px",
+                fontSize: "18px",
                 fontFamily: "Georgia, serif",
                 color: "#ffcc00"
             }
         ).setOrigin(0.5);
 
+        this.topScoresHeader = this.add.text(
+            centerX,
+            150,
+            "RANK      NAME                         SCORE",
+            {
+                fontSize: "16px",
+                fontFamily: "monospace",
+                color: "#ffcc00"
+            }
+        ).setOrigin(0.5, 0);
+
+        this.topScoresText = this.add.text(
+            centerX,
+            175,
+            "Loading scores...",
+            {
+                fontSize: "16px",
+                fontFamily: "monospace",
+                color: "#ffffff",
+                align: "center",
+                lineSpacing: 3
+            }
+        ).setOrigin(0.5, 0);
+
         // Google leaderboard button
-        this.createGoogleLeaderboardButton(centerX, height * 0.65);
+        this.createGoogleLeaderboardButton(centerX - 155, height * 0.86);
 
         //Load Initial Score
         this.showLeaderboard("cave");
 
         //Back button
-        const backButtonBg = this.add.rectangle(centerX, 475, 200, 60, 0x222222)
+        const backButtonBg = this.add.rectangle(centerX + 155, height * 0.86, 200, 60, 0x222222)
         .setStrokeStyle(3, 0xffcc00)
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true})
 
         backButtonBg.on("pointerdown", () => this.scene.start("mainmenu"))
 
-        this.add.text(centerX, 475, "HOME", {
+        this.add.text(centerX + 155, height * 0.86, "HOME", {
             fontSize: "24px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff",
@@ -71,7 +96,7 @@ export default class LeaderboardScene extends Phaser.Scene {
 
         const spacing = 180;
         const centerX = width / 2;
-        const centerY = height * 0.3;
+        const centerY = height * 0.2;
 
         this.levels.forEach((key, index) => {
             const x = centerX + (index - 1) * spacing;
@@ -81,7 +106,7 @@ export default class LeaderboardScene extends Phaser.Scene {
                 centerY,
                 key.toUpperCase(),
                 {
-                    fontSize: "18px",
+                    fontSize: "16px",
                     fontFamily: "Georgia, serif",
                     color: "#ffffff"
                 }
@@ -101,24 +126,46 @@ export default class LeaderboardScene extends Phaser.Scene {
         this.levelOutline = this.add.rectangle(
             this.buttons[0].x,
             this.buttons[0].y,
-            125,
-            75,
+            120,
+            60,
         )
         .setStrokeStyle(4, 0xffcc00)
         .setDepth(20)
     }
 
     private async showLeaderboard(level: LeaderboardLevel): Promise<void> {
-        const score = await this.googleLeaderboard.getUserScore(level);
+        this.topScoresHeader.setText("RANK      NAME                         SCORE");
+        this.topScoresText.setText("Loading scores...");
+
+        const [score, topScores] = await Promise.all([
+            this.googleLeaderboard.getUserScore(level),
+            this.googleLeaderboard.getTopScores(level)
+        ]);
 
         if (score === null) {
             this.playerScoreText.setText("Personal High Score: ???");
-            return;
+        } else {
+            this.playerScoreText.setText(
+                `Personal High Score: ${score.toLocaleString()}`
+            )
         }
 
-        this.playerScoreText.setText(
-            `Personal High Score: ${score.toLocaleString()}`
-        )
+        this.topScoresText.setText(this.formatTopScores(topScores));
+    }
+
+    private formatTopScores(scores: LeaderboardEntry[]): string {
+        if (scores.length === 0) {
+            return "No scores available";
+        }
+
+        return scores
+            .map((entry) => {
+                const rank = String(entry.rank).padStart(4, " ");
+                const name = entry.name.slice(0, 24).padEnd(24, " ");
+                const score = entry.score.toLocaleString().padStart(12, " ");
+                return `${rank}    ${name}${score}`;
+            })
+            .join("\n");
     }
 
     createGoogleLeaderboardButton(x: number, y: number) {

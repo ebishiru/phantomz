@@ -8,11 +8,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.getcapacitor.BridgeActivity;
+import com.kevinlo.phantomz.plugins.GoogleTopScoresPlugin;
 
 public class MainActivity extends BridgeActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(GoogleTopScoresPlugin.class);
         super.onCreate(savedInstanceState);
 
         hideSystemBars();

@@ -20,13 +20,18 @@ export default class CreditsScene extends Phaser.Scene {
             color: "#ffcc00",
         }).setOrigin(0.5)
 
-        this.add.text(centerX, 150,
-            "Game Design and Programming: \n" +
-            "Kevin Lo\n\n" +
-            "Art: \n" +
-            "Kevin Lo\n\n" +
-            "Music: \n" +
-            "xDeviruchi\n\n",
+        this.add.text(centerX, 125,
+            "Game Design, Programming & Art: \n",
+            {
+                fontSize: "20px",
+                fontFamily: "Georgia, serif",
+                color: "#ffcc00",
+                align: "center",
+            }
+        ).setOrigin(0.5, 0)
+
+        this.add.text(centerX, 155,
+            "Kevin Lo",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",
@@ -34,6 +39,49 @@ export default class CreditsScene extends Phaser.Scene {
                 align: "center",
             }
         ).setOrigin(0.5, 0)
+
+        this.add.text(centerX, 215, "Music made by:", {
+            fontSize: "20px",
+            fontFamily: "Georgia, serif",
+            color: "#ffcc00",
+        }).setOrigin(0.5)
+
+        this.add.text(centerX, 245, "xDeviruchi", {
+            fontSize: "16px",
+            fontFamily: "Georgia, serif",
+            color: "#FFFFFF",
+        }).setOrigin(0.5)
+
+        this.add.text(centerX, 290, "Special thanks to our Playtesters:", {
+            fontSize: "20px",
+            fontFamily: "Georgia, serif",
+            color: "#ffcc00",
+        }).setOrigin(0.5)
+
+        const playtesters = [
+            "Bidi", "Callixtus", "Cameron2k131", "Conconuts", "Drez", "Endji",
+            "Ephe", "Fiona", "Fornogg", "Fred", "Kelvang", "MichyMiche",
+            "Mrs.Test", "Nalya", "NotGary", "RaveonGames", "Rftchy", "Starusman",
+            "Syllipie", "TataRora", "Tickle", "Xeiryn", "Yvonne"
+        ]
+        const columnCount = 4
+        const rowCount = Math.ceil(playtesters.length / columnCount)
+        const columnWidth = 150
+        const gridStartX = centerX - (columnCount - 1) * columnWidth / 2
+        const gridStartY = 310
+
+        playtesters.forEach((name, index) => {
+            const column = Math.floor(index / rowCount)
+            const row = index % rowCount
+
+            this.add.text(gridStartX + column * columnWidth, gridStartY + row * 18, name, {
+                fontSize: "16px",
+                fontFamily: "Georgia, serif",
+                color: "#FFFFFF",
+                align: "center",
+                fixedWidth: columnWidth,
+            }).setOrigin(0.5, 0)
+        })
 
         //Back button
         const backButtonBg = this.add.rectangle(centerX, 475, 220, 60, 0x222222)
