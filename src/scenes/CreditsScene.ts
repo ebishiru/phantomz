@@ -11,7 +11,7 @@ export default class CreditsScene extends Phaser.Scene {
     create() {
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);
-        
+
         this.saveManager = new SaveManager();
 
         const width = this.scale.width;
@@ -101,36 +101,36 @@ export default class CreditsScene extends Phaser.Scene {
         }).setOrigin(0.5)
 
         //Save Reset Button
-        const resetButtonBg = this.add.rectangle(100, 70, 160, 50, 0x222222)
-        .setStrokeStyle(3, 0xffcc00)
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true})
+        // const resetButtonBg = this.add.rectangle(100, 70, 160, 50, 0x222222)
+        // .setStrokeStyle(3, 0xffcc00)
+        // .setOrigin(0.5)
+        // .setInteractive({ useHandCursor: true})
 
-        resetButtonBg.on("pointerdown", () => {
-            this.resetSaveData();
-        })
+        // resetButtonBg.on("pointerdown", () => {
+        //     this.resetSaveData();
+        // })
 
-        this.add.text(100, 70, "RESET SAVE", {
-            fontSize: "20px",
-            fontFamily: `Georgia, serif`,
-            color: "#ff0000",
-        }).setOrigin(0.5)
+        // this.add.text(100, 70, "RESET SAVE", {
+        //     fontSize: "20px",
+        //     fontFamily: `Georgia, serif`,
+        //     color: "#ff0000",
+        // }).setOrigin(0.5)
 
         //Dev Save Button
-        const devButtonBg = this.add.rectangle(100, 140, 160, 55, 0x222222)
-        .setStrokeStyle(3, 0xffcc00)
-        .setOrigin(0.5)
-        .setInteractive({useHandCursor: true})
+        // const devButtonBg = this.add.rectangle(100, 140, 160, 55, 0x222222)
+        // .setStrokeStyle(3, 0xffcc00)
+        // .setOrigin(0.5)
+        // .setInteractive({useHandCursor: true})
 
-        devButtonBg.on("pointerdown", () => {
-            this.devSaveData();
-        })
+        // devButtonBg.on("pointerdown", () => {
+        //     this.devSaveData();
+        // })
 
-        this.add.text(100, 140, "DEV SAVE", {
-            fontSize: "20px",
-            fontFamily: `Georgia, serif`,
-            color: "#ff0000",
-        }).setOrigin(0.5)
+        // this.add.text(100, 140, "DEV SAVE", {
+        //     fontSize: "20px",
+        //     fontFamily: `Georgia, serif`,
+        //     color: "#ff0000",
+        // }).setOrigin(0.5)
     }
 
     resetSaveData() {
