@@ -8,11 +8,11 @@ I'm hoping this is also motivation to keep me coding. I've been applying to jobs
 
 ## How does the Game work?
 
-The game is a roguelike and raid simulator at the same time. Taking inspiration from popular roguelikes like Vampire Survivors, MegaBonk and Hades,
+The game is a roguelike and mmo raid simulator at the same time. Taking inspiration from popular roguelikes like Vampire Survivors, MegaBonk and Hades,
 I wanted the game to have replay functionality. I've noticed that most of these games have very simple controls and barely any mechanics besides
 moving around. I wanted this game to require more skill from the player, with leaderboards being the main goal for some players.
 
-Taking more inspiration from Final Fantasy 14, I enjoyed the raid combat of dodging telegraphs, seeing castbars and reactively dodging to mechanics,
+Taking more inspiration from Final Fantasy XIV, I enjoyed the raid combat of dodging telegraphs, seeing castbars and reactively dodging to mechanics,
 and hope to implement them in mine.
 
 Visually speaking, I have zero experience in art. I'm hoping for a look close to Hollow Knight but Pixel.
@@ -26,7 +26,7 @@ These upgrades include new skills, increased general passive stats or further up
 
 **2. Boss Loop**
 
-Similar to the player, the boss will level up over time. They will randomly acquire buffs as time progresses. After every milestone,
+Similar to the player, the boss will level up over time. They will randomly acquire buffs as time progresses. After every milestone (minute),
 new bosses will spawn, completely changing the game with new mechanics.
 
 **3. Game Loop**
@@ -39,13 +39,15 @@ strategies to beat them.
 
 ```
 BASIC:
-- Slash: Melee Arc in front, low cd, med damage
 
-- Arrow: Ranged auto, med cd, low damage
+- Slash: Melee Arc in front
 
-- Pulse: AOE multi, high cd, high damage
+- Arrow: Ranged auto
+
+- Pulse: AOE multi
 
 INTERMEDIATE:
+
 - Thrust: Melee line w/ dash
 
 - Caltrops: Placeable AOE DOT
@@ -58,38 +60,81 @@ INTERMEDIATE:
 
 - Volt: Boost move temporarily then aoe damage.
 
-To ADD:
-
-- Blood: AOE around player, Use HP to deal dmg
-[Total: 15000pts]
-
-- Yo-yo: Line attack that attacks the front and back.
-[Total: 9000pts]
-
-- Javelin: Ranged, throw javelin set distance. Must be picked up to reset cd. 
-[Highscore: 2500pts] *DONE
-
 - Restoration: Instantly heal player, long cd
-[Highscore: 500pts] *DONE
 
-- Ward: Invulnerability for 1s.
-[Highscore: 1500pts] *DONE
+- Ward: Invulnerability and reflects dmg.
 
-- Gust: Cone attack with knockback
-[Total: 3000pts] *DONE
+- Javelin: Ranged, throw javelin set distance. Can be picked up to reset cd. 
 
-- Ironburst: shoot 3 pellets in direction
-[Total: 6000pts]
+- Gust: Attacks and pushes the player slightly backwards. Movement skill
 
-- Laser: Bounce off wall to deal damage.
-[Total: 12000pts]
+- Zephyr: Two cleaves and a thrust. Melee multi-hit
 
-- Quasar: Randomly blast in a direction.
+- Mirage: Leave a water clone that deals aoe dmg and randomly teleport away.
 
-- Mirage: Leave a water clone and teleport away.
+- Quasar: Randomly chooses a direction and blasts in that line. Random but ez to hit.
 
-- Zephyr: Two cleaves and a thrust
+ADVANCED:
 
-- Boomerang: Attack in a figure 8.
+- Yo-yo: Line attack that attacks the front then the back.
+
+- Blitzkrieg: Charges forward and do AOE dmg around player. Mov + double hit.
+
+- Kraken: Throw a trident randomly and deal massive dmg later. Random but big dmg.
+
+- Nexus: Crystal autohits. Limit mov but autohit.
+
+TO ADD:
+
+- Eject: ???
+
+- Libra: ???
+
+- Icicles: ???
+
+- Upheaval: ???
+
+- X-acto: ???
+
+- Orbit: ???
 ```
 
+## List of Passives
+
+```
+BASIC:
+
+- Vitality: Increase max hp.
+
+- Strength: Deal +2 dmg to all hits.
+
+- Swiftness: Increase move speed.
+
+- Amplifier: Increase size of aoes.
+
+- Haste: Decrease skill cooldowns.
+
+INTERMEDIATE:
+
+- Executioner: Deal more dmg when Boss is low hp.
+
+- Fortify: Reduce all damage by flat 2.
+
+- Echo: Skills have change to deal double dmg.
+
+ADVANCED:
+
+- Gourmet: Spawn food that heals every min.
+
+- Desperation: Double dmg and inc spd at critical hp.
+
+TO ADD:
+
+- Regen: ???
+
+- Jester: ???
+
+- Might: ???
+
+- Berserk: ???
+```
