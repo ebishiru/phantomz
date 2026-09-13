@@ -34,6 +34,10 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create(data: { characterKey?: string, startingSkill?: string, level?: string }) {
+        const nextRunRerollCharges = this.registry.get("nextRunRerollCharges") ?? 2
+        this.registry.set("rerollCharges", nextRunRerollCharges)
+        this.registry.set("nextRunRerollCharges", 2)
+
         this.selectedCharacter = data?.characterKey || "player1";
         this.selectedSkillKey = data?.startingSkill || "slash";
         this.level = data?.level || "cave";

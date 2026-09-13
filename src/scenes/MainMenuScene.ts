@@ -14,8 +14,8 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     create() {
-        if (this.registry.get("rerollCharges") === undefined) {
-            this.registry.set("rerollCharges", 3)
+        if (this.registry.get("nextRunRerollCharges") === undefined) {
+            this.registry.set("nextRunRerollCharges", 2)
         }
 
         //Title Music
@@ -122,13 +122,13 @@ export default class MainMenuScene extends Phaser.Scene {
             .setStrokeStyle(3, 0x65aed6)
             .setInteractive({ useHandCursor: true })
 
-        this.add.text(refreshButtonX, refreshButtonY - 18, "GET REROLLS", {
+        this.add.text(refreshButtonX, refreshButtonY - 18, "DOUBLE REROLLS", {
             fontSize: "18px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff"
         }).setOrigin(0.7, 0.5)
 
-        this.add.text(refreshButtonX, refreshButtonY + 3, "Watch Ads", {
+        this.add.text(refreshButtonX, refreshButtonY + 3, "Tap to Watch Ads", {
             fontSize: "16px",
             fontFamily: `Georgia, serif`,
             color: "#ffffff"
@@ -140,7 +140,7 @@ export default class MainMenuScene extends Phaser.Scene {
             color: "#65aed6"
         }).setOrigin(0.7, 0.5)
 
-        this.add.image(refreshButtonX + 70, refreshButtonY + 3, "reroll-icon")
+        this.add.image(refreshButtonX + 85, refreshButtonY + 3, "reroll-icon")
         .setOrigin(0.5)
         .setScale(2.5)
 
@@ -152,8 +152,8 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     updateRefreshUI()  {
-        const charges = this.registry.get("rerollCharges") ?? 3
-        this.refreshChargesText.setText(`Charges: ${charges}/3`)
+        const charges = this.registry.get("nextRunRerollCharges") ?? 2
+        this.refreshChargesText.setText(`Next Run: ${charges}/4 rerolls`)
     }
 
     async watchAdForReroll() {
@@ -173,7 +173,7 @@ export default class MainMenuScene extends Phaser.Scene {
             }
 
             this.sound.resumeAll()
-            this.registry.set("rerollCharges", 3)
+            this.registry.set("nextRunRerollCharges", 4)
             this.updateRefreshUI()
         } finally {
             this.showingRerollAd = false

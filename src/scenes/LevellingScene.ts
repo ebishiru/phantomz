@@ -22,7 +22,7 @@ export default class LevellingScene extends Phaser.Scene {
         this.skillSystem = data.skillSystem
 
         if (this.registry.get("rerollCharges") === undefined) {
-            this.registry.set("rerollCharges", 3)
+            this.registry.set("rerollCharges", 2)
         }
     }
 
@@ -69,15 +69,15 @@ export default class LevellingScene extends Phaser.Scene {
     }
 
     getRerollCharges(): number {
-        return this.registry.get("rerollCharges") ?? 3
+        return this.registry.get("rerollCharges") ?? 2
     }
 
     getRerollChargeLabel(): string {
-        return `Reroll ${this.getRerollCharges()}/3`
+        return `Reroll ${this.getRerollCharges()}/4`
     }
 
     setRerollCharges(value: number) {
-        const nextValue = Phaser.Math.Clamp(value, 0, 3)
+        const nextValue = Phaser.Math.Clamp(value, 0, 4)
         this.registry.set("rerollCharges", nextValue)
     }
 
@@ -228,7 +228,7 @@ export default class LevellingScene extends Phaser.Scene {
                 const rightText = this.add.text(
                     -halfWidth / 2 + 60,
                     0,
-                    `${rightOption.title}: ${this.getRerollCharges()}/3\n${rerollAvailable ? rightOption.desc : "No charges left."}`,
+                    `${rightOption.title}: ${this.getRerollCharges()}/4\n${rerollAvailable ? rightOption.desc : "No charges left."}`,
                     {
                         fontSize: "16px",
                         fontFamily: `Georgia, serif`,
