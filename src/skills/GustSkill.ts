@@ -5,7 +5,7 @@ export default class GustSkill extends Skill {
     player: any
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "gust", "Gust", 15, 3000, 80)
+        super(scene, player, "gust", "Gust", 16, 3000, 80)
         this.iconKey = "gust-icon"
         this.player = player
     }

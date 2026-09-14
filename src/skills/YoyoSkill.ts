@@ -6,7 +6,7 @@ export default class YoyoSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "yoyo", "Yo-yo", 14, 4250, 150)
+        super(scene, player, "yoyo", "Yo-yo", 16, 4250, 150)
         this.iconKey = "yoyo-icon"
         this.player = player
     }

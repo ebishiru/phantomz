@@ -168,8 +168,8 @@ export const upgrades = {
 
     quasar: [
         {
-            desc: "Damage +10",
-            apply: (skill: Skill) => skill.buffDamage(10)
+            desc: "Damage +13",
+            apply: (skill: Skill) => skill.buffDamage(13)
         },
         {
             desc: "Cooldown reduced by 1000ms",

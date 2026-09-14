@@ -6,7 +6,7 @@ export default class KrakenSkill extends Skill {
     facingAngle: number = 0
 
     constructor(scene: Phaser.Scene, player: any) {
-        super(scene, player, "kraken", "Kraken", 60, 9000, 40)
+        super(scene, player, "kraken", "Kraken", 65, 9000, 40)
         this.iconKey = "kraken-icon"
         this.player = player
     }
