@@ -108,7 +108,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Shrieker",
+        name: "Shrieking Bat",
         level: "cave",
         spriteKey: "boss2",
         speed: 100,
@@ -133,7 +133,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Buzzerax",
+        name: "Crawler",
         level: "cave",
         spriteKey: "boss4",
         speed: 100,
@@ -168,7 +168,7 @@ export const Bosses = [
         ]
     },
     {
-        name: "Vrykolakas",
+        name: "Camazotz",
         level: "cave",
         spriteKey: "boss7",
         speed: 120,

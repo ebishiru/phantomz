@@ -47,6 +47,25 @@ export default class Boss23MechB extends BossMechanic {
                     this.config.range,
                     this.coneAngle
                 )
+
+                //Clockwise icon
+                const container = this.scene.add.container(this.boss.x, this.boss.y)
+
+                const follow = () => {
+                    container.x = this.boss.x
+                    container.y = this.boss.y
+                }
+
+                this.scene.events.on("update", follow)
+
+                const clockwiseIcon = this.scene.add.sprite(0, -40, "clockwise-icon")
+
+                clockwiseIcon.setOrigin(0.5, 0.5)
+                clockwiseIcon.setScale(1.5)
+                clockwiseIcon.setDepth(20)
+                container.add(clockwiseIcon)
+
+                this.scene.time.delayedCall(this.config.castTime - 200, () => container.destroy())
             }
         })
     }

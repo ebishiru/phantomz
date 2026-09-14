@@ -53,6 +53,24 @@ export default class Boss28MechB extends BossMechanic {
                     this.config.range,
                     this.coneAngle
                 )
+
+                //Clockwise/CCW icon
+                const container = this.scene.add.container(this.boss.x, this.boss.y)
+
+                const follow = () => {
+                    container.x = this.boss.x
+                    container.y = this.boss.y
+                }
+
+                this.scene.events.on("update", follow)
+
+                const rotationIcon = this.scene.add.sprite(0, - 40, this.rotationDirection === "Clockwork" ? "clockwise-icon" : "counterclockwise-icon")
+                rotationIcon.setOrigin(0.5, 0.5)
+                rotationIcon.setScale(1.5)
+                rotationIcon.setDepth(20)
+                container.add(rotationIcon)
+
+                this.scene.time.delayedCall(this.config.castTime - 200, () => container.destroy())
             }
         })
     }

@@ -14,6 +14,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.loadSkills()
         this.loadPassives()
         this.loadUI()
+        this.loadStatusIcons()
         this.loadEnvironment()
     }
 
@@ -137,6 +138,11 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("settings-icon", "./assets/settings-icon.png")
         this.load.image("trophy-icon", "./assets/trophy-icon.png")
         this.load.image("coffee-icon", "./assets/coffee-icon.png")
+    }
+
+    loadStatusIcons() {
+        this.load.image("clockwise-icon", "./assets/clockwise-icon.png")
+        this.load.image("counterclockwise-icon", "./assets/counterclockwise-icon.png")
     }
 
     loadEnvironment() {
