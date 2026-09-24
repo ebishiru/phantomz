@@ -3,8 +3,8 @@ import Skill from "../skills/Skill";
 export const upgrades = {
     slash: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +7",
+            apply: (skill: Skill) => skill.buffDamage(7)
         },
         {
             desc: "Cooldown reduced by 600ms",
@@ -14,8 +14,8 @@ export const upgrades = {
 
     arrow: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +7",
+            apply: (skill: Skill) => skill.buffDamage(7)
         },
         {
             desc: "Cooldown reduced by 750ms",
@@ -84,8 +84,8 @@ export const upgrades = {
 
     hook: [
         {
-            desc: "Damage +5",
-            apply: (skill: Skill) => skill.buffDamage(5)
+            desc: "Damage +7",
+            apply: (skill: Skill) => skill.buffDamage(7)
         },
         {
             desc: "Cooldown reduced by 700ms",
@@ -135,8 +135,8 @@ export const upgrades = {
 
     gust: [
         {
-            desc: "Damage +4",
-            apply: (skill: Skill) => skill.buffDamage(4)
+            desc: "Damage +5",
+            apply: (skill: Skill) => skill.buffDamage(5)
         },
         {
             desc: "Cooldown reduced by 500ms",
@@ -157,8 +157,8 @@ export const upgrades = {
 
     mirage: [
         {
-            desc: "Damage +9",
-            apply: (skill: Skill) => skill.buffDamage(9)
+            desc: "Damage +10",
+            apply: (skill: Skill) => skill.buffDamage(10)
         },
         {
             desc: "Cooldown reduced by 900ms",
@@ -201,8 +201,8 @@ export const upgrades = {
 
     kraken: [
         {
-            desc: "Damage + 15",
-            apply: (skill: Skill) => skill.buffDamage(15)
+            desc: "Damage + 17",
+            apply: (skill: Skill) => skill.buffDamage(17)
         },
         {
             desc: "Cooldown reduced by 1200ms",

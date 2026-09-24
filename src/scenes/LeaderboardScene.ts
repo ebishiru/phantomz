@@ -1,9 +1,11 @@
 import Phaser from "phaser";
 import GoogleLeaderboardManager from "../systems/GoogleLeaderboardManager";
 import type { LeaderboardEntry, LeaderboardLevel } from "../systems/GoogleLeaderboardManager";
+import SaveManager from "../systems/SaveManager";
 
 export default class LeaderboardScene extends Phaser.Scene {
     private googleLeaderboard = GoogleLeaderboardManager.getInstance();
+    private saveManager!: SaveManager;
 
     levels: LeaderboardLevel[] = ["cave", "snow", "tower"]
     chosenLevelTab: LeaderboardLevel = "cave"
@@ -19,6 +21,8 @@ export default class LeaderboardScene extends Phaser.Scene {
     }
 
     create() {
+        this.saveManager = new SaveManager();
+
         //Fade in from black
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
@@ -137,18 +141,14 @@ export default class LeaderboardScene extends Phaser.Scene {
         this.topScoresHeader.setText("RANK      NAME                         SCORE");
         this.topScoresText.setText("Loading scores...");
 
-        const [score, topScores] = await Promise.all([
-            this.googleLeaderboard.getUserScore(level),
+        const [topScores] = await Promise.all([
             this.googleLeaderboard.getTopScores(level)
         ]);
 
-        if (score === null) {
-            this.playerScoreText.setText("Personal High Score: ???");
-        } else {
-            this.playerScoreText.setText(
-                `Personal High Score: ${score.toLocaleString()}`
-            )
-        }
+        const score = this.saveManager.getHiScore(level);
+        this.playerScoreText.setText(
+            `Personal High Score: ${score.toLocaleString()}`
+        )
 
         this.topScoresText.setText(this.formatTopScores(topScores));
     }

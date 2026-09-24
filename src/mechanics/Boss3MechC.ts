@@ -51,7 +51,7 @@ export default class Boss3MechC extends BossMechanic {
             if (
                 rotatedX >= -this.config.width / 2 &&
                 rotatedX <= this.config.width / 2 &&
-                rotatedY >= this.config.range / 2 &&
+                rotatedY >= -this.config.range / 2 &&
                 rotatedY <= this.config.range / 2
             ) {
                 hit = true
