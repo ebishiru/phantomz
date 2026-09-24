@@ -136,7 +136,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     getDesperationThreshold() {
         const level = this.statModifiers.desperationLevel || 0
-        return 0.20 + level * 0.05
+        return 0.20 + level * 0.1
     }
 
     isDesperationActive() {

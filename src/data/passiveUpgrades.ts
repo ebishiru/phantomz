@@ -29,6 +29,6 @@ export const passiveUpgrades = {
         desc: "Increase bread's HP restoration by 10."
     },
     desperation: {
-        desc: "Desperation hits at 5% HP earlier."
+        desc: "Desperation hits at 10% HP earlier."
     },
 }

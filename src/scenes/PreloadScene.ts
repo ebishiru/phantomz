@@ -97,6 +97,7 @@ export default class PreloadScene extends Phaser.Scene {
 
         //Extra skill assets
         this.load.image("fireball2-vfx", "./assets/fireball2-vfx.png")        //CAST ICON
+        this.load.image("blitzkrieg2-vfx", "./assets/blitzkrieg2-vfx.png")    //CRASH VFX
         this.load.image("volt2-vfx", "./assets/volt2-vfx.png")                //CAST ICON
         this.load.image("skip-icon", "./assets/skip-icon.png")                //SKIP ICON
         this.load.image("reroll-icon", "./assets/reroll-icon.png")            //REROLL ICON
@@ -104,7 +105,6 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("mirage2-vfx", "./assets/mirage2-vfx.png")            //AOE VFX
         this.load.image("quasar2-vfx", "./assets/quasar2-vfx.png")            //BEAM VFX
         this.load.image("quasar3-vfx", "./assets/quasar3-vfx.png")            //BEAM RING VFX
-        this.load.image("blitzkrieg2-vfx", "./assets/blitzkrieg2-vfx.png")    //AOE VFX
         this.load.image("kraken2-vfx", "./assets/kraken2-vfx.png")            //AOE VFX
         this.load.image("nexus2-vfx", "./assets/nexus2-vfx.png")              //BEAM VFX
     }

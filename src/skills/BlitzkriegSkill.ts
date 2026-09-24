@@ -33,11 +33,19 @@ export default class Blitzkrieg extends Skill {
         this.startX = this.player.x
         this.startY = this.player.y
 
-        this.endX = this.player.x + Math.cos(this.facingAngle) * this.dashDistance
-        this.endY = this.player.y + Math.sin(this.facingAngle) * this.dashDistance
+        const bounds = this.scene.physics.world.bounds
+        const body = this.player.body as Phaser.Physics.Arcade.Body
+        const marginX = body?.halfWidth ?? 0
+        const marginY = body?.halfHeight ?? 0
+        const targetX = this.player.x + Math.cos(this.facingAngle) * this.dashDistance
+        const targetY = this.player.y + Math.sin(this.facingAngle) * this.dashDistance
+
+        this.endX = Phaser.Math.Clamp(targetX, bounds.left + marginX, bounds.right - marginX)
+        this.endY = Phaser.Math.Clamp(targetY, bounds.top + marginY, bounds.bottom - marginY)
 
         //VFX
         const container = this.scene.add.container(this.player.x, this.player.y)
+            .setDepth(10)
 
         const follow = () => {
             container.x = this.player.x
@@ -66,7 +74,8 @@ export default class Blitzkrieg extends Skill {
             duration: 300,
             ease: "Sine.easeOut",
             onComplete: () => {
-                blitzkriegVFX.destroy()
+                this.scene.events.off("update", follow)
+                container.destroy()
 
                 this.scene.time.delayedCall(300, () => {
                     //Crash VFX
