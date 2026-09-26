@@ -22,6 +22,12 @@ export default class TitleScene extends Phaser.Scene {
             color: `#ffffff`,
         }).setOrigin(0.5)
 
+        this.add.text(width - 12, height - 10, "v1.0.8", {
+            fontSize: "14px",
+            fontFamily: `"Old English Text MT", Georgia, serif`,
+            color: `#ffffff`,
+        }).setOrigin(1, 1).setAlpha(0.7)
+
         this.tweens.add({
             targets: startText,
             alpha: { from: 1, to: 0.3 },
