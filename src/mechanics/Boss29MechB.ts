@@ -36,6 +36,7 @@ export default class Boss29MechB extends BossMechanic {
 
         //Draw Rectangle telegraph
         this.scene.time.delayedCall(this.config.castTime - 500, () => {
+            if (!this.boss || this.boss.health <= 0 ||!this.active) return
             this.telegraph = new RectangleTelegraph(
                 this.scene,
                 startingX,
