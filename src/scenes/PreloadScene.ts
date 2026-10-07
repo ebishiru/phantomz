@@ -51,7 +51,7 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     loadBosses() {
-        for (let i = 1; i <= 30; i++) {
+        for (let i = 1; i <= 40; i++) {
             this.load.spritesheet(`boss${i}`, `./assets/boss${i}.png`, {
                 frameWidth: 16,
                 frameHeight: 16
