@@ -2,7 +2,7 @@ import { Capacitor } from "@capacitor/core";
 import { registerPlugin } from "@capacitor/core";
 import { CapacitorGameConnect } from "@osmanraifgunes/capacitor-game-connect";
 
-export type LeaderboardLevel = "cave" | "snow" | "tower";
+export type LeaderboardLevel = "cave" | "snow" | "tower" | "blight";
 
 export interface LeaderboardEntry {
     rank: number;
@@ -52,7 +52,19 @@ const SAMPLE_TOP_SCORES: Record<LeaderboardLevel, LeaderboardEntry[]> = {
         { rank: 8, name: "WindWalker", score: 1110 },
         { rank: 9, name: "BellTower", score: 640 },
         { rank: 10, name: "Updraft", score: 290 }
-    ]
+    ],
+    blight: [
+        { rank: 1, name: "Blightborn", score: 3420 },
+        { rank: 2, name: "Rotwalker", score: 3070 },
+        { rank: 3, name: "Gravebloom", score: 2730 },
+        { rank: 4, name: "Wither", score: 2390 },
+        { rank: 5, name: "MireLord", score: 2040 },
+        { rank: 6, name: "PlagueZ", score: 1700 },
+        { rank: 7, name: "Rotfang", score: 1360 },
+        { rank: 8, name: "VenomZ", score: 1010 },
+        { rank: 9, name: "Decay", score: 660 },
+        { rank: 10, name: "ToxicFang", score: 300 },
+    ],
 };
 
 export default class GoogleLeaderboardManager {
@@ -63,6 +75,7 @@ export default class GoogleLeaderboardManager {
         cave: "CgkI1buju6gREAIQAg",
         snow: "CgkI1buju6gREAIQAw",
         tower: "CgkI1buju6gREAIQBA",
+        blight: "SAMPLE",
     };
 
     private constructor() {}

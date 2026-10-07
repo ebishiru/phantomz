@@ -3,7 +3,7 @@ import SaveManager from "../systems/SaveManager"
 
 export default class LevelSelect extends Phaser.Scene {
 
-    levels = ["cave", "snow", "tower"]
+    levels = ["cave", "snow", "tower", "blight"]
 
     selectedLevel: string = "cave"
     saveManager!: SaveManager
@@ -30,8 +30,8 @@ export default class LevelSelect extends Phaser.Scene {
         }).setOrigin(0.5)
 
         //Level selection
-        const startLevelX = 175
-        const levelSpacing = 300
+        const startLevelX = 150
+        const levelSpacing = 225
         const levelY = 250
 
         const mapTextures: Phaser.GameObjects.Image[] = []
@@ -53,6 +53,10 @@ export default class LevelSelect extends Phaser.Scene {
             if (key === "tower") {
                 texture.setTint(0x87ceeb);
                 texture.setAlpha(0.8);
+            }
+            if (key === "blight") {
+                texture.setTint(0x5f6335);
+                texture.setAlpha(0.9);
             }
 
             // Determine lock state for snow/tower

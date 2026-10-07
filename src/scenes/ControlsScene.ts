@@ -25,8 +25,8 @@ export default class ControlScene extends Phaser.Scene {
 
         //Controls Text
         this.add.text(centerX, 100,
-            "Movement: Arrow Keys / Joystick\n" +
-            "Skills: Keys 1-4 / Face Buttons\n",
+            "Movement: Joystick\n" +
+            "Skills: Face Buttons\n",
             {
                 fontSize: "24px",
                 fontFamily: "Georgia, serif",

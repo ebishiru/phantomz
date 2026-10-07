@@ -460,4 +460,18 @@ export const Bosses = [
             Boss30MechC,
         ]
     },
+
+    //BLIGHT BOSSES
+    {
+        name: "Coeurl",
+        level: "blight",
+        spriteKey: "boss21",
+        speed: 100,
+        hurtRadius: 50,
+        mechanics: [
+            Boss21MechA,
+            Boss21MechB,
+            Boss21MechC,
+        ]
+    },
 ]

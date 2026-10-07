@@ -63,6 +63,7 @@ export default class Boss16MechA extends BossMechanic {
 
                 //Boss jumps across line
                 this.scene.time.delayedCall(500, () => {
+                    if (!this.boss || this.boss.health <= 0 ||!this.active) return
                     this.scene.add.tween({
                         targets: this.boss,
                         x: this.telegraph.x + Math.cos(angle) * (distance + 100),

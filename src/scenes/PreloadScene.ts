@@ -28,6 +28,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.audio("caveMusic", "./assets/cave-music.mp3")
         this.load.audio("snowMusic", "./assets/snow-music.mp3")
         this.load.audio("towerMusic", "./assets/tower-music.mp3")
+        this.load.audio("blightMusic", "./assets/blight-music.mp3")
         this.load.audio("gameOverMusic", "./assets/game-over-music.mp3")
         this.load.image("audio-icon", "./assets/audio-icon.png")
         this.load.image("mute-icon", "./assets/mute-icon.png")
@@ -149,6 +150,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image("cave", "./assets/cave.png")
         this.load.image("snow", "./assets/snow.png")
         this.load.image("tower", "./assets/tower.png")
+        this.load.image("blight", "./assets/blight.png")
     }
 
     create() {

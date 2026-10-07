@@ -7,7 +7,7 @@ export default class LeaderboardScene extends Phaser.Scene {
     private googleLeaderboard = GoogleLeaderboardManager.getInstance();
     private saveManager!: SaveManager;
 
-    levels: LeaderboardLevel[] = ["cave", "snow", "tower"]
+    levels: LeaderboardLevel[] = ["cave", "snow", "tower", "blight"]
     chosenLevelTab: LeaderboardLevel = "cave"
     levelOutline!: Phaser.GameObjects.Rectangle
     buttons: Phaser.GameObjects.Text[] = []
@@ -98,12 +98,12 @@ export default class LeaderboardScene extends Phaser.Scene {
     createTabs() {
         const { width, height } = this.scale
 
-        const spacing = 180;
+        const spacing = 150;
         const centerX = width / 2;
         const centerY = height * 0.2;
 
         this.levels.forEach((key, index) => {
-            const x = centerX + (index - 1) * spacing;
+            const x = centerX/2 + (index) * spacing;
 
             const button = this.add.text(
                 x,
