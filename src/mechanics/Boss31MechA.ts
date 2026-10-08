@@ -9,7 +9,7 @@ export default class Boss31MechA extends BossMechanic {
         id: "donut-expand-player",
         name: "Shocking Cry",
         castTime: 800,
-        castDuration: 2400,
+        castDuration: 800,
         cooldown: 2500,
         showCastBar: false,
         damage: 20,
