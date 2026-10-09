@@ -93,6 +93,7 @@ import Boss30MechC from "../mechanics/Boss30MechC";
 import Boss31MechA from "../mechanics/Boss31MechA";
 import Boss31MechB from "../mechanics/Boss31MechB";
 import Boss31MechC from "../mechanics/Boss31MechC";
+import Boss32MechA from "../mechanics/Boss32MechA";
 
 export const Bosses = [
 
@@ -465,16 +466,26 @@ export const Bosses = [
     },
 
     //BLIGHT BOSSES
+    // {
+    //     name: "Grizzly",
+    //     level: "blight",
+    //     spriteKey: "boss31",
+    //     speed: 80,
+    //     hurtRadius: 65,
+    //     mechanics: [
+    //         Boss31MechA,
+    //         Boss31MechB,
+    //         Boss31MechC,
+    //     ]
+    // },
     {
-        name: "Grizzly",
+        name: "Treant",
         level: "blight",
-        spriteKey: "boss31",
-        speed: 80,
+        spriteKey: "boss32",
+        speed: 20,
         hurtRadius: 65,
         mechanics: [
-            Boss31MechA,
-            Boss31MechB,
-            Boss31MechC,
+            Boss32MechA,
         ]
     },
 ]
